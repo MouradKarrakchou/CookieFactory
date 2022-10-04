@@ -1,4 +1,4 @@
-package fr.unice.polytech.biblio;
+package fr.unice.polytech.cod;
 
         import org.junit.jupiter.api.BeforeEach;
         import org.junit.jupiter.api.Test;
