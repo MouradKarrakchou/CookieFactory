@@ -1,3 +1,5 @@
+package fr.unice.polytech.cod;
+
 import fr.unice.polytech.cod.Recipe;
 
 import java.util.Queue;
