@@ -1,4 +1,4 @@
 package fr.unice.polytech.cod.ingredient;
 
-public class Topping {
+public class Topping extends Ingredient {
 }
