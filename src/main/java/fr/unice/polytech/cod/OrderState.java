@@ -1,4 +1,5 @@
 package fr.unice.polytech.cod;
 
-public class OrderState {
+public enum OrderState {
+    PENDING, PROGRESSING, READY, OBSOLETE
 }

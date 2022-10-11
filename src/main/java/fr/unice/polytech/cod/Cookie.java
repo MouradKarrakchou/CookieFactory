@@ -22,4 +22,14 @@ public class Cookie {
     public String getCookieName() {
         return cookieName;
     }
+
+    @Override
+    public String toString() {
+        return "Cookie{" +
+                "cookieName='" + cookieName + '\'' +
+                ", dough=" + dough +
+                ", flavour=" + flavour +
+                ", toppingList=" + toppingList +
+                '}';
+    }
 }
