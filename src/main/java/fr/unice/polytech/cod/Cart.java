@@ -13,11 +13,13 @@ public class Cart {
         this.store = store;
         itemList = new ArrayList<>();
     }
-
     public void showCart() {
         for(Item item: itemList){
             Display.itemInfo(item);
         }
     }
 
+    public void addToCart(Item item) {
+        itemList.add(item);
+    }
 }
