@@ -22,4 +22,13 @@ public class Cart {
     public void addToCart(Item item) {
         itemList.add(item);
     }
+
+    public void removeToCart(Item item) {
+        itemList.remove(item);
+    }
+
+    public Order validateCart(){
+        return new Order(this);
+    }
+
 }
