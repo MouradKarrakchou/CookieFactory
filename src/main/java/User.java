@@ -31,7 +31,7 @@ public class User {
      * Show all the cookies in our order and give the choice to validate or add/delete more cookies
      */
     public void recapCart(){
-
+        this.cart.showCart();
     }
 
     /**

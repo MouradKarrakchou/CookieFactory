@@ -5,11 +5,16 @@ public class Item {
     private int quantity;
 
 
-    public Item(Cookie cookie, int quantity){
+    public Item(Cookie cookie, int quantity) {
         this.quantity = quantity;
         this.cookie = cookie;
     }
 
+    public Cookie getCookie() {
+        return cookie;
+    }
 
-
+    public int getQuantity() {
+        return quantity;
+    }
 }
