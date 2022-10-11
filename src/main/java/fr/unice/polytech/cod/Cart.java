@@ -13,4 +13,8 @@ public class Cart {
         this.store = store;
         itemList = new ArrayList<>();
     }
+
+    public void addToCart(Item item) {
+        itemList.add(item);
+    }
 }

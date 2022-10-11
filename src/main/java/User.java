@@ -1,6 +1,7 @@
 import fr.unice.polytech.cod.Cart;
 import fr.unice.polytech.cod.CookieBook;
 import fr.unice.polytech.cod.FidelityAccount;
+import fr.unice.polytech.cod.Item;
 
 public class User {
     private CookieBook cookieBook;
@@ -20,11 +21,13 @@ public class User {
     public void seeCatalogue(){
     }
 
+
     /**
      * Add cookies to the Cart
      */
-    public void chooseCookies(){
+    public void chooseCookies(Item){
         //use Cart
+        cart.addToCart();
     }
 
     /**
