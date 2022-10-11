@@ -1,16 +1,20 @@
 package fr.unice.polytech.cod;
 
-import fr.unice.polytech.cod.Recipe;
-
-import java.util.Queue;
-
 public class Item {
-    private Recipe recipe;
+    private Cookie cookie;
     private int quantity;
 
 
-    public Item(Recipe recipe, int quantity){
+    public Item(Cookie cookie, int quantity) {
         this.quantity = quantity;
-        this.recipe = recipe;
+        this.cookie = cookie;
+    }
+
+    public Cookie getCookie() {
+        return cookie;
+    }
+
+    public int getQuantity() {
+        return quantity;
     }
 }

@@ -25,24 +25,26 @@ public class User {
         return(cookieBook.seeCatalogue());
     }
 
+
     /**
      * Add cookies to the Cart
      */
-    public void chooseCookies(){
-        //use Cart
+    public void chooseCookies(Cookie cookie, Integer quantity){
+        Item item = new Item(cookie, quantity);
+        cart.addToCart(item);
     }
 
     /**
      * Show all the cookies in our order and give the choice to validate or add/delete more cookies
      */
     public void recapCart(){
-
+        this.cart.showCart();
     }
 
     /**
      * lock the Cart and validate order
      */
-    public void validateCarteAndCreateOrder(){
+    public void validateCartAndCreateOrder(){
 
     }
 
