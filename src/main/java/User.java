@@ -13,4 +13,33 @@ public class User {
         this.cart = cart;
         this.fidelityAccount = fidelityAccount;
     }
+
+    /**
+     * Show the catalogue for User
+     */
+    public void seeCatalogue(){
+    }
+
+    /**
+     * Add cookies to the Cart
+     */
+    public void chooseCookies(){
+        //use Cart
+    }
+
+    /**
+     * Show all the cookies in our order and give the choice to validate or add/delete more cookies
+     */
+    public void recapCart(){
+
+    }
+
+    /**
+     * lock the Cart and validate order
+     */
+    public void validateCarteAndCreateOrder(){
+
+    }
+
+
 }
