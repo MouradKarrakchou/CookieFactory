@@ -1,6 +1,9 @@
 import fr.unice.polytech.cod.Cart;
 import fr.unice.polytech.cod.CookieBook;
 import fr.unice.polytech.cod.FidelityAccount;
+import fr.unice.polytech.cod.Recipe;
+
+import java.util.List;
 
 public class User {
     private CookieBook cookieBook;
@@ -17,7 +20,9 @@ public class User {
     /**
      * Show the catalogue for User
      */
-    public void seeCatalogue(){
+    public List<Recipe> seeCatalogue(){
+        System.out.println(cookieBook.seeCatalogue());
+        return(cookieBook.seeCatalogue());
     }
 
     /**
