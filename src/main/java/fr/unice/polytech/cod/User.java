@@ -1,4 +1,4 @@
-import fr.unice.polytech.cod.*;
+package fr.unice.polytech.cod;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -18,7 +18,7 @@ public class User {
     }
 
     /**
-     * Show the catalogue for User
+     * Show the catalogue for fr.unice.polytech.cod.User
      */
     public List<Cookie> seeCatalogue(){
         System.out.println(Arrays.toString(cookieBook.seeCatalogue().toArray()));

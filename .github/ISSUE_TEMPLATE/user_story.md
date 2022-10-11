@@ -1,6 +1,6 @@
 ---
-name: User Story
-about: Describe the User Story
+name: fr.unice.polytech.cod.User Story
+about: Describe the fr.unice.polytech.cod.User Story
 title: "[US]"
 labels: bug, US
 assignees: ''
