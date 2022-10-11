@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CookieBook {
-    private List<Recipe> recipes;
+    private List<Cookie> cookies;
 
     public CookieBook(){
-        recipes = new ArrayList<>();
+        cookies = new ArrayList<>();
         // TODO : Add recipes here.
     }
 }

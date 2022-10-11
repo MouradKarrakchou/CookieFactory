@@ -37,7 +37,7 @@ public class User {
     /**
      * lock the Cart and validate order
      */
-    public void validateCarteAndCreateOrder(){
+    public void validateCartAndCreateOrder(){
 
     }
 
