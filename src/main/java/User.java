@@ -1,15 +1,20 @@
 import fr.unice.polytech.cod.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class User {
     private CookieBook cookieBook;
     private Cart cart;
     private FidelityAccount fidelityAccount;
+    private List<Order> userOrders;
     // TODO : private List<Order> orders;
 
     public User(CookieBook cookieBook, Cart cart, FidelityAccount fidelityAccount){
         this.cookieBook = cookieBook;
         this.cart = cart;
         this.fidelityAccount = fidelityAccount;
+        this.userOrders = new ArrayList<>();
     }
 
     /**
@@ -20,7 +25,9 @@ public class User {
 
 
     /**
-     * Add cookies to the Cart
+     * Add cookies to cart
+     * @param cookie the cookie to add to the cart
+     * @param quantity of the selected cookie
      */
     public void chooseCookies(Cookie cookie, Integer quantity){
         Item item = new Item(cookie, quantity);
@@ -35,10 +42,13 @@ public class User {
     }
 
     /**
-     * lock the Cart and validate order
+     * Add the user order to his orders list
+     * @return the user order
      */
-    public void validateCartAndCreateOrder(){
-
+    public Order validateCart(){
+        Order order = new Order(cart, OrderState.PENDING);
+        userOrders.add(order);
+        return order;
     }
 
 
