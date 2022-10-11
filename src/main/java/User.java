@@ -1,5 +1,6 @@
 import fr.unice.polytech.cod.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class User {
@@ -18,7 +19,8 @@ public class User {
      * Show the catalogue for User
      */
     public List<Cookie> seeCatalogue(){
-        System.out.println(cookieBook.seeCatalogue());
+        System.out.println(Arrays.toString(cookieBook.seeCatalogue().toArray()));
+
         return(cookieBook.seeCatalogue());
     }
 
