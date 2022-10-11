@@ -1,7 +1,4 @@
-import fr.unice.polytech.cod.Cart;
-import fr.unice.polytech.cod.CookieBook;
-import fr.unice.polytech.cod.FidelityAccount;
-import fr.unice.polytech.cod.Recipe;
+import fr.unice.polytech.cod.*;
 
 import java.util.List;
 
@@ -20,7 +17,7 @@ public class User {
     /**
      * Show the catalogue for User
      */
-    public List<Recipe> seeCatalogue(){
+    public List<Cookie> seeCatalogue(){
         System.out.println(cookieBook.seeCatalogue());
         return(cookieBook.seeCatalogue());
     }
