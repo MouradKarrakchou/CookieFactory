@@ -6,13 +6,13 @@ import fr.unice.polytech.cod.ingredient.Topping;
 
 import java.util.List;
 
-public class Recipe {
+public class Cookie {
     private String recipeName;
     private Dough dough;
     private Flavour flavour;
     private List<Topping> toppingList;
 
-    public Recipe (String recipeName, Dough dough, Flavour flavour, List<Topping> toppingList){
+    public Cookie(String recipeName, Dough dough, Flavour flavour, List<Topping> toppingList){
         this.recipeName = recipeName;
         this.dough = dough;
         this.flavour = flavour;
