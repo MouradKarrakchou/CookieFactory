@@ -9,9 +9,14 @@ public class Cart {
     private Store store;
     private List<Item> itemList;
 
-    public Cart(Store store){
+    public Cart(Store store) {
         this.store = store;
         itemList = new ArrayList<>();
+    }
+    public void showCart() {
+        for(Item item: itemList){
+            Display.itemInfo(item);
+        }
     }
 
     public void addToCart(Item item) {

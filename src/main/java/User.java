@@ -1,6 +1,6 @@
 import fr.unice.polytech.cod.*;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class User {
@@ -20,7 +20,10 @@ public class User {
     /**
      * Show the catalogue for User
      */
-    public void seeCatalogue(){
+    public List<Cookie> seeCatalogue(){
+        System.out.println(Arrays.toString(cookieBook.seeCatalogue().toArray()));
+
+        return(cookieBook.seeCatalogue());
     }
 
 
@@ -38,7 +41,7 @@ public class User {
      * Show all the cookies in our order and give the choice to validate or add/delete more cookies
      */
     public void recapCart(){
-
+        this.cart.showCart();
     }
 
     /**
