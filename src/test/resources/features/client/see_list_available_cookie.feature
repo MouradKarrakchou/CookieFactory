@@ -1,9 +1,9 @@
 Feature: See list of available cookies
 
   Background:
-    Given a client
+    Given a user
 
   Scenario: all ingredients are available
-    When  requests the cookie list
+    When  he requests the cookie list
     Then he receive the entire list
 

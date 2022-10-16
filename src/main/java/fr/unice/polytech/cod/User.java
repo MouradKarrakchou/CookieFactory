@@ -17,6 +17,11 @@ public class User {
         this.userOrders = new ArrayList<>();
     }
 
+    public User() {
+        //for cumcumber test
+        this.cookieBook = new CookieBook();
+    }
+
     /**
      * Show the catalogue for fr.unice.polytech.cod.User
      */
