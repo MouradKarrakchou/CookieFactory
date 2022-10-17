@@ -15,7 +15,7 @@ public class Main {
         FidelityAccount fidelityAccount = new FidelityAccount();
         User user = new User(cookieBook, cart, fidelityAccount);
 
-        System.out.println("\nCatalogue : \n" + user.seeCatalogue() + "\n");
+        System.out.println("\nCatalogue : \n" + user.getCatalogue() + "\n");
         System.out.println("\nUser choose a cookie\n");
         user.chooseCookies(new Cookie("cookieName", new Dough(), new Flavour(), new ArrayList<>()), 12);
         System.out.println("\nCart content : \n");

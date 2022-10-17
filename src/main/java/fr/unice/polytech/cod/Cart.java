@@ -22,4 +22,8 @@ public class Cart {
     public void addToCart(Item item) {
         itemList.add(item);
     }
+
+    public List<Item> getItemList() {
+        return itemList;
+    }
 }

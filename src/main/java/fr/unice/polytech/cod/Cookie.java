@@ -19,6 +19,9 @@ public class Cookie {
         this.toppingList = toppingList; //TODO: Make sure the given topping list isn't > 3
     }
 
+    public Cookie(String testCookie, Flavour flavour) {
+    }
+
     public String getCookieName() {
         return cookieName;
     }
