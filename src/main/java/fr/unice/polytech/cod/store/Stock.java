@@ -8,6 +8,7 @@ import java.util.List;
 
 public class Stock {
     private List<Ingredient> ingredients;
+    
 
     public Stock(){
         ingredients = new ArrayList<>();

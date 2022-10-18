@@ -22,7 +22,7 @@ public class Main {
         user.viewCatalog();
 
         Display.info("(User choose a cookie)");
-        user.chooseCookies(new Cookie("Chocolala", new Dough(), new Flavour(), new ArrayList<>()), 12);
+        user.chooseCookies(new Cookie("Chocolala", new Dough("Pate verte",25,50), new Flavour("Vert",25,50), new ArrayList<>()), 12);
 
         Display.info("(User watch recapCart)\n");
         user.recapCart();
