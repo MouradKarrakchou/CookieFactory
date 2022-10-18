@@ -27,8 +27,9 @@ public class User {
     /**
      * Show the catalogue for fr.unice.polytech.cod.User
      */
-    public void viewCatalog(){
+    public List<Cookie> viewCatalog(){
         Display.displayCookies(cookieBook.getAvailableCookie());
+        return cookieBook.getAvailableCookie();
     }
 
 
