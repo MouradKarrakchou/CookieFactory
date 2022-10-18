@@ -1,5 +1,5 @@
 package fr.unice.polytech.cod;
 
 public enum OrderState {
-    PENDING, PROGRESSING, READY, OBSOLETE
+    PENDING, IN_PROGRESS, READY, OBSOLETE
 }
