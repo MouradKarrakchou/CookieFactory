@@ -9,4 +9,8 @@ public class Order {
         this.cart = cart;
         this.orderState = orderState;
     }
+
+    public String getOrderState() {
+        return orderState.toString();
+    }
 }

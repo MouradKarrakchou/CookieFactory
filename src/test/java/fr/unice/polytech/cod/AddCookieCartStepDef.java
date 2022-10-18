@@ -15,19 +15,19 @@ import static org.junit.Assert.assertEquals;
 public class AddCookieCartStepDef {
 
     User user;
-    @Given("a user his cart and a cookie")
-    public void a_user_his_cart_and_a_cookie() {
-        // Write code here that turns the phrase above into concrete actions
+    @Given("a user his cart and a valid cookie")
+    public void a_user_his_cart_and_a_valid_cookie() {
         user = new User();
     }
     @When("he add cookie to his cart")
     public void he_add_cookie_to_his_cart() {
-        Cookie  cookie = new Cookie("testCookie", new Dough(),new Flavour(),new ArrayList<Topping>());
+        Cookie  cookie = new Cookie("testCookie", new Dough("Pate verte",25,50),new Flavour("Vert",25,50),new ArrayList<Topping>());
         user.chooseCookies(cookie, 2);
     }
-    @Then("he has one cookie in his cart")
-    public void he_has_one_cookie_in_his_cart() {
+    @Then("a cookie is added to his cart")
+    public void a_cookie_is_added_to_his_cart() {
         assertEquals(1, user.getCart().getItemList().size());
     }
+
 
 }
