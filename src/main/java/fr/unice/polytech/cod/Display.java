@@ -25,8 +25,8 @@ public class Display {
         LOGGER.info(colorize("Here is the catalog:", BRIGHT_BLUE_TEXT()));
         StringBuilder cookieNames = new StringBuilder();
         for(Cookie cookie : availableCookie){
-            cookieNames.append(" - ").append(cookie.getName());
+            cookieNames.append("    - ").append(cookie.getName()).append("\n");
         }
-        LOGGER.info(availableCookie.toString());
+        LOGGER.info(cookieNames.toString());
     }
 }
