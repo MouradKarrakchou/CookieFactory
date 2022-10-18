@@ -10,8 +10,25 @@ public class Ingredient {
         this.pricePerg =price;
         this.quantity=quantity;
     }
+
+    /**
+     * Permit to create a new Ingredit of the quantity to exctract and reduce this quantity from our object
+     * @param quantityToExtract
+     * @return
+     * @throws Exception
+     */
     public Ingredient takePortion(double quantityToExtract) throws Exception {
         return null;
     }
+
+    /**
+     * verify if 2 objects are of the same types
+     * @param ingredient
+     * @return
+     */
+    public boolean sameTypes(Ingredient ingredient){
+        return false;
+    }
+
 
 }
