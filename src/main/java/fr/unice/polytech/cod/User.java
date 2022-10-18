@@ -26,7 +26,7 @@ public class User {
     }
 
     /**
-     * Show the catalogue for fr.unice.polytech.cod.User
+     * Show the catalogue
      */
     public List<Cookie> getCatalogue(){
         //System.out.println(Arrays.toString(cookieBook.seeCatalogue().toArray()));
