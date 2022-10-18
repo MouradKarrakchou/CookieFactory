@@ -28,7 +28,7 @@ public class User {
      * Show the catalogue for fr.unice.polytech.cod.User
      */
     public List<Cookie> getCatalogue(){
-        //System.out.println(Arrays.toString(cookieBook.seeCatalogue().toArray()));
+        Display.displayCookies(cookieBook.getAvailableCookie());
         return(cookieBook.getAvailableCookie());
     }
 
@@ -38,7 +38,7 @@ public class User {
      * @param cookie the cookie to add to the cart
      * @param quantity of the selected cookie
      */
-    public void chooseCookies(Cookie cookie, Integer quantity){
+    public void chooseCookies(Cookie cookie, int quantity){
         Item item = new Item(cookie, quantity);
         cart.addToCart(item);
     }
