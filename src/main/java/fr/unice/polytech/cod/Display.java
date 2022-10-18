@@ -11,6 +11,7 @@ public class Display {
 
     public static void start(){
         System.setProperty("java.util.logging.SimpleFormatter.format", colorize("%5$s %n", BRIGHT_WHITE_TEXT()));
+        LOGGER.info(colorize("Welcome to cookie on demand!", YELLOW_TEXT(), MAGENTA_BACK()));
     }
 
     public static void itemInfo(Item item) {

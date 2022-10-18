@@ -2,7 +2,6 @@ package fr.unice.polytech.cod;
 import fr.unice.polytech.cod.store.Store;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class User {
@@ -30,8 +29,7 @@ public class User {
      */
     public List<Cookie> getCatalogue(){
         //System.out.println(Arrays.toString(cookieBook.seeCatalogue().toArray()));
-
-        return(cookieBook.seeCatalogue());
+        return(cookieBook.getAvailableCookie());
     }
 
 
