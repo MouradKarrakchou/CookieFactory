@@ -1,4 +1,5 @@
 package fr.unice.polytech.cod;
+
 import fr.unice.polytech.cod.store.Store;
 
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ public class User {
     private List<Order> userOrders;
     // TODO : private List<Order> orders;
 
-    public User(CookieBook cookieBook, Cart cart, FidelityAccount fidelityAccount){
+    public User(CookieBook cookieBook, Cart cart, FidelityAccount fidelityAccount) {
         this.cookieBook = cookieBook;
         this.cart = cart;
         this.fidelityAccount = fidelityAccount;
@@ -27,7 +28,7 @@ public class User {
     /**
      * Show the catalogue
      */
-    public List<Cookie> viewCatalog(){
+    public List<Cookie> viewCatalog() {
         Display.displayCookies(cookieBook.getAvailableCookie());
         return cookieBook.getAvailableCookie();
     }
@@ -35,10 +36,11 @@ public class User {
 
     /**
      * Add cookies to cart
-     * @param cookie the cookie to add to the cart
+     *
+     * @param cookie   the cookie to add to the cart
      * @param quantity of the selected cookie
      */
-    public void chooseCookies(Cookie cookie, int quantity){
+    public void chooseCookies(Cookie cookie, int quantity) {
         Item item = new Item(cookie, quantity);
         cart.addToCart(item);
     }
@@ -46,7 +48,7 @@ public class User {
     /**
      * Show all the cookies in our order and give the choice to validate or add/delete more cookies
      */
-    public void recapCart(){
+    public void recapCart() {
         Display.title("Your cart:");
         cart.showCart();
     }
@@ -56,11 +58,12 @@ public class User {
      */
     public void validateCart() throws Exception {
         //userOrders.add(this.cart.createOrder());
-        if(!cart.isEmpty())
+        if (!cart.isEmpty())
             cart.validateCart();
         else
             throw new Exception("Panier vide impossible de le valider");
     }
+
     public Cart getCart() {
         return cart;
     }
@@ -70,9 +73,13 @@ public class User {
     }
 
     public Bill finaliseOrder() throws Exception {
-        if(cart.isValidated())
+        if (cart.isValidated())
             return new Bill();
         else
             throw new Exception("Panier non validé");
+    }
+
+    public void addOrder(Order order) {
+        this.userOrders.add(order);
     }
 }
