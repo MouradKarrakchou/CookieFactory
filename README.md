@@ -18,7 +18,7 @@ Sur cette version initiale seule un test Junit5 est déclenché pour vérifier q
 
 
 
-## User stories 
+## fr.unice.polytech.cod.User stories 
 La liste des fonctionnalités livrées par user story.
 
 ### Milestone X
