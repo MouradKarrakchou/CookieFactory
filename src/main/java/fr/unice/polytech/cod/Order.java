@@ -13,4 +13,8 @@ public class Order {
     public String getOrderState() {
         return orderState.toString();
     }
+
+    public void setState(OrderState state) {
+        this.orderState = state;
+    }
 }
