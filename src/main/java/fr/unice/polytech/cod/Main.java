@@ -28,6 +28,6 @@ public class Main {
         user.recapCart();
 
         System.out.println("\nCart is validate : \n");
-        user.validateCart();
+        //user.validateCart();
     }
 }
