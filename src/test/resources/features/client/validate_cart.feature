@@ -8,6 +8,6 @@ Feature: Validate a cart
 
   Scenario: his cart is empty
     Given a user with a empty cart
-    When  he validate his cart
+    When  he can't validate his cart
     Then he can't finalise his order
 
