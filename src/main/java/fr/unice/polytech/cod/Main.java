@@ -24,6 +24,6 @@ public class Main {
         System.out.println("\nCart content : \n");
         user.recapCart();
         System.out.println("\nCart is validate : \n");
-        user.validateCart();
+        //user.validateCart();
     }
 }
