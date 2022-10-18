@@ -5,6 +5,7 @@ import fr.unice.polytech.cod.ingredient.Flavour;
 import fr.unice.polytech.cod.store.Store;
 
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 public class Main {
 
@@ -20,10 +21,12 @@ public class Main {
 
         user.viewCatalog();
 
-        System.out.println("\nUser choose a cookie\n");
-        user.chooseCookies(new Cookie("cookieName", new Dough(), new Flavour(), new ArrayList<>()), 12);
-        System.out.println("\nCart content : \n");
+        Display.info("(User choose a cookie)");
+        user.chooseCookies(new Cookie("Chocolala", new Dough(), new Flavour(), new ArrayList<>()), 12);
+
+        Display.info("(User watch recapCart)\n");
         user.recapCart();
+
         System.out.println("\nCart is validate : \n");
         user.validateCart();
     }

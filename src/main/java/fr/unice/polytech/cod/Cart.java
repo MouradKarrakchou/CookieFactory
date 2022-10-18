@@ -15,9 +15,7 @@ public class Cart {
     }
 
     public void showCart() {
-        for (Item item : itemList) {
-            Display.itemInfo(item);
-        }
+        Display.showItems(itemList);
     }
 
     public void addToCart(Item item) {
