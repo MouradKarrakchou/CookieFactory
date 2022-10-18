@@ -9,6 +9,9 @@ import io.cucumber.java.en.When;
 
 import java.util.ArrayList;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 public class ValidateCartStepDef {
     User user;
 
@@ -40,7 +43,7 @@ public class ValidateCartStepDef {
     @Then("he can finalise his order")
     public void he_can_finalise_his_order(){
         try {
-            user.validateCart();
+            assertTrue(user.finaliseOrder()!=null);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -48,10 +51,13 @@ public class ValidateCartStepDef {
 
     @Then("he can't finalise his order")
     public void he_can_t_finalise_his_order() {
+        boolean checkException = false;
         try {
             user.finaliseOrder();
         } catch (Exception e) {
-            System.out.println(e);
+            checkException = true;
         }
+        assertTrue(checkException);
+
     }
 }
