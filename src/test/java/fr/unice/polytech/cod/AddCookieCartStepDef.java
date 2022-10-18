@@ -15,8 +15,8 @@ import static org.junit.Assert.assertEquals;
 public class AddCookieCartStepDef {
 
     User user;
-    @Given("a user")
-    public void a_user() {
+    @Given("a user his cart and a cookie")
+    public void a_user_his_cart_and_a_cookie() {
         // Write code here that turns the phrase above into concrete actions
         user = new User();
     }
