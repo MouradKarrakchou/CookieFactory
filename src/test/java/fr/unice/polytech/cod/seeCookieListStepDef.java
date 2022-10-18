@@ -3,7 +3,6 @@ package fr.unice.polytech.cod;
 import fr.unice.polytech.cod.ingredient.Dough;
 import fr.unice.polytech.cod.ingredient.Flavour;
 import fr.unice.polytech.cod.ingredient.Topping;
-import io.cucumber.java.bs.A;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -13,7 +12,7 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-public class stepDefinition {
+public class seeCookieListStepDef {
     User user;
     List<Cookie> cookieList;
     @Given("a user")
@@ -31,13 +30,24 @@ public class stepDefinition {
         assertFalse(cookieList.isEmpty());
     }
 
-    @When("he add cookie to his cart")
-    public void he_add_cookie_to_his_cart() {
-       Cookie  cookie = new Cookie("testCookie", new Dough(),new Flavour(),new ArrayList<Topping>());
-        user.chooseCookies(cookie, 2);
+
+
+
+    @When("he validate his cart")
+    public void he_validate_his_cart() {
+        // Write code here that turns the phrase above into concrete actions
+        throw new io.cucumber.java.PendingException();
     }
-    @Then("he can watch the cookie in his cart")
-    public void he_can_watch_the_cookie_in_his_cart() {
-        assertEquals(1, user.getCart().getItemList().size());
+    @Then("he can finalise his order")
+    public void he_can_finalise_his_order() {
+        // Write code here that turns the phrase above into concrete actions
+        throw new io.cucumber.java.PendingException();
     }
+
+    @Then("he can't finalise his order")
+    public void he_can_t_finalise_his_order() {
+        // Write code here that turns the phrase above into concrete actions
+        throw new io.cucumber.java.PendingException();
+    }
+
 }
