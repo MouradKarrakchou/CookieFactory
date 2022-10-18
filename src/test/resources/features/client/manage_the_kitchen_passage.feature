@@ -10,3 +10,8 @@ Feature: Manage the kitchen passage
     When  the order state is READY
     Then the chef associated to this command can clean, help or take a break
 
+  Scenario: give the prepared order
+    Given an unvailable chef
+    And his ready order
+    When  he give the order
+    Then the he can clean, help or take a break
