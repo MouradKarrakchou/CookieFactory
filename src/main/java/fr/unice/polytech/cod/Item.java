@@ -23,10 +23,19 @@ public class Item {
         return quantity;
     }
 
-    public List<Ingredient> getIngredientsNeeded(){
+    /**
+     * Generate a list of needed ingredients according to the item list
+     *
+     * @return The of needed ingredients
+     */
+    public List<Ingredient> generateIngredientsNeeded(){
+        // Cloning the list of ingredients
         List<Ingredient> ingredientsClone = new ArrayList<>(cookie.getIngredients());
 
-        for(Ingredient ingredient : ingredientsClone);
+        // Multiplying each ingredient needed by the number of cookies
+        for(Ingredient ingredient : ingredientsClone)
+            ingredient.multiplyQuantity(quantity);
+
         return ingredientsClone;
     }
 }
