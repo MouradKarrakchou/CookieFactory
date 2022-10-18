@@ -2,23 +2,20 @@ package fr.unice.polytech.cod;
 
 import java.util.logging.Logger;
 
+import static com.diogonunes.jcolor.Ansi.colorize;
+import static com.diogonunes.jcolor.Attribute.*;
+
+
 public class Display {
+    private final static Logger LOGGER = Logger.getLogger(Display.class.getName());
 
-    public static final String ANSI_RESET = "\u001B[0m";
-    public static final String ANSI_GREEN = "\u001B[32m";
-    public static final String ANSI_YELLOW = "\u001B[33m";
-    public static final String ANSI_BLUE = "\u001B[34m";
-    public static final String ANSI_WHITE = "\u001B[37m";
-    public static final String ANSI_PURPLE = "\u001B[35m";
-
-    public final static Logger LOGGER = Logger.getLogger("");
-
-    public Display() {
-        System.setProperty("java.util.logging.SimpleFormatter.format", "%5$s %n");
+    public static void start(){
+        System.setProperty("java.util.logging.SimpleFormatter.format", colorize("%5$s %n", BRIGHT_WHITE_TEXT()));
     }
 
     public static void itemInfo(Item item) {
-        LOGGER.info(ANSI_BLUE + "[" + item.getQuantity() + "] " + item.getCookie().getCookieName() + ANSI_RESET);
+        String quantity = item.getQuantity() + "x ";
+        String cookieName = item.getCookie().getCookieName();
+        LOGGER.info(" - " + colorize(quantity, BLUE_TEXT()) + colorize(cookieName, BRIGHT_WHITE_TEXT()));
     }
-
 }
