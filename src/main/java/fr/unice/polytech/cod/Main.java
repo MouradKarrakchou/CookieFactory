@@ -9,6 +9,9 @@ import java.util.ArrayList;
 public class Main {
 
     public static void main(String[] args) {
+        // Initializing the display
+        Display.start();
+
         Store store = new Store();
         CookieBook cookieBook = new CookieBook();
         Cart cart = new Cart(store);
