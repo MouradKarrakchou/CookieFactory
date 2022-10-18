@@ -36,8 +36,8 @@ public class stepDefinition {
        Cookie  cookie = new Cookie("testCookie", new Dough(),new Flavour(),new ArrayList<Topping>());
         user.chooseCookies(cookie, 2);
     }
-    @Then("he can watch the cookie in his cart")
-    public void he_can_watch_the_cookie_in_his_cart() {
+    @Then("he has one cookie in his cart")
+    public void he_has_one_cookie_in_his_cart() {
         assertEquals(1, user.getCart().getItemList().size());
     }
 }
