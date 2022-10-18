@@ -3,7 +3,6 @@ package fr.unice.polytech.cod;
 import fr.unice.polytech.cod.ingredient.Dough;
 import fr.unice.polytech.cod.ingredient.Flavour;
 import fr.unice.polytech.cod.ingredient.Topping;
-import io.cucumber.java.bs.A;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -24,7 +23,7 @@ public class stepDefinition {
     @When("he requests the cookie list")
     public void he_requests_the_cookie_list() {
         // Write code here that turns the phrase above into concrete actions
-        cookieList = user.getCatalogue();
+        cookieList = user.viewCatalog();
     }
     @Then("he receive the entire list")
     public void he_receive_the_entire_list() {
