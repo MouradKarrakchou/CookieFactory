@@ -54,8 +54,8 @@ public class ManageTheKitchenPassage {
         throw new io.cucumber.java.PendingException();
     }
 
-    @Given("an unvailable chef")
-    public void an_unvailable_chef() {
+    @Given("an unavailable chef")
+    public void an_unavailable_chef() {
         schedule = new Schedule();
         chef = new Chef(schedule);
     }
@@ -66,11 +66,14 @@ public class ManageTheKitchenPassage {
     }
     @When("he give the order")
     public void he_give_the_order() {
-        chef.giveOrder();
+        try {
+            chef.giveOrder();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
-    @Then("the he can clean, help or take a break")
-    public void the_he_can_clean_help_or_take_a_break() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+    @Then("he can clean, help or take a break")
+    public void he_can_clean_help_or_take_a_break() {
+        chef.makeOtherActivityDuringLeftTime();
     }
 }

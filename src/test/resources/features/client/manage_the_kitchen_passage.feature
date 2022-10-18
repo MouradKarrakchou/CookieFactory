@@ -11,7 +11,7 @@ Feature: Manage the kitchen passage
     Then the chef associated to this command can clean, help or take a break
 
   Scenario: give the prepared order
-    Given an unvailable chef
+    Given an unavailable chef
     And his ready order
     When  he give the order
-    Then the he can clean, help or take a break
+    Then he can clean, help or take a break

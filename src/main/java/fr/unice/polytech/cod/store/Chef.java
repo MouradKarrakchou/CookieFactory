@@ -1,6 +1,7 @@
 package fr.unice.polytech.cod.store;
 
 import fr.unice.polytech.cod.Order;
+import fr.unice.polytech.cod.OrderState;
 import fr.unice.polytech.cod.Schedule;
 
 import java.util.List;
@@ -8,7 +9,6 @@ import java.util.Optional;
 
 public class Chef {
     Schedule schedule;
-    Order orderToPrepare;
     boolean available;
     Optional<Order> orderToPrepare;
 
@@ -29,18 +29,25 @@ public class Chef {
         return available;
     }
 
-    public void setOrder(Order orderToPrepare) {
-        this.orderToPrepare = orderToPrepare;
+    public void setOrder(Order order) {
+        this.orderToPrepare = Optional.of(order);
+        schedule.startTimer();
     }
 
     public void setAvailability(boolean availability) {
         this.available = availability;
     }
 
-    public void giveOrder() {
+    public void giveOrder() throws Exception {
         if(this.orderToPrepare.isPresent()){
             Order order = orderToPrepare.get();
-            order.setOrderState();
+            this.orderToPrepare = Optional.empty();
         }
+        else
+            throw new Exception("No associate order");
+    }
+
+    public void makeOtherActivityDuringLeftTime() {
+        //TODO he can clean, help or take a break
     }
 }
