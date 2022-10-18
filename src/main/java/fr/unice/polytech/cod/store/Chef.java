@@ -8,10 +8,13 @@ import java.util.Optional;
 
 public class Chef {
     Schedule schedule;
+    Order orderToPrepare;
+    boolean available;
     Optional<Order> orderToPrepare;
 
     public Chef(Schedule schedule) {
         this.schedule = schedule;
+        this.available = true;
     }
 
     public void associateOrder(Order orderToPrepare) {
@@ -20,6 +23,18 @@ public class Chef {
 
     public Optional<Order> getOrderToPrepare() {
         return orderToPrepare;
+    }
+
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public void setOrder(Order orderToPrepare) {
+        this.orderToPrepare = orderToPrepare;
+    }
+
+    public void setAvailability(boolean availability) {
+        this.available = availability;
     }
 
     public void giveOrder() {
