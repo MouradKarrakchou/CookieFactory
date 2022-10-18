@@ -2,8 +2,10 @@ package fr.unice.polytech.cod;
 
 import fr.unice.polytech.cod.ingredient.Dough;
 import fr.unice.polytech.cod.ingredient.Flavour;
+import fr.unice.polytech.cod.ingredient.Ingredient;
 import fr.unice.polytech.cod.ingredient.Topping;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Cookie {
@@ -20,6 +22,14 @@ public class Cookie {
     }
 
     public Cookie(String testCookie, Flavour flavour) {
+    }
+
+    public List<Ingredient> getIngredients(){
+        List<Ingredient> ingredients = new ArrayList<>();
+        ingredients.add(dough);
+        ingredients.add(flavour);
+        ingredients.addAll(toppingList);
+        return ingredients;
     }
 
     public String getName() {
