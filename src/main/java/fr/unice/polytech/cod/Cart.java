@@ -32,4 +32,7 @@ public class Cart {
         return new Order(this, OrderState.PENDING);
     }
 
+    public List<Item> getItemList() {
+        return itemList;
+    }
 }

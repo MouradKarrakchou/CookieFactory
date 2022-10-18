@@ -1,4 +1,6 @@
 package fr.unice.polytech.cod;
+import fr.unice.polytech.cod.store.Store;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -17,11 +19,17 @@ public class User {
         this.userOrders = new ArrayList<>();
     }
 
+    public User() {
+        //for cumcumber test
+        this.cookieBook = new CookieBook();
+        this.cart = new Cart(new Store());
+    }
+
     /**
      * Show the catalogue for fr.unice.polytech.cod.User
      */
-    public List<Cookie> seeCatalogue(){
-        System.out.println(Arrays.toString(cookieBook.seeCatalogue().toArray()));
+    public List<Cookie> getCatalogue(){
+        //System.out.println(Arrays.toString(cookieBook.seeCatalogue().toArray()));
 
         return(cookieBook.seeCatalogue());
     }
@@ -49,5 +57,12 @@ public class User {
      */
     public void validateCart(){
         userOrders.add(this.cart.createOrder());
+    }
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
     }
 }
