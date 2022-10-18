@@ -38,8 +38,7 @@ public class Ingredient {
         return quantity;
     }
 
-    public Ingredient takePortion(double quantityToExtract) throws Exception {
-        return null;
+
     /**
      * verify if 2 objects are of the same types
      * @param ingredient
