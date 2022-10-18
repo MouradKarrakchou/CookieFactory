@@ -6,9 +6,9 @@ public class Dough extends Ingredient {
     }
 
     @Override
-    public Ingredient takePortion(double quanityToExtract) throws Exception {
-        if (super.quantity>quanityToExtract) throw new Exception("Tried to take a too big portion");
-        this.quantity-=quanityToExtract;
+    public Ingredient takePortion(double quantityToExtract) throws Exception {
+        if (super.quantity> quantityToExtract) throw new Exception("Tried to take a too big portion");
+        this.quantity-= quantityToExtract;
         return new Dough(super.name,super.pricePerg,super.quantity);
     }
 }

@@ -10,7 +10,7 @@ public class Ingredient {
         this.pricePerg =price;
         this.quantity=quantity;
     }
-    public Ingredient takePortion(double quanityToExtract) throws Exception {
+    public Ingredient takePortion(double quantityToExtract) throws Exception {
         return null;
     }
 
