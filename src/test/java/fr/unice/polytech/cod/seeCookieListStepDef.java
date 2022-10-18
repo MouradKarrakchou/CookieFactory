@@ -12,7 +12,7 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-public class stepDefinition {
+public class seeCookieListStepDef {
     User user;
     List<Cookie> cookieList;
     @Given("a user")
@@ -23,20 +23,31 @@ public class stepDefinition {
     @When("he requests the cookie list")
     public void he_requests_the_cookie_list() {
         // Write code here that turns the phrase above into concrete actions
-        cookieList = user.viewCatalog();
+        cookieList = user.getCatalogue();
     }
     @Then("he receive the entire list")
     public void he_receive_the_entire_list() {
         assertFalse(cookieList.isEmpty());
     }
 
-    @When("he add cookie to his cart")
-    public void he_add_cookie_to_his_cart() {
-       Cookie  cookie = new Cookie("testCookie", new Dough(),new Flavour(),new ArrayList<Topping>());
-        user.chooseCookies(cookie, 2);
+
+
+
+    @When("he validate his cart")
+    public void he_validate_his_cart() {
+        // Write code here that turns the phrase above into concrete actions
+        throw new io.cucumber.java.PendingException();
     }
-    @Then("he can watch the cookie in his cart")
-    public void he_can_watch_the_cookie_in_his_cart() {
-        assertEquals(1, user.getCart().getItemList().size());
+    @Then("he can finalise his order")
+    public void he_can_finalise_his_order() {
+        // Write code here that turns the phrase above into concrete actions
+        throw new io.cucumber.java.PendingException();
     }
+
+    @Then("he can't finalise his order")
+    public void he_can_t_finalise_his_order() {
+        // Write code here that turns the phrase above into concrete actions
+        throw new io.cucumber.java.PendingException();
+    }
+
 }
