@@ -13,20 +13,38 @@ public class Display {
     public static void start(){
         System.setProperty("java.util.logging.SimpleFormatter.format", colorize("%5$s %n", BRIGHT_WHITE_TEXT()));
         LOGGER.info(colorize("Welcome to cookie on demand!", YELLOW_TEXT(), MAGENTA_BACK()));
-    }
-
-    public static void itemInfo(Item item) {
-        String quantity = item.getQuantity() + "x ";
-        String cookieName = item.getCookie().getName();
-        LOGGER.info(" - " + colorize(quantity, BLUE_TEXT()) + colorize(cookieName, BRIGHT_WHITE_TEXT()));
+        endLine();
     }
 
     public static void displayCookies(List<Cookie> availableCookie) {
-        LOGGER.info(colorize("Here is the catalog:", BRIGHT_BLUE_TEXT()));
+        title("Here is the catalog:");
         StringBuilder cookieNames = new StringBuilder();
         for(Cookie cookie : availableCookie){
-            cookieNames.append(" - ").append(cookie.getName());
+            cookieNames.append("    - ").append(cookie.getName()).append("\n");
         }
-        LOGGER.info(availableCookie.toString());
+        LOGGER.info(cookieNames.toString());
+    }
+
+
+    public static void title(String title){
+        LOGGER.info(colorize(title, BRIGHT_BLUE_TEXT()));
+    }
+
+    public static void endLine(){
+        LOGGER.info("");
+    }
+
+    public static void info(String string){
+        LOGGER.info(string);
+    }
+
+    public static void showItems(List<Item> items) {
+        StringBuilder output = new StringBuilder();
+        for(Item item : items){
+            output.append("    - ")
+                    .append(colorize("" + item.getQuantity() + "x ", BRIGHT_BLUE_TEXT()))
+                    .append(colorize(item.getCookie().getName(), BRIGHT_WHITE_TEXT()));
+        }
+        LOGGER.info(output.toString());
     }
 }
