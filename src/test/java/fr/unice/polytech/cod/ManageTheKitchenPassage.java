@@ -5,7 +5,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class ManageTheKitchenPassage {
 
@@ -23,8 +23,11 @@ public class ManageTheKitchenPassage {
     public void order_state_is_pending() {
         assertEquals("PENDING", order.getOrderState());
     }
-    @Then("the schedule associate the chef to the PENDING state order, which now is in the IN_PROGRESS state")
+    @Then("the schedule associates the chef to the PENDING state order, which now is in the IN_PROGRESS state")
     public void the_schedule_associate_the_chef_to_the_pending_state_order_which_now_is_in_the_in_progress_state() {
+        assertEquals("PENDING", order.getOrderState());
+        schedule.associateOrder(chef, order);
+        assertNotNull(chef.getOrderToPrepare());
         assertEquals("IN_PROGRESS", order.getOrderState());
     }
 
