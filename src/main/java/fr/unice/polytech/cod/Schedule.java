@@ -18,4 +18,7 @@ public class Schedule {
         }
     }
 
+    public void startTimer() {
+        //TODO lance le compteur de surement dans un thread à part
+    }
 }
