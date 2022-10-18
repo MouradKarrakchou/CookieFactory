@@ -13,8 +13,9 @@ public class Cart {
         this.store = store;
         itemList = new ArrayList<>();
     }
+
     public void showCart() {
-        for(Item item: itemList){
+        for (Item item : itemList) {
             Display.itemInfo(item);
         }
     }
@@ -27,8 +28,8 @@ public class Cart {
         itemList.remove(item);
     }
 
-    public Order validateCart(){
-        return new Order(this);
+    public Order createOrder() {
+        return new Order(this, OrderState.PENDING);
     }
 
 }

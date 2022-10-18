@@ -3,11 +3,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static java.util.List.*;
-
 public class User {
     private CookieBook cookieBook;
     private Cart cart;
@@ -51,13 +46,8 @@ public class User {
 
     /**
      * Add the user order to his orders list
-     * @return the user order
      */
-    public Order validateCart(){
-        Order order = new Order(cart, OrderState.PENDING);
-        userOrders.add(order);
-        return order;
+    public void validateCart(){
+        userOrders.add(this.cart.createOrder());
     }
-
-
 }
