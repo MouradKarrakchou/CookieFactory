@@ -18,7 +18,7 @@ public class ValidateCartStepDef {
     @Given("a user with a non-empty cart")
     public void a_user_with_a_non_empty_cart() {
         user = new User();
-        Cookie  cookie = new Cookie("testCookie", new Dough(),new Flavour(),new ArrayList<Topping>());
+        Cookie  cookie = new Cookie("testCookie",  new Dough("Pate verte",25,50),new Flavour("Vert",25,50),new ArrayList<Topping>());
         user.chooseCookies(cookie, 1);
     }
 

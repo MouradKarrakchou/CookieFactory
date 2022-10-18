@@ -25,7 +25,7 @@ public class RemoveOrder {
     public void a_chef_a_client_a_client_order_a_store_and_the_order_list_of_a_store_including_that_of_the_client_who_is_ready() {
         store = new Store();
         user = new User();
-        chef = new Chef();
+        chef = new Chef(null);
         order = new Order(null, OrderState.READY);
         store.setOrderList(List.of(order, new Order(null, OrderState.READY)));
     }
