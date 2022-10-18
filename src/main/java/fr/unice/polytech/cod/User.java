@@ -2,7 +2,6 @@ package fr.unice.polytech.cod;
 import fr.unice.polytech.cod.store.Store;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class User {
@@ -28,10 +27,9 @@ public class User {
     /**
      * Show the catalogue
      */
-    public List<Cookie> getCatalogue(){
-        //System.out.println(Arrays.toString(cookieBook.seeCatalogue().toArray()));
-
-        return(cookieBook.seeCatalogue());
+    public List<Cookie> viewCatalog(){
+        Display.displayCookies(cookieBook.getAvailableCookie());
+        return cookieBook.getAvailableCookie();
     }
 
 
@@ -40,7 +38,7 @@ public class User {
      * @param cookie the cookie to add to the cart
      * @param quantity of the selected cookie
      */
-    public void chooseCookies(Cookie cookie, Integer quantity){
+    public void chooseCookies(Cookie cookie, int quantity){
         Item item = new Item(cookie, quantity);
         cart.addToCart(item);
     }

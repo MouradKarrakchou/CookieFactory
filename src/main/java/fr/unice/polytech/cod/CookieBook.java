@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CookieBook {
-    private List<Cookie> cookies;
+    private final List<Cookie> cookies;
 
     public CookieBook(){
         cookies = new ArrayList<>();
@@ -14,7 +14,7 @@ public class CookieBook {
         // TODO : Add recipes here.
     }
 
-    public List<Cookie> seeCatalogue() {
+    public List<Cookie> getAvailableCookie() {
         return cookies;
     }
 }

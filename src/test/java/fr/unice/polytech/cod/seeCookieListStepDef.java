@@ -23,7 +23,7 @@ public class seeCookieListStepDef {
     @When("he requests the cookie list")
     public void he_requests_the_cookie_list() {
         // Write code here that turns the phrase above into concrete actions
-        cookieList = user.getCatalogue();
+        cookieList = user.viewCatalog();
     }
     @Then("he receive the entire list")
     public void he_receive_the_entire_list() {
