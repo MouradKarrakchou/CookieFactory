@@ -8,11 +8,9 @@ import io.cucumber.java.en.When;
 import static org.junit.Assert.*;
 
 public class ManageTheKitchenPassage {
-
     Schedule schedule;
     Chef chef;
     Order order;
-    OrderState orderState;
     @Given("an available chef and a PENDING state order")
     public void an_available_chef_and_a_pending_state_order() {
         schedule = new Schedule();
@@ -32,19 +30,26 @@ public class ManageTheKitchenPassage {
     }
 
 
-    @Given("an unavailable chef and a READY state order, and a possible other unavailable chef")
-    public void an_unavailable_chef_and_a_ready_state_order_and_a_possible_other_unavailable_chef() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+    @Given("an unavailable chef")
+    public void an_unavailable_chef() {
+        schedule = new Schedule();
+        chef = new Chef(schedule);
     }
-    @When("the order state is READY")
-    public void the_order_state_is_ready() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+    @Given("his ready order")
+    public void his_ready_order() {
+        order = new Order(null, OrderState.READY);
+        chef.associateOrder(order);
     }
-    @Then("the chef associated to this command can clean, help or take a break")
-    public void the_chef_associated_to_this_command_can_clean_help_or_take_a_break() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+    @When("he give the order")
+    public void he_give_the_order() {
+        try {
+            chef.giveOrder();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+    @Then("he can clean, help or take a break")
+    public void he_can_clean_help_or_take_a_break() {
+        chef.makeOtherActivityDuringLeftTime();
     }
 }
