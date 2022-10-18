@@ -13,14 +13,23 @@ public class Cart {
         this.store = store;
         itemList = new ArrayList<>();
     }
+
     public void showCart() {
-        for(Item item: itemList){
+        for (Item item : itemList) {
             Display.itemInfo(item);
         }
     }
 
     public void addToCart(Item item) {
         itemList.add(item);
+    }
+
+    public void removeToCart(Item item) {
+        itemList.remove(item);
+    }
+
+    public Order createOrder() {
+        return new Order(this, OrderState.PENDING);
     }
 
     public List<Item> getItemList() {

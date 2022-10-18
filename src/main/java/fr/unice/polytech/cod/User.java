@@ -54,14 +54,10 @@ public class User {
 
     /**
      * Add the user order to his orders list
-     * @return the user order
      */
-    public Order validateCart(){
-        Order order = new Order(cart, OrderState.PENDING);
-        userOrders.add(order);
-        return order;
+    public void validateCart(){
+        userOrders.add(this.cart.createOrder());
     }
-
     public Cart getCart() {
         return cart;
     }
