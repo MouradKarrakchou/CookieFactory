@@ -1,5 +1,10 @@
 package fr.unice.polytech.cod;
 
+import fr.unice.polytech.cod.ingredient.Ingredient;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class Item {
     private Cookie cookie;
     private int quantity;
@@ -16,5 +21,12 @@ public class Item {
 
     public int getQuantity() {
         return quantity;
+    }
+
+    public List<Ingredient> getIngredientsNeeded(){
+        List<Ingredient> ingredientsClone = new ArrayList<>(cookie.getIngredients());
+
+        for(Ingredient ingredient : ingredientsClone);
+        return ingredientsClone;
     }
 }

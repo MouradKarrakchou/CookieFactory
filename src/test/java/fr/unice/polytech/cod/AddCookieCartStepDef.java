@@ -21,7 +21,7 @@ public class AddCookieCartStepDef {
     }
     @When("he add cookie to his cart")
     public void he_add_cookie_to_his_cart() {
-        Cookie  cookie = new Cookie("testCookie", new Dough(),new Flavour(),new ArrayList<Topping>());
+        Cookie  cookie = new Cookie("testCookie", new Dough("Pate verte",25,50),new Flavour("Vert",25,50),new ArrayList<Topping>());
         user.chooseCookies(cookie, 2);
     }
     @Then("a cookie is added to his cart")
