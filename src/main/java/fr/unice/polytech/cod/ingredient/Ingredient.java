@@ -30,13 +30,13 @@ public class Ingredient {
         quantity *= n;
     }
 
-
     /**
      * verify if 2 objects are of the same types
      * @param ingredient
      * @return
      */
-    public boolean sameTypes(Ingredient ingredient){
+    @Override
+    public boolean equals(Object ingredient){
         return false;
     }
 

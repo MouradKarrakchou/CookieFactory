@@ -24,7 +24,9 @@ public class Dough extends Ingredient {
      * @return
      */
     @Override
-    public boolean sameTypes(Ingredient ingredient){
+    public boolean equals(Object ingredient){
+        if (ingredient instanceof Flavour)
+            return(this.name.equals(((Flavour) ingredient).name));
         return false;
     }
 }

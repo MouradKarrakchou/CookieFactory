@@ -17,13 +17,16 @@ public class Topping extends Ingredient {
         this.quantity-= quantityToExtract;
         return new Topping(super.name,super.pricePerg,super.quantity);
     }
+    
     /**
      * verify if 2 objects are of the same types
      * @param ingredient
      * @return
      */
     @Override
-    public boolean sameTypes(Ingredient ingredient){
+    public boolean equals(Object ingredient){
+        if (ingredient instanceof Topping)
+            return(this.name.equals(((Topping) ingredient).name));
         return false;
     }
 }
