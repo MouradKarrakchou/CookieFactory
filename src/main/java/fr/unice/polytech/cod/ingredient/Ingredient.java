@@ -21,6 +21,14 @@ public class Ingredient {
         quantity *= n;
     }
 
+    public void increaseQuantity(double quantity){
+        this.quantity += quantity;
+    }
+
+    public double getQuantity(){
+        return quantity;
+    }
+
     public Ingredient takePortion(double quantityToExtract) throws Exception {
         return null;
     }

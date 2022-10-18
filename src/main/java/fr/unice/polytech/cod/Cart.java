@@ -1,5 +1,6 @@
 package fr.unice.polytech.cod;
 
+import fr.unice.polytech.cod.ingredient.Ingredient;
 import fr.unice.polytech.cod.store.Store;
 
 import java.util.ArrayList;
@@ -50,5 +51,28 @@ public class Cart {
 
     public boolean isEmpty() {
         return this.itemList.isEmpty();
+    }
+
+    private List<Ingredient> generateIngredientsNeeded(List<Item> items){
+        List<Ingredient> neededIngredients = new ArrayList<>();
+
+        // Check the list of items
+        for(Item item : items){
+            // Generating all needed ingredients for each item
+            for(Ingredient ingredient : item.generateIngredientsNeeded()){
+                // Merging all needed ingredients together
+                boolean isAdded = false;
+
+                for(Ingredient neededIngredient : neededIngredients){
+                    if(neededIngredient.equals(ingredient))
+                        neededIngredient.increaseQuantity(ingredient.getQuantity());
+                }
+
+                if(!isAdded)
+                    neededIngredients.add(ingredient);
+            }
+        }
+
+        return neededIngredients;
     }
 }

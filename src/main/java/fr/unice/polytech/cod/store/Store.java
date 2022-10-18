@@ -5,7 +5,9 @@ import fr.unice.polytech.cod.Order;
 import fr.unice.polytech.cod.ingredient.Ingredient;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Store {
 
@@ -22,12 +24,7 @@ public class Store {
         this.orderList.remove(order);
     }
 
-    public boolean hasEnoughIngredients(List<Item> items){
-        List<Ingredient> ingredientsNeeded;
-
-        for(Item item : items){
-        }
-
+    public boolean hasEnoughIngredients(List<Ingredient> ingredients){
         return true;
     }
 
