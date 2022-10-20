@@ -3,7 +3,9 @@ package fr.unice.polytech.cod;
 import fr.unice.polytech.cod.ingredient.Ingredient;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Item {
     private Cookie cookie;
@@ -24,13 +26,13 @@ public class Item {
     }
 
     /**
-     * Generate a list of needed ingredients according to the item list
+     * Generate a set of all needed ingredients according to the cookie on the list and its quantity.
      *
-     * @return The of needed ingredients
+     * @return The number of needed ingredients
      */
-    public List<Ingredient> generateIngredientsNeeded(){
+    public Set<Ingredient> generateIngredientsNeeded(){
         // Cloning the list of ingredients
-        List<Ingredient> ingredientsClone = new ArrayList<>(cookie.getIngredients());
+        Set<Ingredient> ingredientsClone = new HashSet<>(cookie.getIngredients());
 
         // Multiplying each ingredient needed by the number of cookies
         for(Ingredient ingredient : ingredientsClone)
