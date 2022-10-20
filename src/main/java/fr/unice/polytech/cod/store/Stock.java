@@ -10,7 +10,7 @@ public class Stock {
     private Set<Ingredient> ingredients;
     private Set<Ingredient> lockedIngredients;
 
-    public Stock(){
+    public Stock() {
         ingredients = new HashSet<>();
         lockedIngredients = new HashSet<>();
     }
@@ -21,11 +21,11 @@ public class Stock {
      * @param ingredient - The ingredient to lock.
      * @return boolean - If the ingredient has been locked.
      */
-    public boolean lock(Ingredient ingredient){
+    public boolean lock(Ingredient ingredient) {
         Optional<Ingredient> _stockIngredient = findIngredientInStock(ingredient);
 
         // If the ingredient needed isn't in the stock, we can't lock it.
-        if(_stockIngredient.isEmpty())
+        if (_stockIngredient.isEmpty())
             return false;
 
         // Opening the Optional<Ingredient>
@@ -35,35 +35,53 @@ public class Stock {
         if (ingredient.getQuantity() > stockIngredient.getQuantity())
             return false;
 
-        addToLockedIngredients(ingredient);
+        moveToLockedIngredients(ingredient);
         return true;
     }
 
-    private Optional<Ingredient> findIngredientInStock(Ingredient ingredient){
+    private Optional<Ingredient> findIngredientInStock(Ingredient ingredient) {
         return ingredients.stream().filter(i -> i.equals(ingredient)).findFirst();
     }
 
-    private void addToLockedIngredients(Ingredient ingredient){
+    private void moveToLockedIngredients(Ingredient ingredient) {
         Optional<Ingredient> _lockedIngredient = lockedIngredients.stream().filter(i -> i.equals(ingredient)).findFirst();
 
         // If the ingredient isn't in the stock, we add it.
-        if(_lockedIngredient.isEmpty())
+        if (_lockedIngredient.isEmpty())
             lockedIngredients.add(ingredient);
 
-        // If the ingredient is in the stock, we increase the quantity of it.
+            // If the ingredient is in the stock, we increase the quantity of it.
         else
             _lockedIngredient.get().increaseQuantity(ingredient.getQuantity());
     }
 
-    public void addStock(Ingredient ingredient){
+    /**
+     * Add the given ingredient to the stock.
+     *
+     * @param ingredient - The ingredient to add in the stock.
+     */
+    public void addStock(Ingredient ingredient) {
         Optional<Ingredient> _ingredient = findIngredientInStock(ingredient);
 
         // If the ingredient isn't in the stock, we add it.
-        if(_ingredient.isEmpty())
+        if (_ingredient.isEmpty())
             ingredients.add(ingredient);
 
             // If the ingredient is in the stock, we increase the quantity of it.
         else
             _ingredient.get().increaseQuantity(ingredient.getQuantity());
+    }
+
+    /**
+     * For a given ingredient check on the stock if there is enough of this ingredient.
+     *
+     * @param ingredient - The given ingredient to check on the stock.
+     * @return boolean - If there is enough of this ingredient on the stock.
+     */
+    public boolean hasEnough(Ingredient ingredient) {
+        Optional<Ingredient> _ingredient = findIngredientInStock(ingredient);
+        if (_ingredient.isEmpty())
+            return false;
+        return _ingredient.get().getQuantity() >= ingredient.getQuantity();
     }
 }

@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Set;
 
 public class Store {
-
     List<Order> orderList;
 
     private final Stock stock;
@@ -24,7 +23,15 @@ public class Store {
         this.orderList.remove(order);
     }
 
-    public boolean hasEnoughIngredients(List<Ingredient> ingredients){
+    /**
+     * For a given set of ingredients check if there is enough of these ingredients in the stock.
+     *
+     * @param ingredients - The given set of ingredients to check.
+     * @return boolean - If there is enough of these ingredients in the stock.
+     */
+    public boolean hasEnoughIngredients(Set<Ingredient> ingredients) {
+        for (Ingredient ingredient : ingredients)
+            if (!stock.hasEnough(ingredient)) return false;
         return true;
     }
 
@@ -35,8 +42,6 @@ public class Store {
     public List<Order> getOrderList() {
         return orderList;
     }
-
-
 }
 
 
