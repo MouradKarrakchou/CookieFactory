@@ -6,19 +6,6 @@ public class Dough extends Ingredient {
     }
 
     /**
-     * Permit to create a new Ingredit of the quantity to exctract and reduce this quantity from our object
-     * @param quantityToExtract
-     * @return
-     * @throws Exception
-     */
-    @Override
-    public Ingredient takePortion(double quantityToExtract) throws Exception {
-        if (super.quantity> quantityToExtract) throw new Exception("Tried to take a too big portion");
-        this.quantity-= quantityToExtract;
-        return new Dough(super.name,super.pricePerg,super.quantity);
-    }
-
-    /**
      * Check if 2 objects are the same (same name, same class)
      *
      * @param object The object to compare
