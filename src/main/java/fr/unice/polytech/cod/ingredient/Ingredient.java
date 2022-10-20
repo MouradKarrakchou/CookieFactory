@@ -13,14 +13,21 @@ public class Ingredient {
     }
 
     /**
-     * Permit to create a new Ingredit of the quantity to exctract and reduce this quantity from our object
-     * @param quantityToExtract
-     * @return
-     * @throws Exception
+     * Generate a new Ingredient of the quantity given quantity.
+     * Reduce the quantity from the called Ingredient.
+     *
+     * @param quantityToExtract - The quantity to take from the called ingredient
+     * @return The new ingredient generated from the called Ingredient
+     * @throws NotEnoughQuantityException If the quantity asked is above the quantity of the called ingredient.
      */
-    public Ingredient takePortion(double quantityToExtract) throws Exception {
-        return null;
+    public Ingredient split(double quantityToExtract) throws NotEnoughQuantityException {
+        if (quantityToExtract > quantity)
+            throw new NotEnoughQuantityException();
+
+        quantity -= quantityToExtract;
+        return new Ingredient(name, pricePerg, quantity);
     }
+
     /**
      * Multiply the quantity by n. Used in Item to get the total of quantity needed for n cookies.
      *
