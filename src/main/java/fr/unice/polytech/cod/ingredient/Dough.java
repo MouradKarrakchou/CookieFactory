@@ -5,15 +5,6 @@ public class Dough extends Ingredient {
         super(name, pricePerg, quantity);
     }
 
-    @Override
-    public Ingredient split(double quantityToExtract) throws NotEnoughQuantityException {
-        if (quantityToExtract > quantity)
-            throw new NotEnoughQuantityException();
-
-        quantity -= quantityToExtract;
-        return new Dough(name, pricePerg, quantityToExtract);
-    }
-
     /**
      * Check if 2 objects are the same (same name, same class)
      *
