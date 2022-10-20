@@ -25,7 +25,7 @@ public class Ingredient {
             throw new NotEnoughQuantityException();
 
         quantity -= quantityToExtract;
-        return new Ingredient(name, pricePerg, quantity);
+        return new Ingredient(name, pricePerg, quantityToExtract);
     }
 
     /**

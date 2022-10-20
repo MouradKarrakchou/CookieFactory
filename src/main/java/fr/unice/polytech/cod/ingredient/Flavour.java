@@ -5,6 +5,15 @@ public class  Flavour extends Ingredient {
         super(name, price, quantity);
     }
 
+    @Override
+    public Ingredient split(double quantityToExtract) throws NotEnoughQuantityException {
+        if (quantityToExtract > quantity)
+            throw new NotEnoughQuantityException();
+
+        quantity -= quantityToExtract;
+        return new Flavour(name, pricePerg, quantityToExtract);
+    }
+
     /**
      * Check if 2 objects are the same (same name, same class)
      *
