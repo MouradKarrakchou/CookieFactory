@@ -40,14 +40,22 @@ public class Ingredient {
 
 
     /**
-     * verify if 2 objects are of the same types
-     * @param ingredient
-     * @return
+     * Check if 2 objects are the same (same name, same class)
+     *
+     * @param object The ingredient to compare
+     * @return true/false - The two given ingredients are the same
      */
     @Override
-    public boolean equals(Object ingredient){
-        return false;
+    public boolean equals(Object object){
+        // Check for the address
+        if (object == this)
+            return true;
+
+        // Check for the instance
+        if (!(object instanceof Ingredient i))
+            return false;
+
+        // Check for the name equality
+        return i.name.equals(name);
     }
-
-
 }

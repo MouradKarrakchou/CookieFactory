@@ -17,15 +17,24 @@ public class  Flavour extends Ingredient {
         this.quantity-= quantityToExtract;
         return new Flavour(super.name,super.pricePerg,super.quantity);
     }
+
     /**
-     * verify if 2 objects are of the same types
-     * @param ingredient
-     * @return
+     * Check if 2 objects are the same (same name, same class)
+     *
+     * @param object The object to compare
+     * @return true/false - The two given ingredients are the same
      */
     @Override
-    public boolean equals(Object ingredient){
-        if (ingredient instanceof Flavour)
-            return(this.name.equals(((Flavour) ingredient).name));
-        return false;
+    public boolean equals(Object object){
+        // Check for the address
+        if (object == this)
+            return true;
+
+        // Check for the instance
+        if (!(object instanceof Flavour f))
+            return false;
+
+        // Check for the name equality
+        return f.name.equals(name);
     }
 }
