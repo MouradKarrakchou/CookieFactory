@@ -30,7 +30,6 @@ public class Stock {
 
         // Opening the Optional<Ingredient>
         Ingredient stockIngredient = _stockIngredient.get();
-        Ingredient toLockIngredient;
 
         // If there is not enough quantity on the stock to be locked.
         if (ingredient.getQuantity() > stockIngredient.getQuantity())
