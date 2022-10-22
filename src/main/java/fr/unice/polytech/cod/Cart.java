@@ -4,7 +4,9 @@ import fr.unice.polytech.cod.ingredient.Ingredient;
 import fr.unice.polytech.cod.store.Store;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Cart {
     private Store store;
@@ -53,8 +55,8 @@ public class Cart {
         return this.itemList.isEmpty();
     }
 
-    private List<Ingredient> generateIngredientsNeeded(List<Item> items){
-        List<Ingredient> neededIngredients = new ArrayList<>();
+    private Set<Ingredient> generateIngredientsNeeded(Set<Item> items){
+        Set<Ingredient> neededIngredients = new HashSet<>();
 
         // Check the list of items
         for(Item item : items){
@@ -64,8 +66,11 @@ public class Cart {
                 boolean isAdded = false;
 
                 for(Ingredient neededIngredient : neededIngredients){
-                    if(neededIngredient.equals(ingredient))
+                    if(neededIngredient.equals(ingredient)){
                         neededIngredient.increaseQuantity(ingredient.getQuantity());
+                        isAdded = true;
+                    }
+
                 }
 
                 if(!isAdded)

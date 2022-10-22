@@ -7,8 +7,8 @@ import fr.unice.polytech.cod.ingredient.NotEnoughQuantityException;
 import java.util.*;
 
 public class Stock {
-    private Set<Ingredient> ingredients;
-    private Set<Ingredient> lockedIngredients;
+    private final Set<Ingredient> ingredients;
+    private final Set<Ingredient> lockedIngredients;
 
     public Stock() {
         ingredients = new HashSet<>();
