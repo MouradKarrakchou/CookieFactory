@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>fr.unice.polytech.cf</groupId> <!-- CHANGE ME -->
-    <artifactId>demo</artifactId> <!-- CHANGE ME -->
+    <artifactId>The_Cookie_Factory_K</artifactId> <!-- CHANGE ME -->
     <version>1.0-SNAPSHOT</version> <!-- CHANGE ME -->
 
     <properties>
@@ -114,6 +114,13 @@
                     </properties>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.sonarsource.scanner.maven</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+                <version>3.9.1.2184</version>
+            </plugin>
+
         </plugins>
     </build>
 </project>
