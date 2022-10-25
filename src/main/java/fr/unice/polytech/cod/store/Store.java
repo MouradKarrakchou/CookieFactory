@@ -11,12 +11,11 @@ import java.util.Set;
 
 public class Store {
     List<Order> orderList;
-
-    private final Stock stock;
+    private final StockManager stockManager;
 
     public Store() {
         this.orderList = new ArrayList<>();
-        this.stock = new Stock();
+        this.stockManager = new StockManager();
     }
 
     public void retrieveOrder(Order order) {
@@ -30,9 +29,7 @@ public class Store {
      * @return boolean - If there is enough of these ingredients in the stock.
      */
     public boolean hasEnoughIngredients(Set<Ingredient> ingredients) {
-        for (Ingredient ingredient : ingredients)
-            if (!stock.hasEnough(ingredient)) return false;
-        return true;
+        return stockManager.hasEnough(ingredients);
     }
 
     public void setOrderList(List<Order> orderList) {
