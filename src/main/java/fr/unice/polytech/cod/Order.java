@@ -6,6 +6,12 @@ public class Order {
     Cart cart;
     User user;
 
+    public Order(Cart cart, User user) {
+        this.cart = cart;
+        this.orderState = OrderState.PENDING;
+        this.user = user;
+    }
+
     public Order(Cart cart, OrderState orderState, User user) {
         this.cart = cart;
         this.orderState = orderState;

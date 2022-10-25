@@ -39,6 +39,12 @@ public class Store {
     public List<Order> getOrderList() {
         return orderList;
     }
+
+    public void addOrder(Order order, Set<Ingredient> ingredientsNeeded) {
+        for(Ingredient ingredient : ingredientsNeeded)
+            stock.lock(ingredient);
+        this.orderList.add(order);
+    }
 }
 
 
