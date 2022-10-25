@@ -38,6 +38,4 @@ public class ValidateCartStepDef {
         assertEquals(1, user.getOrders().size());
 
     }
-
-    }
 }
