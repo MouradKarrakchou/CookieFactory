@@ -10,9 +10,10 @@ public class Cart {
     private List<Item> itemList;
     private boolean isValidated;
 
+
     public Cart(Store store) {
         this.store = store;
-        itemList = new ArrayList<>();
+        this.itemList = new ArrayList<>();
         this.isValidated = false;
     }
 
@@ -20,24 +21,26 @@ public class Cart {
         Display.showItems(itemList);
     }
 
-    public void addToCart(Item item) {
+    public boolean addToCart(Item item) {
         itemList.add(item);
+        return true;
     }
 
     public void removeToCart(Item item) {
         itemList.remove(item);
     }
 
-    public Order createOrder() {
-        return new Order(this, OrderState.PENDING);
+    public Order createOrder(User user) {
+        return new Order(this, OrderState.PENDING,user);
     }
 
     public List<Item> getItemList() {
         return itemList;
     }
 
-    public void validateCart(){
+    public boolean validateCart(){
         this.isValidated = true;
+        return true;
     }
 
     public boolean isValidated() {

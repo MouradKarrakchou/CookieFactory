@@ -3,6 +3,7 @@ package fr.unice.polytech.cod;
 import fr.unice.polytech.cod.store.Store;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class User {
@@ -81,5 +82,9 @@ public class User {
 
     public void addOrder(Order order) {
         this.userOrders.add(order);
+    }
+
+    public List<Order> getOrders() {
+        return userOrders;
     }
 }
