@@ -2,12 +2,15 @@ package fr.unice.polytech.cod;
 
 import fr.unice.polytech.cod.store.Chef;
 
+import java.util.List;
+
 public class Schedule {
 
+    List<DaySlot> daySlotList;
 
-
-    Schedule() {
-
+    public Schedule() {
+        //a finir
+        daySlotList.add(new DaySlot(null));
     }
 
     public void associateOrder(Chef chef, Order orderToPrepare) {
