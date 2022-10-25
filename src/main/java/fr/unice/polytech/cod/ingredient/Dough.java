@@ -6,25 +6,22 @@ public class Dough extends Ingredient {
     }
 
     /**
-     * Permit to create a new Ingredit of the quantity to exctract and reduce this quantity from our object
-     * @param quantityToExtract
-     * @return
-     * @throws Exception
+     * Check if 2 objects are the same (same name, same class)
+     *
+     * @param object The object to compare
+     * @return true/false - The two given ingredients are the same
      */
     @Override
-    public Ingredient takePortion(double quantityToExtract) throws Exception {
-        if (super.quantity> quantityToExtract) throw new Exception("Tried to take a too big portion");
-        this.quantity-= quantityToExtract;
-        return new Dough(super.name,super.pricePerg,super.quantity);
-    }
+    public boolean equals(Object object){
+        // Check for the address
+        if (object == this)
+            return true;
 
-    /**
-     * verify if 2 objects are of the same types
-     * @param ingredient
-     * @return
-     */
-    @Override
-    public boolean sameTypes(Ingredient ingredient){
-        return false;
+        // Check for the instance
+        if (!(object instanceof Dough d))
+            return false;
+
+        // Check for the name equality
+        return d.name.equals(name);
     }
 }

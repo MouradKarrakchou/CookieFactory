@@ -2,6 +2,7 @@ package fr.unice.polytech.cod;
 
 import fr.unice.polytech.cod.ingredient.Dough;
 import fr.unice.polytech.cod.ingredient.Flavour;
+import fr.unice.polytech.cod.store.Stock;
 import fr.unice.polytech.cod.store.Store;
 
 import java.util.ArrayList;
@@ -27,7 +28,12 @@ public class Main {
         Display.info("(User watch recapCart)\n");
         user.recapCart();
 
-        System.out.println("\nCart is validate : \n");
-        //user.validateCart();
+        Stock s = new Stock();
+        Dough d200 = new Dough("les", 2, 200);
+        Dough d100 = new Dough("les", 2, 100);
+        s.addStock(d200);
+        s.addStock(d100);
+        System.out.println(s.lock(d100));
+        System.out.println("end");
     }
 }
