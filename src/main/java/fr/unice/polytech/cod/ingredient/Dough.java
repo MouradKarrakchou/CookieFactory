@@ -1,7 +1,5 @@
 package fr.unice.polytech.cod.ingredient;
 
-import java.util.Objects;
-
 public class Dough extends Ingredient {
     public Dough(String name,double pricePerg, double quantity) {
         super(name, pricePerg, quantity);
@@ -25,10 +23,5 @@ public class Dough extends Ingredient {
 
         // Check for the name equality
         return d.name.equals(name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, pricePerGram, quantity);
     }
 }

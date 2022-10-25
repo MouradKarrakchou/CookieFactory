@@ -38,7 +38,7 @@ public class RemoveOrder {
     @Then("the order is removed from the order list")
     public void the_order_is_removed_from_the_order_list() {
         assertFalse(this.store.getOrderList().contains(order));
-        assertEquals(this.store.getOrderList().size(), 1);
+        assertEquals(1, this.store.getOrderList().size());
     }
 
 }

@@ -9,8 +9,7 @@ import io.cucumber.java.en.When;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ValidateCartStepDef {
     User user;
@@ -43,7 +42,7 @@ public class ValidateCartStepDef {
     @Then("he can finalise his order")
     public void he_can_finalise_his_order(){
         try {
-            assertTrue(user.finaliseOrder()!=null);
+            assertNotNull(user.finaliseOrder());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
