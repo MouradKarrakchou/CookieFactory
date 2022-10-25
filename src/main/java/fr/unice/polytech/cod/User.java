@@ -10,7 +10,8 @@ public class User {
     private Cart cart;
     private FidelityAccount fidelityAccount;
     private List<Order> userOrders;
-    // TODO : private List<Order> orders;
+
+    private List<Order> userOrdersHistory;
 
     public User(CookieBook cookieBook, Cart cart, FidelityAccount fidelityAccount) {
         this.cookieBook = cookieBook;
@@ -43,9 +44,7 @@ public class User {
     public void chooseCookies(Cookie cookie, int quantity) {
         Item item = new Item(cookie, quantity);
         cart.addToCart(item);
-    }
-
-    /**
+    }    /**
      * Show all the cookies in our order and give the choice to validate or add/delete more cookies
      */
     public void recapCart() {
@@ -77,6 +76,14 @@ public class User {
             return new Bill();
         else
             throw new Exception("Panier non validé");
+    }
+
+    public void retrieveOrder(Order order){
+        if (userOrders.contains(order)){
+            userOrdersHistory.add(order);
+            userOrders.remove(order);
+            order.setState(OrderState.RETRIEVE);
+        }
     }
 
     public void addOrder(Order order) {
