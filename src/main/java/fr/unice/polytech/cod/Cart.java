@@ -23,8 +23,12 @@ public class Cart {
         Display.showItems(itemList);
     }
 
-    public void addToCart(Item item) {
+    public boolean addToCart(Item item) {
+        if (!store.hasEnoughIngredients(item.getIngredientsNeeded()))
+            return false;
+
         itemList.add(item);
+        return true;
     }
 
     public void removeToCart(Item item) {
@@ -61,7 +65,7 @@ public class Cart {
         // Check the list of items
         for(Item item : items){
             // Generating all needed ingredients for each item
-            for(Ingredient ingredient : item.generateIngredientsNeeded()){
+            for(Ingredient ingredient : item.getIngredientsNeeded()){
                 // Merging all needed ingredients together
                 boolean isAdded = false;
 
@@ -70,7 +74,6 @@ public class Cart {
                         neededIngredient.increaseQuantity(ingredient.getQuantity());
                         isAdded = true;
                     }
-
                 }
 
                 if(!isAdded)
