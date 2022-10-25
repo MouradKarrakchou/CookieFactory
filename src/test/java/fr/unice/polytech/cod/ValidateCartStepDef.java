@@ -32,7 +32,7 @@ public class ValidateCartStepDef {
         cart.getStore().getStock().addStock(new Flavour("Vert",25,50));
 
         Cookie  cookie = new Cookie("testCookie",  new Dough("Pate verte",25,50),new Flavour("Vert",25,50),new ArrayList<Topping>());
-        assertTrue(user.chooseCookies(cookie, 1));
+        user.chooseCookies(cookie, 1);
     }
 
     @When("he validate his cart")
