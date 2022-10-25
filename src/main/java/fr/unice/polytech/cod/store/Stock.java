@@ -37,7 +37,7 @@ public class Stock {
         return true;
     }
 
-    private Optional<Ingredient> findIngredientInStock(Ingredient ingredient) {
+    public Optional<Ingredient> findIngredientInStock(Ingredient ingredient) {
         return ingredients.stream().filter(i -> i.equals(ingredient)).findFirst();
     }
 
@@ -45,13 +45,13 @@ public class Stock {
         Optional<Ingredient> optionalLockedIngredient = lockedIngredients.stream().filter(i -> i.equals(ingredient)).findFirst();
 
         // If the ingredient isn't in the stock, we add it.
-        if (_lockedIngredient.isEmpty()){
+        if (optionalLockedIngredient.isEmpty()){
             lockedIngredients.add(ingredient);
         }
 
             // If the ingredient is in the stock, we increase the quantity of it.
         else
-            _lockedIngredient.get().increaseQuantity(ingredient.getQuantity());
+            optionalLockedIngredient.get().increaseQuantity(ingredient.getQuantity());
         findIngredientInStock(ingredient).get().increaseQuantity(-ingredient.getQuantity());
     }
 
