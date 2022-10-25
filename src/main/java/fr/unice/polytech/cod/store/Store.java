@@ -8,7 +8,6 @@ import java.util.Set;
 
 public class Store {
     List<Order> orderList;
-
     private final Stock stock;
 
     public Store() {
@@ -18,6 +17,7 @@ public class Store {
 
     public void retrieveOrder(Order order) {
         this.orderList.remove(order);
+        order.getUser().retrieveOrder(order);
     }
 
     /**

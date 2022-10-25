@@ -11,11 +11,13 @@ public class ManageTheKitchenPassage {
     Schedule schedule;
     Chef chef;
     Order order;
+    User user;
     @Given("an available chef and a PENDING state order")
     public void an_available_chef_and_a_pending_state_order() {
         schedule = new Schedule();
+        user = new User();
         chef = new Chef(schedule);
-        order = new Order(null, OrderState.PENDING);
+        order = new Order(null, OrderState.PENDING, user);
     }
     @When("order state is PENDING")
     public void order_state_is_pending() {
@@ -37,7 +39,7 @@ public class ManageTheKitchenPassage {
     }
     @Given("his ready order")
     public void his_ready_order() {
-        order = new Order(null, OrderState.READY);
+        order = new Order(null, OrderState.READY, user);
         chef.associateOrder(order);
     }
     @When("he give the order")

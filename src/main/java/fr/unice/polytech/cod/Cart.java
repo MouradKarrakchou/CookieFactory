@@ -15,7 +15,7 @@ public class Cart {
 
     public Cart(Store store) {
         this.store = store;
-        itemList = new ArrayList<>();
+        this.itemList = new ArrayList<>();
         this.isValidated = false;
     }
 
@@ -23,24 +23,29 @@ public class Cart {
         Display.showItems(itemList);
     }
 
-    public void addToCart(Item item) {
+    public boolean addToCart(Item item) {
+        if (!store.hasEnoughIngredients(item.getIngredientsNeeded()))
+            return false;
+
         itemList.add(item);
+        return true;
     }
 
     public void removeToCart(Item item) {
         itemList.remove(item);
     }
 
-    public Order createOrder() {
-        return new Order(this, OrderState.PENDING);
+    public Order createOrder(User user) {
+        return new Order(this, OrderState.PENDING,user);
     }
 
     public List<Item> getItemList() {
         return itemList;
     }
 
-    public void validateCart(){
+    public boolean validateCart(){
         this.isValidated = true;
+        return true;
     }
 
     public boolean isValidated() {
@@ -61,7 +66,7 @@ public class Cart {
         // Check the list of items
         for(Item item : items){
             // Generating all needed ingredients for each item
-            for(Ingredient ingredient : item.generateIngredientsNeeded()){
+            for(Ingredient ingredient : item.getIngredientsNeeded()){
                 // Merging all needed ingredients together
                 boolean isAdded = false;
 
@@ -70,7 +75,6 @@ public class Cart {
                         neededIngredient.increaseQuantity(ingredient.getQuantity());
                         isAdded = true;
                     }
-
                 }
 
                 if(!isAdded)

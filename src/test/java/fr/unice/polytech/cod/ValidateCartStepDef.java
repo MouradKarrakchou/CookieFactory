@@ -31,32 +31,13 @@ public class ValidateCartStepDef {
         user.validateCart();
     }
 
-    @When("he can't validate his cart")
-    public void he_can_t_validate_his_cart() {
-        try {
-            user.validateCart();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }
-    @Then("he can finalise his order")
-    public void he_can_finalise_his_order(){
-        try {
-            assertNotNull(user.finaliseOrder());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
 
-    @Then("he can't finalise his order")
-    public void he_can_t_finalise_his_order() {
-        boolean checkException = false;
-        try {
-            user.finaliseOrder();
-        } catch (Exception e) {
-            checkException = true;
-        }
-        assertTrue(checkException);
+    @Then("his order is created")
+    public void his_order_is_created(){
+        assertEquals(1, user.getOrders().size());
+        assertEquals(1, user.getOrders().size());
+
+    }
 
     }
 }
