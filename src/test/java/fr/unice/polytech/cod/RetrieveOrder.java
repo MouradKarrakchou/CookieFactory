@@ -26,8 +26,8 @@ public class RetrieveOrder {
         store = new Store();
         user = new User();
         chef = new Chef(null);
-        order = new Order(null, OrderState.READY);
-        store.setOrderList(List.of(order, new Order(null, OrderState.READY)));
+        order = new Order(null, OrderState.READY, user);
+        store.setOrderList(List.of(order, new Order(null, OrderState.READY, user)));
     }
 
     @When("a chef informs the system that he has given the order")
