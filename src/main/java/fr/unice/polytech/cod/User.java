@@ -30,8 +30,8 @@ public class User {
      * Show the catalogue
      */
     public List<Cookie> viewCatalog() {
-        Display.displayCookies(cookieBook.getAvailableCookie());
-        return cookieBook.getAvailableCookie();
+        Display.displayCookies(cookieBook.getAvailableCookie(this.cart.getStore()));
+        return cookieBook.getAvailableCookie(this.cart.getStore());
     }
 
 
@@ -43,7 +43,7 @@ public class User {
      */
     public void chooseCookies(Cookie cookie, int quantity) {
         Item item = new Item(cookie, quantity);
-        cart.addToCart(item);
+        boolean a = cart.addToCart(item);
     }
 
     /**
@@ -60,7 +60,7 @@ public class User {
     public void validateCart() throws Exception {
         //userOrders.add(this.cart.createOrder());
         if (!cart.isEmpty())
-            cart.validateCart();
+            cart.validateCart(this);
         else
             throw new Exception("Panier vide impossible de le valider");
     }

@@ -35,16 +35,22 @@ public class Cart {
         itemList.remove(item);
     }
 
-    public Order createOrder(User user) {
-        return new Order(this, OrderState.PENDING,user);
-    }
+
 
     public List<Item> getItemList() {
         return itemList;
     }
 
-    public boolean validateCart(){
+    public boolean validateCart(User user){
+        Set<Ingredient> ingredientsNeeded = generateIngredientsNeeded(this.itemList);
+        if(!store.hasEnoughIngredients(ingredientsNeeded))
+            return false;
+
         this.isValidated = true;
+        Order order = new Order(this, user);
+        user.addOrder(order);
+        store.addOrder(order, ingredientsNeeded);
+
         return true;
     }
 
@@ -60,28 +66,28 @@ public class Cart {
         return this.itemList.isEmpty();
     }
 
-    private Set<Ingredient> generateIngredientsNeeded(Set<Item> items){
+    private Set<Ingredient> generateIngredientsNeeded(List<Item> items){
         Set<Ingredient> neededIngredients = new HashSet<>();
-
         // Check the list of items
         for(Item item : items){
             // Generating all needed ingredients for each item
             for(Ingredient ingredient : item.getIngredientsNeeded()){
                 // Merging all needed ingredients together
                 boolean isAdded = false;
-
                 for(Ingredient neededIngredient : neededIngredients){
                     if(neededIngredient.equals(ingredient)){
                         neededIngredient.increaseQuantity(ingredient.getQuantity());
                         isAdded = true;
                     }
                 }
-
                 if(!isAdded)
                     neededIngredients.add(ingredient);
             }
         }
-
         return neededIngredients;
+    }
+
+    public Store getStore() {
+        return this.store;
     }
 }
