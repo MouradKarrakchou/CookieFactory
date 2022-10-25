@@ -20,6 +20,7 @@ public class Store {
 
     public void retrieveOrder(Order order) {
         this.orderList.remove(order);
+        order.getUser().retrieveOrder(order);
     }
 
     /**
@@ -28,7 +29,7 @@ public class Store {
      * @param ingredients - The given set of ingredients to check.
      * @return boolean - If there is enough of these ingredients in the stock.
      */
-    public boolean hasEnough(Set<Ingredient> ingredients) {
+    public boolean hasEnoughIngredients(Set<Ingredient> ingredients) {
         for (Ingredient ingredient : ingredients)
             if (!stock.hasEnough(ingredient)) return false;
         return true;

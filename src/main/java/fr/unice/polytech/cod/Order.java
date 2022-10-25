@@ -19,4 +19,8 @@ public class Order {
     public void setState(OrderState state) {
         this.orderState = state;
     }
+
+    public User getUser() {
+        return user;
+    }
 }
