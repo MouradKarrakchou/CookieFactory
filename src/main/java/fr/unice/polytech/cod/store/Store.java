@@ -45,6 +45,11 @@ public class Store {
             stock.lock(ingredient);
         this.orderList.add(order);
     }
+
+
+    public Stock getStock() {
+        return this.stock;
+    }
 }
 
 

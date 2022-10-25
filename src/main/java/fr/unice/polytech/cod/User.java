@@ -45,9 +45,9 @@ public class User {
      * @param cookie   the cookie to add to the cart
      * @param quantity of the selected cookie
      */
-    public void chooseCookies(Cookie cookie, int quantity) {
+    public boolean chooseCookies(Cookie cookie, int quantity) {
         Item item = new Item(cookie, quantity);
-        boolean a = cart.addToCart(item);
+        return cart.addToCart(item);
     }
 
     /**
