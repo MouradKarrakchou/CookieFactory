@@ -20,6 +20,7 @@ public class Store {
 
     public void retrieveOrder(Order order) {
         this.orderList.remove(order);
+        order.getUser().retrieveOrder(order);
     }
 
     /**

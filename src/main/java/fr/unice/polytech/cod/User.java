@@ -11,19 +11,23 @@ public class User {
     private Cart cart;
     private FidelityAccount fidelityAccount;
     private List<Order> userOrders;
-    // TODO : private List<Order> orders;
+
+    private List<Order> userOrdersHistory;
 
     public User(CookieBook cookieBook, Cart cart, FidelityAccount fidelityAccount) {
         this.cookieBook = cookieBook;
         this.cart = cart;
         this.fidelityAccount = fidelityAccount;
         this.userOrders = new ArrayList<>();
+        this.userOrdersHistory = new ArrayList<>();
     }
 
     public User() {
         //for cumcumber test
         this.cookieBook = new CookieBook();
         this.cart = new Cart(new Store());
+        this.userOrders = new ArrayList<>();
+        this.userOrdersHistory = new ArrayList<>();
     }
 
     /**
@@ -80,11 +84,23 @@ public class User {
             throw new Exception("Panier non validé");
     }
 
+    public void retrieveOrder(Order order) {
+        if (userOrders.contains(order)) {
+            userOrdersHistory.add(order);
+            userOrders.remove(order);
+            order.setState(OrderState.RETRIEVE);
+        }
+    }
+
     public void addOrder(Order order) {
         this.userOrders.add(order);
     }
 
     public List<Order> getOrders() {
         return userOrders;
+    }
+
+    public List<Order> getUserOrdersHistory() {
+        return userOrdersHistory;
     }
 }
