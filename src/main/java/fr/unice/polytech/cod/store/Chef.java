@@ -8,10 +8,12 @@ public class Chef {
     Schedule schedule;
     boolean available;
     Optional<Order> orderToPrepare;
+    ChefState state;
 
     public Chef(Schedule schedule) {
         this.schedule = schedule;
         this.available = true;
+        this.state = ChefState.AVAILABLE;
     }
 
     public void associateOrder(Order orderToPrepare) {
@@ -46,5 +48,9 @@ public class Chef {
 
     public void makeOtherActivityDuringLeftTime() {
         //TODO he can clean, help or take a break
+    }
+
+    public void setState(ChefState chefState) {
+        this.state = chefState;
     }
 }

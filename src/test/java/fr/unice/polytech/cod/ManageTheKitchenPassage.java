@@ -1,6 +1,8 @@
 package fr.unice.polytech.cod;
 
 import fr.unice.polytech.cod.store.Chef;
+import fr.unice.polytech.cod.store.ChefState;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -11,14 +13,23 @@ public class ManageTheKitchenPassage {
     Schedule schedule;
     Chef chef;
     Order order;
-    User user;
-    @Given("an available chef and a PENDING state order")
-    public void an_available_chef_and_a_pending_state_order() {
+    @Given("an chef who is \"([^\"]*)\"$")
+    public void an_chef_who_is(ChefState chefState) {
         schedule = new Schedule();
-        user = new User();
         chef = new Chef(schedule);
-        order = new Order(null, OrderState.PENDING, user);
+        chef.setState(chefState);
     }
+    @And("An order at the state \"([^\"]*)\"$")
+    public void an_order_at_the_state(OrderState orderState) {
+        order = new Order(null, orderState, new User());
+    }
+    @And("his ready order")
+    public void his_ready_order() {
+        order = new Order(null, OrderState.READY, new User());
+        chef.associateOrder(order);
+    }
+
+
     @When("order state is PENDING")
     public void order_state_is_pending() {
         assertEquals("PENDING", order.getOrderState());
@@ -32,16 +43,6 @@ public class ManageTheKitchenPassage {
     }
 
 
-    @Given("an unavailable chef")
-    public void an_unavailable_chef() {
-        schedule = new Schedule();
-        chef = new Chef(schedule);
-    }
-    @Given("his ready order")
-    public void his_ready_order() {
-        order = new Order(null, OrderState.READY, user);
-        chef.associateOrder(order);
-    }
     @When("he give the order")
     public void he_give_the_order() {
         try {

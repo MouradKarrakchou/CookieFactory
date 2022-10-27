@@ -1,8 +1,10 @@
 Feature: Remove one cookies from the cart
 
   Background:
-    Given a user2
+    Given a user
+    And a valid cookie
     And a non-empty cart
+
 
   Scenario: remove one cookie from a cart
     When  he remove a cookie from his cart
