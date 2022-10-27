@@ -23,8 +23,16 @@ Proposition d'échelle, la [méthode MoSCoW](https://paper-leaf.com/insights/pri
   4. _**Won't have/N'aura pas** : l'histoire de l'utilisateur est considérée comme étant parmi les moins critiques ou les moins utiles._
   
   
-:star2: **Estimation:** Préciser l'effort requis pour mettre en œuvre la US, décrire sa complexité.
+:star2: **Estimation:** Préciser l'effort requis pour mettre en œuvre la US, décrire sa complexité et la durée estimée pour réaliser l'user story.
 Ce point est estimé avec la méthode vue en cours.
+
+**Complexité:**
+- 1/5 &rarr; Très facile, c'est une formalité
+- 2/5 &rarr; Facile mais peut prendre un peu de temps
+- 3/5 &rarr; Dans la norme, nécessite du travail mais ce n'est pas un défis technique
+- 4/5 &rarr; Nécessite une certaines quantité de travail et de réflexion mais l'issue peut-être assumée seul 
+- 5/5 &rarr; Vraiment compliqué, être plusieurs sur cette issue peut-être nécessaire 
+
 
 
 :sparkles: **Règle métier:**
