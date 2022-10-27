@@ -22,6 +22,10 @@ public class Item {
         return quantity;
     }
 
+    public void updateQuantity(int value){
+        quantity+=value;
+    }
+
     /**
      * Generate a set of all needed ingredients according to the cookie on the list and its quantity.
      *

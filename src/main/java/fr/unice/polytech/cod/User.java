@@ -3,7 +3,6 @@ package fr.unice.polytech.cod;
 import fr.unice.polytech.cod.store.Store;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public class User {
@@ -59,7 +58,7 @@ public class User {
     }
 
     /**
-     * Add the user order to his orders list
+     * If the cart is not empty, validate the cart to create an order
      */
     public void validateCart() throws Exception {
         //userOrders.add(this.cart.createOrder());
@@ -73,10 +72,11 @@ public class User {
         return cart;
     }
 
-    public void setCart(Cart cart) {
-        this.cart = cart;
-    }
-
+    /**
+     * If the cart is validated, the client can finalise the order to get his bill
+     * @return the bill of the order
+     * @throws Exception
+     */
     public Bill finaliseOrder() throws Exception {
         if (cart.isValidated())
             return new Bill();
@@ -102,5 +102,17 @@ public class User {
 
     public List<Order> getUserOrdersHistory() {
         return userOrdersHistory;
+    }
+
+    public List<Item> getAllItemsFromCart() {
+        return cart.getItemList();
+    }
+
+    public Item getItemFromCart(String itemName) throws Exception {
+        return cart.getItem(itemName);
+    }
+
+    public void removeOneItemFromCart(Item item) {
+        cart.removeFromCart(item);
     }
 }
