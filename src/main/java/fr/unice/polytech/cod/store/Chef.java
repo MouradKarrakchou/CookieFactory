@@ -1,10 +1,7 @@
 package fr.unice.polytech.cod.store;
 
 import fr.unice.polytech.cod.Order;
-import fr.unice.polytech.cod.OrderState;
 import fr.unice.polytech.cod.Schedule;
-
-import java.util.List;
 import java.util.Optional;
 
 public class Chef {

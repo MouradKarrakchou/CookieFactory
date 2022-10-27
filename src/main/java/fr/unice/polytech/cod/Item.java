@@ -1,7 +1,6 @@
 package fr.unice.polytech.cod;
 
 import fr.unice.polytech.cod.ingredient.Ingredient;
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -28,7 +27,7 @@ public class Item {
      *
      * @return The number of needed ingredients
      */
-    public Set<Ingredient> getIngredientsNeeded(){
+    public Set<Ingredient> generateIngredientsNeeded(){
         // Cloning the list of ingredients
         Set<Ingredient> ingredientsClone = new HashSet<>(cookie.getIngredients());
 

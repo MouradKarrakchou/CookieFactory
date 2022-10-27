@@ -1,14 +1,16 @@
 package fr.unice.polytech.cod.ingredient;
 
+import java.util.Objects;
+
 public class Ingredient {
     protected String name;
     //price per g
-    protected double pricePerg;
+    protected double pricePerGram;
     protected double quantity;
 
     public Ingredient(String name, double price, double quantity) {
         this.name = name;
-        this.pricePerg = price;
+        this.pricePerGram = price;
         this.quantity = quantity;
     }
 
@@ -48,5 +50,10 @@ public class Ingredient {
 
         // Check for the name equality
         return i.name.equals(name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, pricePerGram, quantity);
     }
 }

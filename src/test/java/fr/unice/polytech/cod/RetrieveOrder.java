@@ -5,7 +5,6 @@ import fr.unice.polytech.cod.store.Store;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -38,7 +37,8 @@ public class RetrieveOrder {
     @Then("the order is removed from the customer's order list and current orders, added to its history and its status changes to RETRIEVE")
     public void the_order_is_removed_from_the_customer_s_order_list_and_current_orders_added_to_its_history_and_its_status_changes_to_retrieve() {
         assertFalse(this.store.getOrderList().contains(order));
-        assertEquals(this.store.getOrderList().size(), 1);
+        assertEquals(1, this.store.getOrderList().size());
+        assertEquals(1, this.store.getOrderList().size());
 
         assertFalse(this.user.getOrders().contains(order));
         assertTrue(this.user.getUserOrdersHistory().contains(order));

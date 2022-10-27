@@ -4,8 +4,6 @@ import fr.unice.polytech.cod.ingredient.Dough;
 import fr.unice.polytech.cod.ingredient.Flavour;
 import fr.unice.polytech.cod.ingredient.Ingredient;
 import fr.unice.polytech.cod.ingredient.Topping;
-
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;

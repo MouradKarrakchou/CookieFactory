@@ -24,7 +24,7 @@ public class Cart {
     }
 
     public boolean addToCart(Item item) {
-        if (!store.hasEnoughIngredients(item.getIngredientsNeeded()))
+        if (!store.hasEnoughIngredients(item.generateIngredientsNeeded()))
             return false;
 
         itemList.add(item);
@@ -71,7 +71,7 @@ public class Cart {
         // Check the list of items
         for(Item item : items){
             // Generating all needed ingredients for each item
-            for(Ingredient ingredient : item.getIngredientsNeeded()){
+            for(Ingredient ingredient : item.generateIngredientsNeeded()){
                 // Merging all needed ingredients together
                 boolean isAdded = false;
                 for(Ingredient neededIngredient : neededIngredients){
