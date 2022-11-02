@@ -11,6 +11,7 @@ public class DaySlot {
     Date date;
     public DaySlot(Date date){
         this.date=date;
+        timeSlots= new ArrayList<>();
         timeSlots.add(new TimeSlot(new Time(8,0,0),new Time(12,0,0)));
         timeSlots.add(new TimeSlot(new Time(13,0,0),new Time(17,0,0)));
     }

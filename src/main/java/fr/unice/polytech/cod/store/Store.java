@@ -16,6 +16,7 @@ public class Store {
     private final Stock stock;
 
     public Store() {
+        listChef=new ArrayList<>();
         this.orderList = new ArrayList<>();
         this.stock = new Stock();
         listChef.add(new Chef(new Schedule()));
