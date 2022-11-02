@@ -15,7 +15,7 @@ public class Cart {
 
     public Cart(Store store) {
         this.store = store;
-        itemList = new ArrayList<>();
+        this.itemList = new ArrayList<>();
         this.isValidated = false;
     }
 
@@ -23,61 +23,110 @@ public class Cart {
         Display.showItems(itemList);
     }
 
-    public void addToCart(Item item) {
+    /**
+     * If the store as the ingredients, add an item to the cart
+     * @param item
+     * @return
+     */
+    public boolean addToCart(Item item) {
+        if (!store.hasEnoughIngredients(item.generateIngredientsNeeded()))
+            return false;
+
         itemList.add(item);
+        return true;
     }
 
-    public void removeToCart(Item item) {
-        itemList.remove(item);
-    }
-
-    public Order createOrder() {
-        return new Order(this, OrderState.PENDING);
+    /**
+     * Remove one from the quantity of the item, if the item is present as one copy, then it is deleted
+     * @param item
+     */
+    public void removeFromCart(Item item) {
+        if(item.getQuantity() == 0)
+            itemList.remove(item);
+        else
+            item.updateQuantity(-1);
     }
 
     public List<Item> getItemList() {
         return itemList;
     }
 
-    public void validateCart(){
+    /**
+     * Validdte the cart and create an order, that is added to the user and the sore.
+     * The cart is validated only if the store has all the ingredients needed
+     * @param user
+     * @return
+     */
+    public boolean validateCart(User user){
+        Set<Ingredient> ingredientsNeeded = generateIngredientsNeeded(this.itemList);
+        if(!store.hasEnoughIngredients(ingredientsNeeded))
+            return false;
+
         this.isValidated = true;
+        Order order = new Order(this, user);
+        user.addOrder(order);
+        store.addOrder(order, ingredientsNeeded);
+
+        return true;
     }
 
     public boolean isValidated() {
         return isValidated;
     }
 
-    public void setValidated(boolean b) {
-        this.isValidated = b;
-    }
-
     public boolean isEmpty() {
         return this.itemList.isEmpty();
     }
 
-    private Set<Ingredient> generateIngredientsNeeded(Set<Item> items){
+    /**
+     * Take a list of ingredients and return a set of the ingredients needed
+     * @param items
+     * @return A set of the ingredients needed
+     */
+    private Set<Ingredient> generateIngredientsNeeded(List<Item> items){
         Set<Ingredient> neededIngredients = new HashSet<>();
-
         // Check the list of items
         for(Item item : items){
             // Generating all needed ingredients for each item
             for(Ingredient ingredient : item.generateIngredientsNeeded()){
                 // Merging all needed ingredients together
                 boolean isAdded = false;
-
                 for(Ingredient neededIngredient : neededIngredients){
                     if(neededIngredient.equals(ingredient)){
                         neededIngredient.increaseQuantity(ingredient.getQuantity());
                         isAdded = true;
                     }
-
                 }
-
                 if(!isAdded)
                     neededIngredients.add(ingredient);
             }
         }
-
         return neededIngredients;
+    }
+
+    public Store getStore() {
+        return this.store;
+    }
+
+    public Item getItem(String itemName) throws Exception {
+        Item itemFounded = itemList.stream()
+                .filter(item -> itemName.equals(item.getCookie().getName()))
+                .findAny()
+                .orElse(null);
+        if(itemFounded == null)
+            throw new Exception("Can't find this item into the cart: "+itemName);
+        else
+            return itemFounded;
+    }
+
+    public int getItemQuantity(String itemName) {
+        Item item = null;
+        try {
+            item = getItem(itemName);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        if(item == null) return 0;
+        return item.getQuantity();
     }
 }

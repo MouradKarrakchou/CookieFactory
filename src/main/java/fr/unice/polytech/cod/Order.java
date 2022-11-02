@@ -4,10 +4,18 @@ public class Order {
 
     OrderState orderState;
     Cart cart;
+    User user;
 
-    public Order(Cart cart, OrderState orderState) {
+    public Order(Cart cart, User user) {
+        this.cart = cart;
+        this.orderState = OrderState.PENDING;
+        this.user = user;
+    }
+
+    public Order(Cart cart, OrderState orderState, User user) {
         this.cart = cart;
         this.orderState = orderState;
+        this.user = user;
     }
 
     public String getOrderState() {
@@ -16,5 +24,9 @@ public class Order {
 
     public void setState(OrderState state) {
         this.orderState = state;
+    }
+
+    public User getUser() {
+        return user;
     }
 }

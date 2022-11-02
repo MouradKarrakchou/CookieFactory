@@ -15,8 +15,8 @@ import static org.junit.Assert.*;
 public class seeCookieListStepDef {
     User user;
     List<Cookie> cookieList;
-    @Given("a user")
-    public void a_user() {
+    @Given("a user2")
+    public void a_user2() {
         // Write code here that turns the phrase above into concrete actions
         user = new User();
     }

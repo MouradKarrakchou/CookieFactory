@@ -1,20 +1,19 @@
 package fr.unice.polytech.cod.store;
 
 import fr.unice.polytech.cod.Order;
-import fr.unice.polytech.cod.OrderState;
 import fr.unice.polytech.cod.Schedule;
-
-import java.util.List;
 import java.util.Optional;
 
 public class Chef {
     Schedule schedule;
     boolean available;
     Optional<Order> orderToPrepare;
+    ChefState state;
 
     public Chef(Schedule schedule) {
         this.schedule = schedule;
         this.available = true;
+        this.state = ChefState.AVAILABLE;
     }
 
     public void associateOrder(Order orderToPrepare) {
@@ -49,5 +48,9 @@ public class Chef {
 
     public void makeOtherActivityDuringLeftTime() {
         //TODO he can clean, help or take a break
+    }
+
+    public void setState(ChefState chefState) {
+        this.state = chefState;
     }
 }

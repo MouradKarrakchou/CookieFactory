@@ -1,10 +1,7 @@
 package fr.unice.polytech.cod;
 
 import fr.unice.polytech.cod.ingredient.Ingredient;
-
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class Item {
@@ -23,6 +20,10 @@ public class Item {
 
     public int getQuantity() {
         return quantity;
+    }
+
+    public void updateQuantity(int value){
+        quantity+=value;
     }
 
     /**

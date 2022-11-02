@@ -4,9 +4,7 @@ import fr.unice.polytech.cod.ingredient.Dough;
 import fr.unice.polytech.cod.ingredient.Flavour;
 import fr.unice.polytech.cod.store.Stock;
 import fr.unice.polytech.cod.store.Store;
-
 import java.util.ArrayList;
-import java.util.logging.Logger;
 
 public class Main {
 

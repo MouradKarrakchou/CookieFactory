@@ -1,7 +1,11 @@
 package fr.unice.polytech.cod;
 
+import fr.unice.polytech.cod.ingredient.Ingredient;
+import fr.unice.polytech.cod.store.Store;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class CookieBook {
     private final List<Cookie> cookies;
@@ -14,7 +18,17 @@ public class CookieBook {
         // TODO : Add recipes here.
     }
 
-    public List<Cookie> getAvailableCookie() {
-        return cookies;
+    /**
+     * return the availables cookies depend from the store
+     * @param store
+     * @return a list of cookies
+     */
+    public List<Cookie> getAvailableCookie(Store store) {
+        List<Cookie> cookieAvailable = new ArrayList<>();
+        for(Cookie cookie : cookies){
+            if(store.hasEnoughIngredients(cookie.getIngredients()))
+                cookieAvailable.add(cookie);
+        }
+        return cookieAvailable;
     }
 }

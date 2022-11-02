@@ -5,13 +5,11 @@ import fr.unice.polytech.cod.store.Store;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.*;
 
-public class RemoveOrder {
+public class RetrieveOrder {
 
     Store store;
 
@@ -26,8 +24,9 @@ public class RemoveOrder {
         store = new Store();
         user = new User();
         chef = new Chef(null);
-        order = new Order(null, OrderState.READY);
-        store.setOrderList(List.of(order, new Order(null, OrderState.READY)));
+        order = new Order(null, OrderState.READY, user);
+        store.setOrderList(List.of(order, new Order(null, OrderState.READY, user)));
+        user.addOrder(order);
     }
 
     @When("a chef informs the system that he has given the order")
@@ -35,10 +34,14 @@ public class RemoveOrder {
         this.store.retrieveOrder(order);
     }
 
-    @Then("the order is removed from the order list")
-    public void the_order_is_removed_from_the_order_list() {
+    @Then("the order is removed from the customer's order list and current orders, added to its history and its status changes to RETRIEVE")
+    public void the_order_is_removed_from_the_customer_s_order_list_and_current_orders_added_to_its_history_and_its_status_changes_to_retrieve() {
         assertFalse(this.store.getOrderList().contains(order));
-        assertEquals(this.store.getOrderList().size(), 1);
+        assertEquals(1, this.store.getOrderList().size());
+        assertEquals(1, this.store.getOrderList().size());
+
+        assertFalse(this.user.getOrders().contains(order));
+        assertTrue(this.user.getUserOrdersHistory().contains(order));
     }
 
 }

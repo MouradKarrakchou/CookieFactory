@@ -8,7 +8,7 @@ import static com.diogonunes.jcolor.Attribute.*;
 
 
 public class Display {
-    private final static Logger LOGGER = Logger.getLogger(Display.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(Display.class.getName());
 
     public static void start(){
         System.setProperty("java.util.logging.SimpleFormatter.format", colorize("%5$s %n", BRIGHT_WHITE_TEXT()));

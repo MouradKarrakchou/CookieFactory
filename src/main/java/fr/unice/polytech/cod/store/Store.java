@@ -2,7 +2,6 @@ package fr.unice.polytech.cod.store;
 
 import fr.unice.polytech.cod.Item;
 import fr.unice.polytech.cod.Order;
-import fr.unice.polytech.cod.Schedule;
 import fr.unice.polytech.cod.ingredient.Ingredient;
 
 import java.util.ArrayList;
@@ -24,6 +23,7 @@ public class Store {
 
     public void retrieveOrder(Order order) {
         this.orderList.remove(order);
+        order.getUser().retrieveOrder(order);
     }
 
     public void timeSlotAvailables(){
@@ -51,6 +51,17 @@ public class Store {
 
     public List<Order> getOrderList() {
         return orderList;
+    }
+
+    public void addOrder(Order order, Set<Ingredient> ingredientsNeeded) {
+        for(Ingredient ingredient : ingredientsNeeded)
+            stock.lock(ingredient);
+        this.orderList.add(order);
+    }
+
+
+    public Stock getStock() {
+        return this.stock;
     }
 }
 
