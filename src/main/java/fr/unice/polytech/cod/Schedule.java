@@ -12,8 +12,7 @@ public class Schedule {
 
     public void associateOrder(Chef chef, Order orderToPrepare) {
         if(chef.isAvailable()) {
-            chef.setOrder(orderToPrepare);
-            chef.setAvailability(false);
+            chef.associateOrder(orderToPrepare);
             orderToPrepare.setState(OrderState.IN_PROGRESS);
         }
     }

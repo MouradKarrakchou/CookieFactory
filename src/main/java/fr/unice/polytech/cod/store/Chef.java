@@ -16,8 +16,13 @@ public class Chef {
         this.state = ChefState.AVAILABLE;
     }
 
+    /**
+     * Associate the chef with an order, the chef is now unavailable
+     * @param orderToPrepare
+     */
     public void associateOrder(Order orderToPrepare) {
         this.orderToPrepare = Optional.of(orderToPrepare);
+        this.available = false;
     }
 
     public Optional<Order> getOrderToPrepare() {
@@ -26,15 +31,6 @@ public class Chef {
 
     public boolean isAvailable() {
         return available;
-    }
-
-    public void setOrder(Order order) {
-        this.orderToPrepare = Optional.of(order);
-        schedule.startTimer();
-    }
-
-    public void setAvailability(boolean availability) {
-        this.available = availability;
     }
 
     public void giveOrder() throws Exception {
