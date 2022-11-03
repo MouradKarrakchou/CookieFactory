@@ -113,6 +113,6 @@ public class User {
     }
 
     public void removeOneItemFromCart(Item item) {
-        cart.removeFromCart(item);
+        cart.removeOneFromCart(item);
     }
 }
