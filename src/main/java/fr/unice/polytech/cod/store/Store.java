@@ -1,18 +1,25 @@
 package fr.unice.polytech.cod.store;
 
+import fr.unice.polytech.cod.Item;
 import fr.unice.polytech.cod.Order;
+import fr.unice.polytech.cod.Schedule;
 import fr.unice.polytech.cod.ingredient.Ingredient;
+
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 public class Store {
     List<Order> orderList;
+    List<Chef> listChef;
     private final Stock stock;
 
     public Store() {
+        listChef=new ArrayList<>();
         this.orderList = new ArrayList<>();
         this.stock = new Stock();
+        listChef.add(new Chef(new Schedule()));
     }
 
     public void retrieveOrder(Order order) {
@@ -20,6 +27,13 @@ public class Store {
         order.getUser().retrieveOrder(order);
     }
 
+    public void timeSlotAvailables(){
+
+        for (Chef chef:listChef){
+            //A finir
+            //listChef.getAvailableTimeSlots();
+        }
+    }
     /**
      * For a given set of ingredients check if there is enough of these ingredients in the stock.
      *
