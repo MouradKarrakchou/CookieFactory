@@ -30,10 +30,10 @@ public class User {
     }
 
     /**
-     * Show the catalogue
+     * return the list of available cookies based on the store
      */
     public List<Cookie> viewCatalog() {
-        Display.displayCookies(cookieBook.getAvailableCookie(this.cart.getStore()));
+        //Display.displayCookies(cookieBook.getAvailableCookie(this.cart.getStore())); //useless non ?
         return cookieBook.getAvailableCookie(this.cart.getStore());
     }
 

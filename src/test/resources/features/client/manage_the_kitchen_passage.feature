@@ -11,4 +11,4 @@ Feature: Manage the kitchen passage
     Given an chef who is "UNAVAILABLE"
     And An order at the state "READY"
     When  he give the order
-    Then he can clean, help or take a break
+    Then the state of the order is "RETRIEVE"

@@ -12,9 +12,9 @@ public class CookieBook {
 
     public CookieBook(){
         cookies = new ArrayList<>();
-        cookies.add(new Cookie("Cookie au chocolat",null,null,null));
-        cookies.add(new Cookie("Cookie à la vanille",null,null,null));
-        cookies.add(new Cookie("Cookie à la pistache",null,null,null));
+        cookies.add(new Cookie("Cookie au chocolat",null,null,new ArrayList<>()));
+        cookies.add(new Cookie("Cookie à la vanille",null,null,new ArrayList<>()));
+        cookies.add(new Cookie("Cookie à la pistache",null,null,new ArrayList<>()));
         // TODO : Add recipes here.
     }
 

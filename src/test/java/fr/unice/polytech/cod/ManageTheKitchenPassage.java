@@ -43,9 +43,4 @@ public class ManageTheKitchenPassage {
     public void the_state_of_the_order_is(OrderState orderState) {
         assertEquals(orderState, order.getOrderState());
     }
-
-    @Then("he can clean, help or take a break")
-    public void he_can_clean_help_or_take_a_break() {
-        chef.makeOtherActivityDuringLeftTime();
-    }
 }

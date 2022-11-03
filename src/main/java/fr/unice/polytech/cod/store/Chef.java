@@ -1,6 +1,7 @@
 package fr.unice.polytech.cod.store;
 
 import fr.unice.polytech.cod.Order;
+import fr.unice.polytech.cod.OrderState;
 import fr.unice.polytech.cod.Schedule;
 import java.util.Optional;
 
@@ -36,6 +37,7 @@ public class Chef {
     public void giveOrder() throws Exception {
         if(this.orderToPrepare.isPresent()){
             Order order = orderToPrepare.get();
+            order.setState(OrderState.RETRIEVE);
             this.orderToPrepare = Optional.empty();
         }
         else
