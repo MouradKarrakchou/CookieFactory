@@ -18,7 +18,7 @@ public class Main {
         FidelityAccount fidelityAccount = new FidelityAccount();
         User user = new User(cookieBook, cart, fidelityAccount);
 
-        user.viewCatalog();
+        Display.displayCookies(user.viewCatalog());
 
         Display.info("(User choose a cookie)");
         user.chooseCookies(new Cookie("Chocolala", new Dough("Pate verte",25,50), new Flavour("Vert",25,50), new ArrayList<>()), 12);
