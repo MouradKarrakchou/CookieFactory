@@ -18,8 +18,8 @@ public class Order {
         this.user = user;
     }
 
-    public String getOrderState() {
-        return orderState.toString();
+    public OrderState getOrderState() {
+        return orderState;
     }
 
     public void setState(OrderState state) {

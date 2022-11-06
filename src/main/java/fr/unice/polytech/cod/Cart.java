@@ -37,10 +37,10 @@ public class Cart {
 
     /**
      * Remove one from the quantity of the item, if the item is present as one copy, then it is deleted
-     * @param item
+     * @param item The item present in the cart.
      */
-    public void removeFromCart(Item item) {
-        if(item.getQuantity() == 0)
+    public void removeOneFromCart(Item item) {
+        if(item.getQuantity() == 1)
             itemList.remove(item);
         else
             item.updateQuantity(-1);

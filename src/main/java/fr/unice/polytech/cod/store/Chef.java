@@ -1,6 +1,7 @@
 package fr.unice.polytech.cod.store;
 
 import fr.unice.polytech.cod.Order;
+import fr.unice.polytech.cod.OrderState;
 import fr.unice.polytech.cod.Schedule;
 import java.util.Optional;
 
@@ -16,8 +17,13 @@ public class Chef {
         this.state = ChefState.AVAILABLE;
     }
 
+    /**
+     * Associate the chef with an order, the chef is now unavailable
+     * @param orderToPrepare
+     */
     public void associateOrder(Order orderToPrepare) {
         this.orderToPrepare = Optional.of(orderToPrepare);
+        this.available = false;
     }
 
     public Optional<Order> getOrderToPrepare() {
@@ -28,18 +34,10 @@ public class Chef {
         return available;
     }
 
-    public void setOrder(Order order) {
-        this.orderToPrepare = Optional.of(order);
-        schedule.startTimer();
-    }
-
-    public void setAvailability(boolean availability) {
-        this.available = availability;
-    }
-
     public void giveOrder() throws Exception {
         if(this.orderToPrepare.isPresent()){
             Order order = orderToPrepare.get();
+            order.setState(OrderState.RETRIEVE);
             this.orderToPrepare = Optional.empty();
         }
         else

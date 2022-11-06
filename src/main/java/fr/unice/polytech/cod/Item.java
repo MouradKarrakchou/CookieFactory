@@ -22,8 +22,12 @@ public class Item {
         return quantity;
     }
 
+    /**
+     * Increase the quantity by a given value
+     * @param value The value to increase the quantity
+     */
     public void updateQuantity(int value){
-        quantity+=value;
+        quantity += value;
     }
 
     /**

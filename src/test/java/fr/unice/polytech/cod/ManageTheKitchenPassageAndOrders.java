@@ -9,7 +9,7 @@ import io.cucumber.java.en.When;
 
 import static org.junit.Assert.*;
 
-public class ManageTheKitchenPassage {
+public class ManageTheKitchenPassageAndOrders {
     Schedule schedule;
     Chef chef;
     Order order;
@@ -22,26 +22,13 @@ public class ManageTheKitchenPassage {
     @And("An order at the state \"([^\"]*)\"$")
     public void an_order_at_the_state(OrderState orderState) {
         order = new Order(null, orderState, new User());
-    }
-    @And("his ready order")
-    public void his_ready_order() {
-        order = new Order(null, OrderState.READY, new User());
-        chef.associateOrder(order);
+        if(orderState == OrderState.READY) chef.associateOrder(order);
     }
 
-
-    @When("order state is PENDING")
-    public void order_state_is_pending() {
-        assertEquals("PENDING", order.getOrderState());
-    }
-    @Then("the schedule associates the chef to the PENDING state order, which now is in the IN_PROGRESS state")
-    public void the_schedule_associate_the_chef_to_the_pending_state_order_which_now_is_in_the_in_progress_state() {
-        assertEquals("PENDING", order.getOrderState());
+    @When("the chef is associate with an order")
+    public void the_chef_is_associate_with_an_order() {
         schedule.associateOrder(chef, order);
-        assertNotNull(chef.getOrderToPrepare());
-        assertEquals("IN_PROGRESS", order.getOrderState());
     }
-
 
     @When("he give the order")
     public void he_give_the_order() {
@@ -51,8 +38,9 @@ public class ManageTheKitchenPassage {
             throw new RuntimeException(e);
         }
     }
-    @Then("he can clean, help or take a break")
-    public void he_can_clean_help_or_take_a_break() {
-        chef.makeOtherActivityDuringLeftTime();
+
+    @Then("the state of the order is \"([^\"]*)\"$")
+    public void the_state_of_the_order_is(OrderState orderState) {
+        assertEquals(orderState, order.getOrderState());
     }
 }

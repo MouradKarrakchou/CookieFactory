@@ -10,6 +10,7 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 public class RetrieveOrder {
+    /*
 
     Store store;
 
@@ -43,5 +44,5 @@ public class RetrieveOrder {
         assertFalse(this.user.getOrders().contains(order));
         assertTrue(this.user.getUserOrdersHistory().contains(order));
     }
-
+*/
 }

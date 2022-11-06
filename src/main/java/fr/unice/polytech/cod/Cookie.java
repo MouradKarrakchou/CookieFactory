@@ -31,8 +31,9 @@ public class Cookie {
      */
     public Set<Ingredient> getIngredients(){
         Set<Ingredient> ingredients = new HashSet<>();
-        ingredients.add(dough);
-        ingredients.add(flavour);
+
+        if(dough != null) ingredients.add(dough);
+        if(flavour != null) ingredients.add(flavour);
         ingredients.addAll(toppingList);
         return ingredients;
     }
