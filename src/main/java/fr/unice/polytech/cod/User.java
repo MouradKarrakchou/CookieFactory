@@ -5,6 +5,7 @@ import fr.unice.polytech.cod.store.Store;
 import fr.unice.polytech.cod.store.StoreManager;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class User {
@@ -13,7 +14,6 @@ public class User {
     private FidelityAccount fidelityAccount;
     private List<Order> userOrders;
     private StoreManager storeManager;
-
     private List<Order> userOrdersHistory;
 
     public User(CookieBook cookieBook, Cart cart, FidelityAccount fidelityAccount) {
@@ -58,6 +58,12 @@ public class User {
         return(storeManager.getStoreList());
     }
 
+    /**
+     * choose the store for his current order
+     * @param name
+     * @return
+     * @throws InvalidStoreExepection
+     */
     public Store selectStore(String name) throws InvalidStoreExepection {
         Store store=storeManager.selectStore(name);
         this.cart.setStore(store);
@@ -70,6 +76,14 @@ public class User {
     public void recapCart() {
         Display.title("Your cart:");
         cart.showCart();
+    }
+
+    /**
+     * Gets a list of available TimeSlots by Date;
+     * @return
+     */
+    public List<TimeSlot> getAvailableTimeSlot(Date date){
+        return(this.cart.getStore().timeSlotAvailables(date));
     }
 
     /**

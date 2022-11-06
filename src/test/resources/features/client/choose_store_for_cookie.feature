@@ -1,5 +1,5 @@
-# Created by moura at 02/11/2022
-Feature: # Enter feature name here
+
+Feature: Choose store for cookie
   # Enter feature description here
 
   Scenario: # Enter scenario name here

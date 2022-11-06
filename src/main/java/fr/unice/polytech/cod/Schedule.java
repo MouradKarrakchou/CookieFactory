@@ -3,6 +3,7 @@ package fr.unice.polytech.cod;
 import fr.unice.polytech.cod.store.Chef;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Schedule {
@@ -15,6 +16,7 @@ public class Schedule {
         daySlotList.add(new DaySlot(null));
     }
 
+
     public void associateOrder(Chef chef, Order orderToPrepare) {
         if(chef.isAvailable()) {
             chef.associateOrder(orderToPrepare);
@@ -22,7 +24,16 @@ public class Schedule {
         }
     }
 
-    public void startTimer() {
-        //TODO lance le compteur de surement dans un thread à part
+    /**
+     * Give the available time slots of the Chef
+     * @param date
+     * @return
+     */
+    public List<TimeSlot> getTimeSlots(Date date){
+        for(DaySlot daySlot:daySlotList){
+            if (daySlot.date.equals(date))
+                return daySlot.emptyTimeSlots();
+        }
+        return null;
     }
 }

@@ -3,6 +3,10 @@ package fr.unice.polytech.cod.store;
 import fr.unice.polytech.cod.Order;
 import fr.unice.polytech.cod.OrderState;
 import fr.unice.polytech.cod.Schedule;
+import fr.unice.polytech.cod.TimeSlot;
+
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 public class Chef {
@@ -50,5 +54,14 @@ public class Chef {
 
     public void setState(ChefState chefState) {
         this.state = chefState;
+    }
+
+    /**
+     * gives the Available TimeSlots of this Chef
+     * @param date
+     * @return
+     */
+    public List<TimeSlot> getTimeSlotsAvailables(Date date){
+        return(this.schedule.getTimeSlots(date));
     }
 }

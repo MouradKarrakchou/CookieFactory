@@ -2,6 +2,7 @@ package fr.unice.polytech.cod;
 
 import java.sql.Time;
 import java.util.Optional;
+import java.util.Timer;
 
 public class TimeSlot {
     Time startTime;
@@ -18,9 +19,8 @@ public class TimeSlot {
      * associate this time slot with the order
      * @param order
      */
-    public void associateTimeSlot(Order order){
-        this.order=Optional.of(order);
-    }
+    public void associateTimeSlot(Order order, int numberOfMinuteNeeded){
+        this.order=Optional.of(order);}
 
     /**
      * Change the start time of the time slot

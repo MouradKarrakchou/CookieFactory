@@ -3,12 +3,10 @@ package fr.unice.polytech.cod.store;
 import fr.unice.polytech.cod.Item;
 import fr.unice.polytech.cod.Order;
 import fr.unice.polytech.cod.Schedule;
+import fr.unice.polytech.cod.TimeSlot;
 import fr.unice.polytech.cod.ingredient.Ingredient;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class Store {
     String name;
@@ -29,12 +27,16 @@ public class Store {
         order.getUser().retrieveOrder(order);
     }
 
-    public void timeSlotAvailables(){
-
+    /**
+     * Gets a list of available TimeSlots from all the employees of the store by Date;
+     * @return
+     */
+    public List<TimeSlot> timeSlotAvailables(Date date){
+        List<TimeSlot> timeSlots = new ArrayList<>();
         for (Chef chef:listChef){
-            //A finir
-            //listChef.getAvailableTimeSlots();
+            timeSlots.addAll(chef.getTimeSlotsAvailables(date));
         }
+        return(timeSlots);
     }
     /**
      * For a given set of ingredients check if there is enough of these ingredients in the stock.
