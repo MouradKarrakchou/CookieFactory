@@ -21,7 +21,7 @@ public class RetrieveOrder {
 
     @Given("a chef, a client, a client order, a store and the order list of a store including that of the client who is READY")
     public void a_chef_a_client_a_client_order_a_store_and_the_order_list_of_a_store_including_that_of_the_client_who_is_ready() {
-        store = new Store();
+        store = new Store(null);
         user = new User();
         chef = new Chef(null);
         order = new Order(null, OrderState.READY, user);

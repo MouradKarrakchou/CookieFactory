@@ -13,8 +13,7 @@ public class Cart {
     private List<Item> itemList;
     private boolean isValidated;
 
-    public Cart(Store store) {
-        this.store = store;
+    public Cart() {
         this.itemList = new ArrayList<>();
         this.isValidated = false;
     }
@@ -129,4 +128,8 @@ public class Cart {
         if(item == null) return 0;
         return item.getQuantity();
     }
+    public void setStore(Store store) {
+        this.store = store;
+    }
+
 }

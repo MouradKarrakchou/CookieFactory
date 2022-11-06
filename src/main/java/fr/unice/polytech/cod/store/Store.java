@@ -11,11 +11,13 @@ import java.util.List;
 import java.util.Set;
 
 public class Store {
+    String name;
     List<Order> orderList;
     List<Chef> listChef;
     private final Stock stock;
 
-    public Store() {
+    public Store(String name) {
+        this.name=name;
         listChef=new ArrayList<>();
         this.orderList = new ArrayList<>();
         this.stock = new Stock();
@@ -63,6 +65,11 @@ public class Store {
 
     public Stock getStock() {
         return this.stock;
+    }
+
+
+    public String getName() {
+        return name;
     }
 }
 

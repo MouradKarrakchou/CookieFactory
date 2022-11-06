@@ -1,6 +1,8 @@
 package fr.unice.polytech.cod;
 
+import fr.unice.polytech.cod.store.InvalidStoreExepection;
 import fr.unice.polytech.cod.store.Store;
+import fr.unice.polytech.cod.store.StoreManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +12,7 @@ public class User {
     private Cart cart;
     private FidelityAccount fidelityAccount;
     private List<Order> userOrders;
+    private StoreManager storeManager;
 
     private List<Order> userOrdersHistory;
 
@@ -19,14 +22,16 @@ public class User {
         this.fidelityAccount = fidelityAccount;
         this.userOrders = new ArrayList<>();
         this.userOrdersHistory = new ArrayList<>();
+        this.storeManager=new StoreManager();
     }
 
     public User() {
         //for cumcumber test
         this.cookieBook = new CookieBook();
-        this.cart = new Cart(new Store());
+        this.cart = new Cart();
         this.userOrders = new ArrayList<>();
         this.userOrdersHistory = new ArrayList<>();
+        this.storeManager=new StoreManager();
     }
 
     /**
@@ -47,6 +52,16 @@ public class User {
     public boolean chooseCookies(Cookie cookie, int quantity) {
         Item item = new Item(cookie, quantity);
         return cart.addToCart(item);
+    }
+
+    public List<Store> viewStoreAvailable(){
+        return(storeManager.getStoreList());
+    }
+
+    public Store selectStore(String name) throws InvalidStoreExepection {
+        Store store=storeManager.selectStore(name);
+        this.cart.setStore(store);
+        return(store);
     }
 
     /**

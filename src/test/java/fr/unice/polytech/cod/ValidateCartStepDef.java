@@ -24,9 +24,8 @@ public class ValidateCartStepDef {
 
     @Given("a user with a non-empty cart")
     public void a_user_with_a_non_empty_cart() {
-        store =new Store();
         CookieBook cookieBook = new CookieBook();
-        cart = new Cart(store);
+        cart = new Cart();
         user = new User(cookieBook, cart, new FidelityAccount());
         cart.getStore().getStock().addStock(new Dough("Pate verte",25,50));
         cart.getStore().getStock().addStock(new Flavour("Vert",25,50));

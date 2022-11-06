@@ -12,9 +12,9 @@ public class Main {
         // Initializing the display
         Display.start();
 
-        Store store = new Store();
+        Store store = new Store("Antibes");
         CookieBook cookieBook = new CookieBook();
-        Cart cart = new Cart(store);
+        Cart cart = new Cart();
         FidelityAccount fidelityAccount = new FidelityAccount();
         User user = new User(cookieBook, cart, fidelityAccount);
 
