@@ -16,7 +16,7 @@ public class Main {
         CookieBook cookieBook = new CookieBook();
         Cart cart = new Cart();
         FidelityAccount fidelityAccount = new FidelityAccount();
-        User user = new User(cookieBook, cart, fidelityAccount);
+        User user = new User(cookieBook, cart);
 
         Display.displayCookies(user.viewCatalog());
 
