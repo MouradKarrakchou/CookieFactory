@@ -56,17 +56,17 @@ public class Cart {
      * @param user
      * @return
      */
-    public boolean validateCart(User user){
+    public Bill validate(User user) throws Exception {
         Set<Ingredient> ingredientsNeeded = generateIngredientsNeeded(this.itemList);
         if(!store.hasEnoughIngredients(ingredientsNeeded))
-            return false;
+            throw new Exception("Ingrédients indisponibles");
 
         this.isValidated = true;
         Order order = new Order(this, user);
         user.addOrder(order);
         store.addOrder(order, ingredientsNeeded);
 
-        return true;
+        return new Bill(order);
     }
 
     public boolean isValidated() {

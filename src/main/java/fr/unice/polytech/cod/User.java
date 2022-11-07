@@ -89,28 +89,16 @@ public class User {
     /**
      * If the cart is not empty, validate the cart to create an order
      */
-    public void validateCart() throws Exception {
+    public Bill validateCart() throws Exception {
         //userOrders.add(this.cart.createOrder());
         if (!cart.isEmpty())
-            cart.validateCart(this);
+            return cart.validate(this);
         else
             throw new Exception("Panier vide impossible de le valider");
     }
 
     public Cart getCart() {
         return cart;
-    }
-
-    /**
-     * If the cart is validated, the client can finalise the order to get his bill
-     * @return the bill of the order
-     * @throws Exception
-     */
-    public Bill finaliseOrder() throws Exception {
-        if (cart.isValidated())
-            return new Bill();
-        else
-            throw new Exception("Panier non validé");
     }
 
     public void retrieveOrder(Order order) {

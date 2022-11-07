@@ -1,5 +1,10 @@
 package fr.unice.polytech.cod;
 
 public class Bill {
-    public Bill(){}
+
+    Order order;
+
+    public Bill(Order order){
+        this.order = order;
+    }
 }
