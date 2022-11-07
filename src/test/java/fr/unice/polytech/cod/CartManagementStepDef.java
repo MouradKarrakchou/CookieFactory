@@ -36,6 +36,7 @@ public class CartManagementStepDef {
     public void a_non_empty_cart() {
         cart = user.getCart();
         cart.getItemList().add(new Item(testCookie, 2));
+        cart.setTimeSlot(new TimeSlot(null,null));
     }
     @And("a valid cookie")
     public void a_valid_cookie() {

@@ -1,9 +1,6 @@
 package fr.unice.polytech.cod.store;
 
-import fr.unice.polytech.cod.Item;
-import fr.unice.polytech.cod.Order;
-import fr.unice.polytech.cod.Schedule;
-import fr.unice.polytech.cod.TimeSlot;
+import fr.unice.polytech.cod.*;
 import fr.unice.polytech.cod.ingredient.Ingredient;
 
 import java.util.*;
@@ -31,10 +28,10 @@ public class Store {
      * Gets a list of available TimeSlots from all the employees of the store by Date;
      * @return
      */
-    public List<TimeSlot> timeSlotAvailables(Date date){
+    public List<TimeSlot> timeSlotAvailables(){
         List<TimeSlot> timeSlots = new ArrayList<>();
         for (Chef chef:listChef){
-            timeSlots.addAll(chef.getTimeSlotsAvailables(date));
+            timeSlots.addAll(chef.getTimeSlotsAvailables());
         }
         return(timeSlots);
     }
@@ -63,6 +60,14 @@ public class Store {
             stock.lock(ingredient);
         this.orderList.add(order);
     }
+
+    public void associateOrder(Chef chef, Order orderToPrepare) {
+        if(chef.isAvailable()) {
+            chef.associateOrder(orderToPrepare);
+            orderToPrepare.setState(OrderState.IN_PROGRESS);
+        }
+    }
+
 
 
     public Stock getStock() {

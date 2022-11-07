@@ -58,10 +58,13 @@ public class Chef {
 
     /**
      * gives the Available TimeSlots of this Chef
-     * @param date
      * @return
      */
-    public List<TimeSlot> getTimeSlotsAvailables(Date date){
-        return(this.schedule.getTimeSlots(date));
+    public List<TimeSlot> getTimeSlotsAvailables(){
+        return(this.schedule.getTimeSlots());
+    }
+
+    public Schedule getSchedule() {
+        return schedule;
     }
 }

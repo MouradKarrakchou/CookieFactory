@@ -8,7 +8,8 @@ public class TimeSlot {
     Time startTime;
     Time endTime;
     Optional<Order> order;
-    DaySlot daySlot;
+    boolean reserved=true;
+
     public TimeSlot(Time startTime,Time endTime){
         this.startTime=startTime;
         this.endTime=endTime;
@@ -19,29 +20,11 @@ public class TimeSlot {
      * associate this time slot with the order
      * @param order
      */
-    public void associateTimeSlot(Order order, int numberOfMinuteNeeded){
+    public void associateTimeSlot(Order order){
         this.order=Optional.of(order);}
 
-    /**
-     * Change the start time of the time slot
-     * @param time
-     * @return
-     */
-    public TimeSlot cutTimeSlotByStart(Time time){
-        TimeSlot newTimeSlot=new TimeSlot((Time)startTime.clone(),(Time)time.clone());
-        startTime=time;
-        return newTimeSlot;
-    }
-
-    /**
-     * Change the end time of the time slot
-     * @param time
-     * @return
-     */
-    public TimeSlot cutTimeSlotByEnd(Time time){
-        TimeSlot newTimeSlot=new TimeSlot((Time)time.clone(),(Time)endTime.clone());
-        endTime=time;
-        return newTimeSlot;
+    public void setReserved(boolean reserved) {
+        this.reserved = reserved;
     }
 
     /**
@@ -49,6 +32,7 @@ public class TimeSlot {
      * @return
      */
     public Optional<TimeSlot> timeSlotAvailable() {
+        if (this.reserved) return Optional.empty();
         if (order.isEmpty()) return(Optional.of(this));
         else return(Optional.empty());
     }
