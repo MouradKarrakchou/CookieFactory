@@ -13,6 +13,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.jupiter.api.Assertions;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -81,6 +82,16 @@ public class CartManagementStepDef {
     @When("he subscribe to the fidelity program as {string} with {string} mail and this password {string}")
     public void he_subscribe_to_the_fidelity_program(String name, String email, String password) {
         user.subscribeToFidelityAccount(name, email, password);
+    }
+
+    @When("the user validate his order")
+    public void the_user_validate_his_order() throws InvalidStoreExepection {
+        System.out.println("TODO");
+    }
+
+    @Then("the bill is created")
+    public void the_bill_is_created() throws InvalidStoreExepection {
+        System.out.println("TODO");
     }
 
     @Then("he take advantage of our loyalty program")
