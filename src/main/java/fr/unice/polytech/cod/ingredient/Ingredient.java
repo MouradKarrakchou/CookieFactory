@@ -31,6 +31,10 @@ public class Ingredient {
         return quantity;
     }
 
+    public double getPricePerGram() {
+        return pricePerGram;
+    }
+
 
     /**
      * Check if 2 objects are the same (same name, same class)
@@ -55,5 +59,11 @@ public class Ingredient {
     @Override
     public int hashCode() {
         return Objects.hash(name, pricePerGram, quantity);
+    }
+
+    @Override
+    public String toString() {
+
+        return name;
     }
 }

@@ -29,4 +29,6 @@ public class Order {
     public User getUser() {
         return user;
     }
+
+    public Cart getCart() { return cart;}
 }
