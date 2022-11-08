@@ -26,7 +26,6 @@ public class Chef {
     public void associateOrder(Order orderToPrepare) {
         this.orderToPrepare = Optional.of(orderToPrepare);
         this.state = ChefState.UNAVAILABLE;
-
     }
 
     public Optional<Order> getOrderToPrepare() {
