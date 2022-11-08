@@ -4,6 +4,7 @@ import fr.unice.polytech.cod.ingredient.Dough;
 import fr.unice.polytech.cod.ingredient.Flavour;
 import fr.unice.polytech.cod.ingredient.Ingredient;
 import fr.unice.polytech.cod.ingredient.Topping;
+import fr.unice.polytech.cod.store.InvalidStoreExepection;
 import fr.unice.polytech.cod.store.Stock;
 import fr.unice.polytech.cod.store.Store;
 import io.cucumber.java.en.And;
@@ -16,8 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.*;
 
 public class CartManagementStepDef {
 
@@ -25,6 +25,7 @@ public class CartManagementStepDef {
     Cart cart;
     Cookie testCookie;
     List<Cookie> cookieList;
+    Exception exception;
 
 
     @Given("a user")
@@ -35,6 +36,7 @@ public class CartManagementStepDef {
     public void a_non_empty_cart() {
         cart = user.getCart();
         cart.getItemList().add(new Item(testCookie, 2));
+        cart.setTimeSlot(new TimeSlot(null,null));
     }
     @And("a valid cookie")
     public void a_valid_cookie() {
@@ -56,11 +58,47 @@ public class CartManagementStepDef {
     public void he_requests_the_cookie_list() {
         // Write code here that turns the phrase above into concrete actions
         cookieList = user.viewCatalog();
-        if(cookieList.isEmpty()) System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     }
     @When("he validate his cart")
     public void he_validate_his_cart() throws Exception {
         user.validateCart();
+    }
+
+    @When("we choose a valid store")
+    public void we_choose_a_valid_store() throws InvalidStoreExepection {
+        user.selectStore("Antibes");
+    }
+
+
+    @When("we choose an invalid store")
+    public void we_choose_an_invalid_store() {
+        try {
+            user.selectStore("invalidStore");
+        } catch (InvalidStoreExepection e) {
+            this.exception=e;
+        }
+    }
+    @When("he subscribe to the fidelity program as {string} with {string} mail and this password {string}")
+    public void he_subscribe_to_the_fidelity_program(String name, String email, String password) {
+        user.subscribeToFidelityAccount(name, email, password);
+    }
+
+    @Then("he take advantage of our loyalty program")
+    public void he_take_advantage_of_our_loyalty_program() {
+        assertTrue(user.getSubscription().isPresent());
+    }
+    @Then("an InvalidStoreException is triggered")
+    public void an_invalid_store_exception_is_triggered() {
+        assertTrue(this.exception!=null);
+        if (this.exception!=null)
+            assertTrue(this.exception instanceof InvalidStoreExepection);
+    }
+
+
+
+    @Then("the right store is selected in the cart")
+    public void the_right_store_is_selected_in_the_cart() {
+        Assertions.assertTrue(user.getCart().getStore().getName().equals("Antibes"));
     }
 
 

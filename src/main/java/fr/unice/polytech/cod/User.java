@@ -5,24 +5,25 @@ import fr.unice.polytech.cod.store.Store;
 import fr.unice.polytech.cod.store.StoreManager;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 public class User {
     private CookieBook cookieBook;
     private Cart cart;
-    private FidelityAccount fidelityAccount;
     private List<Order> userOrders;
     private StoreManager storeManager;
     private List<Order> userOrdersHistory;
 
-    public User(CookieBook cookieBook, Cart cart, FidelityAccount fidelityAccount) {
+    private Optional<FidelityAccount> subscription;
+
+    public User(CookieBook cookieBook, Cart cart) {
         this.cookieBook = cookieBook;
         this.cart = cart;
-        this.fidelityAccount = fidelityAccount;
         this.userOrders = new ArrayList<>();
         this.userOrdersHistory = new ArrayList<>();
         this.storeManager=new StoreManager();
+        this.subscription = Optional.empty();
     }
 
     public User() {
@@ -82,8 +83,13 @@ public class User {
      * Gets a list of available TimeSlots by Date;
      * @return
      */
-    public List<TimeSlot> getAvailableTimeSlot(Date date){
-        return(this.cart.getStore().timeSlotAvailables(date));
+    public List<TimeSlot> getAvailableTimeSlot(){
+        return(this.cart.getStore().timeSlotAvailables());
+    }
+
+    public void chooseTimeSlot(TimeSlot timeSlot){
+        timeSlot.setReserved(true);
+        this.cart.setTimeSlot(timeSlot);
     }
 
     /**
@@ -131,5 +137,13 @@ public class User {
 
     public void removeOneItemFromCart(Item item) {
         cart.removeOneFromCart(item);
+    }
+
+    public void subscribeToFidelityAccount(String name, String email, String password){
+        this.subscription = Optional.of(new FidelityAccount(name, email, password));
+    }
+
+    public Optional<FidelityAccount> getSubscription() {
+        return subscription;
     }
 }
