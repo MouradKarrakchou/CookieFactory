@@ -5,24 +5,25 @@ import fr.unice.polytech.cod.store.Store;
 import fr.unice.polytech.cod.store.StoreManager;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 public class User {
     private CookieBook cookieBook;
     private Cart cart;
-    private FidelityAccount fidelityAccount;
     private List<Order> userOrders;
     private StoreManager storeManager;
     private List<Order> userOrdersHistory;
 
-    public User(CookieBook cookieBook, Cart cart, FidelityAccount fidelityAccount) {
+    private Optional<FidelityAccount> subscription;
+
+    public User(CookieBook cookieBook, Cart cart) {
         this.cookieBook = cookieBook;
         this.cart = cart;
-        this.fidelityAccount = fidelityAccount;
         this.userOrders = new ArrayList<>();
         this.userOrdersHistory = new ArrayList<>();
         this.storeManager=new StoreManager();
+        this.subscription = Optional.empty();
     }
 
     public User() {
@@ -94,28 +95,16 @@ public class User {
     /**
      * If the cart is not empty, validate the cart to create an order
      */
-    public void validateCart() throws Exception {
+    public Bill validateCart() throws Exception {
         //userOrders.add(this.cart.createOrder());
         if (!cart.isEmpty())
-            cart.validateCart(this);
+            return cart.validate(this);
         else
             throw new Exception("Panier vide impossible de le valider");
     }
 
     public Cart getCart() {
         return cart;
-    }
-
-    /**
-     * If the cart is validated, the client can finalise the order to get his bill
-     * @return the bill of the order
-     * @throws Exception
-     */
-    public Bill finaliseOrder() throws Exception {
-        if (cart.isValidated())
-            return new Bill();
-        else
-            throw new Exception("Panier non validé");
     }
 
     public void retrieveOrder(Order order) {
@@ -128,6 +117,8 @@ public class User {
 
     public void addOrder(Order order) {
         this.userOrders.add(order);
+        if(this.subscription.isPresent())
+            this.subscription.get().addOrder(order);
     }
 
     public List<Order> getOrders() {
@@ -155,5 +146,13 @@ public class User {
 
     public void removeOneItemFromCart(Item item) {
         cart.removeOneFromCart(item);
+    }
+
+    public void subscribeToFidelityAccount(String name, String email, String password){
+        this.subscription = Optional.of(new FidelityAccount(name, email, password));
+    }
+
+    public Optional<FidelityAccount> getSubscription() {
+        return subscription;
     }
 }

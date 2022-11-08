@@ -73,7 +73,6 @@ public class CartManagementStepDef {
     public void he_requests_the_cookie_list() {
         // Write code here that turns the phrase above into concrete actions
         cookieList = user.viewCatalog();
-        if(cookieList.isEmpty()) System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     }
     @When("he validate his cart")
     public void he_validate_his_cart() throws Exception {
@@ -94,7 +93,15 @@ public class CartManagementStepDef {
             this.exception=e;
         }
     }
+    @When("he subscribe to the fidelity program as {string} with {string} mail and this password {string}")
+    public void he_subscribe_to_the_fidelity_program(String name, String email, String password) {
+        user.subscribeToFidelityAccount(name, email, password);
+    }
 
+    @Then("he take advantage of our loyalty program")
+    public void he_take_advantage_of_our_loyalty_program() {
+        assertTrue(user.getSubscription().isPresent());
+    }
     @When("a user chooses a time slot")
     public void a_user_chooses_a_time_slot() {
         this.cart.setTimeSlot(timeSlot);
