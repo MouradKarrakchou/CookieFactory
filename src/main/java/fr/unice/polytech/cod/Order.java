@@ -1,10 +1,12 @@
 package fr.unice.polytech.cod;
 
-public class Order {
+import java.sql.Time;
 
-    OrderState orderState;
-    Cart cart;
-    User user;
+public class Order {
+    private OrderState orderState;
+    private Cart cart;
+    private User user;
+    private Time finishTime;
 
     public Order(Cart cart, User user) {
         this.cart = cart;
@@ -16,6 +18,14 @@ public class Order {
         this.cart = cart;
         this.orderState = orderState;
         this.user = user;
+    }
+
+    public void setFinishTime(Time finishTime){
+        this.finishTime = finishTime;
+    }
+
+    public Time getFinishTime(){
+        return finishTime;
     }
 
     public OrderState getOrderState() {
