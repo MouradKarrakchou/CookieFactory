@@ -66,7 +66,7 @@ public class Cart {
         Order order = new Order(this, user);
         user.addOrder(order);
         store.addOrder(order, ingredientsNeeded);
-        this.timeSlot.associateTimeSlot(order);
+        this.timeSlot.associate(order);
 
         return new Bill(order);
     }

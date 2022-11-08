@@ -1,4 +1,4 @@
-Feature Create the bill
+Feature: Create the bill
 
   Background:
     Given a user
@@ -6,5 +6,6 @@ Feature Create the bill
 
 
   Scenario: create the bill
-    When the user validate his order
+    When  the user validate his order
     Then the bill is created
+

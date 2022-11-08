@@ -17,22 +17,13 @@ public class User {
 
     private Optional<FidelityAccount> subscription;
 
-    public User(CookieBook cookieBook, Cart cart) {
+    public User(CookieBook cookieBook, Cart cart,StoreManager storeManager) {
         this.cookieBook = cookieBook;
         this.cart = cart;
         this.userOrders = new ArrayList<>();
         this.userOrdersHistory = new ArrayList<>();
-        this.storeManager=new StoreManager();
+        this.storeManager=storeManager;
         this.subscription = Optional.empty();
-    }
-
-    public User() {
-        //for cumcumber test
-        this.cookieBook = new CookieBook();
-        this.cart = new Cart();
-        this.userOrders = new ArrayList<>();
-        this.userOrdersHistory = new ArrayList<>();
-        this.storeManager=new StoreManager();
     }
 
     /**
@@ -117,6 +108,8 @@ public class User {
 
     public void addOrder(Order order) {
         this.userOrders.add(order);
+        if(this.subscription.isPresent())
+            this.subscription.get().addOrder(order);
     }
 
     public List<Order> getOrders() {
@@ -133,6 +126,13 @@ public class User {
 
     public Item getItemFromCart(String itemName) throws Exception {
         return cart.getItem(itemName);
+    }
+
+    public StoreManager getStoreManager() {
+        return storeManager;
+    }
+    public Store getStore(){
+        return(this.cart.getStore());
     }
 
     public void removeOneItemFromCart(Item item) {

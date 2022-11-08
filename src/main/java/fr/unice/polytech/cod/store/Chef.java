@@ -11,13 +11,11 @@ import java.util.Optional;
 
 public class Chef {
     Schedule schedule;
-    boolean available;
     Optional<Order> orderToPrepare;
     ChefState state;
 
     public Chef(Schedule schedule) {
         this.schedule = schedule;
-        this.available = true;
         this.state = ChefState.AVAILABLE;
     }
 
@@ -27,7 +25,8 @@ public class Chef {
      */
     public void associateOrder(Order orderToPrepare) {
         this.orderToPrepare = Optional.of(orderToPrepare);
-        this.available = false;
+        this.state = ChefState.UNAVAILABLE;
+        //Dans
     }
 
     public Optional<Order> getOrderToPrepare() {
@@ -35,7 +34,7 @@ public class Chef {
     }
 
     public boolean isAvailable() {
-        return available;
+        return state == ChefState.AVAILABLE;
     }
 
     public void giveOrder() throws Exception {
