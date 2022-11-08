@@ -40,7 +40,7 @@ public class BillTest {
         Cookie cookie = new Cookie("CooKie", dough, flavour, toppings);
         Item item = new Item(cookie, 1);
         cart.addToCart(item);
-        bill.showBill();
+        System.out.println(bill.showBill());
 
         toppings.add(topping1);
         toppings.add(topping2);
@@ -48,6 +48,6 @@ public class BillTest {
         cookie = new Cookie("CooKie", dough, flavour, toppings);
         item = new Item(cookie, 1);
         cart.addToCart(item);
-        bill.showBill();
+        System.out.println(bill.showBill());
     }
 }

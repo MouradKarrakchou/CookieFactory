@@ -16,9 +16,11 @@ public class Bill {
         this.numberOrder = Store.orderNumber++;
     }
 
-    public void showBill() {
+    public String showBill() {
+        String receipt = "";
+
         String storeName = order.getCart().getStore().getName();
-        System.out.println("==========" + storeName + "==========");
+        receipt += "==========" + storeName + "==========\n";
         List<Item> items = order.getCart().getItemList();
 
         double totalPrice = 0;
@@ -29,21 +31,23 @@ public class Bill {
             Flavour flavour = cookie.getFlavour();
             List<Topping> toppings = cookie.getToppingList();
 
-            System.out.println(cookie.getName() + ":");
-            System.out.println("    " + dough.toString() + ".........." + dough.getQuantity() * dough.getPricePerGram() + "€");
-            System.out.println("    " + flavour.toString() + ".........." + flavour.getQuantity() * flavour.getPricePerGram() + "€");
+            receipt += cookie.getName() + ":\n";
+            receipt += "    " + dough.toString() + ".........." + dough.getQuantity() * dough.getPricePerGram() + "€\n";
+            receipt += "    " + flavour.toString() + ".........." + flavour.getQuantity() * flavour.getPricePerGram() + "€\n";
 
             totalPrice += dough.getQuantity() * dough.getPricePerGram() + flavour.getQuantity() * flavour.getPricePerGram();
 
             if(!toppings.isEmpty()) {
                 for (Topping topping : toppings) {
-                    System.out.println("    " + topping.toString() + ".........." + topping.getQuantity() * topping.getPricePerGram() + "€");
+                    receipt += "    " + topping.toString() + ".........." + topping.getQuantity() * topping.getPricePerGram() + "€\n";
                     totalPrice += topping.getQuantity() * topping.getPricePerGram();
                 }
             }
         }
 
-        System.out.println("=========================");
-        System.out.println("Total price.........." + totalPrice + "€");
+        receipt += "=========================\n";
+        receipt += "Total price.........." + totalPrice + "€\n";
+
+        return receipt;
     }
 }
