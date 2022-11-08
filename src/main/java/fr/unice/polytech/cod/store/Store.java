@@ -13,6 +13,7 @@ public class Store {
     List<Order> orderList;
     List<Chef> listChef;
     private final Stock stock;
+    public static int orderNumber = 0;
 
     public Store(String name) {
         this.name=name;
