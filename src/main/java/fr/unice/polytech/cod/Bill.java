@@ -34,9 +34,12 @@ public class Bill {
             System.out.println("    " + flavour.toString() + ".........." + flavour.getQuantity() * flavour.getPricePerGram() + "€");
 
             totalPrice += dough.getQuantity() * dough.getPricePerGram() + flavour.getQuantity() * flavour.getPricePerGram();
-            for(Topping topping : toppings) {
-                System.out.println("    " + topping.toString() + ".........." + topping.getQuantity() * topping.getPricePerGram() + "€");
-                totalPrice += topping.getQuantity() * topping.getPricePerGram();
+
+            if(!toppings.isEmpty()) {
+                for (Topping topping : toppings) {
+                    System.out.println("    " + topping.toString() + ".........." + topping.getQuantity() * topping.getPricePerGram() + "€");
+                    totalPrice += topping.getQuantity() * topping.getPricePerGram();
+                }
             }
         }
 
