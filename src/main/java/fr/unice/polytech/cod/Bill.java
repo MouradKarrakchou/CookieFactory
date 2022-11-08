@@ -17,10 +17,10 @@ public class Bill {
     }
 
     public String showBill() {
-        String receipt = "";
+        StringBuilder receipt = new StringBuilder();
 
         String storeName = order.getCart().getStore().getName();
-        receipt += "==========" + storeName + "==========\n";
+        receipt.append("===============").append(storeName).append("===============\n");
         List<Item> items = order.getCart().getItemList();
 
         double totalPrice = 0;
@@ -31,23 +31,24 @@ public class Bill {
             Flavour flavour = cookie.getFlavour();
             List<Topping> toppings = cookie.getToppingList();
 
-            receipt += cookie.getName() + ":\n";
-            receipt += "    " + dough.toString() + ".........." + dough.getQuantity() * dough.getPricePerGram() + "€\n";
-            receipt += "    " + flavour.toString() + ".........." + flavour.getQuantity() * flavour.getPricePerGram() + "€\n";
+            receipt.append(cookie.getName()).append(":\n");
+            receipt.append("    ").append(dough.toString()).append("..........").append(dough.getQuantity() * dough.getPricePerGram()).append("€\n");
+            receipt.append("    ").append(flavour.toString()).append("..........").append(flavour.getQuantity() * flavour.getPricePerGram()).append("€\n");
 
             totalPrice += dough.getQuantity() * dough.getPricePerGram() + flavour.getQuantity() * flavour.getPricePerGram();
 
             if(!toppings.isEmpty()) {
                 for (Topping topping : toppings) {
-                    receipt += "    " + topping.toString() + ".........." + topping.getQuantity() * topping.getPricePerGram() + "€\n";
+                    receipt.append("    ").append(topping.toString()).append("..........").append(topping.getQuantity() * topping.getPricePerGram()).append("€\n");
                     totalPrice += topping.getQuantity() * topping.getPricePerGram();
                 }
             }
         }
 
-        receipt += "=========================\n";
-        receipt += "Total price.........." + totalPrice + "€\n";
+        receipt.append("===================================\n");
+        receipt.append("Total price..........").append(totalPrice).append("€\n");
 
-        return receipt;
+        System.out.println(receipt);
+        return receipt.toString();
     }
 }
