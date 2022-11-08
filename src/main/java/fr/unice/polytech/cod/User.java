@@ -129,6 +129,8 @@ public class User {
 
     public void addOrder(Order order) {
         this.userOrders.add(order);
+        if(this.subscription.isPresent())
+            this.subscription.get().addOrder(order);
     }
 
     public List<Order> getOrders() {

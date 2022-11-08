@@ -46,4 +46,7 @@ public class FidelityAccount {
         return orderList;
     }
 
+    public void addOrder(Order order) {
+        this.orderList.add(order);
+    }
 }
