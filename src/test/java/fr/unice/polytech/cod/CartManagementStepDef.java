@@ -39,9 +39,9 @@ public class CartManagementStepDef {
         cart.setTimeSlot(timeSlot);
     }
 
-    @Given("the antibes store")
-    public void the_antibes_store() throws InvalidStoreExepection {
-        user.selectStore("Antibes");
+    @Given("a store named {string}")
+    public void the_antibes_store(String name) throws InvalidStoreExepection {
+        user.selectStore(name);
         user.getStore().getStock().addStock(new Dough("Pate verte",25,100));
         user.getStore().getStock().addStock(new Flavour("Vert",25,100));
     }
@@ -53,6 +53,12 @@ public class CartManagementStepDef {
         cart.getItemList().add(new Item(testCookie, 2));
         cart.setTimeSlot(new TimeSlot(null,null));
     }
+    @And("a non-empty cart with one cookie")
+    public void a_non_empty_cart_with_one_cookie() {
+        cart = user.getCart();
+        cart.getItemList().add(new Item(testCookie, 1));
+        cart.setTimeSlot(new TimeSlot(null,null));
+    }
     @And("a valid cookie")
     public void a_valid_cookie() {
         testCookie =new Cookie("testCookie", new Dough("Pate verte",25,50),new Flavour("Vert",25,50),new ArrayList<Topping>());
@@ -61,7 +67,7 @@ public class CartManagementStepDef {
 
     @When("he add cookie to his cart")
     public void he_add_cookie_to_his_cart() {
-        user.chooseCookies(testCookie, 2);
+        user.chooseCookies(testCookie, 1);
     }
     @When("he remove a cookie from his cart")
     public void he_remove_a_cookie_from_his_cart() throws Exception {
@@ -153,7 +159,7 @@ public class CartManagementStepDef {
 
     @Then("a cookie is added to his cart")
     public void a_cookie_is_added_to_his_cart() {
-        assertEquals(1, user.getCart().getItemList().size());
+        assertEquals(2, user.getCart().getItemList().size());
     }
 
     @Then("his cart has one item less")

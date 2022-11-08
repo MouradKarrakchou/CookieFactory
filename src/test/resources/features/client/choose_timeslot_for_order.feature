@@ -5,7 +5,7 @@ Feature: Choose a time slot
     Given a user
     And a valid cookie
     And a non-empty cart
-    And the antibes store
+    And a store named "Antibes"
 
   Scenario: the user choose a valid time slot and validate his cart
     Given a valid time slot

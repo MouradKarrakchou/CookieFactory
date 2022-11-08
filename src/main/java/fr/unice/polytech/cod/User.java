@@ -33,6 +33,7 @@ public class User {
         this.userOrders = new ArrayList<>();
         this.userOrdersHistory = new ArrayList<>();
         this.storeManager=new StoreManager();
+        this.subscription = Optional.empty();
     }
 
     /**
