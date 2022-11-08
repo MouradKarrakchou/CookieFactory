@@ -33,6 +33,7 @@ public class User {
         this.userOrders = new ArrayList<>();
         this.userOrdersHistory = new ArrayList<>();
         this.storeManager=new StoreManager();
+        this.subscription = Optional.empty();
     }
 
     /**
@@ -135,6 +136,13 @@ public class User {
 
     public Item getItemFromCart(String itemName) throws Exception {
         return cart.getItem(itemName);
+    }
+
+    public StoreManager getStoreManager() {
+        return storeManager;
+    }
+    public Store getStore(){
+        return(this.cart.getStore());
     }
 
     public void removeOneItemFromCart(Item item) {
