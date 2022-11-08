@@ -4,6 +4,8 @@ import fr.unice.polytech.cod.ingredient.Dough;
 import fr.unice.polytech.cod.ingredient.Flavour;
 import fr.unice.polytech.cod.store.Stock;
 import fr.unice.polytech.cod.store.Store;
+import fr.unice.polytech.cod.store.StoreManager;
+
 import java.util.ArrayList;
 
 public class Main {
@@ -16,7 +18,7 @@ public class Main {
         CookieBook cookieBook = new CookieBook();
         Cart cart = new Cart();
         FidelityAccount fidelityAccount = new FidelityAccount();
-        User user = new User(cookieBook, cart);
+        User user = new User(cookieBook, cart,new StoreManager());
 
         Display.displayCookies(user.viewCatalog());
 

@@ -8,7 +8,7 @@ public class TimeSlot {
     Time startTime;
     Time endTime;
     Optional<Order> order;
-    boolean reserved=true;
+    boolean reserved=false;
 
     public TimeSlot(Time startTime,Time endTime){
         this.startTime=startTime;
@@ -20,7 +20,7 @@ public class TimeSlot {
      * associate this time slot with the order
      * @param order
      */
-    public void associateTimeSlot(Order order){
+    public void associate(Order order){
         this.order=Optional.of(order);}
 
     public void setReserved(boolean reserved) {

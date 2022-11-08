@@ -17,22 +17,12 @@ public class User {
 
     private Optional<FidelityAccount> subscription;
 
-    public User(CookieBook cookieBook, Cart cart) {
+    public User(CookieBook cookieBook, Cart cart,StoreManager storeManager) {
         this.cookieBook = cookieBook;
         this.cart = cart;
         this.userOrders = new ArrayList<>();
         this.userOrdersHistory = new ArrayList<>();
-        this.storeManager=new StoreManager();
-        this.subscription = Optional.empty();
-    }
-
-    public User() {
-        //for cumcumber test
-        this.cookieBook = new CookieBook();
-        this.cart = new Cart();
-        this.userOrders = new ArrayList<>();
-        this.userOrdersHistory = new ArrayList<>();
-        this.storeManager=new StoreManager();
+        this.storeManager=storeManager;
         this.subscription = Optional.empty();
     }
 

@@ -3,6 +3,7 @@ package fr.unice.polytech.cod;
 import fr.unice.polytech.cod.store.Chef;
 import fr.unice.polytech.cod.store.ChefState;
 import fr.unice.polytech.cod.store.Store;
+import fr.unice.polytech.cod.store.StoreManager;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -24,7 +25,7 @@ public class ManageTheKitchenPassageAndOrders {
     }
     @And("An order at the state \"([^\"]*)\"$")
     public void an_order_at_the_state(OrderState orderState) {
-        order = new Order(null, orderState, new User());
+        order = new Order(null, orderState, new User(new CookieBook(),new Cart(),new StoreManager()));
         if(orderState == OrderState.READY) chef.associateOrder(order);
     }
 

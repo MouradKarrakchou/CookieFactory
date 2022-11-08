@@ -7,6 +7,7 @@ import fr.unice.polytech.cod.ingredient.Topping;
 import fr.unice.polytech.cod.store.InvalidStoreExepection;
 import fr.unice.polytech.cod.store.Stock;
 import fr.unice.polytech.cod.store.Store;
+import fr.unice.polytech.cod.store.StoreManager;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -31,7 +32,7 @@ public class CartManagementStepDef {
 
     @Given("a user")
     public void a_user() {
-        user = new User();
+        user = new User(new CookieBook(),new Cart(),new StoreManager());
     }
 
     @Given("a valid time slot")
@@ -121,7 +122,7 @@ public class CartManagementStepDef {
     }
     @When("a user chooses a time slot")
     public void a_user_chooses_a_time_slot() {
-        this.cart.setTimeSlot(timeSlot);
+        this.user.chooseTimeSlot(timeSlot);
     }
     @When("he validate the cart")
     public void he_validate_the_cart() throws Exception {
