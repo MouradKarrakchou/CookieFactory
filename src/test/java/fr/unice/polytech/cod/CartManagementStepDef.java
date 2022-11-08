@@ -107,8 +107,8 @@ public class CartManagementStepDef {
         this.cart.setTimeSlot(timeSlot);
     }
     @When("he validate the cart")
-    public void he_validate_the_cart() {
-        this.cart.validateCart(user);
+    public void he_validate_the_cart() throws Exception {
+        this.cart.validate(user);
     }
 
     @Then("the order is associated with the time slot")
