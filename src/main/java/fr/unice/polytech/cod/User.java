@@ -95,28 +95,16 @@ public class User {
     /**
      * If the cart is not empty, validate the cart to create an order
      */
-    public void validateCart() throws Exception {
+    public Bill validateCart() throws Exception {
         //userOrders.add(this.cart.createOrder());
         if (!cart.isEmpty())
-            cart.validateCart(this);
+            return cart.validate(this);
         else
             throw new Exception("Panier vide impossible de le valider");
     }
 
     public Cart getCart() {
         return cart;
-    }
-
-    /**
-     * If the cart is validated, the client can finalise the order to get his bill
-     * @return the bill of the order
-     * @throws Exception
-     */
-    public Bill finaliseOrder() throws Exception {
-        if (cart.isValidated())
-            return new Bill();
-        else
-            throw new Exception("Panier non validé");
     }
 
     public void retrieveOrder(Order order) {
@@ -129,6 +117,8 @@ public class User {
 
     public void addOrder(Order order) {
         this.userOrders.add(order);
+        if(this.subscription.isPresent())
+            this.subscription.get().addOrder(order);
     }
 
     public List<Order> getOrders() {
@@ -145,6 +135,13 @@ public class User {
 
     public Item getItemFromCart(String itemName) throws Exception {
         return cart.getItem(itemName);
+    }
+
+    public StoreManager getStoreManager() {
+        return storeManager;
+    }
+    public Store getStore(){
+        return(this.cart.getStore());
     }
 
     public void removeOneItemFromCart(Item item) {
