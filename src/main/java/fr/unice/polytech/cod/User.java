@@ -146,6 +146,13 @@ public class User {
         return cart.getItem(itemName);
     }
 
+    public StoreManager getStoreManager() {
+        return storeManager;
+    }
+    public Store getStore(){
+        return(this.cart.getStore());
+    }
+
     public void removeOneItemFromCart(Item item) {
         cart.removeOneFromCart(item);
     }

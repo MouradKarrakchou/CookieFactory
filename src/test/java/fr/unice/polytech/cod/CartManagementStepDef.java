@@ -26,12 +26,27 @@ public class CartManagementStepDef {
     Cookie testCookie;
     List<Cookie> cookieList;
     Exception exception;
-
+    TimeSlot timeSlot;
 
     @Given("a user")
     public void a_user() {
         user = new User();
     }
+
+    @Given("a valid time slot")
+    public void a_valid_time_slot() {
+        timeSlot=new TimeSlot(null,null);
+        cart.setTimeSlot(timeSlot);
+    }
+
+    @Given("the antibes store")
+    public void the_antibes_store() throws InvalidStoreExepection {
+        user.selectStore("Antibes");
+        user.getStore().getStock().addStock(new Dough("Pate verte",25,100));
+        user.getStore().getStock().addStock(new Flavour("Vert",25,100));
+    }
+
+
     @And("a non-empty cart")
     public void a_non_empty_cart() {
         cart = user.getCart();
@@ -80,6 +95,26 @@ public class CartManagementStepDef {
         }
     }
 
+    @When("a user chooses a time slot")
+    public void a_user_chooses_a_time_slot() {
+        this.cart.setTimeSlot(timeSlot);
+    }
+    @When("he validate the cart")
+    public void he_validate_the_cart() {
+        this.cart.validateCart(user);
+    }
+
+    @Then("the order is associated with the time slot")
+    public void the_order_is_associated_with_the_time_slot() throws InvalidStoreExepection {
+        Store store=this.user.getStoreManager().selectStore("Antibes");
+        assertEquals(1,store.getOrderList().size());
+        assertTrue(this.timeSlot.order.isPresent());
+        assertTrue(this.timeSlot.reserved);
+    }
+    @Then("the order is reserverd")
+    public void the_order_is_reserverd() {
+        assertTrue(this.timeSlot.reserved);
+    }
 
     @Then("an InvalidStoreException is triggered")
     public void an_invalid_store_exception_is_triggered() {
