@@ -3,7 +3,7 @@ Feature: Add cookie to the cart
   Background:
     Given a user
     And a valid cookie
-    And the antibes store
+    And a store named "Antibes"
     And a non-empty cart
 
 
