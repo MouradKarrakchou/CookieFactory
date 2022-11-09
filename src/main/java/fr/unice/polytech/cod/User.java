@@ -102,7 +102,7 @@ public class User {
         if (userOrders.contains(order)) {
             userOrdersHistory.add(order);
             userOrders.remove(order);
-            order.setState(OrderState.RETRIEVE);
+            order.updateState(OrderState.RETRIEVE);
         }
     }
 

@@ -32,7 +32,15 @@ public class Order {
         return orderState;
     }
 
-    public void setState(OrderState state) {
+    /**
+     * Set the state of the order to the given OrderState
+     * If the state is set to READY the finishTime will be set to now.
+     * @param state The new state of the order
+     */
+    public void updateState(OrderState state) {
+        if(state == OrderState.READY)
+            finishTime = new Time(System.currentTimeMillis());
+
         this.orderState = state;
     }
 

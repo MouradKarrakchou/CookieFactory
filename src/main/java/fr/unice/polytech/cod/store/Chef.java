@@ -5,7 +5,6 @@ import fr.unice.polytech.cod.OrderState;
 import fr.unice.polytech.cod.Schedule;
 import fr.unice.polytech.cod.TimeSlot;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,7 +39,7 @@ public class Chef {
     public void giveOrder() throws Exception {
         if(this.orderToPrepare.isPresent()){
             Order order = orderToPrepare.get();
-            order.setState(OrderState.RETRIEVE);
+            order.updateState(OrderState.RETRIEVE);
             this.orderToPrepare = Optional.empty();
         }
         else

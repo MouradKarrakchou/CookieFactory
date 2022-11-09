@@ -15,7 +15,7 @@ import java.util.List;
 
 public class BillTest {
     Store store = new Store("StoRe");
-    User user = new User();
+    User user = new User(null, null, null); // Added null caused compile error
     Cart cart = new Cart();
     Order order = new Order(cart, user);
     Bill bill = new Bill(order);
