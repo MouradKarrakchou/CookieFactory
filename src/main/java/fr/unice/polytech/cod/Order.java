@@ -28,7 +28,7 @@ public class Order {
         return finishTime;
     }
 
-    public OrderState getOrderState() {
+    public OrderState getState() {
         return orderState;
     }
 
