@@ -29,6 +29,7 @@ public class CartManagementStepDef {
     List<Cookie> cookieList;
     Exception exception;
     TimeSlot timeSlot;
+    Bill bill;
 
     @Given("a user")
     public void a_user() {
@@ -87,7 +88,7 @@ public class CartManagementStepDef {
     }
     @When("he validate his cart")
     public void he_validate_his_cart() throws Exception {
-        user.validateCart();
+        bill = user.validateCart();
     }
     @When("we choose a valid store")
     public void we_choose_a_valid_store() throws InvalidStoreExepection {
@@ -105,10 +106,6 @@ public class CartManagementStepDef {
     public void he_subscribe_to_the_fidelity_program(String name, String email, String password) {
         user.subscribeToFidelityAccount(name, email, password);
     }
-    @When("the user validate his order")
-    public void the_user_validate_his_order() throws InvalidStoreExepection {
-        System.out.println("TODO");
-    }
     @When("a user chooses a time slot")
     public void a_user_chooses_a_time_slot() {
         this.user.chooseTimeSlot(timeSlot);
@@ -120,7 +117,7 @@ public class CartManagementStepDef {
 
     @Then("the bill is created")
     public void the_bill_is_created() throws InvalidStoreExepection {
-        System.out.println("TODO");
+       assertTrue(bill != null);
     }
     @Then("he take advantage of our loyalty program")
     public void he_take_advantage_of_our_loyalty_program() {

@@ -12,3 +12,5 @@ Feature: Receive a discount after ordering 30 cookies
     When he validate his cart
     Then he receive a discount for his next order
 
+
+

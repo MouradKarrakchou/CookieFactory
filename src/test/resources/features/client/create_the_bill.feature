@@ -2,10 +2,12 @@ Feature: Create the bill
 
   Background:
     Given a user
-    And An order at the state "PENDING"
+    And a store named "Antibes"
+    And a valid cookie
+    And a non-empty cart with 1 cookie
 
 
   Scenario: create the bill
-    When  the user validate his order
+    When he validate his cart
     Then the bill is created
 
