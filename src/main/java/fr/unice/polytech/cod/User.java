@@ -146,4 +146,19 @@ public class User {
     public Optional<FidelityAccount> getSubscription() {
         return subscription;
     }
+
+    public boolean hasDiscount() {
+        if(this.getSubscription().isEmpty()) return false;
+        FidelityAccount subscription =  this.getSubscription().get();
+        return subscription.getDiscount().isPresent();
+    }
+
+    public Optional<Discount> getDiscount() {
+        return subscription.get().getDiscount();
+    }
+
+    public void useDiscount(Order order) {
+        order.setDiscount(this.getDiscount());
+        this.getSubscription().get().resetDiscount();
+    }
 }

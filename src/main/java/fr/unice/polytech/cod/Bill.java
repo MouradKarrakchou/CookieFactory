@@ -44,7 +44,11 @@ public class Bill {
                 }
             }
         }
-
+        if(order.getDiscount().isPresent()){
+            Discount discount = order.getDiscount().get();
+            totalPrice-=totalPrice*discount.getValue();
+            receipt.append("    ").append(discount.getName()).append("..........").append(discount.getValue()).append("%\n");
+        }
         receipt.append("===================================\n");
         receipt.append("Total price..........").append(totalPrice).append("€\n");
 

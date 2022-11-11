@@ -1,6 +1,7 @@
 package fr.unice.polytech.cod;
 
 import java.sql.Time;
+import java.util.Optional;
 
 public class Order {
     private OrderState orderState;
@@ -8,16 +9,20 @@ public class Order {
     private User user;
     private Time finishTime;
 
+    private Optional<Discount> discount;
+
     public Order(Cart cart, User user) {
         this.cart = cart;
         this.orderState = OrderState.PENDING;
         this.user = user;
+        this.discount = Optional.empty();
     }
 
     public Order(Cart cart, OrderState orderState, User user) {
         this.cart = cart;
         this.orderState = orderState;
         this.user = user;
+        this.discount = Optional.empty();
     }
 
     public void setFinishTime(Time finishTime){
@@ -49,4 +54,12 @@ public class Order {
     }
 
     public Cart getCart() { return cart;}
+
+    public Optional<Discount> getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Optional<Discount> discount) {
+        this.discount = discount;
+    }
 }

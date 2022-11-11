@@ -47,24 +47,27 @@ public class CartManagementStepDef {
         user.getStore().getStock().addStock(new Dough("Pate verte",25,100));
         user.getStore().getStock().addStock(new Flavour("Vert",25,100));
     }
-
-
-    @And("a non-empty cart")
+    @Given("a valid cookie")
+    public void a_valid_cookie() {
+        testCookie = new Cookie("testCookie", new Dough("Pate verte",25,1),new Flavour("Vert",25,1),new ArrayList<Topping>());
+    }
+    @Given("a fidelity account")
+    public void a_fidelity_account() throws InvalidStoreExepection {
+        user.subscribeToFidelityAccount("name", "email", "password");
+    }
+    @Given("a non-empty cart")
     public void a_non_empty_cart() {
         cart = user.getCart();
         cart.getItemList().add(new Item(testCookie, 2));
         cart.setTimeSlot(new TimeSlot(null,null));
     }
-    @And("a non-empty cart with one cookie")
-    public void a_non_empty_cart_with_one_cookie() {
+    @Given("a non-empty cart with {int} cookie")
+    public void a_non_empty_cart_with_cookie(int nbCookies) {
         cart = user.getCart();
-        cart.getItemList().add(new Item(testCookie, 1));
+        cart.getItemList().add(new Item(testCookie, nbCookies));
         cart.setTimeSlot(new TimeSlot(null,null));
     }
-    @And("a valid cookie")
-    public void a_valid_cookie() {
-        testCookie =new Cookie("testCookie", new Dough("Pate verte",25,50),new Flavour("Vert",25,50),new ArrayList<Topping>());
-    }
+
 
 
     @When("he add cookie to his cart")
@@ -86,13 +89,10 @@ public class CartManagementStepDef {
     public void he_validate_his_cart() throws Exception {
         user.validateCart();
     }
-
     @When("we choose a valid store")
     public void we_choose_a_valid_store() throws InvalidStoreExepection {
         user.selectStore("Antibes");
     }
-
-
     @When("we choose an invalid store")
     public void we_choose_an_invalid_store() {
         try {
@@ -105,30 +105,27 @@ public class CartManagementStepDef {
     public void he_subscribe_to_the_fidelity_program(String name, String email, String password) {
         user.subscribeToFidelityAccount(name, email, password);
     }
-
     @When("the user validate his order")
     public void the_user_validate_his_order() throws InvalidStoreExepection {
         System.out.println("TODO");
+    }
+    @When("a user chooses a time slot")
+    public void a_user_chooses_a_time_slot() {
+        this.user.chooseTimeSlot(timeSlot);
+    }
+    @When("he order {int} cookies")
+    public void he_order_cookies(int numberOfCookies) throws InvalidStoreExepection {
+        user.chooseCookies(testCookie, numberOfCookies);
     }
 
     @Then("the bill is created")
     public void the_bill_is_created() throws InvalidStoreExepection {
         System.out.println("TODO");
     }
-
     @Then("he take advantage of our loyalty program")
     public void he_take_advantage_of_our_loyalty_program() {
         assertTrue(user.getSubscription().isPresent());
     }
-    @When("a user chooses a time slot")
-    public void a_user_chooses_a_time_slot() {
-        this.user.chooseTimeSlot(timeSlot);
-    }
-    @When("he validate the cart")
-    public void he_validate_the_cart() throws Exception {
-        this.cart.validate(user);
-    }
-
     @Then("the order is associated with the time slot")
     public void the_order_is_associated_with_the_time_slot() throws InvalidStoreExepection {
         Store store=this.user.getStoreManager().selectStore("Antibes");
@@ -147,15 +144,10 @@ public class CartManagementStepDef {
         if (this.exception!=null)
             assertTrue(this.exception instanceof InvalidStoreExepection);
     }
-
-
-
     @Then("the right store is selected in the cart")
     public void the_right_store_is_selected_in_the_cart() {
         Assertions.assertTrue(user.getCart().getStore().getName().equals("Antibes"));
     }
-
-
     @Then("his order is created")
     public void his_order_is_created(){
         Assertions.assertEquals(1, user.getOrders().size());
@@ -168,15 +160,17 @@ public class CartManagementStepDef {
     public void he_receive_the_entire_list() {
         assertFalse(cookieList.isEmpty());
     }
-
     @Then("a cookie is added to his cart")
     public void a_cookie_is_added_to_his_cart() {
         assertEquals(2, user.getCart().getItemList().size());
     }
-
     @Then("his cart has one item less")
     public void his_cart_has_one_item_less() {
        assertEquals(1, cart.getItemQuantity("testCookie"));
+    }
+    @Then("he receive a discount for his next order")
+    public void he_receive_a_discount_for_his_next_order() {
+        assertTrue(user.hasDiscount());
     }
 
 }

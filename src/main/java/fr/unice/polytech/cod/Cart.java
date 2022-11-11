@@ -25,6 +25,7 @@ public class Cart {
 
     /**
      * If the store as the ingredients, add an item to the cart
+     *
      * @param item
      * @return
      */
@@ -38,10 +39,11 @@ public class Cart {
 
     /**
      * Remove one from the quantity of the item, if the item is present as one copy, then it is deleted
+     *
      * @param item The item present in the cart.
      */
     public void removeOneFromCart(Item item) {
-        if(item.getQuantity() == 1)
+        if (item.getQuantity() == 1)
             itemList.remove(item);
         else
             item.updateQuantity(-1);
@@ -54,19 +56,23 @@ public class Cart {
     /**
      * Validdte the cart and create an order, that is added to the user and the sore.
      * The cart is validated only if the store has all the ingredients needed
+     *
      * @param user
      * @return
      */
     public Bill validate(User user) throws Exception {
         Set<Ingredient> ingredientsNeeded = generateIngredientsNeeded(this.itemList);
-        if(!store.hasEnoughIngredients(ingredientsNeeded))
+        if (!store.hasEnoughIngredients(ingredientsNeeded))
             throw new Exception("Ingrédients indisponibles");
 
-        this.isValidated = true;
         Order order = new Order(this, user);
+        if (user.hasDiscount())
+            user.useDiscount(order);
         user.addOrder(order);
         store.addOrder(order, ingredientsNeeded);
+
         this.timeSlot.associate(order);
+        this.isValidated = true;
 
         return new Bill(order);
     }
@@ -81,24 +87,25 @@ public class Cart {
 
     /**
      * Take a list of ingredients and return a set of the ingredients needed
+     *
      * @param items
      * @return A set of the ingredients needed
      */
-    private Set<Ingredient> generateIngredientsNeeded(List<Item> items){
+    private Set<Ingredient> generateIngredientsNeeded(List<Item> items) {
         Set<Ingredient> neededIngredients = new HashSet<>();
         // Check the list of items
-        for(Item item : items){
+        for (Item item : items) {
             // Generating all needed ingredients for each item
-            for(Ingredient ingredient : item.generateIngredientsNeeded()){
+            for (Ingredient ingredient : item.generateIngredientsNeeded()) {
                 // Merging all needed ingredients together
                 boolean isAdded = false;
-                for(Ingredient neededIngredient : neededIngredients){
-                    if(neededIngredient.equals(ingredient)){
+                for (Ingredient neededIngredient : neededIngredients) {
+                    if (neededIngredient.equals(ingredient)) {
                         neededIngredient.increaseQuantity(ingredient.getQuantity());
                         isAdded = true;
                     }
                 }
-                if(!isAdded)
+                if (!isAdded)
                     neededIngredients.add(ingredient);
             }
         }
@@ -114,8 +121,8 @@ public class Cart {
                 .filter(item -> itemName.equals(item.getCookie().getName()))
                 .findAny()
                 .orElse(null);
-        if(itemFounded == null)
-            throw new Exception("Can't find this item into the cart: "+itemName);
+        if (itemFounded == null)
+            throw new Exception("Can't find this item into the cart: " + itemName);
         else
             return itemFounded;
     }
@@ -127,9 +134,10 @@ public class Cart {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        if(item == null) return 0;
+        if (item == null) return 0;
         return item.getQuantity();
     }
+
     public void setStore(Store store) {
         this.store = store;
     }
