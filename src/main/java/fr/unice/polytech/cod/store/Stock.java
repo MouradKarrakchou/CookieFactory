@@ -5,7 +5,7 @@ import fr.unice.polytech.cod.ingredient.Ingredient;
 import java.util.*;
 
 public class Stock {
-    private final Set<Ingredient> ingredients;
+    final Set<Ingredient> ingredients;
     private final Set<Ingredient> lockedIngredients;
 
     public Stock() {
@@ -94,5 +94,9 @@ public class Stock {
         if (optionalIngredient.isEmpty())
             return false;
         return optionalIngredient.get().getQuantity() >= ingredient.getQuantity();
+    }
+
+    public Set<Ingredient> getIngredients() {
+        return ingredients;
     }
 }

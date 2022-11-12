@@ -9,9 +9,12 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BillTest {
+    Map<Ingredient, Double> taxes = new HashMap<>();
     Store store = new Store("StoRe");
     User user = new User(null, null, null); // Added null caused compile error
     Cart cart = new Cart();
@@ -26,6 +29,11 @@ public class BillTest {
 
     @Test
     void showBillTest() {
+        taxes.put(dough, 0.5);
+        taxes.put(flavour, 0.6);
+        taxes.put(topping1, 0.8);
+        taxes.put(topping2, 0.9);
+        store.setTaxes(taxes);
         Stock stock = store.getStock();
         cart.setStore(store);
 
@@ -39,13 +47,11 @@ public class BillTest {
         cart.addToCart(item);
         String receipt = """
                 ===============StoRe===============
-                CooKie:
-                    Pâte..........50.0€
-                    Chocolat..........72.0€
+                CooKie..........123.1€
                 ===================================
-                Total price..........122.0€
+                Total price..........123.1€
                 """;
-        assertEquals(receipt, bill.showBill());
+        assertEquals(receipt, bill.toString());
 
         toppings.add(topping1);
         toppings.add(topping2);
@@ -55,17 +61,11 @@ public class BillTest {
         cart.addToCart(item);
         receipt = """
                 ===============StoRe===============
-                CooKie:
-                    Pâte..........50.0€
-                    Chocolat..........72.0€
-                CooKYZ:
-                    Pâte..........50.0€
-                    Chocolat..........72.0€
-                    Pépites..........60.0€
-                    Crème..........30.0€
+                CooKie..........123.1€
+                CooKYZ..........214.8€
                 ===================================
-                Total price..........334.0€
+                Total price..........337.9€
                 """;
-        assertEquals(receipt, bill.showBill());
+        assertEquals(receipt, bill.toString());
     }
 }
