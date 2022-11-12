@@ -1,21 +1,20 @@
 package fr.unice.polytech.cod.ingredient;
 
-import fr.unice.polytech.cod.ingredient.*;
-
+import fr.unice.polytech.cod.store.Store;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 public class Cookie {
-    private String name;
-    private Dough dough;
-    private Flavour flavour;
-    private List<Topping> toppingList; // TODO : Maybe topping should be represented as a set
+    private final String name;
+    private final Dough dough;
+    private final Flavour flavour;
+    private final List<Topping> toppingList; // TODO : Maybe topping should be represented as a set
     Mix mix;
     Cooking cooking;
 
-    private int preparationTime; // en minutes
+    private final int preparationTime; // en minutes
 
     public Cookie(String cookieName, Dough dough, Flavour flavour, List<Topping> toppingList, Mix mix, Cooking cooking, int preparationTime) {
         this.name = cookieName;
@@ -59,11 +58,11 @@ public class Cookie {
 
     public double getPriceByStore(Store store) {
         Map<Ingredient, Double> taxes = store.getTaxes();
-        double price = dough.getQuantity() * dough.getPricePerGram() + taxes.get(dough);
-        if(flavour != null) price += flavour.getQuantity() * flavour.getPricePerGram() + taxes.get(flavour);
+        double price = dough.getQuantity() * dough.getPrice() + taxes.get(dough);
+        if(flavour != null) price += flavour.getQuantity() * flavour.getPrice() + taxes.get(flavour);
         if(!toppingList.isEmpty()) {
             for(Topping topping : toppingList)
-                price += topping.getQuantity() * topping.getPricePerGram() +taxes.get(topping);
+                price += topping.getQuantity() * topping.getPrice() +taxes.get(topping);
         }
         return price;
     }

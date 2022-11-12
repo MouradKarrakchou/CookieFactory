@@ -1,5 +1,6 @@
 package fr.unice.polytech.cod;
 
+import fr.unice.polytech.cod.ingredient.Cookie;
 import fr.unice.polytech.cod.store.Store;
 
 import java.util.List;
