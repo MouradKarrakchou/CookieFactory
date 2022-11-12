@@ -5,13 +5,12 @@ import fr.unice.polytech.cod.store.InvalidStoreExepection;
 import fr.unice.polytech.cod.store.Stock;
 import fr.unice.polytech.cod.store.Store;
 import fr.unice.polytech.cod.store.StoreManager;
-import io.cucumber.java.en.And;
+import fr.unice.polytech.cod.store.*;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.jupiter.api.Assertions;
 
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -25,17 +24,14 @@ public class CartManagementStepDef {
     Cookie testCookie;
     List<Cookie> cookieList;
     Exception exception;
-    TimeSlot timeSlot;
+    Interval interval;
+    Bill bill;
+    StoreManager storeManager;
 
     @Given("a user")
     public void a_user() {
-        user = new User(new CookieBook(),new Cart(),new StoreManager());
-    }
-
-    @Given("a valid time slot")
-    public void a_valid_time_slot() {
-        timeSlot=new TimeSlot(null,null);
-        cart.setTimeSlot(timeSlot);
+        this.storeManager=new StoreManager();
+        user = new User(new CookieBook(),new Cart(),storeManager);
     }
 
     @Given("a store named {string}")
@@ -44,21 +40,7 @@ public class CartManagementStepDef {
         user.getStore().getStock().addStock(new Dough("Pate verte",25,100));
         user.getStore().getStock().addStock(new Flavour("Vert",25,100));
     }
-
-
-    @And("a non-empty cart")
-    public void a_non_empty_cart() {
-        cart = user.getCart();
-        cart.getItemList().add(new Item(testCookie, 2));
-        cart.setTimeSlot(new TimeSlot(null,null));
-    }
-    @And("a non-empty cart with one cookie")
-    public void a_non_empty_cart_with_one_cookie() {
-        cart = user.getCart();
-        cart.getItemList().add(new Item(testCookie, 1));
-        cart.setTimeSlot(new TimeSlot(null,null));
-    }
-    @And("a valid cookie")
+    @Given("a valid cookie")
     public void a_valid_cookie() {
         IngredientCatalog ingredientCatalog = new IngredientCatalog();
         testCookie = new Cookie("Cookie au chocolat",
@@ -66,8 +48,24 @@ public class CartManagementStepDef {
                 ingredientCatalog.getFlavourList().get(0),
                 ingredientCatalog.getToppingList(),
                 Mix.MIXED,
-                Cooking.CHEWY);
+                Cooking.CHEWY,
+                10);
     }
+    @Given("a fidelity account")
+    public void a_fidelity_account() throws InvalidStoreExepection {
+        user.subscribeToFidelityAccount("name", "email", "password");
+    }
+
+    @Given("a non-empty cart with {int} cookie")
+    public void a_non_empty_cart_with_cookie(int nbCookies) {
+        cart = user.getCart();
+        cart.getItemList().add(new Item(testCookie, nbCookies));
+        TimeSlot timeSlot=new TimeSlot(new TimeClock(8,0),new TimeClock(8,15));
+        List<TimeSlot> timeSlots=new ArrayList<>();
+        timeSlots.add(timeSlot);
+        cart.setInterval(new Interval(timeSlots));
+    }
+
 
 
     @When("he add cookie to his cart")
@@ -87,15 +85,12 @@ public class CartManagementStepDef {
     }
     @When("he validate his cart")
     public void he_validate_his_cart() throws Exception {
-        user.validateCart();
+        bill = user.validateCart();
     }
-
     @When("we choose a valid store")
     public void we_choose_a_valid_store() throws InvalidStoreExepection {
         user.selectStore("Antibes");
     }
-
-
     @When("we choose an invalid store")
     public void we_choose_an_invalid_store() {
         try {
@@ -108,40 +103,18 @@ public class CartManagementStepDef {
     public void he_subscribe_to_the_fidelity_program(String name, String email, String password) {
         user.subscribeToFidelityAccount(name, email, password);
     }
-
-    @When("the user validate his order")
-    public void the_user_validate_his_order() throws InvalidStoreExepection {
-        System.out.println("TODO");
+    @When("he order {int} cookies")
+    public void he_order_cookies(int numberOfCookies) throws InvalidStoreExepection {
+        user.chooseCookies(testCookie, numberOfCookies);
     }
 
     @Then("the bill is created")
     public void the_bill_is_created() throws InvalidStoreExepection {
-        System.out.println("TODO");
+       assertTrue(bill != null);
     }
-
     @Then("he take advantage of our loyalty program")
     public void he_take_advantage_of_our_loyalty_program() {
         assertTrue(user.getSubscription().isPresent());
-    }
-    @When("a user chooses a time slot")
-    public void a_user_chooses_a_time_slot() {
-        this.user.chooseTimeSlot(timeSlot);
-    }
-    @When("he validate the cart")
-    public void he_validate_the_cart() throws Exception {
-        this.cart.validate(user);
-    }
-
-    @Then("the order is associated with the time slot")
-    public void the_order_is_associated_with_the_time_slot() throws InvalidStoreExepection {
-        Store store=this.user.getStoreManager().selectStore("Antibes");
-        assertEquals(1,store.getOrderList().size());
-        assertTrue(this.timeSlot.order.isPresent());
-        assertTrue(this.timeSlot.reserved);
-    }
-    @Then("the order is reserverd")
-    public void the_order_is_reserverd() {
-        assertTrue(this.timeSlot.reserved);
     }
 
     @Then("an InvalidStoreException is triggered")
@@ -150,15 +123,10 @@ public class CartManagementStepDef {
         if (this.exception!=null)
             assertTrue(this.exception instanceof InvalidStoreExepection);
     }
-
-
-
     @Then("the right store is selected in the cart")
     public void the_right_store_is_selected_in_the_cart() {
         Assertions.assertTrue(user.getCart().getStore().getName().equals("Antibes"));
     }
-
-
     @Then("his order is created")
     public void his_order_is_created(){
         Assertions.assertEquals(1, user.getOrders().size());
@@ -171,15 +139,55 @@ public class CartManagementStepDef {
     public void he_receive_the_entire_list() {
         assertFalse(cookieList.isEmpty());
     }
-
     @Then("a cookie is added to his cart")
     public void a_cookie_is_added_to_his_cart() {
         assertEquals(2, user.getCart().getItemList().size());
     }
-
     @Then("his cart has one item less")
     public void his_cart_has_one_item_less() {
        assertEquals(1, cart.getItemQuantity("testCookie"));
     }
+    @Then("he receive a discount for his next order")
+    public void he_receive_a_discount_for_his_next_order() {
+        assertTrue(user.hasDiscount());
+    }
+    @Then("he do not receive a discount for his next order")
+    public void he_do_not_receive_a_discount_for_his_next_order() {
+        assertFalse(user.hasDiscount());
+    }
 
+
+
+
+    @Given("a valid interval")
+    public void aValidInterval() {
+        ArrayList<TimeSlot> timeSlots=new ArrayList<>();
+        timeSlots.add(new TimeSlot(new TimeClock(8,0),new TimeClock(8,15)));
+        timeSlots.add(new TimeSlot(new TimeClock(8,15),new TimeClock(8,30)));
+        timeSlots.add(new TimeSlot(new TimeClock(8,30),new TimeClock(8,45)));
+        timeSlots.add(new TimeSlot(new TimeClock(8,45),new TimeClock(9,0)));
+
+        interval=new Interval(timeSlots);
+    }
+
+    @When("a user chooses an interval")
+    public void aUserChoosesAnInterval() {
+        this.user.chooseInterval(interval);
+    }
+
+    @Then("the order is associated with the Time slots composing the interval are")
+    public void theOrderIsAssociatedWithTheTimeSlotsComposingTheIntervalAre() {
+        Store store=this.user.getStore();
+        assertEquals(1,store.getOrderList().size());
+        for(TimeSlot timeSlot:interval.getTimeSlots())
+        {assertTrue(timeSlot.getOrder().isPresent());
+            assertTrue(timeSlot.reserved);}
+    }
+
+    @Then("the Time slots composing the interval are set to reserved")
+    public void theTimeSlotsComposingTheIntervalAreSetToReserved() {
+        for(TimeSlot timeSlot:interval.getTimeSlots())
+        {
+            assertTrue(timeSlot.reserved);}
+    }
 }

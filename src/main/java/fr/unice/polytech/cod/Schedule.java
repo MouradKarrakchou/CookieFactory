@@ -15,7 +15,7 @@ public class Schedule {
      * Give the available time slots of the Chef
      * @return
      */
-    public List<TimeSlot> getTimeSlots(){
-        return daySlot.emptyTimeSlots();
+    public List<Interval> getIntervals(int minutes){
+        return daySlot.askForSlotsAvailable(minutes);
     }
 }

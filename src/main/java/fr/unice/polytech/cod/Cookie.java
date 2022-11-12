@@ -14,16 +14,16 @@ public class Cookie {
     Mix mix;
     Cooking cooking;
 
-    public Cookie(String cookieName, Dough dough, Flavour flavour, List<Topping> toppingList, Mix mix, Cooking cooking){
+    private int preparationTime; // en minutes
+
+    public Cookie(String cookieName, Dough dough, Flavour flavour, List<Topping> toppingList, Mix mix, Cooking cooking, int preparationTime) {
         this.name = cookieName;
         this.dough = dough;
         this.flavour = flavour;
         this.toppingList = toppingList; //TODO: Make sure the given topping list isn't > 3
         this.mix = mix;
         this.cooking = cooking;
-    }
-
-    public Cookie(String testCookie, Flavour flavour) {
+        this.preparationTime = preparationTime;
     }
 
     /**
@@ -31,17 +31,29 @@ public class Cookie {
      *
      * @return The set of all ingredients needed.
      */
-    public Set<Ingredient> getIngredients(){
+    public Set<Ingredient> getIngredients() {
         Set<Ingredient> ingredients = new HashSet<>();
 
-        if(dough != null) ingredients.add(dough);
-        if(flavour != null) ingredients.add(flavour);
+        if (dough != null) ingredients.add(dough);
+        if (flavour != null) ingredients.add(flavour);
         ingredients.addAll(toppingList);
         return ingredients;
     }
 
     public String getName() {
         return name;
+    }
+
+    public Dough getDough() {
+        return dough;
+    }
+
+    public Flavour getFlavour() {
+        return flavour;
+    }
+
+    public List<Topping> getToppingList() {
+        return toppingList;
     }
 
     @Override
@@ -52,5 +64,9 @@ public class Cookie {
                 ", flavour=" + flavour +
                 ", toppingList=" + toppingList +
                 '}';
+    }
+
+    public int getPreparationTime() {
+        return preparationTime;
     }
 }

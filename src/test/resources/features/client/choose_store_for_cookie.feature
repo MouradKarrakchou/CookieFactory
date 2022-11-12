@@ -4,7 +4,7 @@ Feature: Choose store for cookie
   Background:
     Given a user
     And a valid cookie
-    And a non-empty cart
+    And a non-empty cart with 2 cookie
 
   Scenario: we choose a valid store
     When we choose a valid store

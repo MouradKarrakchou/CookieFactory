@@ -5,12 +5,12 @@ import java.util.Optional;
 import java.util.Timer;
 
 public class TimeSlot {
-    Time startTime;
-    Time endTime;
-    Optional<Order> order;
+    private TimeClock startTime;
+    private TimeClock endTime;
+    private Optional<Order> order;
     boolean reserved=false;
 
-    public TimeSlot(Time startTime,Time endTime){
+    public TimeSlot(TimeClock startTime,TimeClock endTime){
         this.startTime=startTime;
         this.endTime=endTime;
         this.order=Optional.empty();
@@ -27,13 +27,25 @@ public class TimeSlot {
         this.reserved = reserved;
     }
 
+    public TimeClock getStartTime() {
+        return startTime;
+    }
+
+    public TimeClock getEndTime() {
+        return endTime;
+    }
+
+    public Optional<Order> getOrder() {
+        return order;
+    }
+
     /**
      * If there is no order set for this timeSlot return himself else return empty
      * @return
      */
-    public Optional<TimeSlot> timeSlotAvailable() {
-        if (this.reserved) return Optional.empty();
-        if (order.isEmpty()) return(Optional.of(this));
-        else return(Optional.empty());
+    public Boolean isAvailable() {
+        if (this.reserved) return false;
+        if (order.isEmpty()) return true;
+        else return false;
     }
 }
