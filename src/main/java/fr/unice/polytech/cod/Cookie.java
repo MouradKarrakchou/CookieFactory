@@ -4,8 +4,11 @@ import fr.unice.polytech.cod.ingredient.Dough;
 import fr.unice.polytech.cod.ingredient.Flavour;
 import fr.unice.polytech.cod.ingredient.Ingredient;
 import fr.unice.polytech.cod.ingredient.Topping;
+import fr.unice.polytech.cod.store.Store;
+
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public class Cookie {
@@ -52,6 +55,17 @@ public class Cookie {
 
     public List<Topping> getToppingList() {
         return toppingList;
+    }
+
+    public double getPriceByStore(Store store) {
+        Map<Ingredient, Double> taxes = store.getTaxes();
+        double price = dough.getQuantity() * dough.getPricePerGram() + taxes.get(dough);
+        if(flavour != null) price += flavour.getQuantity() * flavour.getPricePerGram() + taxes.get(flavour);
+        if(!toppingList.isEmpty()) {
+            for(Topping topping : toppingList)
+                price += topping.getQuantity() * topping.getPricePerGram() +taxes.get(topping);
+        }
+        return price;
     }
 
     @Override
