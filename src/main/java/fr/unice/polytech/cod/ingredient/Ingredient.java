@@ -13,12 +13,6 @@ public class Ingredient {
         this.price = price;
         this.quantity = quantity;
     }
-
-    public Ingredient(String name, double pricePerg) {
-        this.name = name;
-        this.pricePerGram = pricePerg;
-    }
-
     /**
      * Multiply the quantity by n. Used in Item to get the total of quantity needed for n cookies.
      *

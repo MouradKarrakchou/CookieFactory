@@ -18,8 +18,8 @@ public class CookieBook {
                 ingredientCatalog.getDoughList().get(0),
                 ingredientCatalog.getFlavourList().get(0),
                 ingredientCatalog.getToppingList(),
-                Mix.MIXED,
-                Cooking.CHEWY,
+                new Mix(Mix.MixState.MIXED),
+                new Cooking(Cooking.CookingState.CHEWY),
                 10));
         //cookies.add(new Cookie("Cookie à la vanille",null,null,new ArrayList<>()));
         //cookies.add(new Cookie("Cookie à la pistache",null,null,new ArrayList<>()));

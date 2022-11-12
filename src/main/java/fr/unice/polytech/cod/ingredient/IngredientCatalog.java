@@ -8,20 +8,20 @@ public class IngredientCatalog {
 
     public IngredientCatalog() {
         this.ingredientList = new ArrayList<>(
-                List.of(new Dough("plain", 0.002),
-                        new Dough("chocolate", 0.002),
-                        new Dough("peanut butter", 0.002),
-                        new Dough("oatmeal", 0.002),
-                        new Dough("chocolate", 0.002),
+                List.of(new Dough("plain", 0.002, 1),
+                        new Dough("chocolate", 0.002, 1),
+                        new Dough("peanut butter", 0.002, 1),
+                        new Dough("oatmeal", 0.002, 1),
+                        new Dough("chocolate", 0.002, 1),
 
-                        new Flavour("vanilla", 0.002),
-                        new Flavour("cinnamon", 0.002),
-                        new Flavour("chili", 0.002),
+                        new Flavour("vanilla", 0.002, 1),
+                        new Flavour("cinnamon", 0.002, 1),
+                        new Flavour("chili", 0.002, 1),
 
-                        new Topping("white chocolate", 0.002),
-                        new Topping("milk chocolate", 0.002),
-                        new Topping("M&M’s", 0.002),
-                        new Topping("Reese’s buttercup", 0.002)
+                        new Topping("white chocolate", 0.002, 1),
+                        new Topping("milk chocolate", 0.002, 1),
+                        new Topping("M&M’s", 0.002, 1),
+                        new Topping("Reese’s buttercup", 0.002, 1)
                 ));
     }
 
