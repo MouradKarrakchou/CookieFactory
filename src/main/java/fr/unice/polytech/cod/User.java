@@ -151,4 +151,11 @@ public class User {
         order.setDiscount(this.getDiscount());
         this.getSubscription().get().resetDiscount();
     }
+
+    public void cancelOrder(Order order) {
+        if(order.getOrderState().equals(OrderState.PENDING))
+            cart.cancelOrder(order);
+        else
+            System.out.println("Your order is already in progress. You cannot canceled it.");
+    }
 }

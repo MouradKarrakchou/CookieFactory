@@ -21,7 +21,12 @@ public class TimeSlot {
      * @param order
      */
     public void associate(Order order){
-        this.order=Optional.of(order);}
+        this.order=Optional.of(order);
+    }
+
+    public void disassociate() {
+        this.order = Optional.empty();
+    }
 
     public void setReserved(boolean reserved) {
         this.reserved = reserved;

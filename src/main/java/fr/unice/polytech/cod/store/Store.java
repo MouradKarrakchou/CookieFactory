@@ -76,6 +76,10 @@ public class Store {
         this.orderList.add(order);
     }
 
+    public void removeOrder(Order order) {
+        this.orderList.remove(order);
+    }
+
     public void associateOrder(Chef chef, Order orderToPrepare) {
         if(chef.isAvailable()) {
             chef.associateOrder(orderToPrepare);

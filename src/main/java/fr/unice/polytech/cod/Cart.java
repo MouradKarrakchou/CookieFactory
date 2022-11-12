@@ -78,6 +78,12 @@ public class Cart {
         return new Bill(order);
     }
 
+    public void cancelOrder(Order order) {
+        store.removeOrder(order);
+        this.interval.freedInterval();
+        this.isValidated = false; //TODO utilité ?
+    }
+
     public boolean isValidated() {
         return isValidated;
     }
@@ -146,4 +152,5 @@ public class Cart {
     public void setInterval(Interval intervals) {
         this.interval = intervals;
     }
+
 }

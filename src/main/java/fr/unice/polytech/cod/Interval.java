@@ -24,6 +24,12 @@ public class Interval implements Comparable {
         }
     }
 
+    public void freedInterval() {
+        for(TimeSlot timeSlot : timeSlots) {
+            timeSlot.disassociate();
+        }
+    }
+
     public TimeClock getStartTime() {
         return startTime;
     }
