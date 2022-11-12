@@ -18,8 +18,7 @@ public class ManageTheKitchenPassageAndOrders {
     Store store;
     @Given("an chef who is \"([^\"]*)\"$")
     public void an_chef_who_is(ChefState chefState) {
-        schedule = new Schedule();
-        chef = new Chef(schedule);
+        chef = new Chef();
         chef.setState(chefState);
         store=new Store("Magasin");
     }
