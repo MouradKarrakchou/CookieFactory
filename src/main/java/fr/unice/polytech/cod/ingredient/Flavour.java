@@ -5,6 +5,10 @@ public class  Flavour extends Ingredient {
         super(name, price, quantity);
     }
 
+    public Flavour(String vanilla, double price) {
+        super(vanilla, price);
+    }
+
     /**
      * Check if 2 objects are the same (same name, same class)
      *

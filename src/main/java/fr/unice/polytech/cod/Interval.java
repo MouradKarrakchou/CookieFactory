@@ -32,6 +32,10 @@ public class Interval implements Comparable {
         return endTime;
     }
 
+    public List<TimeSlot> getTimeSlots() {
+        return timeSlots;
+    }
+
     @Override
     public boolean equals(Object obj) {
         return (compareTo(obj)==0);

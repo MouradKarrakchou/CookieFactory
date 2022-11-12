@@ -79,9 +79,9 @@ public class User {
         return(this.cart.getStore().timeSlotAvailables(minutesNeeded));
     }
 
-    public void chooseTimeSlot(TimeSlot timeSlot){
-        timeSlot.setReserved(true);
-        this.cart.setTimeSlot(timeSlot);
+    public void chooseInterval(Interval interval){
+        interval.reserve();
+        this.cart.setInterval(interval);
     }
 
     /**
