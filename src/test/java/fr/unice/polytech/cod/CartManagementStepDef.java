@@ -8,13 +8,13 @@ import fr.unice.polytech.cod.store.InvalidStoreExepection;
 import fr.unice.polytech.cod.store.Stock;
 import fr.unice.polytech.cod.store.Store;
 import fr.unice.polytech.cod.store.StoreManager;
+import fr.unice.polytech.cod.store.*;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.jupiter.api.Assertions;
 
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -30,10 +30,12 @@ public class CartManagementStepDef {
     Exception exception;
     TimeSlot timeSlot;
     Bill bill;
+    StoreManager storeManager;
 
     @Given("a user")
     public void a_user() {
-        user = new User(new CookieBook(),new Cart(),new StoreManager());
+        this.storeManager=new StoreManager();
+        user = new User(new CookieBook(),new Cart(),storeManager);
     }
 
     @Given("a valid time slot")
@@ -50,7 +52,7 @@ public class CartManagementStepDef {
     }
     @Given("a valid cookie")
     public void a_valid_cookie() {
-        testCookie = new Cookie("testCookie", new Dough("Pate verte",25,1),new Flavour("Vert",25,1),new ArrayList<Topping>());
+        testCookie = new Cookie("testCookie", new Dough("Pate verte",25,1),new Flavour("Vert",25,1),new ArrayList<Topping>(), 10);
     }
     @Given("a fidelity account")
     public void a_fidelity_account() throws InvalidStoreExepection {
@@ -127,7 +129,7 @@ public class CartManagementStepDef {
     public void the_order_is_associated_with_the_time_slot() throws InvalidStoreExepection {
         Store store=this.user.getStoreManager().selectStore("Antibes");
         assertEquals(1,store.getOrderList().size());
-        assertTrue(this.timeSlot.order.isPresent());
+        assertTrue(this.timeSlot.getOrder().isPresent());
         assertTrue(this.timeSlot.reserved);
     }
     @Then("the order is reserverd")
@@ -169,5 +171,12 @@ public class CartManagementStepDef {
     public void he_receive_a_discount_for_his_next_order() {
         assertTrue(user.hasDiscount());
     }
+    @Then("he do not receive a discount for his next order")
+    public void he_do_not_receive_a_discount_for_his_next_order() {
+        assertFalse(user.hasDiscount());
+    }
+
+
+
 
 }
