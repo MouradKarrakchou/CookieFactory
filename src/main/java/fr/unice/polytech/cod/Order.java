@@ -34,13 +34,13 @@ public class Order extends UpdatableObject {
 
     /**
      * Set the state of the order to the given OrderState
-     * If the state is set to READY the finishTime will be set to now.
+     * If the state is set to READY run the UpdatableObject thread
      * @param state The new state of the order
      */
     public void updateState(OrderState state) {
         this.orderState = state;
         if(orderState == OrderState.READY)
-            start(); // Run the UpdatableObject thread
+            start(); // Start the UpdatableObject thread
     }
 
     /**
