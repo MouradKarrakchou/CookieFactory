@@ -44,4 +44,8 @@ public class Bill {
         System.out.println(receipt);
         return receipt.toString();
     }
+
+    public Order getOrder() {
+        return order;
+    }
 }

@@ -15,12 +15,12 @@ public class RetirementCookie extends CookieComponent{
     }
 
     @Override
-    protected List<Ingredient> generateIngredients(){
+    protected ArrayList<Ingredient> generateIngredients(){
         Dough dought = new Dough("RetirementDough", 3,3);
         Flavour flavour = new Flavour("FruitFlavour", 2, 2);
         Topping topping = new Topping("Fruits", 2, 4);
         Mix mix = new Mix(Mix.MixState.TOPPED);
         Cooking cooking = new Cooking(Cooking.CookingState.CRUNCHY);
-        return List.of(dought, flavour,topping, mix, cooking);
+        return new ArrayList<>(List.of(dought, flavour,topping, mix, cooking));
     }
 }

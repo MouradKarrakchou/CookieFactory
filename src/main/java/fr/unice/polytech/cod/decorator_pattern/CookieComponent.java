@@ -12,7 +12,7 @@ public abstract class CookieComponent {
     protected String name;
     protected double price;
     protected int preparationTime;
-    protected List<Ingredient> ingredients;
+    protected ArrayList<Ingredient> ingredients;
     protected CookieSize cookieSize;
 
     protected List<Ingredient> generateIngredients(){
@@ -33,7 +33,7 @@ public abstract class CookieComponent {
     public int getPreparationTime() {
         return preparationTime;
     }
-    public List<Ingredient> getIngredients() {
+    public ArrayList<Ingredient> getIngredients() {
         return ingredients;
     }
 

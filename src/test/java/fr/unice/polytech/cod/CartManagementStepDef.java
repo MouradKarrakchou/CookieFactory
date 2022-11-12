@@ -36,14 +36,15 @@ public class CartManagementStepDef {
 
     @Given("a store named {string}")
     public void the_antibes_store(String name) throws InvalidStoreExepection {
+        IngredientCatalog ingredientCatalog = new IngredientCatalog();
         user.selectStore(name);
-        user.getStore().getStock().addStock(new Dough("Pate verte",25,100));
-        user.getStore().getStock().addStock(new Flavour("Vert",25,100));
+        for (int i =0; i <100; i++)
+            user.getStore().getStock().addStockList(ingredientCatalog.getIngredientList());
     }
     @Given("a valid cookie")
     public void a_valid_cookie() {
         IngredientCatalog ingredientCatalog = new IngredientCatalog();
-        testCookie = new Cookie("Cookie au chocolat",
+        testCookie = new Cookie("testCookie",
                 ingredientCatalog.getDoughList().get(0),
                 ingredientCatalog.getFlavourList().get(0),
                 ingredientCatalog.getToppingList(),
@@ -85,6 +86,7 @@ public class CartManagementStepDef {
     }
     @When("he validate his cart")
     public void he_validate_his_cart() throws Exception {
+        user.getCart().showCart();
         bill = user.validateCart();
     }
     @When("we choose a valid store")

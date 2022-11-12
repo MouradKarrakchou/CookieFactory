@@ -14,11 +14,11 @@ public class UpdatableObjectTest {
     @BeforeEach
     void Init(){
         myPendingOrder = new Order(null, OrderState.PENDING, null);
-        myPendingOrder.setWaitingTime(500);
     }
 
     @Test
     void orderStateChangeTest() throws InterruptedException {
+        myPendingOrder.setWaitingTime(500);
         assertEquals(OrderState.PENDING, myPendingOrder.getOrderState());
 
         myPendingOrder.updateState(OrderState.READY);
@@ -26,5 +26,14 @@ public class UpdatableObjectTest {
 
         sleep(1000);
         assertEquals(OrderState.OBSOLETE, myPendingOrder.getOrderState());
+    }
+
+    @Test
+    void multipleOrderStateChangeTest() throws InterruptedException {
+        myPendingOrder.setWaitingTime(10000);
+        myPendingOrder.updateState(OrderState.READY);
+        sleep(1000);
+        myPendingOrder.updateState(OrderState.READY);
+
     }
 }

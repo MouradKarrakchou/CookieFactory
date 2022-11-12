@@ -30,7 +30,7 @@ public class ToppingDecorator extends Decorator{
     }
 
     @Override
-    public List<Ingredient> getIngredients() {
+    public ArrayList<Ingredient> getIngredients() {
         ArrayList<Ingredient> allIngredients = new ArrayList<Ingredient>(cookieComponent.getIngredients());
         if(decoratorState.equals(DecoratorState.ADD))
             allIngredients.add(this.topping);

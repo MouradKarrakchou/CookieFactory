@@ -9,6 +9,8 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 public class ManageTheKitchenPassageAndOrders {
@@ -16,6 +18,7 @@ public class ManageTheKitchenPassageAndOrders {
     Chef chef;
     Order order;
     Store store;
+    Bill bill;
     @Given("an chef who is \"([^\"]*)\"$")
     public void an_chef_who_is(ChefState chefState) {
         chef = new Chef();
@@ -33,17 +36,24 @@ public class ManageTheKitchenPassageAndOrders {
         store.associateOrder(chef, order);
     }
 
-    @When("he give the order")
-    public void he_give_the_order() {
-        try {
-            chef.giveOrder();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     @Then("the state of the order is \"([^\"]*)\"$")
     public void the_state_of_the_order_is(OrderState orderState) {
         assertEquals(orderState, order.getOrderState());
+    }
+
+    @Given("A store")
+    public void a_store() {
+        // Write code here that turns the phrase above into concrete actions
+        store = new Store(null);
+    }
+    @Given("A order at the state \"([^\"]*)\"$")
+    public void a_order_at_the_state(OrderState orderState) {
+        order = new Order(null, OrderState.READY, null);
+        store.setOrderList(List.of(order, new Order(null, OrderState.READY, null)));
+        bill = new Bill(order);
+    }
+    @When("client retrieve his order")
+    public void client_retrieve_his_order() throws  Exception{
+        this.store.retrieveOrder(bill);
     }
 }

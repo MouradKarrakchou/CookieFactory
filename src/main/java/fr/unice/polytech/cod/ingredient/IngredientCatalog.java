@@ -30,14 +30,32 @@ public class IngredientCatalog {
     }
 
     public List<Dough> getDoughList() {
-        return (List<Dough>) this.ingredientList.stream().filter(ingre -> ingre instanceof Dough);
+        List<Dough> doughList = new ArrayList<>();
+        for (int i = 0; i < this.ingredientList.size(); i ++){
+            if(this.ingredientList.get(i) instanceof Dough){
+                doughList.add((Dough) this.ingredientList.get(i));
+            }
+        }
+        return doughList;
     }
 
     public List<Flavour> getFlavourList() {
-        return (List<Flavour>) this.ingredientList.stream().filter(ingre -> ingre instanceof Flavour);
+        List<Flavour> flavourList = new ArrayList<>();
+        for (int i = 0; i < this.ingredientList.size(); i ++){
+            if(this.ingredientList.get(i) instanceof Flavour){
+                flavourList.add((Flavour) this.ingredientList.get(i));
+            }
+        }
+        return flavourList;
     }
 
     public List<Topping> getToppingList() {
-        return (List<Topping>) this.ingredientList.stream().filter(ingre -> ingre instanceof Topping);
+        List<Topping> toppingList = new ArrayList<>();
+        for (int i = 0; i < this.ingredientList.size(); i ++){
+            if(this.ingredientList.get(i) instanceof Topping){
+                toppingList.add((Topping) this.ingredientList.get(i));
+            }
+        }
+        return toppingList;
     }
 }

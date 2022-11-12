@@ -39,8 +39,9 @@ public class Order extends UpdatableObject {
      */
     public void updateState(OrderState state) {
         this.orderState = state;
-        if(orderState == OrderState.READY)
-            start(); // Start the UpdatableObject thread
+        if(orderState == OrderState.READY){
+            start();
+        }
     }
 
     /**
