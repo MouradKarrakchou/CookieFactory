@@ -3,7 +3,6 @@ package unitTest;
 import fr.unice.polytech.cod.*;
 import fr.unice.polytech.cod.ingredient.Dough;
 import fr.unice.polytech.cod.ingredient.Flavour;
-import fr.unice.polytech.cod.ingredient.Ingredient;
 import fr.unice.polytech.cod.ingredient.Topping;
 import fr.unice.polytech.cod.store.Stock;
 import fr.unice.polytech.cod.store.Store;
@@ -45,7 +44,7 @@ public class BillTest {
         stock.addStock(new Topping("Pépites", 2, 1000000));
         stock.addStock(new Topping("Crème", 1.5, 1000000));
 
-        Cookie cookie = new Cookie("CooKie", dough, flavour, new ArrayList<>());
+        Cookie cookie = new Cookie("CooKie", dough, flavour, new ArrayList<>(), new Mix(Mix.MixState.MIXED),new Cooking(Cooking.CookingState.CRUNCHY),10);
         Item item = new Item(cookie, 1);
         cart.addToCart(item);
         String receipt = """
@@ -59,7 +58,7 @@ public class BillTest {
         toppings.add(topping1);
         toppings.add(topping2);
 
-        cookie = new Cookie("CooKYZ", dough, flavour, toppings);
+        cookie = new Cookie("CooKYZ", dough, flavour, toppings, new Mix(Mix.MixState.MIXED),new Cooking(Cooking.CookingState.CRUNCHY),10);
         item = new Item(cookie, 1);
         cart.addToCart(item);
         receipt = """

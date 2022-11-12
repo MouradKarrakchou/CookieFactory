@@ -5,15 +5,14 @@ import java.util.Objects;
 public class Ingredient {
     protected String name;
     //price per g
-    protected double pricePerGram;
+    protected double price;
     protected double quantity;
 
-    public Ingredient(String name, double price, double quantity) {
+    public Ingredient(String name, double price, double quantity) {  //Ce constructeur c'est juste pour les tests !?
         this.name = name;
-        this.pricePerGram = price;
+        this.price = price;
         this.quantity = quantity;
     }
-
     /**
      * Multiply the quantity by n. Used in Item to get the total of quantity needed for n cookies.
      *
@@ -31,10 +30,13 @@ public class Ingredient {
         return quantity;
     }
 
-    public double getPricePerGram() {
-        return pricePerGram;
+    public double getPrice() {
+        return price;
     }
 
+    public String getName() {
+        return name;
+    }
 
     /**
      * Check if 2 objects are the same (same name, same class)
@@ -58,7 +60,7 @@ public class Ingredient {
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, pricePerGram, quantity);
+        return Objects.hash(name, price, quantity);
     }
 
     @Override

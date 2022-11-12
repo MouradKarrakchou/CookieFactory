@@ -4,7 +4,7 @@ Feature: Add cookie to the cart
     Given a user
     And a valid cookie
     And a store named "Antibes"
-    And a non-empty cart
+    And a non-empty cart with 2 cookie
 
 
   Scenario: all the cookies are available

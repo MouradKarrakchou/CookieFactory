@@ -1,10 +1,6 @@
-package fr.unice.polytech.cod;
+package fr.unice.polytech.cod.ingredient;
 
-import fr.unice.polytech.cod.ingredient.Dough;
-import fr.unice.polytech.cod.ingredient.Flavour;
-import fr.unice.polytech.cod.ingredient.Ingredient;
-import fr.unice.polytech.cod.ingredient.Topping;
-import fr.unice.polytech.cod.store.Store;
+import fr.unice.polytech.cod.ingredient.*;
 
 import java.util.HashSet;
 import java.util.List;
@@ -16,15 +12,19 @@ public class Cookie {
     private Dough dough;
     private Flavour flavour;
     private List<Topping> toppingList; // TODO : Maybe topping should be represented as a set
+    Mix mix;
+    Cooking cooking;
 
-    public Cookie(String cookieName, Dough dough, Flavour flavour, List<Topping> toppingList){
+    private int preparationTime; // en minutes
+
+    public Cookie(String cookieName, Dough dough, Flavour flavour, List<Topping> toppingList, Mix mix, Cooking cooking, int preparationTime) {
         this.name = cookieName;
         this.dough = dough;
         this.flavour = flavour;
         this.toppingList = toppingList; //TODO: Make sure the given topping list isn't > 3
-    }
-
-    public Cookie(String testCookie, Flavour flavour) {
+        this.mix = mix;
+        this.cooking = cooking;
+        this.preparationTime = preparationTime;
     }
 
     /**
@@ -32,11 +32,11 @@ public class Cookie {
      *
      * @return The set of all ingredients needed.
      */
-    public Set<Ingredient> getIngredients(){
+    public Set<Ingredient> getIngredients() {
         Set<Ingredient> ingredients = new HashSet<>();
 
-        if(dough != null) ingredients.add(dough);
-        if(flavour != null) ingredients.add(flavour);
+        if (dough != null) ingredients.add(dough);
+        if (flavour != null) ingredients.add(flavour);
         ingredients.addAll(toppingList);
         return ingredients;
     }
@@ -76,5 +76,9 @@ public class Cookie {
                 ", flavour=" + flavour +
                 ", toppingList=" + toppingList +
                 '}';
+    }
+
+    public int getPreparationTime() {
+        return preparationTime;
     }
 }

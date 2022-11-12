@@ -5,6 +5,7 @@ public class Topping extends Ingredient {
         super(name, price, quantity);
     }
 
+
     /**
      * Check if 2 objects are the same (same name, same class)
      *
