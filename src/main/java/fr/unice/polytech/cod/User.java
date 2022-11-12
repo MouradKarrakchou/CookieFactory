@@ -74,8 +74,8 @@ public class User {
      * Gets a list of available TimeSlots by Date;
      * @return
      */
-    public List<TimeSlot> getAvailableTimeSlot(){
-        return(this.cart.getStore().timeSlotAvailables());
+    public List<Interval> getAvailableIntervals(int minutesNeeded){
+        return(this.cart.getStore().timeSlotAvailables(minutesNeeded));
     }
 
     public void chooseTimeSlot(TimeSlot timeSlot){

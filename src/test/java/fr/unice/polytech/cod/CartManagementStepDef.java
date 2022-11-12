@@ -4,10 +4,7 @@ import fr.unice.polytech.cod.ingredient.Dough;
 import fr.unice.polytech.cod.ingredient.Flavour;
 import fr.unice.polytech.cod.ingredient.Ingredient;
 import fr.unice.polytech.cod.ingredient.Topping;
-import fr.unice.polytech.cod.store.InvalidStoreExepection;
-import fr.unice.polytech.cod.store.Stock;
-import fr.unice.polytech.cod.store.Store;
-import fr.unice.polytech.cod.store.StoreManager;
+import fr.unice.polytech.cod.store.*;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -29,10 +26,12 @@ public class CartManagementStepDef {
     List<Cookie> cookieList;
     Exception exception;
     TimeSlot timeSlot;
+    StoreManager storeManager;
 
     @Given("a user")
     public void a_user() {
-        user = new User(new CookieBook(),new Cart(),new StoreManager());
+        this.storeManager=new StoreManager();
+        user = new User(new CookieBook(),new Cart(),storeManager);
     }
 
     @Given("a valid time slot")
@@ -133,7 +132,7 @@ public class CartManagementStepDef {
     public void the_order_is_associated_with_the_time_slot() throws InvalidStoreExepection {
         Store store=this.user.getStoreManager().selectStore("Antibes");
         assertEquals(1,store.getOrderList().size());
-        assertTrue(this.timeSlot.order.isPresent());
+        assertTrue(this.timeSlot.getOrder().isPresent());
         assertTrue(this.timeSlot.reserved);
     }
     @Then("the order is reserverd")

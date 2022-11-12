@@ -1,21 +1,22 @@
 package fr.unice.polytech.cod.store;
 
-import fr.unice.polytech.cod.Order;
-import fr.unice.polytech.cod.OrderState;
-import fr.unice.polytech.cod.Schedule;
-import fr.unice.polytech.cod.TimeSlot;
+import fr.unice.polytech.cod.*;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 public class Chef {
-    Schedule schedule;
-    Optional<Order> orderToPrepare;
-    ChefState state;
+    private Schedule schedule;
+    private Optional<Order> orderToPrepare;
+    private ChefState state;
+    public static TimeClock STARTMORNINGTIME=new TimeClock(8,0);
+    public static TimeClock ENDMORNINGTIME=new TimeClock(12,0);
+    public static TimeClock STARTAFTERNOONTIME=new TimeClock(14,0);
+    public static TimeClock ENDAFTERNOONTIME=new TimeClock(18,0);
 
-    public Chef(Schedule schedule) {
-        this.schedule = schedule;
+
+    public Chef() {
+        this.schedule = new Schedule();
         this.state = ChefState.AVAILABLE;
     }
 
@@ -59,8 +60,8 @@ public class Chef {
      * gives the Available TimeSlots of this Chef
      * @return
      */
-    public List<TimeSlot> getTimeSlotsAvailables(){
-        return(this.schedule.getTimeSlots());
+    public List<Interval> getIntervalsAvailable(int minutes){
+        return(this.schedule.getIntervals(minutes));
     }
 
     public Schedule getSchedule() {

@@ -4,6 +4,7 @@ import fr.unice.polytech.cod.*;
 import fr.unice.polytech.cod.ingredient.Ingredient;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Store {
     String name;
@@ -17,7 +18,7 @@ public class Store {
         listChef=new ArrayList<>();
         this.orderList = new ArrayList<>();
         this.stock = new Stock();
-        listChef.add(new Chef(new Schedule()));
+        listChef.add(new Chef());
     }
 
     public void retrieveOrder(Order order) {
@@ -29,12 +30,14 @@ public class Store {
      * Gets a list of available TimeSlots from all the employees of the store by Date;
      * @return
      */
-    public List<TimeSlot> timeSlotAvailables(){
-        List<TimeSlot> timeSlots = new ArrayList<>();
+    public List<Interval> timeSlotAvailables(int minutes){
+        List<Interval> intervals = new ArrayList<>();
         for (Chef chef:listChef){
-            timeSlots.addAll(chef.getTimeSlotsAvailables());
+            for (Interval interval: chef.getIntervalsAvailable(minutes))
+                if (!intervals.contains(interval)) intervals.add(interval);
         }
-        return(timeSlots);
+        Collections.sort(intervals);
+        return(intervals);
     }
     /**
      * For a given set of ingredients check if there is enough of these ingredients in the stock.
@@ -68,7 +71,9 @@ public class Store {
             orderToPrepare.setState(OrderState.IN_PROGRESS);
         }
     }
-
+    public void addChef(Chef chef){
+        this.listChef.add(chef);
+    }
 
 
     public Stock getStock() {
