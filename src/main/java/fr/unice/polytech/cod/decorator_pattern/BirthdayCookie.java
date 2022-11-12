@@ -15,12 +15,12 @@ public class BirthdayCookie extends CookieComponent{
     }
 
     @Override
-    protected List<Ingredient> generateIngredients(){
+    protected ArrayList<Ingredient> generateIngredients(){
         Dough dought = new Dough("BirtdayDough", 3,3);
         Flavour flavour = new Flavour("CandyFlavour", 2, 2);
         Topping topping = new Topping("Candy", 2, 4);
         Mix mix = new Mix(Mix.MixState.MIXED);
         Cooking cooking = new Cooking(Cooking.CookingState.CHEWY);
-        return List.of(dought, flavour,topping, mix, cooking);
+        return new ArrayList<>(List.of(dought, flavour,topping, mix, cooking));
     }
 }
