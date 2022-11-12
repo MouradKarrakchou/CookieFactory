@@ -1,7 +1,10 @@
 package fr.unice.polytech.cod;
 
-public class UpdatableObject extends Thread {
+import static java.lang.Thread.sleep;
+
+public class UpdatableObject implements Runnable {
     private int waitingTime;
+    private Thread currentThread;
 
     /**
      * Instantiate a new UpdatableObject
@@ -18,11 +21,27 @@ public class UpdatableObject extends Thread {
     /**
      * This method will wait for waitingTime (in ms) before calling OnTimeReached method.
      */
+    public void start(){
+        killCurrentThread();
+        currentThread = new Thread(this);
+        currentThread.start();
+    }
+
+    /**
+     * Kill the current thread
+     */
+    private void killCurrentThread(){
+        if(currentThread != null)
+            currentThread.interrupt();
+    }
+
     @Override
     public void run() {
-        try {sleep(waitingTime);}
-        catch (InterruptedException e) {throw new RuntimeException(e);}
-        OnTimeReached();
+        try {
+            sleep(waitingTime);
+            OnTimeReached();
+        }
+        catch (InterruptedException ignored) {}
     }
 
     /**

@@ -14,16 +14,14 @@ public class User {
     private Cart cart;
     private List<Order> userOrders;
     private StoreManager storeManager;
-    private List<Order> userOrdersHistory;
 
     private Optional<FidelityAccount> subscription;
 
-    public User(CookieBook cookieBook, Cart cart,StoreManager storeManager) {
+    public User(CookieBook cookieBook, Cart cart, StoreManager storeManager) {
         this.cookieBook = cookieBook;
         this.cart = cart;
         this.userOrders = new ArrayList<>();
-        this.userOrdersHistory = new ArrayList<>();
-        this.storeManager=storeManager;
+        this.storeManager = storeManager;
         this.subscription = Optional.empty();
     }
 
@@ -47,20 +45,21 @@ public class User {
         return cart.addToCart(item);
     }
 
-    public List<Store> viewStoreAvailable(){
-        return(storeManager.getStoreList());
+    public List<Store> viewStoreAvailable() {
+        return (storeManager.getStoreList());
     }
 
     /**
      * choose the store for his current order
+     *
      * @param name
      * @return
      * @throws InvalidStoreExepection
      */
     public Store selectStore(String name) throws InvalidStoreExepection {
-        Store store=storeManager.selectStore(name);
+        Store store = storeManager.selectStore(name);
         this.cart.setStore(store);
-        return(store);
+        return (store);
     }
 
     /**
@@ -73,13 +72,14 @@ public class User {
 
     /**
      * Gets a list of available TimeSlots by Date;
+     *
      * @return
      */
-    public List<Interval> getAvailableIntervals(int minutesNeeded){
-        return(this.cart.getStore().timeSlotAvailables(minutesNeeded));
+    public List<Interval> getAvailableIntervals(int minutesNeeded) {
+        return (this.cart.getStore().timeSlotAvailables(minutesNeeded));
     }
 
-    public void chooseInterval(Interval interval){
+    public void chooseInterval(Interval interval) {
         interval.reserve();
         this.cart.setInterval(interval);
     }
@@ -99,26 +99,14 @@ public class User {
         return cart;
     }
 
-    public void retrieveOrder(Order order) {
-        if (userOrders.contains(order)) {
-            userOrdersHistory.add(order);
-            userOrders.remove(order);
-            order.updateState(OrderState.RETRIEVE);
-        }
-    }
-
     public void addOrder(Order order) {
         this.userOrders.add(order);
-        if(this.subscription.isPresent())
+        if (this.subscription.isPresent())
             this.subscription.get().addOrder(order);
     }
 
     public List<Order> getOrders() {
         return userOrders;
-    }
-
-    public List<Order> getUserOrdersHistory() {
-        return userOrdersHistory;
     }
 
     public List<Item> getAllItemsFromCart() {
@@ -132,15 +120,16 @@ public class User {
     public StoreManager getStoreManager() {
         return storeManager;
     }
-    public Store getStore(){
-        return(this.cart.getStore());
+
+    public Store getStore() {
+        return (this.cart.getStore());
     }
 
     public void removeOneItemFromCart(Item item) {
         cart.removeOneFromCart(item);
     }
 
-    public void subscribeToFidelityAccount(String name, String email, String password){
+    public void subscribeToFidelityAccount(String name, String email, String password) {
         this.subscription = Optional.of(new FidelityAccount(name, email, password));
     }
 
@@ -149,8 +138,8 @@ public class User {
     }
 
     public boolean hasDiscount() {
-        if(this.getSubscription().isEmpty()) return false;
-        FidelityAccount subscription =  this.getSubscription().get();
+        if (this.getSubscription().isEmpty()) return false;
+        FidelityAccount subscription = this.getSubscription().get();
         return subscription.getDiscount().isPresent();
     }
 
