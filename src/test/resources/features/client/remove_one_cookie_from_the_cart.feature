@@ -3,7 +3,7 @@ Feature: Remove one cookies from the cart
   Background:
     Given a user
     And a valid cookie
-    And a non-empty cart
+    And a non-empty cart with 2 cookie
 
 
   Scenario: remove one cookie from a cart

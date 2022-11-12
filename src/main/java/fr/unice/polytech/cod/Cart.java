@@ -12,7 +12,8 @@ public class Cart {
     private Store store;
     private List<Item> itemList;
     private boolean isValidated;
-    private TimeSlot timeSlot;
+    private Interval interval;
+
 
     public Cart() {
         this.itemList = new ArrayList<>();
@@ -71,7 +72,7 @@ public class Cart {
         user.addOrder(order);
         store.addOrder(order, ingredientsNeeded);
 
-        this.timeSlot.associate(order);
+        this.interval.validate(order);
         this.isValidated = true;
 
         return new Bill(order);
@@ -142,7 +143,7 @@ public class Cart {
         this.store = store;
     }
 
-    public void setTimeSlot(TimeSlot timeSlot) {
-        this.timeSlot = timeSlot;
+    public void setInterval(Interval intervals) {
+        this.interval = intervals;
     }
 }
