@@ -1,6 +1,6 @@
 package fr.unice.polytech.cod;
 
-import fr.unice.polytech.cod.ingredient.Ingredient;
+import fr.unice.polytech.cod.ingredient.*;
 import fr.unice.polytech.cod.store.Store;
 
 import java.util.ArrayList;
@@ -12,9 +12,17 @@ public class CookieBook {
 
     public CookieBook(){
         cookies = new ArrayList<>();
-        cookies.add(new Cookie("Cookie au chocolat",null,null,new ArrayList<>()));
-        cookies.add(new Cookie("Cookie à la vanille",null,null,new ArrayList<>()));
-        cookies.add(new Cookie("Cookie à la pistache",null,null,new ArrayList<>()));
+        IngredientCatalog ingredientCatalog = new IngredientCatalog();
+
+
+        cookies.add(new Cookie("Cookie au chocolat",
+                ingredientCatalog.getDoughList().get(0),
+                ingredientCatalog.getFlavourList().get(0),
+                ingredientCatalog.getToppingList(),
+                Mix.MIXED,
+                Cooking.CHEWY));
+        //cookies.add(new Cookie("Cookie à la vanille",null,null,new ArrayList<>()));
+        //cookies.add(new Cookie("Cookie à la pistache",null,null,new ArrayList<>()));
         // TODO : Add recipes here.
     }
 

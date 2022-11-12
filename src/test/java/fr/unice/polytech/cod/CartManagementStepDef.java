@@ -1,9 +1,6 @@
 package fr.unice.polytech.cod;
 
-import fr.unice.polytech.cod.ingredient.Dough;
-import fr.unice.polytech.cod.ingredient.Flavour;
-import fr.unice.polytech.cod.ingredient.Ingredient;
-import fr.unice.polytech.cod.ingredient.Topping;
+import fr.unice.polytech.cod.ingredient.*;
 import fr.unice.polytech.cod.store.InvalidStoreExepection;
 import fr.unice.polytech.cod.store.Stock;
 import fr.unice.polytech.cod.store.Store;
@@ -63,7 +60,13 @@ public class CartManagementStepDef {
     }
     @And("a valid cookie")
     public void a_valid_cookie() {
-        testCookie =new Cookie("testCookie", new Dough("Pate verte",25,50),new Flavour("Vert",25,50),new ArrayList<Topping>());
+        IngredientCatalog ingredientCatalog = new IngredientCatalog();
+        testCookie = new Cookie("Cookie au chocolat",
+                ingredientCatalog.getDoughList().get(0),
+                ingredientCatalog.getFlavourList().get(0),
+                ingredientCatalog.getToppingList(),
+                Mix.MIXED,
+                Cooking.CHEWY);
     }
 
 

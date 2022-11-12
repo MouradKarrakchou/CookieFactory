@@ -8,10 +8,15 @@ public class Ingredient {
     protected double pricePerGram;
     protected double quantity;
 
-    public Ingredient(String name, double price, double quantity) {
+    public Ingredient(String name, double price, double quantity) {  //Ce constructeur c'est juste pour les tests !?
         this.name = name;
         this.pricePerGram = price;
         this.quantity = quantity;
+    }
+
+    public Ingredient(String name, double pricePerg) {
+        this.name = name;
+        this.pricePerGram = pricePerg;
     }
 
     /**

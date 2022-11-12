@@ -36,4 +36,12 @@ public class Main {
         System.out.println(s.lock(d100));
         System.out.println("end");
     }
+
+    void runTime() {
+        //Un store, un user(fidelityAccount), des cuistos
+        //Mettre plein d'ingrédient dans le stock
+        //Le user choisi des cookies à mettre dans son cart, choisir un magasin et l'heure
+        //Passer le temps jusqu'a que la commande soit prête
+        //Le client va récupé la commande
+    }
 }

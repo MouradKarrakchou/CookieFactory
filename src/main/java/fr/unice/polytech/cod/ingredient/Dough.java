@@ -5,6 +5,10 @@ public class Dough extends Ingredient {
         super(name, pricePerg, quantity);
     }
 
+    public Dough(String name, double pricePerg) {
+        super(name, pricePerg);
+    }
+
     /**
      * Check if 2 objects are the same (same name, same class)
      *

@@ -1,9 +1,7 @@
 package fr.unice.polytech.cod;
 
-import fr.unice.polytech.cod.ingredient.Dough;
-import fr.unice.polytech.cod.ingredient.Flavour;
-import fr.unice.polytech.cod.ingredient.Ingredient;
-import fr.unice.polytech.cod.ingredient.Topping;
+import fr.unice.polytech.cod.ingredient.*;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -13,12 +11,16 @@ public class Cookie {
     private Dough dough;
     private Flavour flavour;
     private List<Topping> toppingList; // TODO : Maybe topping should be represented as a set
+    Mix mix;
+    Cooking cooking;
 
-    public Cookie(String cookieName, Dough dough, Flavour flavour, List<Topping> toppingList){
+    public Cookie(String cookieName, Dough dough, Flavour flavour, List<Topping> toppingList, Mix mix, Cooking cooking){
         this.name = cookieName;
         this.dough = dough;
         this.flavour = flavour;
         this.toppingList = toppingList; //TODO: Make sure the given topping list isn't > 3
+        this.mix = mix;
+        this.cooking = cooking;
     }
 
     public Cookie(String testCookie, Flavour flavour) {
