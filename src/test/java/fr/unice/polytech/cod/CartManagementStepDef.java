@@ -8,13 +8,11 @@ import fr.unice.polytech.cod.store.InvalidStoreExepection;
 import fr.unice.polytech.cod.store.Stock;
 import fr.unice.polytech.cod.store.Store;
 import fr.unice.polytech.cod.store.StoreManager;
-import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.jupiter.api.Assertions;
 
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -50,7 +48,7 @@ public class CartManagementStepDef {
     }
     @Given("a valid cookie")
     public void a_valid_cookie() {
-        testCookie = new Cookie("testCookie", new Dough("Pate verte",25,1),new Flavour("Vert",25,1),new ArrayList<Topping>());
+        testCookie = new Cookie("testCookie", new Dough("Pate verte",25,1),new Flavour("Vert",25,1),new ArrayList<Topping>(), 10);
     }
     @Given("a fidelity account")
     public void a_fidelity_account() throws InvalidStoreExepection {
@@ -169,5 +167,12 @@ public class CartManagementStepDef {
     public void he_receive_a_discount_for_his_next_order() {
         assertTrue(user.hasDiscount());
     }
+    @Then("he do not receive a discount for his next order")
+    public void he_do_not_receive_a_discount_for_his_next_order() {
+        assertFalse(user.hasDiscount());
+    }
+
+
+
 
 }

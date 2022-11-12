@@ -12,5 +12,7 @@ Feature: Receive a discount after ordering 30 cookies
     When he validate his cart
     Then he receive a discount for his next order
 
-
+  Scenario: client doesn't have a fidelity account
+    When he validate his cart
+    Then he do not receive a discount for his next order
 
