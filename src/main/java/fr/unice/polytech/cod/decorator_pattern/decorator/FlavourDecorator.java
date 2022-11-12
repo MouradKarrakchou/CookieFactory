@@ -7,12 +7,12 @@ import fr.unice.polytech.cod.ingredient.Ingredient;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class FlavourDecorator extends Decorator{
+public class FlavourDecorator extends Decorator{
 
     protected Flavour flavour;
 
 
-    public FlavourDecorator(CookieComponent cookieComponent, DecoratorState decoratorState) {
+    public FlavourDecorator(CookieComponent cookieComponent, Flavour flavour, DecoratorState decoratorState) {
         super(cookieComponent, decoratorState);
         this.flavour = flavour;
     }
@@ -32,7 +32,7 @@ public abstract class FlavourDecorator extends Decorator{
     }
 
     @Override
-    public List<Ingredient> getIngredients() {
+    public ArrayList<Ingredient> getIngredients() {
         ArrayList<Ingredient> allIngredients = new ArrayList<Ingredient>(cookieComponent.getIngredients());
         if(decoratorState.equals(DecoratorState.ADD))
             allIngredients.add(this.flavour);

@@ -46,7 +46,7 @@ public abstract class Decorator extends CookieComponent{
     }
 
     @Override
-    public List<Ingredient> getIngredients() {
+    public ArrayList<Ingredient> getIngredients() {
         ArrayList<Ingredient> allIngredients = new ArrayList<Ingredient>(cookieComponent.getIngredients());
         if(decoratorState.equals(DecoratorState.ADD))
             allIngredients.addAll(this.ingredientsDecorator);
