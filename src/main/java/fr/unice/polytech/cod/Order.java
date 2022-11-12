@@ -1,32 +1,65 @@
 package fr.unice.polytech.cod;
 
-public class Order {
+import java.sql.Time;
+import java.util.Optional;
 
-    OrderState orderState;
-    Cart cart;
-    User user;
+public class Order {
+    private OrderState orderState;
+    private Cart cart;
+    private User user;
+    private Time finishTime;
+
+    private Optional<Discount> discount;
 
     public Order(Cart cart, User user) {
         this.cart = cart;
         this.orderState = OrderState.PENDING;
         this.user = user;
+        this.discount = Optional.empty();
     }
 
     public Order(Cart cart, OrderState orderState, User user) {
         this.cart = cart;
         this.orderState = orderState;
         this.user = user;
+        this.discount = Optional.empty();
     }
 
-    public OrderState getOrderState() {
+    public void setFinishTime(Time finishTime){
+        this.finishTime = finishTime;
+    }
+
+    public Time getFinishTime(){
+        return finishTime;
+    }
+
+    public OrderState getState() {
         return orderState;
     }
 
-    public void setState(OrderState state) {
+    /**
+     * Set the state of the order to the given OrderState
+     * If the state is set to READY the finishTime will be set to now.
+     * @param state The new state of the order
+     */
+    public void updateState(OrderState state) {
+        if(state == OrderState.READY)
+            finishTime = new Time(System.currentTimeMillis());
+
         this.orderState = state;
     }
 
     public User getUser() {
         return user;
+    }
+
+    public Cart getCart() { return cart;}
+
+    public Optional<Discount> getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Optional<Discount> discount) {
+        this.discount = discount;
     }
 }

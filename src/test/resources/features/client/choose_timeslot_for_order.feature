@@ -10,7 +10,7 @@ Feature: Choose a time slot
   Scenario: the user choose a valid time slot and validate his cart
     Given a valid time slot
     When a user chooses a time slot
-    And he validate the cart
+    And he validate his cart
     Then the order is associated with the time slot
 
   Scenario: the user reserve a time slot for his cart

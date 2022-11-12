@@ -41,7 +41,7 @@ public class Chef {
     public void giveOrder() throws Exception {
         if(this.orderToPrepare.isPresent()){
             Order order = orderToPrepare.get();
-            order.setState(OrderState.RETRIEVE);
+            order.updateState(OrderState.RETRIEVE);
             this.orderToPrepare = Optional.empty();
         }
         else

@@ -68,7 +68,7 @@ public class Store {
     public void associateOrder(Chef chef, Order orderToPrepare) {
         if(chef.isAvailable()) {
             chef.associateOrder(orderToPrepare);
-            orderToPrepare.setState(OrderState.IN_PROGRESS);
+            orderToPrepare.updateState(OrderState.IN_PROGRESS);
         }
     }
     public void addChef(Chef chef){

@@ -42,6 +42,18 @@ public class Cookie {
         return name;
     }
 
+    public Dough getDough() {
+        return dough;
+    }
+
+    public Flavour getFlavour() {
+        return flavour;
+    }
+
+    public List<Topping> getToppingList() {
+        return toppingList;
+    }
+
     @Override
     public String toString() {
         return "Cookie{" +
