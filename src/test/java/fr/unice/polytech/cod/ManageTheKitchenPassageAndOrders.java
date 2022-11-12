@@ -45,6 +45,6 @@ public class ManageTheKitchenPassageAndOrders {
 
     @Then("the state of the order is \"([^\"]*)\"$")
     public void the_state_of_the_order_is(OrderState orderState) {
-        assertEquals(orderState, order.getState());
+        assertEquals(orderState, order.getOrderState());
     }
 }
