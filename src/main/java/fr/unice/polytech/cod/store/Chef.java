@@ -14,7 +14,6 @@ public class Chef {
     public static TimeClock STARTAFTERNOONTIME=new TimeClock(14,0);
     public static TimeClock ENDAFTERNOONTIME=new TimeClock(18,0);
 
-
     public Chef() {
         this.schedule = new Schedule();
         this.state = ChefState.AVAILABLE;
@@ -36,16 +35,6 @@ public class Chef {
 
     public boolean isAvailable() {
         return state == ChefState.AVAILABLE;
-    }
-
-    public void giveOrder() throws Exception {
-        if(this.orderToPrepare.isPresent()){
-            Order order = orderToPrepare.get();
-            order.updateState(OrderState.RETRIEVE);
-            this.orderToPrepare = Optional.empty();
-        }
-        else
-            throw new Exception("No associate order");
     }
 
     public void makeOtherActivityDuringLeftTime() {

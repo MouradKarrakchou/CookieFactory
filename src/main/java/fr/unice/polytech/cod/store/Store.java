@@ -2,6 +2,7 @@ package fr.unice.polytech.cod.store;
 
 import fr.unice.polytech.cod.*;
 import fr.unice.polytech.cod.ingredient.Ingredient;
+import org.mockito.internal.matchers.Or;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -26,9 +27,13 @@ public class Store {
         }
     }
 
-    public void retrieveOrder(Order order) {
-        this.orderList.remove(order);
-        order.getUser().retrieveOrder(order);
+    public void retrieveOrder(Bill bill) throws Exception{
+        Order order = bill.getOrder();
+        if (this.orderList.contains(order)){
+            order.updateState(OrderState.RETRIEVE);
+            this.orderList.remove(order);
+        }else
+            throw new Exception("Order doesn't exist");
     }
 
     /**
