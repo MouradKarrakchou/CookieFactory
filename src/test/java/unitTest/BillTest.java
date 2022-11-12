@@ -1,6 +1,7 @@
 package unitTest;
 
 import fr.unice.polytech.cod.*;
+import fr.unice.polytech.cod.ingredient.Cookie;
 import fr.unice.polytech.cod.ingredient.Dough;
 import fr.unice.polytech.cod.ingredient.Flavour;
 import fr.unice.polytech.cod.ingredient.Topping;

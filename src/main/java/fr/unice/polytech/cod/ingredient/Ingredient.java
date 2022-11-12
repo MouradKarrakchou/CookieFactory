@@ -5,12 +5,12 @@ import java.util.Objects;
 public class Ingredient {
     protected String name;
     //price per g
-    protected double pricePerGram;
+    protected double price;
     protected double quantity;
 
     public Ingredient(String name, double price, double quantity) {
         this.name = name;
-        this.pricePerGram = price;
+        this.price = price;
         this.quantity = quantity;
     }
 
@@ -31,10 +31,13 @@ public class Ingredient {
         return quantity;
     }
 
-    public double getPricePerGram() {
-        return pricePerGram;
+    public double getPrice() {
+        return price;
     }
 
+    public String getName() {
+        return name;
+    }
 
     /**
      * Check if 2 objects are the same (same name, same class)
@@ -58,7 +61,7 @@ public class Ingredient {
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, pricePerGram, quantity);
+        return Objects.hash(name, price, quantity);
     }
 
     @Override

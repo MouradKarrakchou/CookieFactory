@@ -1,5 +1,6 @@
 package fr.unice.polytech.cod;
 
+import fr.unice.polytech.cod.ingredient.Cookie;
 import fr.unice.polytech.cod.ingredient.Dough;
 import fr.unice.polytech.cod.ingredient.Flavour;
 import fr.unice.polytech.cod.ingredient.Topping;
@@ -32,15 +33,15 @@ public class Bill {
             List<Topping> toppings = cookie.getToppingList();
 
             receipt.append(cookie.getName()).append(":\n");
-            receipt.append("    ").append(dough.toString()).append("..........").append(dough.getQuantity() * dough.getPricePerGram()).append("€\n");
-            receipt.append("    ").append(flavour.toString()).append("..........").append(flavour.getQuantity() * flavour.getPricePerGram()).append("€\n");
+            receipt.append("    ").append(dough.toString()).append("..........").append(dough.getQuantity() * dough.getPrice()).append("€\n");
+            receipt.append("    ").append(flavour.toString()).append("..........").append(flavour.getQuantity() * flavour.getPrice()).append("€\n");
 
-            totalPrice += dough.getQuantity() * dough.getPricePerGram() + flavour.getQuantity() * flavour.getPricePerGram();
+            totalPrice += dough.getQuantity() * dough.getPrice() + flavour.getQuantity() * flavour.getPrice();
 
             if(!toppings.isEmpty()) {
                 for (Topping topping : toppings) {
-                    receipt.append("    ").append(topping.toString()).append("..........").append(topping.getQuantity() * topping.getPricePerGram()).append("€\n");
-                    totalPrice += topping.getQuantity() * topping.getPricePerGram();
+                    receipt.append("    ").append(topping.toString()).append("..........").append(topping.getQuantity() * topping.getPrice()).append("€\n");
+                    totalPrice += topping.getQuantity() * topping.getPrice();
                 }
             }
         }

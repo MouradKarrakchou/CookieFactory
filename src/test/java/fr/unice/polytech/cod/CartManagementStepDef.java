@@ -1,15 +1,10 @@
 package fr.unice.polytech.cod;
 
-import fr.unice.polytech.cod.ingredient.Dough;
-import fr.unice.polytech.cod.ingredient.Flavour;
-import fr.unice.polytech.cod.ingredient.Ingredient;
-import fr.unice.polytech.cod.ingredient.Topping;
+import fr.unice.polytech.cod.ingredient.*;
 import fr.unice.polytech.cod.store.InvalidStoreExepection;
 import fr.unice.polytech.cod.store.Stock;
 import fr.unice.polytech.cod.store.Store;
 import fr.unice.polytech.cod.store.StoreManager;
-import fr.unice.polytech.cod.store.*;
-import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
