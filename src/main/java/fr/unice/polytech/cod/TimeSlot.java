@@ -26,6 +26,7 @@ public class TimeSlot {
 
     public void disassociate() {
         this.order = Optional.empty();
+        this.reserved = false;
     }
 
     public void setReserved(boolean reserved) {

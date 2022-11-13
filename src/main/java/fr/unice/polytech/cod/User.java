@@ -153,8 +153,10 @@ public class User {
     }
 
     public void cancelOrder(Order order) {
-        if(order.getOrderState().equals(OrderState.PENDING))
+        if(order.getOrderState().equals(OrderState.PENDING)) {
             cart.cancelOrder(order);
+            System.out.println("Your order has been canceled.");
+        }
         else
             System.out.println("Your order is already in progress. You cannot canceled it.");
     }

@@ -74,6 +74,7 @@ public class Cart {
 
         this.interval.validate(order);
         this.isValidated = true;
+        //TODO CLEAR LE PANIER ?
 
         return new Bill(order);
     }

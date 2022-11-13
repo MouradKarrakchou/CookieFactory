@@ -5,11 +5,11 @@ import fr.unice.polytech.cod.store.InvalidStoreExepection;
 import fr.unice.polytech.cod.store.Stock;
 import fr.unice.polytech.cod.store.Store;
 import fr.unice.polytech.cod.store.StoreManager;
-import fr.unice.polytech.cod.store.*;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.jupiter.api.Assertions;
+import org.mockito.internal.matchers.Or;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +27,8 @@ public class CartManagementStepDef {
     Interval interval;
     Bill bill;
     StoreManager storeManager;
+    Order pendingOrder;
+    Order inProgressOrder;
 
     @Given("a user")
     public void a_user() {
@@ -192,4 +194,35 @@ public class CartManagementStepDef {
         {
             assertTrue(timeSlot.reserved);}
     }
+
+    @Given("an order at the state \"([^\"]*)\"$")
+    public void an_order_at_the_state(OrderState state) {
+        pendingOrder = new Order(cart, user);
+        inProgressOrder = new Order(cart, user);
+        if(state.equals(OrderState.PENDING)) pendingOrder.updateState(state);
+        else inProgressOrder.updateState(state);
+    }
+
+    @When("the user try to cancel his order at the state \"([^\"]*)\"$")
+    public void the_user_try_to_cancel_his_order_at_the_state_OrderState(OrderState state) {
+        if(state.equals(OrderState.PENDING)) user.cancelOrder(pendingOrder);
+        else user.cancelOrder(inProgressOrder);
+
+    }
+
+    @Then("the order is canceled")
+    public void the_order_is_canceled() {
+        assertFalse(user.getCart().getStore().getOrderList().contains(pendingOrder));
+    }
+
+    @Then("the user is notified")
+    public void the_user_is_notified() {
+        assertTrue(true);//TODO COMMENT TESTER UN SYS.OUT ?
+    }
+
+    @Then("the order cannot be canceled")
+    public void the_order_cannot_be_canceled() {
+        assertFalse(user.getCart().getStore().getOrderList().contains(inProgressOrder));
+    }
+
 }
