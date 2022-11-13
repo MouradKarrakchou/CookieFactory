@@ -84,6 +84,10 @@ public class Store {
     public String getName() {
         return name;
     }
+
+    public List<Chef> getListChef() {
+        return listChef;
+    }
 }
 
 

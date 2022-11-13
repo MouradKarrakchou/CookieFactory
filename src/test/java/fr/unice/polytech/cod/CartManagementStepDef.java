@@ -4,11 +4,8 @@ import fr.unice.polytech.cod.ingredient.Dough;
 import fr.unice.polytech.cod.ingredient.Flavour;
 import fr.unice.polytech.cod.ingredient.Ingredient;
 import fr.unice.polytech.cod.ingredient.Topping;
-import fr.unice.polytech.cod.store.InvalidStoreExepection;
-import fr.unice.polytech.cod.store.Stock;
-import fr.unice.polytech.cod.store.Store;
-import fr.unice.polytech.cod.store.StoreManager;
 import fr.unice.polytech.cod.store.*;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -30,6 +27,7 @@ public class CartManagementStepDef {
     Interval interval;
     Bill bill;
     StoreManager storeManager;
+    List<Interval> availableIntervals;
 
     @Given("a user")
     public void a_user() {
@@ -185,5 +183,56 @@ public class CartManagementStepDef {
         for(TimeSlot timeSlot:interval.getTimeSlots())
         {
             assertTrue(timeSlot.reserved);}
+    }
+
+    @Given("an employee with disponibility only from {int} to {int}")
+    public void anEmployeeWithDisponibilityOnlyFromTo(int startingHour, int finishingHour) {
+        Chef chef=new Chef();
+        user.getStore().addChef(chef);
+        List<TimeSlot> timeSlots=chef.getSchedule().getDaySlot().getTimeSlots();
+        for (TimeSlot timeSlot:timeSlots){
+            if(!(timeSlot.getStartTime().compareTo(new TimeClock(startingHour,0))>=0&&timeSlot.getEndTime().compareTo(new TimeClock(finishingHour,0))<=0))
+                timeSlot.setReserved(true);
+        }
+    }
+
+
+    @When("a user ask for {int} minute intervals possible")
+    public void aUserAskForMinuteIntervalsPossible(int duration ) {
+        availableIntervals=user.getAvailableIntervals(duration);
+    }
+
+    @Then("he gets only intervals starting and finishing in the {int} to {int} time period with a {int} minute duration")
+    public void heGetsOnlyIntervalsStartingAndFinishingInTheToTimePeriodWithAMinuteDuration(int startingHour, int finishingHour,int duration) {
+        for (Interval interval:availableIntervals){
+            assertTrue(interval.getStartTime().compareTo(new TimeClock(startingHour,0))>=0&&interval.getEndTime().compareTo(new TimeClock(finishingHour,0))<=0);
+            assertTrue(interval.getStartTime().timeDifference(interval.getEndTime())==duration);
+        }
+    }
+
+    @And("the store has no employ")
+    public void theStoreHasNoEmploy() {
+        user.getStore().getListChef().clear();
+    }
+
+    @And("he gets no intervals starting before {int} and finishing after")
+    public void heGetsNoIntervalsStartingBeforeAndFinishingAfter(int firstEndTime) {
+        for (Interval interval:availableIntervals){
+            boolean startBeforeEndOfFirstshift=interval.getStartTime().compareTo(new TimeClock(firstEndTime,0))<0;
+            boolean endAfterFirstshift=interval.getEndTime().compareTo(new TimeClock(firstEndTime,0))>0;
+            //xor
+            assertTrue(!(startBeforeEndOfFirstshift && endAfterFirstshift));
+        }
+    }
+
+    @And("he gets the right number of disponibility for a {int} hours disponibility with a {int} min interval")
+    public void heGetsTheRightNumberOfDisponibilityForAHoursDisponibilityWithAMinInterval(int numberOfHour, int intervalDurantion) {
+        int numberOfMinute=numberOfHour*60;
+        if (intervalDurantion%15!=0)
+            numberOfMinute-=(intervalDurantion/15+1)*15;
+        else
+            numberOfMinute-=intervalDurantion;
+        int numberOfInterval=numberOfMinute/15+1;
+        assertEquals(numberOfInterval,availableIntervals.size());
     }
 }

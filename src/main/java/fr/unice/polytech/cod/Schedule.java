@@ -18,4 +18,8 @@ public class Schedule {
     public List<Interval> getIntervals(int minutes){
         return daySlot.askForSlotsAvailable(minutes);
     }
+
+    public DaySlot getDaySlot() {
+        return daySlot;
+    }
 }
