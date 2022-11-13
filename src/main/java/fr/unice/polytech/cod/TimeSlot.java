@@ -52,6 +52,5 @@ public class TimeSlot {
     public Boolean isAvailable() {
         if (this.reserved) return false;
         if (order.isEmpty()) return true;
-        else return false;
-    }
+        else return false;}
 }

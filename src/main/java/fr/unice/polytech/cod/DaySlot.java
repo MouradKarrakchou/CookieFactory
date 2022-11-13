@@ -71,4 +71,7 @@ public class DaySlot {
         return timeSlots;
     }
 
+    public List<TimeSlot> getTimeSlots() {
+        return timeSlots;
+    }
 }

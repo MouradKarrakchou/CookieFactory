@@ -106,6 +106,10 @@ public class Store {
     public void setTaxes(Map<Ingredient, Double> taxes) {
         this.taxes = taxes;
     }
+
+    public List<Chef> getListChef() {
+        return listChef;
+    }
 }
 
 
