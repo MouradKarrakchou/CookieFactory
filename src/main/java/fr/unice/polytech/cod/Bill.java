@@ -1,8 +1,6 @@
 package fr.unice.polytech.cod;
 
-import fr.unice.polytech.cod.ingredient.Dough;
-import fr.unice.polytech.cod.ingredient.Flavour;
-import fr.unice.polytech.cod.ingredient.Topping;
+import fr.unice.polytech.cod.ingredient.Cookie;
 import fr.unice.polytech.cod.store.Store;
 
 import java.util.List;
@@ -16,33 +14,24 @@ public class Bill {
         this.numberOrder = Store.orderNumber++;
     }
 
-    public String showBill() {
+    @Override
+    public String toString() {
         StringBuilder receipt = new StringBuilder();
 
         String storeName = order.getCart().getStore().getName();
         receipt.append("===============").append(storeName).append("===============\n");
         List<Item> items = order.getCart().getItemList();
 
+        double cookiePrice;
         double totalPrice = 0;
 
         for(Item item : items) {
             Cookie cookie = item.getCookie();
-            Dough dough = cookie.getDough();
-            Flavour flavour = cookie.getFlavour();
-            List<Topping> toppings = cookie.getToppingList();
+            //Math.round(price * 100) / 100 allows to round the price to 2 figures
+            cookiePrice = Math.round(cookie.getPriceByStore(order.getCart().getStore()) * 100)/100.0;
 
-            receipt.append(cookie.getName()).append(":\n");
-            receipt.append("    ").append(dough.toString()).append("..........").append(dough.getQuantity() * dough.getPricePerGram()).append("€\n");
-            receipt.append("    ").append(flavour.toString()).append("..........").append(flavour.getQuantity() * flavour.getPricePerGram()).append("€\n");
-
-            totalPrice += dough.getQuantity() * dough.getPricePerGram() + flavour.getQuantity() * flavour.getPricePerGram();
-
-            if(!toppings.isEmpty()) {
-                for (Topping topping : toppings) {
-                    receipt.append("    ").append(topping.toString()).append("..........").append(topping.getQuantity() * topping.getPricePerGram()).append("€\n");
-                    totalPrice += topping.getQuantity() * topping.getPricePerGram();
-                }
-            }
+            receipt.append(cookie.getName()).append("..........").append(cookiePrice).append("€\n");
+            totalPrice += cookiePrice;
         }
         if(order.getDiscount().isPresent()){
             Discount discount = order.getDiscount().get();
@@ -54,5 +43,9 @@ public class Bill {
 
         System.out.println(receipt);
         return receipt.toString();
+    }
+
+    public Order getOrder() {
+        return order;
     }
 }

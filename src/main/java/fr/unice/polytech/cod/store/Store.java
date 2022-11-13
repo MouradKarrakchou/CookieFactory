@@ -2,6 +2,7 @@ package fr.unice.polytech.cod.store;
 
 import fr.unice.polytech.cod.*;
 import fr.unice.polytech.cod.ingredient.Ingredient;
+import org.mockito.internal.matchers.Or;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -12,6 +13,7 @@ public class Store {
     List<Chef> listChef;
     private final Stock stock;
     public static int orderNumber = 0;
+    Map<Ingredient, Double> taxes;
 
     public Store(String name) {
         this.name=name;
@@ -19,11 +21,19 @@ public class Store {
         this.orderList = new ArrayList<>();
         this.stock = new Stock();
         listChef.add(new Chef());
+
+        for(Ingredient ingredient : stock.getIngredients()) {
+            taxes.put(ingredient, 0.0);
+        }
     }
 
-    public void retrieveOrder(Order order) {
-        this.orderList.remove(order);
-        order.getUser().retrieveOrder(order);
+    public void retrieveOrder(Bill bill) throws Exception{
+        Order order = bill.getOrder();
+        if (this.orderList.contains(order)){
+            order.updateState(OrderState.RETRIEVE);
+            this.orderList.remove(order);
+        }else
+            throw new Exception("Order doesn't exist");
     }
 
     /**
@@ -39,6 +49,7 @@ public class Store {
         Collections.sort(intervals);
         return(intervals);
     }
+
     /**
      * For a given set of ingredients check if there is enough of these ingredients in the stock.
      *
@@ -71,18 +82,25 @@ public class Store {
             orderToPrepare.updateState(OrderState.IN_PROGRESS);
         }
     }
+
     public void addChef(Chef chef){
         this.listChef.add(chef);
     }
-
 
     public Stock getStock() {
         return this.stock;
     }
 
-
     public String getName() {
         return name;
+    }
+
+    public Map<Ingredient, Double> getTaxes() {
+        return taxes;
+    }
+
+    public void setTaxes(Map<Ingredient, Double> taxes) {
+        this.taxes = taxes;
     }
 
     public List<Chef> getListChef() {

@@ -4,6 +4,11 @@ import fr.unice.polytech.cod.ingredient.Dough;
 import fr.unice.polytech.cod.ingredient.Flavour;
 import fr.unice.polytech.cod.ingredient.Ingredient;
 import fr.unice.polytech.cod.ingredient.Topping;
+import fr.unice.polytech.cod.ingredient.*;
+import fr.unice.polytech.cod.store.InvalidStoreExepection;
+import fr.unice.polytech.cod.store.Stock;
+import fr.unice.polytech.cod.store.Store;
+import fr.unice.polytech.cod.store.StoreManager;
 import fr.unice.polytech.cod.store.*;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -37,13 +42,21 @@ public class CartManagementStepDef {
 
     @Given("a store named {string}")
     public void the_antibes_store(String name) throws InvalidStoreExepection {
+        IngredientCatalog ingredientCatalog = new IngredientCatalog();
         user.selectStore(name);
-        user.getStore().getStock().addStock(new Dough("Pate verte",25,100));
-        user.getStore().getStock().addStock(new Flavour("Vert",25,100));
+        for (int i =0; i <100; i++)
+            user.getStore().getStock().addStockList(ingredientCatalog.getIngredientList());
     }
     @Given("a valid cookie")
     public void a_valid_cookie() {
-        testCookie = new Cookie("testCookie", new Dough("Pate verte",25,1),new Flavour("Vert",25,1),new ArrayList<Topping>(), 10);
+        IngredientCatalog ingredientCatalog = new IngredientCatalog();
+        testCookie = new Cookie("testCookie",
+                ingredientCatalog.getDoughList().get(0),
+                ingredientCatalog.getFlavourList().get(0),
+                ingredientCatalog.getToppingList(),
+                new Mix(Mix.MixState.MIXED),
+                new Cooking(Cooking.CookingState.CHEWY),
+                10);
     }
     @Given("a fidelity account")
     public void a_fidelity_account() throws InvalidStoreExepection {
@@ -79,6 +92,7 @@ public class CartManagementStepDef {
     }
     @When("he validate his cart")
     public void he_validate_his_cart() throws Exception {
+        user.getCart().showCart();
         bill = user.validateCart();
     }
     @When("we choose a valid store")
