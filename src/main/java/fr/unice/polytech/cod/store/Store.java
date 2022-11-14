@@ -25,7 +25,6 @@ public class Store {
         this.stock = new Stock();
         listChef.add(new Chef(this));
         this.cookieBook = new CookieBook();
-        listChef.add(new Chef());
 
         for(Ingredient ingredient : stock.getIngredients()) {
             taxes.put(ingredient, 0.0);

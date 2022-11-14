@@ -22,12 +22,7 @@ public class DaySlot {
      * create the timeSlots of the chef for the morning and the afternoon
      */
     private void initialiseTimeSlots(Store store) {
-        this.timeSlots.addAll(creatingTimeSlots(store.getOpenHour(),store.getCloseHour()));
-    private void initialiseTimeSlots() {
-        this.timeSlots.addAll(creatingTimeSlots(Chef.START_MORNING_TIME,Chef.END_MORNING_TIME));
-        this.timeSlots.addAll(creatingTimeSlots(Chef.START_AFTERNOON_TIME,Chef.END_AFTERNOON_TIME));
-    }
-
+        this.timeSlots.addAll(creatingTimeSlots(store.getOpenHour(),store.getCloseHour()));}
 
     public List<Interval> askForSlotsAvailable(int numberOfMinuteNeeded){
         List<Interval> intervals=new ArrayList<>();
