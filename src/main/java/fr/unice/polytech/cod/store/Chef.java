@@ -41,7 +41,6 @@ public class Chef {
         Order order = this.orderToPrepare.get();
         this.state = ChefState.UNAVAILABLE;
         order.updateState(OrderState.IN_PROGRESS);
-        order.updateState(OrderState.READY);
     }
 
     public void makeOtherActivityDuringLeftTime() {
