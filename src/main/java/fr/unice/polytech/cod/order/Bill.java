@@ -10,10 +10,27 @@ import java.util.List;
 public class Bill {
     Order order;
     int numberOrder;
+    double totalPrice;
 
     public Bill(Order order){
         this.order = order;
         this.numberOrder = Store.orderNumber++;
+        this.totalPrice = computeTotalPrice();
+    }
+
+    private double computeTotalPrice(){
+        List<Item> items = order.getCart().getItemList();
+        double totalPrice = 0;
+        for(Item item : items) {
+            Cookie cookie = item.getCookie();
+            double cookiePrice = Math.round(cookie.getPriceByStore(order.getCart().getStore()) * 100)/100.0;
+            totalPrice += cookiePrice;
+        }
+        if(order.getDiscount().isPresent()){
+            Discount discount = order.getDiscount().get();
+            totalPrice-=totalPrice*discount.getValue();
+        }
+        return totalPrice;
     }
 
     @Override
@@ -49,5 +66,9 @@ public class Bill {
 
     public Order getOrder() {
         return order;
+    }
+
+    public double getTotalPrice() {
+        return totalPrice;
     }
 }
