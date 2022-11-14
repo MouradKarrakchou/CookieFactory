@@ -54,7 +54,7 @@ public class Cart {
     }
 
     /**
-     * Validdte the cart and create an order, that is added to the user and the sore.
+     * Validate the cart and create an order, that is added to the user and the sore.
      * The cart is validated only if the store has all the ingredients needed
      *
      * @param user
