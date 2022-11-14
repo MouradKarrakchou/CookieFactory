@@ -3,19 +3,26 @@ package fr.unice.polytech.cod;
 import fr.unice.polytech.cod.ingredient.Ingredient;
 import fr.unice.polytech.cod.store.Store;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.time.Duration;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.*;
 
 public class Cart {
     private Store store;
     private List<Item> itemList;
     private Interval interval;
+    private int canceled;
+    private Instant lastTimeCanceled;
+    private Instant endPenaltyTime;
+    private boolean penalty;
 
 
     public Cart() {
         this.itemList = new ArrayList<>();
+        this.canceled = 0;
+        this.penalty = false;
     }
 
     public void showCart() {
@@ -79,6 +86,38 @@ public class Cart {
     public void cancelOrder(Order order) {
         store.removeOrder(order);
         this.interval.freedInterval();
+        canceled++;
+        Instant time = Instant.now();
+
+        cancelPenalty(time);
+    }
+
+    private void cancelPenalty(Instant time) {
+        if(canceled == 2) {
+            boolean isCanceledTwiceInARow = isCanceledTwiceInARow(time);
+            if(isCanceledTwiceInARow)
+                penalty(time);
+            else
+                canceled = 0;
+        }
+
+        lastTimeCanceled = time;
+    }
+
+    private boolean isCanceledTwiceInARow(Instant time) {
+        return Duration.between(lastTimeCanceled, time).toMinutes() <= 8;
+    }
+
+    private void penalty(Instant time) {
+        endPenaltyTime = time.plusSeconds(600); //10 minutes
+        penalty = true;
+    }
+
+    public boolean isTherePenalty(Instant time) {
+        if(time.isAfter(endPenaltyTime))
+            penalty = false;
+
+        return penalty;
     }
 
     public boolean isEmpty() {
