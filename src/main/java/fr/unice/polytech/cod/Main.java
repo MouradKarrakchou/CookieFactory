@@ -9,7 +9,7 @@ import fr.unice.polytech.cod.helper.Display;
 import fr.unice.polytech.cod.food.*;
 import fr.unice.polytech.cod.store.Stock;
 import fr.unice.polytech.cod.store.Store;
-import fr.unice.polytech.cod.data.StoreManager;
+import fr.unice.polytech.cod.data.StoreLocation;
 import fr.unice.polytech.cod.user.Cart;
 import fr.unice.polytech.cod.user.fidelityAccount.FidelityAccount;
 import fr.unice.polytech.cod.user.User;
@@ -27,7 +27,7 @@ public class Main {
         CookieBook cookieBook = new CookieBook();
         Cart cart = new Cart();
         FidelityAccount fidelityAccount = new FidelityAccount();
-        User user = new User(cookieBook, cart,new StoreManager());
+        User user = new User(cart,new StoreLocation());
 
         Display.displayCookies(user.viewCatalog());
 

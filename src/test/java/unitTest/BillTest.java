@@ -20,7 +20,7 @@ import java.util.Map;
 public class BillTest {
     Map<Ingredient, Double> taxes = new HashMap<>();
     Store store = new Store("StoRe");
-    User user = new User(null, null, null); // Added null caused compile error
+    User user = new User( null, null); // Added null caused compile error
     Cart cart = new Cart();
     Order order = new Order(cart, user);
     Bill bill = new Bill(order);

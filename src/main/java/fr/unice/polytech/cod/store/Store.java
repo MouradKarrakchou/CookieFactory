@@ -20,6 +20,7 @@ public class Store {
     CookieBook cookieBook;
     public TimeClock openHour=new TimeClock(8,0);
     public TimeClock closeHour=new TimeClock(18,0);
+    StoreManager storeManager;
 
     public Store(String name) {
         this.name=name;
@@ -105,6 +106,15 @@ public class Store {
         for (Chef chef: listChef){
             chef.updateSchedule(this);
         }
+    }
+
+
+    public void setStoreManager(StoreManager storeManager) {
+        this.storeManager = storeManager;
+    }
+
+    public StoreManager getStoreManager() {
+        return storeManager;
     }
 
     public TimeClock getOpenHour() {

@@ -1,5 +1,5 @@
-# Created by moura at 13/11/2022
-Feature:
+Feature: Define opening hour
+
   Given a user
   And a valid cookie
   And a non-empty cart with 2 cookie
@@ -7,4 +7,6 @@ Feature:
   And the store has no employ
 
   Scenario:
-  When
+    Given a manager
+    When the manager changes the openning time of the store from 10 to 16
+    Then the schedule of the employees start from 10 to 16

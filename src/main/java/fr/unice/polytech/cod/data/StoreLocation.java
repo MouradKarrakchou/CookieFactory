@@ -7,9 +7,9 @@ import fr.unice.polytech.cod.store.Store;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StoreManager {
+public class StoreLocation {
     List<Store> storeList;
-    public StoreManager(){
+    public StoreLocation(){
         storeList= new ArrayList<>();
         storeList.add(new Store("Antibes"));
         storeList.add(new Store("Nice"));

@@ -1,11 +1,19 @@
 package unitTest;
 
 import fr.unice.polytech.cod.*;
-import fr.unice.polytech.cod.ingredient.Cookie;
-import fr.unice.polytech.cod.ingredient.IngredientCatalog;
+import fr.unice.polytech.cod.data.CookieBook;
+import fr.unice.polytech.cod.data.IngredientCatalog;
+import fr.unice.polytech.cod.data.StoreLocation;
+import fr.unice.polytech.cod.food.Cookie;
+import fr.unice.polytech.cod.food.Item;
+import fr.unice.polytech.cod.schedule.Interval;
+import fr.unice.polytech.cod.schedule.TimeClock;
+import fr.unice.polytech.cod.schedule.TimeSlot;
 import fr.unice.polytech.cod.store.Chef;
 import fr.unice.polytech.cod.store.InvalidStoreException;
 import fr.unice.polytech.cod.store.StoreManager;
+import fr.unice.polytech.cod.user.Cart;
+import fr.unice.polytech.cod.user.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,18 +25,17 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class TimeManagementTest {
-    private StoreManager storeManager;
+    private StoreLocation storeLocation;
     private User user;
 
 
     private final IngredientCatalog ingredientCatalog = IngredientCatalog.instance;
-    private final CookieBook cookieBook = CookieBook.instance;
 
 
     @BeforeEach
     public void init() throws InvalidStoreException {
-        this.storeManager=new StoreManager();
-        this.user = new User(this.cookieBook,new Cart(),storeManager);
+        this.storeLocation=new StoreLocation();
+        this.user = new User(new Cart(),storeLocation);
         this.user.selectStore("Antibes");
         for (int i = 0; i <100; i++)
             user.getStore().getStock().addStockList(ingredientCatalog.getIngredientList());
@@ -124,7 +131,7 @@ public class TimeManagementTest {
     }
     
     public Chef createChef(int start, int end){
-        Chef chef=new Chef();
+        Chef chef=new Chef(user.getStore());
         user.getStore().addChef(chef);
         List<TimeSlot> timeSlots=chef.getSchedule().getDaySlot().getTimeSlots();
         for (TimeSlot timeSlot:timeSlots){
