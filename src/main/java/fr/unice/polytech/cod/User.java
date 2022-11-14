@@ -7,6 +7,7 @@ import fr.unice.polytech.cod.store.InvalidStoreException;
 import fr.unice.polytech.cod.store.Store;
 import fr.unice.polytech.cod.store.StoreManager;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -90,8 +91,8 @@ public class User {
      * If the cart is not empty, validate the cart to create an order
      */
     public Bill validateCart() throws Exception {
-        //userOrders.add(this.cart.createOrder());
-        if (!cart.isEmpty())
+        Instant time = Instant.now();
+        if (!cart.isEmpty() && !cart.isTherePenalty(time))
             return cart.validate(this);
         else
             throw new Exception("Panier vide impossible de le valider");
@@ -155,7 +156,7 @@ public class User {
     }
 
     public boolean cancelOrder(Order order) {
-        if(order.getOrderState().equals(OrderState.PENDING)) {
+        if(userOrders.contains(order) && order.getOrderState().equals(OrderState.PENDING)) {
             cart.cancelOrder(order);
             return true; //Your order has been canceled
         }

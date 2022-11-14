@@ -36,13 +36,12 @@ public class CartManagementStepDef {
     Order pendingOrder;
     Order inProgressOrder;
 
-    private final CookieBook cookieBook = CookieBook.instance;
     private final IngredientCatalog ingredientCatalog = IngredientCatalog.instance;
 
     @Given("a user")
     public void a_user() {
         this.storeManager=new StoreManager();
-        user = new User(cookieBook,new Cart(),storeManager);
+        user = new User(new CookieBook(),new Cart(),storeManager);
     }
 
     @Given("a store named {string}")
@@ -53,7 +52,7 @@ public class CartManagementStepDef {
     }
     @Given("a valid cookie")
     public void a_valid_cookie() {
-        testCookie = cookieBook.getCookie("Cookie au chocolat");
+        testCookie = new CookieBook().getCookie("Cookie au chocolat");
     }
     @Given("a fidelity account")
     public void a_fidelity_account() throws InvalidStoreException {
@@ -198,7 +197,7 @@ public class CartManagementStepDef {
 
     @Given("an employee with disponibility only from {int} to {int}")
     public void anEmployeeWithDisponibilityOnlyFromTo(int startingHour, int finishingHour) {
-        Chef chef=new Chef();
+        Chef chef=new Chef(user.getStore());
         user.getStore().addChef(chef);
         List<TimeSlot> timeSlots=chef.getSchedule().getDaySlot().getTimeSlots();
         for (TimeSlot timeSlot:timeSlots){
@@ -251,6 +250,8 @@ public class CartManagementStepDef {
     public void an_order_at_the_state(OrderState state) {
         pendingOrder = new Order(cart, user);
         inProgressOrder = new Order(cart, user);
+        user.getOrders().add(pendingOrder);
+        user.getOrders().add(inProgressOrder);
         if(state.equals(OrderState.PENDING)) pendingOrder.updateState(state);
         else inProgressOrder.updateState(state);
     }

@@ -11,14 +11,14 @@ public class Chef {
     private Schedule schedule;
     private Optional<Order> orderToPrepare;
     private ChefState state;
-    public static TimeClock START_MORNING_TIME = new TimeClock(8,0);
-    public static TimeClock END_MORNING_TIME = new TimeClock(12,0);
-    public static TimeClock START_AFTERNOON_TIME = new TimeClock(14,0);
-    public static TimeClock END_AFTERNOON_TIME = new TimeClock(18,0);
 
-    public Chef() {
-        this.schedule = new Schedule();
+    public Chef(Store store) {
+        this.schedule = new Schedule(store);
         this.state = ChefState.AVAILABLE;
+    }
+
+    public void updateSchedule(Store store){
+        this.schedule = new Schedule(store);
     }
 
     /**

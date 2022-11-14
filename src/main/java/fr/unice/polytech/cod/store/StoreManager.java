@@ -1,5 +1,7 @@
 package fr.unice.polytech.cod.store;
 
+import fr.unice.polytech.cod.ingredient.Cookie;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,5 +22,10 @@ public class StoreManager {
             if (store.getName().equals(name)) return store;
         }
         throw new InvalidStoreException();
+    }
+
+    public void addCookieStore(Cookie cookie, String store) throws Exception{
+        Store store1 = this.selectStore(store);
+        store1.getCookieBook().addCookieRecipe(cookie);
     }
 }
