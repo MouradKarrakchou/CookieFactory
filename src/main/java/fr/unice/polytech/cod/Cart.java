@@ -83,6 +83,10 @@ public class Cart {
         return new Bill(order);
     }
 
+    /**
+     * Cancel the client order
+     * @param order to cancel
+     */
     public void cancelOrder(Order order) {
         store.removeOrder(order);
         this.interval.freedInterval();
@@ -92,6 +96,10 @@ public class Cart {
         cancelPenalty(time);
     }
 
+    /**
+     * Manage the necessity of the penalty
+     * @param time at which the client has canceled his order
+     */
     private void cancelPenalty(Instant time) {
         if(canceled == 2) {
             boolean isCanceledTwiceInARow = isCanceledTwiceInARow(time);
@@ -104,15 +112,29 @@ public class Cart {
         lastTimeCanceled = time;
     }
 
+    /**
+     * Check if another order has been canceled less than 8 minutes ago
+     * @param time at which the order has been canceled
+     * @return true if 2 orders has been canceled in 8 minutes or less
+     */
     private boolean isCanceledTwiceInARow(Instant time) {
         return Duration.between(lastTimeCanceled, time).toMinutes() <= 8;
     }
 
+    /**
+     * Apply the 10 minutes penalty
+     * @param time at which the order has been canceled and at which the penalty starts
+     */
     private void penalty(Instant time) {
         endPenaltyTime = time.plusSeconds(600); //10 minutes
         penalty = true;
     }
 
+    /**
+     * Check if the penalty is over and if so, update the attribute
+     * @param time at which we check if the there is the penalty
+     * @return true if there still is the penalty
+     */
     public boolean isTherePenalty(Instant time) {
         if(time.isAfter(endPenaltyTime))
             penalty = false;
@@ -185,4 +207,7 @@ public class Cart {
         this.interval = intervals;
     }
 
+    public int getCanceled() {
+        return canceled;
+    }
 }
