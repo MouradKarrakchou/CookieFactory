@@ -1,5 +1,6 @@
 package fr.unice.polytech.cod;
 
+import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.store.Chef;
 
 import java.util.ArrayList;

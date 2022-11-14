@@ -1,5 +1,7 @@
 package fr.unice.polytech.cod;
 
+import fr.unice.polytech.cod.order.Order;
+import fr.unice.polytech.cod.order.OrderState;
 import fr.unice.polytech.cod.store.Chef;
 import fr.unice.polytech.cod.store.ChefState;
 import fr.unice.polytech.cod.store.Store;
