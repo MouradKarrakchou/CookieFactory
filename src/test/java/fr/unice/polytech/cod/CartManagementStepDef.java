@@ -294,15 +294,18 @@ public class CartManagementStepDef {
         store.setStoreManager(storeManager);
     }
 
-    @When("the manager changes the openning time of the store from {int} to {int}")
-    public void theManagerChangesTheOpenningTimeOfTheStoreFromTo(int startingHour, int endHour) {
+    @When("the manager changes the opening time of the store from {int} to {int}")
+    public void theManagerChangesTheOpeningTimeOfTheStoreFromTo(int startingHour, int endHour) {
         this.storeManager.changeOpenningHour(new TimeClock(startingHour,0),new TimeClock(endHour,0));
     }
 
     @Then("the schedule of the employees start from {int} to {int}")
     public void theScheduleOfTheEmployeesStartFromTo(int startingHour, int endHour) {
         for(Chef chef:store.getListChef()){
-            assertEquals(0,chef.getSchedule().getDaySlot().getTimeSlots().get(0).getStartTime().compareTo(new TimeClock(startingHour,0)));
+            List<TimeSlot> timeSlots=chef.getSchedule().getDaySlot().getTimeSlots();
+            assertEquals(0,timeSlots.get(0).getStartTime().compareTo(new TimeClock(startingHour,0)));
+            assertEquals(0,timeSlots.get(timeSlots.size()-1).getStartTime().compareTo(new TimeClock(endHour,0)));
+
         }
     }
 }

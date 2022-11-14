@@ -137,6 +137,10 @@ public class User {
         cart.removeOneFromCart(item);
     }
 
+    public List<Order> getOrderHistory(){
+        if (this._subscription.isPresent()) return this._subscription.get().getOrderList();
+        else return new ArrayList<>();
+    }
     public void subscribeToFidelityAccount(String name, String email, String password) {
         this._subscription = Optional.of(new FidelityAccount(name, email, password));
     }
