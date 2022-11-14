@@ -1,7 +1,7 @@
 package unitTest;
 
-import fr.unice.polytech.cod.Order;
-import fr.unice.polytech.cod.OrderState;
+import fr.unice.polytech.cod.order.Order;
+import fr.unice.polytech.cod.order.OrderState;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
