@@ -84,4 +84,8 @@ public class Order extends UpdatableObject {
     public int getDuration() {
         return 0;
     }
+
+    public SmsNotifier getSmsNotifier(){
+        return smsNotifier;
+    }
 }
