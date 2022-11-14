@@ -1,7 +1,9 @@
-package fr.unice.polytech.cod;
+package fr.unice.polytech.cod.data;
 
-import fr.unice.polytech.cod.ingredient.Cookie;
-import fr.unice.polytech.cod.ingredient.*;
+import fr.unice.polytech.cod.food.Cookie;
+import fr.unice.polytech.cod.food.ingredient.Cooking;
+import fr.unice.polytech.cod.food.ingredient.Ingredient;
+import fr.unice.polytech.cod.food.ingredient.Mix;
 import fr.unice.polytech.cod.store.Store;
 
 import java.util.ArrayList;

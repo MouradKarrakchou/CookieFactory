@@ -1,5 +1,6 @@
-package fr.unice.polytech.cod.ingredient;
+package fr.unice.polytech.cod.food;
 
+import fr.unice.polytech.cod.food.ingredient.*;
 import fr.unice.polytech.cod.store.Store;
 import java.util.HashSet;
 import java.util.List;

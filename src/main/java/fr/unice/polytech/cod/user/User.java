@@ -1,11 +1,18 @@
-package fr.unice.polytech.cod;
+package fr.unice.polytech.cod.user;
 
-import fr.unice.polytech.cod.ingredient.Cookie;
+import fr.unice.polytech.cod.data.CookieBook;
+import fr.unice.polytech.cod.food.Item;
+import fr.unice.polytech.cod.helper.Display;
+import fr.unice.polytech.cod.food.Cookie;
+import fr.unice.polytech.cod.order.Bill;
 import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.order.OrderState;
+import fr.unice.polytech.cod.schedule.Interval;
 import fr.unice.polytech.cod.store.InvalidStoreException;
 import fr.unice.polytech.cod.store.Store;
-import fr.unice.polytech.cod.store.StoreManager;
+import fr.unice.polytech.cod.data.StoreManager;
+import fr.unice.polytech.cod.user.fidelityAccount.Discount;
+import fr.unice.polytech.cod.user.fidelityAccount.FidelityAccount;
 
 import java.time.Instant;
 import java.util.ArrayList;

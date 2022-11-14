@@ -1,9 +1,9 @@
 package fr.unice.polytech.cod.order;
 
-import fr.unice.polytech.cod.Cart;
-import fr.unice.polytech.cod.Discount;
-import fr.unice.polytech.cod.UpdatableObject;
-import fr.unice.polytech.cod.User;
+import fr.unice.polytech.cod.user.Cart;
+import fr.unice.polytech.cod.user.fidelityAccount.Discount;
+import fr.unice.polytech.cod.helper.UpdatableObject;
+import fr.unice.polytech.cod.user.User;
 
 import java.util.Optional;
 

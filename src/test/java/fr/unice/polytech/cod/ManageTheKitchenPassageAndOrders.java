@@ -1,11 +1,16 @@
 package fr.unice.polytech.cod;
 
+import fr.unice.polytech.cod.data.CookieBook;
+import fr.unice.polytech.cod.order.Bill;
 import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.order.OrderState;
+import fr.unice.polytech.cod.schedule.Schedule;
 import fr.unice.polytech.cod.store.Chef;
 import fr.unice.polytech.cod.store.ChefState;
 import fr.unice.polytech.cod.store.Store;
-import fr.unice.polytech.cod.store.StoreManager;
+import fr.unice.polytech.cod.data.StoreManager;
+import fr.unice.polytech.cod.user.Cart;
+import fr.unice.polytech.cod.user.User;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;

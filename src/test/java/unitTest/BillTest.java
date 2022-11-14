@@ -1,11 +1,14 @@
 package unitTest;
 
-import fr.unice.polytech.cod.*;
-import fr.unice.polytech.cod.ingredient.*;
+import fr.unice.polytech.cod.food.*;
+import fr.unice.polytech.cod.food.ingredient.*;
+import fr.unice.polytech.cod.order.Bill;
 import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.store.Stock;
 import fr.unice.polytech.cod.store.Store;
 
+import fr.unice.polytech.cod.user.Cart;
+import fr.unice.polytech.cod.user.User;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

@@ -1,7 +1,7 @@
 package fr.unice.polytech.cod.store;
 
-import fr.unice.polytech.cod.CookieBook;
-import fr.unice.polytech.cod.ingredient.Cookie;
+import fr.unice.polytech.cod.data.StoreManager;
+import fr.unice.polytech.cod.food.Cookie;
 
 public class BrandManager {
     StoreManager storeManager;

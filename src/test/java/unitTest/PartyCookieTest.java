@@ -3,12 +3,11 @@ package unitTest;
 import fr.unice.polytech.cod.decorator_pattern.BirthdayCookie;
 import fr.unice.polytech.cod.decorator_pattern.CookieComponent;
 import fr.unice.polytech.cod.decorator_pattern.decorator.*;
-import fr.unice.polytech.cod.ingredient.*;
+import fr.unice.polytech.cod.food.ingredient.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static java.util.List.copyOf;
 import static org.junit.Assert.assertEquals;

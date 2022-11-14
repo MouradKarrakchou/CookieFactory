@@ -1,15 +1,23 @@
 package fr.unice.polytech.cod;
 
-import fr.unice.polytech.cod.ingredient.Dough;
-import fr.unice.polytech.cod.ingredient.Ingredient;
-import fr.unice.polytech.cod.ingredient.*;
+import fr.unice.polytech.cod.data.CookieBook;
+import fr.unice.polytech.cod.data.IngredientCatalog;
+import fr.unice.polytech.cod.food.ingredient.Dough;
+import fr.unice.polytech.cod.food.ingredient.Ingredient;
+import fr.unice.polytech.cod.food.*;
+import fr.unice.polytech.cod.order.Bill;
 import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.order.OrderState;
+import fr.unice.polytech.cod.schedule.Interval;
+import fr.unice.polytech.cod.schedule.TimeClock;
+import fr.unice.polytech.cod.schedule.TimeSlot;
 import fr.unice.polytech.cod.store.InvalidStoreException;
 import fr.unice.polytech.cod.store.Stock;
 import fr.unice.polytech.cod.store.Store;
-import fr.unice.polytech.cod.store.StoreManager;
+import fr.unice.polytech.cod.data.StoreManager;
 import fr.unice.polytech.cod.store.*;
+import fr.unice.polytech.cod.user.Cart;
+import fr.unice.polytech.cod.user.User;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -185,14 +193,14 @@ public class CartManagementStepDef {
         assertEquals(1,store.getOrderList().size());
         for(TimeSlot timeSlot:interval.getTimeSlots())
         {assertTrue(timeSlot.getOrder().isPresent());
-            assertTrue(timeSlot.reserved);}
+            assertTrue(timeSlot.isReserved());}
     }
 
     @Then("the Time slots composing the interval are set to reserved")
     public void theTimeSlotsComposingTheIntervalAreSetToReserved() {
         for(TimeSlot timeSlot:interval.getTimeSlots())
         {
-            assertTrue(timeSlot.reserved);}
+            assertTrue(timeSlot.isReserved());}
     }
 
     @Given("an employee with disponibility only from {int} to {int}")

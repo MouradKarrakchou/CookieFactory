@@ -1,4 +1,4 @@
-package fr.unice.polytech.cod;
+package fr.unice.polytech.cod.schedule;
 
 import fr.unice.polytech.cod.order.Order;
 

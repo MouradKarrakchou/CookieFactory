@@ -1,5 +1,6 @@
-package fr.unice.polytech.cod;
+package fr.unice.polytech.cod.user.fidelityAccount;
 
+import fr.unice.polytech.cod.food.Item;
 import fr.unice.polytech.cod.order.Order;
 
 import java.util.ArrayList;

@@ -1,13 +1,15 @@
-package fr.unice.polytech.cod;
+package fr.unice.polytech.cod.user;
 
-import fr.unice.polytech.cod.ingredient.Ingredient;
+import fr.unice.polytech.cod.helper.Display;
+import fr.unice.polytech.cod.schedule.Interval;
+import fr.unice.polytech.cod.food.Item;
+import fr.unice.polytech.cod.food.ingredient.Ingredient;
+import fr.unice.polytech.cod.order.Bill;
 import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.store.Store;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.*;
 
 public class Cart {

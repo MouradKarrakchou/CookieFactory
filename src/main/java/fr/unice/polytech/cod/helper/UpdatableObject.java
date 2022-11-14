@@ -1,4 +1,4 @@
-package fr.unice.polytech.cod;
+package fr.unice.polytech.cod.helper;
 
 import static java.lang.Thread.sleep;
 

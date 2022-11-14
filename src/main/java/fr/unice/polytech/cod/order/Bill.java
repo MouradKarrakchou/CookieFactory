@@ -1,7 +1,8 @@
-package fr.unice.polytech.cod;
+package fr.unice.polytech.cod.order;
 
-import fr.unice.polytech.cod.ingredient.Cookie;
-import fr.unice.polytech.cod.order.Order;
+import fr.unice.polytech.cod.user.fidelityAccount.Discount;
+import fr.unice.polytech.cod.food.Item;
+import fr.unice.polytech.cod.food.Cookie;
 import fr.unice.polytech.cod.store.Store;
 
 import java.util.List;

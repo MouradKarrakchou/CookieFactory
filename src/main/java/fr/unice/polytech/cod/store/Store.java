@@ -1,9 +1,12 @@
 package fr.unice.polytech.cod.store;
 
-import fr.unice.polytech.cod.*;
-import fr.unice.polytech.cod.ingredient.Ingredient;
+import fr.unice.polytech.cod.data.CookieBook;
+import fr.unice.polytech.cod.food.ingredient.Ingredient;
+import fr.unice.polytech.cod.order.Bill;
 import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.order.OrderState;
+import fr.unice.polytech.cod.schedule.Interval;
+import fr.unice.polytech.cod.schedule.TimeClock;
 
 import java.util.*;
 

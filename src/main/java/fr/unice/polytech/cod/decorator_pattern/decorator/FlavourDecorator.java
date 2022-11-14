@@ -1,11 +1,10 @@
 package fr.unice.polytech.cod.decorator_pattern.decorator;
 
 import fr.unice.polytech.cod.decorator_pattern.CookieComponent;
-import fr.unice.polytech.cod.ingredient.Flavour;
-import fr.unice.polytech.cod.ingredient.Ingredient;
+import fr.unice.polytech.cod.food.ingredient.Flavour;
+import fr.unice.polytech.cod.food.ingredient.Ingredient;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class FlavourDecorator extends Decorator{
 
