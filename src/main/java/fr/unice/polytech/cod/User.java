@@ -152,12 +152,12 @@ public class User {
         this.getSubscription().get().resetDiscount();
     }
 
-    public void cancelOrder(Order order) {
+    public boolean cancelOrder(Order order) {
         if(order.getOrderState().equals(OrderState.PENDING)) {
             cart.cancelOrder(order);
-            System.out.println("Your order has been canceled.");
+            return true; //Your order has been canceled
         }
         else
-            System.out.println("Your order is already in progress. You cannot canceled it.");
+            return false; //Your order is already in progress. You cannot canceled it
     }
 }

@@ -11,13 +11,11 @@ import java.util.Set;
 public class Cart {
     private Store store;
     private List<Item> itemList;
-    private boolean isValidated;
     private Interval interval;
 
 
     public Cart() {
         this.itemList = new ArrayList<>();
-        this.isValidated = false;
     }
 
     public void showCart() {
@@ -73,8 +71,7 @@ public class Cart {
         store.addOrder(order, ingredientsNeeded);
 
         this.interval.validate(order);
-        this.isValidated = true;
-        //TODO CLEAR LE PANIER ?
+        itemList.clear();
 
         return new Bill(order);
     }
@@ -82,11 +79,6 @@ public class Cart {
     public void cancelOrder(Order order) {
         store.removeOrder(order);
         this.interval.freedInterval();
-        this.isValidated = false; //TODO utilité ?
-    }
-
-    public boolean isValidated() {
-        return isValidated;
     }
 
     public boolean isEmpty() {
