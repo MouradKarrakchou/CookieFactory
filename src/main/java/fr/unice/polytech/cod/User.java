@@ -1,7 +1,7 @@
 package fr.unice.polytech.cod;
 
 import fr.unice.polytech.cod.ingredient.Cookie;
-import fr.unice.polytech.cod.store.InvalidStoreExepection;
+import fr.unice.polytech.cod.store.InvalidStoreException;
 import fr.unice.polytech.cod.store.Store;
 import fr.unice.polytech.cod.store.StoreManager;
 
@@ -54,9 +54,9 @@ public class User {
      *
      * @param name
      * @return
-     * @throws InvalidStoreExepection
+     * @throws InvalidStoreException
      */
-    public Store selectStore(String name) throws InvalidStoreExepection {
+    public Store selectStore(String name) throws InvalidStoreException {
         Store store = storeManager.selectStore(name);
         this.cart.setStore(store);
         return (store);

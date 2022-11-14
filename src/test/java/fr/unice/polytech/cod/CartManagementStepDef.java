@@ -1,11 +1,9 @@
 package fr.unice.polytech.cod;
 
 import fr.unice.polytech.cod.ingredient.Dough;
-import fr.unice.polytech.cod.ingredient.Flavour;
 import fr.unice.polytech.cod.ingredient.Ingredient;
-import fr.unice.polytech.cod.ingredient.Topping;
 import fr.unice.polytech.cod.ingredient.*;
-import fr.unice.polytech.cod.store.InvalidStoreExepection;
+import fr.unice.polytech.cod.store.InvalidStoreException;
 import fr.unice.polytech.cod.store.Stock;
 import fr.unice.polytech.cod.store.Store;
 import fr.unice.polytech.cod.store.StoreManager;
@@ -15,7 +13,6 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.jupiter.api.Assertions;
-import org.mockito.internal.matchers.Or;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +41,7 @@ public class CartManagementStepDef {
     }
 
     @Given("a store named {string}")
-    public void the_antibes_store(String name) throws InvalidStoreExepection {
+    public void the_antibes_store(String name) throws InvalidStoreException {
         IngredientCatalog ingredientCatalog = new IngredientCatalog();
         user.selectStore(name);
         for (int i =0; i <100; i++)
@@ -62,7 +59,7 @@ public class CartManagementStepDef {
                 10);
     }
     @Given("a fidelity account")
-    public void a_fidelity_account() throws InvalidStoreExepection {
+    public void a_fidelity_account() throws InvalidStoreException {
         user.subscribeToFidelityAccount("name", "email", "password");
     }
 
@@ -99,14 +96,14 @@ public class CartManagementStepDef {
         bill = user.validateCart();
     }
     @When("we choose a valid store")
-    public void we_choose_a_valid_store() throws InvalidStoreExepection {
+    public void we_choose_a_valid_store() throws InvalidStoreException {
         user.selectStore("Antibes");
     }
     @When("we choose an invalid store")
     public void we_choose_an_invalid_store() {
         try {
             user.selectStore("invalidStore");
-        } catch (InvalidStoreExepection e) {
+        } catch (InvalidStoreException e) {
             this.exception=e;
         }
     }
@@ -115,12 +112,12 @@ public class CartManagementStepDef {
         user.subscribeToFidelityAccount(name, email, password);
     }
     @When("he order {int} cookies")
-    public void he_order_cookies(int numberOfCookies) throws InvalidStoreExepection {
+    public void he_order_cookies(int numberOfCookies) throws InvalidStoreException {
         user.chooseCookies(testCookie, numberOfCookies);
     }
 
     @Then("the bill is created")
-    public void the_bill_is_created() throws InvalidStoreExepection {
+    public void the_bill_is_created() throws InvalidStoreException {
        assertTrue(bill != null);
     }
     @Then("he take advantage of our loyalty program")
@@ -132,7 +129,7 @@ public class CartManagementStepDef {
     public void an_invalid_store_exception_is_triggered() {
         assertTrue(this.exception!=null);
         if (this.exception!=null)
-            assertTrue(this.exception instanceof InvalidStoreExepection);
+            assertTrue(this.exception instanceof InvalidStoreException);
     }
     @Then("the right store is selected in the cart")
     public void the_right_store_is_selected_in_the_cart() {

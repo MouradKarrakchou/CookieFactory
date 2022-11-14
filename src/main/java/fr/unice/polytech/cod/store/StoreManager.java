@@ -15,10 +15,10 @@ public class StoreManager {
     public List<Store> getStoreList() {
         return storeList;
     }
-    public Store selectStore(String name) throws InvalidStoreExepection {
+    public Store selectStore(String name) throws InvalidStoreException {
         for (Store store:storeList){
             if (store.getName().equals(name)) return store;
         }
-        throw new InvalidStoreExepection();
+        throw new InvalidStoreException();
     }
 }
