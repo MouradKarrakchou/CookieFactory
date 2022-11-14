@@ -29,10 +29,6 @@ public class Chef {
         //Dans
     }
 
-    public Optional<Order> getOrderToPrepare() {
-        return orderToPrepare;
-    }
-
     public boolean isAvailable() {
         return state == ChefState.AVAILABLE;
     }
@@ -57,7 +53,15 @@ public class Chef {
         return schedule;
     }
 
-    public Optional<Order> getWork(TimeClock timeClock){
-        return schedule.getDaySlot().getOrderToPrepare(timeClock);
+    public void updateCurrentOrder(TimeClock timeClock){
+        orderToPrepare = schedule.getDaySlot().getOrderToPrepare(timeClock);
+    }
+
+    public Optional<Order> getOrderToPrepare() {
+        return orderToPrepare;
+    }
+
+    public void terminateCurrentOrder(){
+        orderToPrepare.ifPresent(order -> order.updateState(OrderState.READY));
     }
 }
