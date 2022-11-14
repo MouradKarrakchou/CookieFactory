@@ -82,11 +82,10 @@ public class CookieBook {
     public void addCookieRecipe(Cookie cookie) throws Exception {
         if (!this.cookies.contains(cookie)) {
             for (Ingredient ingredient : cookie.getIngredients()) {
-                if (ingredientCatalog.isInCatalog(ingredient))
-                    this.cookies.add(cookie);
-                else
+                if (!ingredientCatalog.isInCatalog(ingredient))
                     throw new Exception("Cookie composition not valid");
             }
+            this.cookies.add(cookie);
         } else {
             throw new Exception("Cookie already exist");
         }
@@ -104,5 +103,9 @@ public class CookieBook {
                 break;
             }
         }
+    }
+
+    public List<Cookie> getCookies() {
+        return cookies;
     }
 }
