@@ -65,4 +65,8 @@ public class Order extends UpdatableObject {
     public void setDiscount(Optional<Discount> discount) {
         this.discount = discount;
     }
+
+    public int getDuration() {
+        return 0;
+    }
 }
