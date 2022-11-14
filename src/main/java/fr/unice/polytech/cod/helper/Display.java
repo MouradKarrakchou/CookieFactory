@@ -58,4 +58,8 @@ public class Display {
     public static void smsNok(String reason){
         LOGGER.info("Can not send sms to the user. Reason: " + reason);
     }
+
+    public static void mailNotifier(String message) {
+        LOGGER.info(message);
+    }
 }

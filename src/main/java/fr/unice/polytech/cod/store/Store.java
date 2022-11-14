@@ -2,17 +2,22 @@ package fr.unice.polytech.cod.store;
 
 import fr.unice.polytech.cod.data.CookieBook;
 import fr.unice.polytech.cod.food.ingredient.Ingredient;
+import fr.unice.polytech.cod.helper.UpdatableObject;
 import fr.unice.polytech.cod.order.Bill;
 import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.order.OrderState;
 import fr.unice.polytech.cod.schedule.Interval;
 import fr.unice.polytech.cod.schedule.TimeClock;
+import fr.unice.polytech.cod.user.fidelityAccount.FidelityAccount;
 
 import java.util.*;
 
-public class Store {
+public class Store extends UpdatableObject {
     String name;
     List<Order> orderList;
+    List<Order> obsoleteOrders;
+    List<SurpriseBasket> surpriseBaskets;
+    List<FidelityAccount> fidelityAccountList;
     List<Chef> listChef;
     private final Stock stock;
     public static int orderNumber = 0;
@@ -23,9 +28,13 @@ public class Store {
     StoreManager storeManager;
 
     public Store(String name) {
+        super(3*60*60*1000); //3 hours
         this.name=name;
         listChef=new ArrayList<>();
         this.orderList = new ArrayList<>();
+        this.obsoleteOrders = new ArrayList<>();
+        this.surpriseBaskets = new ArrayList<>();
+        this.fidelityAccountList = new ArrayList<>();
         this.stock = new Stock();
         listChef.add(new Chef(this));
         this.cookieBook = new CookieBook();
@@ -33,6 +42,7 @@ public class Store {
         for(Ingredient ingredient : stock.getIngredients()) {
             taxes.put(ingredient, 0.0);
         }
+        startTimer();
     }
 
     public void retrieveOrder(Bill bill) throws Exception{
@@ -151,6 +161,44 @@ public class Store {
 
     public CookieBook getCookieBook() {
         return cookieBook;
+    }
+
+    /**
+     * Check if there are new obsoletes orders for Too Good to Go
+     */
+    private void checkObsoleteOrders() {
+        if(!obsoleteOrders.isEmpty())
+            for(Order order : obsoleteOrders)
+                surpriseBaskets.add(new SurpriseBasket(order));
+    }
+
+    /**
+     * Add the order to the obsolete orders list
+     * @param order to add
+     */
+    public void addToObsoleteOrders(Order order) {
+        obsoleteOrders.add(order);
+    }
+
+    public List<SurpriseBasket> getSurpriseBaskets() {
+        return surpriseBaskets;
+    }
+
+    //TODO start timer at the open hour + 3h and stop it at the close hour
+    @Override
+    protected void OnTimeReached() {
+        checkObsoleteOrders();
+        startTimer();
+    }
+
+    public void addFidelityAccount(FidelityAccount fidelityAccount, int todayDay, int day, int hour, int minute) {
+        int waitingDay = Math.abs(day - todayDay);
+        int waitingTime = waitingDay*24*60*60*1000; //days in milliseconds
+        waitingTime += hour*60*60*1000; //hours in milliseconds
+        waitingTime += minute*60*1000; //minute in milliseconds
+        MailNotifier mailNotifier = new MailNotifier(waitingTime, this, fidelityAccount);
+        mailNotifier.OnTimeReached();
+        fidelityAccountList.add(fidelityAccount);
     }
 }
 

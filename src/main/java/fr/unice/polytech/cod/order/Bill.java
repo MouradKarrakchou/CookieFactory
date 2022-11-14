@@ -10,10 +10,12 @@ import java.util.List;
 public class Bill {
     Order order;
     int numberOrder;
+    double totalPrice;
 
     public Bill(Order order){
         this.order = order;
         this.numberOrder = Store.orderNumber++;
+        this.totalPrice = order.getTotalPrice();
     }
 
     @Override
@@ -49,5 +51,9 @@ public class Bill {
 
     public Order getOrder() {
         return order;
+    }
+
+    public double getTotalPrice() {
+        return totalPrice;
     }
 }

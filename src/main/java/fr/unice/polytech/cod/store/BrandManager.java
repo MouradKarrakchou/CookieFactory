@@ -16,5 +16,7 @@ public class BrandManager {
 
     public StoreLocation getStoreManager() {
         return this.storeLocation;
+    public void removeCookie(Cookie cookie, String store) throws Exception{
+        this.storeManager.removeCookieStore(cookie, store);
     }
 }
