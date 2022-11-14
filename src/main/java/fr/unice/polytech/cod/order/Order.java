@@ -52,8 +52,11 @@ public class Order extends UpdatableObject {
             startTimer();
             smsNotifier.startTimer();
         }
-        if(orderState == OrderState.RETRIEVE)
+        if(orderState == OrderState.RETRIEVE){
+            killCurrentThread();
             smsNotifier.killCurrentThread();
+        }
+
     }
 
     /**
