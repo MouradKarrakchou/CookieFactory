@@ -77,6 +77,19 @@ public class Cookie {
                 '}';
     }
 
+    @Override
+    public boolean equals(Object object) {
+        if (object == this)
+            return true;
+
+        // Check for the instance
+        if (!(object instanceof Cookie c))
+            return false;
+
+        // Check for the name equality
+        return c.name.equals(name);
+    }
+
     public int getPreparationTime() {
         return preparationTime;
     }

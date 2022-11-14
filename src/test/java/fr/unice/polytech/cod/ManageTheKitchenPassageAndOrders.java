@@ -1,5 +1,7 @@
 package fr.unice.polytech.cod;
 
+import fr.unice.polytech.cod.order.Order;
+import fr.unice.polytech.cod.order.OrderState;
 import fr.unice.polytech.cod.store.Chef;
 import fr.unice.polytech.cod.store.ChefState;
 import fr.unice.polytech.cod.store.Store;
@@ -19,6 +21,7 @@ public class ManageTheKitchenPassageAndOrders {
     Order order;
     Store store;
     Bill bill;
+    private final CookieBook cookieBook = CookieBook.instance;
     @Given("an chef who is \"([^\"]*)\"$")
     public void an_chef_who_is(ChefState chefState) {
         chef = new Chef();
@@ -27,7 +30,7 @@ public class ManageTheKitchenPassageAndOrders {
     }
     @And("An order at the state \"([^\"]*)\"$")
     public void an_order_at_the_state(OrderState orderState) {
-        order = new Order(null, orderState, new User(new CookieBook(),new Cart(),new StoreManager()));
+        order = new Order(null, orderState, new User(cookieBook,new Cart(),new StoreManager()));
         if(orderState == OrderState.READY) chef.associateOrder(order);
     }
 

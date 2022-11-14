@@ -2,10 +2,10 @@ package fr.unice.polytech.cod.store;
 
 import fr.unice.polytech.cod.*;
 import fr.unice.polytech.cod.ingredient.Ingredient;
-import org.mockito.internal.matchers.Or;
+import fr.unice.polytech.cod.order.Order;
+import fr.unice.polytech.cod.order.OrderState;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Store {
     String name;

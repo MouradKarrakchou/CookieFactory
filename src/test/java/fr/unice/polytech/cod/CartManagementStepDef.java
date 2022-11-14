@@ -3,6 +3,8 @@ package fr.unice.polytech.cod;
 import fr.unice.polytech.cod.ingredient.Dough;
 import fr.unice.polytech.cod.ingredient.Ingredient;
 import fr.unice.polytech.cod.ingredient.*;
+import fr.unice.polytech.cod.order.Order;
+import fr.unice.polytech.cod.order.OrderState;
 import fr.unice.polytech.cod.store.InvalidStoreException;
 import fr.unice.polytech.cod.store.Stock;
 import fr.unice.polytech.cod.store.Store;
@@ -34,29 +36,24 @@ public class CartManagementStepDef {
     Order pendingOrder;
     Order inProgressOrder;
 
+    private final CookieBook cookieBook = CookieBook.instance;
+    private final IngredientCatalog ingredientCatalog = IngredientCatalog.instance;
+
     @Given("a user")
     public void a_user() {
         this.storeManager=new StoreManager();
-        user = new User(new CookieBook(),new Cart(),storeManager);
+        user = new User(cookieBook,new Cart(),storeManager);
     }
 
     @Given("a store named {string}")
     public void the_antibes_store(String name) throws InvalidStoreException {
-        IngredientCatalog ingredientCatalog = new IngredientCatalog();
         user.selectStore(name);
         for (int i =0; i <100; i++)
             user.getStore().getStock().addStockList(ingredientCatalog.getIngredientList());
     }
     @Given("a valid cookie")
     public void a_valid_cookie() {
-        IngredientCatalog ingredientCatalog = new IngredientCatalog();
-        testCookie = new Cookie("testCookie",
-                ingredientCatalog.getDoughList().get(0),
-                ingredientCatalog.getFlavourList().get(0),
-                ingredientCatalog.getToppingList(),
-                new Mix(Mix.MixState.MIXED),
-                new Cooking(Cooking.CookingState.CHEWY),
-                10);
+        testCookie = cookieBook.getCookie("Cookie au chocolat");
     }
     @Given("a fidelity account")
     public void a_fidelity_account() throws InvalidStoreException {
@@ -82,7 +79,7 @@ public class CartManagementStepDef {
     @When("he remove a cookie from his cart")
     public void he_remove_a_cookie_from_his_cart() throws Exception {
         List<Item> allItems =  user.getAllItemsFromCart();
-        Item item = user.getItemFromCart("testCookie");
+        Item item = user.getItemFromCart("Cookie au chocolat");
         user.removeOneItemFromCart(item);
     }
     @When("he requests the cookie list")
@@ -153,7 +150,7 @@ public class CartManagementStepDef {
     }
     @Then("his cart has one item less")
     public void his_cart_has_one_item_less() {
-       assertEquals(1, cart.getItemQuantity("testCookie"));
+       assertEquals(1, cart.getItemQuantity("Cookie au chocolat"));
     }
     @Then("he receive a discount for his next order")
     public void he_receive_a_discount_for_his_next_order() {
