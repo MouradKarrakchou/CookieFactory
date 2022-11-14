@@ -1,7 +1,9 @@
-package fr.unice.polytech.cod;
+package fr.unice.polytech.cod.data;
 
-import fr.unice.polytech.cod.ingredient.Cookie;
-import fr.unice.polytech.cod.ingredient.*;
+import fr.unice.polytech.cod.food.Cookie;
+import fr.unice.polytech.cod.food.ingredient.Cooking;
+import fr.unice.polytech.cod.food.ingredient.Ingredient;
+import fr.unice.polytech.cod.food.ingredient.Mix;
 import fr.unice.polytech.cod.store.Store;
 
 import java.util.ArrayList;
@@ -12,9 +14,7 @@ public class CookieBook {
 
     private final IngredientCatalog ingredientCatalog = IngredientCatalog.instance;
 
-    public static CookieBook instance = new CookieBook();
-
-    private CookieBook() {
+    public CookieBook() {
         cookies = new ArrayList<>();
 
         cookies.add(new Cookie("Cookie au chocolat",
@@ -79,12 +79,16 @@ public class CookieBook {
      *
      * @param cookie un cookie
      */
-    public void addCookieRecipe(Cookie cookie) {
+    public void addCookieRecipe(Cookie cookie) throws Exception {
         if (!this.cookies.contains(cookie)) {
             for (Ingredient ingredient : cookie.getIngredients()) {
                 if (ingredientCatalog.isInCatalog(ingredient))
                     this.cookies.add(cookie);
+                else
+                    throw new Exception("Cookie composition not valid");
             }
+        } else {
+            throw new Exception("Cookie already exist");
         }
     }
 

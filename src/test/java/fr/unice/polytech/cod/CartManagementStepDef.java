@@ -1,15 +1,23 @@
 package fr.unice.polytech.cod;
 
-import fr.unice.polytech.cod.ingredient.Dough;
-import fr.unice.polytech.cod.ingredient.Ingredient;
-import fr.unice.polytech.cod.ingredient.*;
+import fr.unice.polytech.cod.data.CookieBook;
+import fr.unice.polytech.cod.data.IngredientCatalog;
+import fr.unice.polytech.cod.food.ingredient.Dough;
+import fr.unice.polytech.cod.food.ingredient.Ingredient;
+import fr.unice.polytech.cod.food.*;
+import fr.unice.polytech.cod.order.Bill;
 import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.order.OrderState;
+import fr.unice.polytech.cod.schedule.Interval;
+import fr.unice.polytech.cod.schedule.TimeClock;
+import fr.unice.polytech.cod.schedule.TimeSlot;
 import fr.unice.polytech.cod.store.InvalidStoreException;
 import fr.unice.polytech.cod.store.Stock;
 import fr.unice.polytech.cod.store.Store;
-import fr.unice.polytech.cod.store.StoreManager;
+import fr.unice.polytech.cod.data.StoreManager;
 import fr.unice.polytech.cod.store.*;
+import fr.unice.polytech.cod.user.Cart;
+import fr.unice.polytech.cod.user.User;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -36,13 +44,12 @@ public class CartManagementStepDef {
     Order pendingOrder;
     Order inProgressOrder;
 
-    private final CookieBook cookieBook = CookieBook.instance;
     private final IngredientCatalog ingredientCatalog = IngredientCatalog.instance;
 
     @Given("a user")
     public void a_user() {
         this.storeManager=new StoreManager();
-        user = new User(cookieBook,new Cart(),storeManager);
+        user = new User(new CookieBook(),new Cart(),storeManager);
     }
 
     @Given("a store named {string}")
@@ -53,7 +60,7 @@ public class CartManagementStepDef {
     }
     @Given("a valid cookie")
     public void a_valid_cookie() {
-        testCookie = cookieBook.getCookie("Cookie au chocolat");
+        testCookie = new CookieBook().getCookie("Cookie au chocolat");
     }
     @Given("a fidelity account")
     public void a_fidelity_account() throws InvalidStoreException {
@@ -181,19 +188,19 @@ public class CartManagementStepDef {
         assertEquals(1,store.getOrderList().size());
         for(TimeSlot timeSlot:interval.getTimeSlots())
         {assertTrue(timeSlot.getOrder().isPresent());
-            assertTrue(timeSlot.reserved);}
+            assertTrue(timeSlot.isReserved());}
     }
 
     @Then("the Time slots composing the interval are set to reserved")
     public void theTimeSlotsComposingTheIntervalAreSetToReserved() {
         for(TimeSlot timeSlot:interval.getTimeSlots())
         {
-            assertTrue(timeSlot.reserved);}
+            assertTrue(timeSlot.isReserved());}
     }
 
     @Given("an employee with disponibility only from {int} to {int}")
     public void anEmployeeWithDisponibilityOnlyFromTo(int startingHour, int finishingHour) {
-        Chef chef=new Chef();
+        Chef chef=new Chef(user.getStore());
         user.getStore().addChef(chef);
         List<TimeSlot> timeSlots=chef.getSchedule().getDaySlot().getTimeSlots();
         for (TimeSlot timeSlot:timeSlots){
@@ -248,6 +255,8 @@ public class CartManagementStepDef {
     public void an_order_at_the_state(OrderState state) {
         pendingOrder = new Order(cart, user);
         inProgressOrder = new Order(cart, user);
+        user.getOrders().add(pendingOrder);
+        user.getOrders().add(inProgressOrder);
         if(state.equals(OrderState.PENDING)) pendingOrder.updateState(state);
         else inProgressOrder.updateState(state);
     }

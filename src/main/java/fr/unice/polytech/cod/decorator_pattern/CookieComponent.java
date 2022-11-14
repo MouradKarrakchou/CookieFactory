@@ -1,6 +1,6 @@
 package fr.unice.polytech.cod.decorator_pattern;
 
-import fr.unice.polytech.cod.ingredient.*;
+import fr.unice.polytech.cod.food.ingredient.*;
 
 import java.util.ArrayList;
 import java.util.List;

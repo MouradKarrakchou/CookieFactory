@@ -1,4 +1,4 @@
-package fr.unice.polytech.cod;
+package fr.unice.polytech.cod.helper;
 
 import static java.lang.Thread.sleep;
 
@@ -27,7 +27,7 @@ public class UpdatableObject implements Runnable {
     /**
      * This method will wait for waitingTime (in ms) before calling OnTimeReached method.
      */
-    public void start(){
+    public void startTimer(){
         killCurrentThread();
         currentThread = new Thread(this);
         currentThread.start();
@@ -36,7 +36,7 @@ public class UpdatableObject implements Runnable {
     /**
      * Kill the current thread
      */
-    private void killCurrentThread(){
+    public void killCurrentThread(){
         if(currentThread != null)
             currentThread.interrupt();
     }

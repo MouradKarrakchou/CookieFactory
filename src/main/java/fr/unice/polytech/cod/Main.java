@@ -1,13 +1,18 @@
 package fr.unice.polytech.cod;
 
-import fr.unice.polytech.cod.decorator_pattern.BirthdayCookie;
-import fr.unice.polytech.cod.decorator_pattern.CookieComponent;
-import fr.unice.polytech.cod.decorator_pattern.decorator.Decorator;
-import fr.unice.polytech.cod.decorator_pattern.decorator.ToppingDecorator;
-import fr.unice.polytech.cod.ingredient.*;
+import fr.unice.polytech.cod.data.CookieBook;
+import fr.unice.polytech.cod.food.ingredient.Cooking;
+import fr.unice.polytech.cod.food.ingredient.Dough;
+import fr.unice.polytech.cod.food.ingredient.Flavour;
+import fr.unice.polytech.cod.food.ingredient.Mix;
+import fr.unice.polytech.cod.helper.Display;
+import fr.unice.polytech.cod.food.*;
 import fr.unice.polytech.cod.store.Stock;
 import fr.unice.polytech.cod.store.Store;
-import fr.unice.polytech.cod.store.StoreManager;
+import fr.unice.polytech.cod.data.StoreManager;
+import fr.unice.polytech.cod.user.Cart;
+import fr.unice.polytech.cod.user.fidelityAccount.FidelityAccount;
+import fr.unice.polytech.cod.user.User;
 
 import java.util.ArrayList;
 
@@ -19,7 +24,7 @@ public class Main {
         Display.start();
 
         Store store = new Store("Antibes");
-        final CookieBook cookieBook = CookieBook.instance;
+        CookieBook cookieBook = new CookieBook();
         Cart cart = new Cart();
         FidelityAccount fidelityAccount = new FidelityAccount();
         User user = new User(cookieBook, cart,new StoreManager());

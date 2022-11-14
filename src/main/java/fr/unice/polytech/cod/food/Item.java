@@ -1,7 +1,6 @@
-package fr.unice.polytech.cod;
+package fr.unice.polytech.cod.food;
 
-import fr.unice.polytech.cod.ingredient.Cookie;
-import fr.unice.polytech.cod.ingredient.Ingredient;
+import fr.unice.polytech.cod.food.ingredient.Ingredient;
 import java.util.HashSet;
 import java.util.Set;
 

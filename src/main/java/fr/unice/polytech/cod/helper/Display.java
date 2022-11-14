@@ -1,6 +1,7 @@
-package fr.unice.polytech.cod;
+package fr.unice.polytech.cod.helper;
 
-import fr.unice.polytech.cod.ingredient.Cookie;
+import fr.unice.polytech.cod.food.Item;
+import fr.unice.polytech.cod.food.Cookie;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -48,5 +49,13 @@ public class Display {
                     .append(colorize(item.getCookie().getName(), BRIGHT_WHITE_TEXT()));
         }
         LOGGER.info(output.toString());
+    }
+
+    public static void smsOk(String name, String content){
+        LOGGER.info("SMS has been sent to " + name + ".\n Content: " + content);
+    }
+
+    public static void smsNok(String reason){
+        LOGGER.info("Can not send sms to the user. Reason: " + reason);
     }
 }
