@@ -2,6 +2,7 @@ package fr.unice.polytech.cod.store;
 
 import fr.unice.polytech.cod.data.CookieBook;
 import fr.unice.polytech.cod.food.ingredient.Ingredient;
+import fr.unice.polytech.cod.helper.UpdatableObject;
 import fr.unice.polytech.cod.order.Bill;
 import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.order.OrderState;
@@ -10,10 +11,11 @@ import fr.unice.polytech.cod.schedule.TimeClock;
 
 import java.util.*;
 
-public class Store {
+public class Store extends UpdatableObject {
     String name;
     List<Order> orderList;
     List<Order> obsoleteOrders;
+    List<SurpriseBasket> surpriseBaskets;
     List<Chef> listChef;
     private final Stock stock;
     public static int orderNumber = 0;
@@ -23,10 +25,12 @@ public class Store {
     public TimeClock closeHour=new TimeClock(18,0);
 
     public Store(String name) {
+        super(3*60*60*1000); //3 hours
         this.name=name;
         listChef=new ArrayList<>();
         this.orderList = new ArrayList<>();
         this.obsoleteOrders = new ArrayList<>();
+        this.surpriseBaskets = new ArrayList<>();
         this.stock = new Stock();
         listChef.add(new Chef(this));
         this.cookieBook = new CookieBook();
@@ -34,6 +38,7 @@ public class Store {
         for(Ingredient ingredient : stock.getIngredients()) {
             taxes.put(ingredient, 0.0);
         }
+        startTimer();
     }
 
     public void retrieveOrder(Bill bill) throws Exception{
@@ -149,7 +154,9 @@ public class Store {
      * Check if there are new obsoletes orders for Too Good to Go
      */
     private void checkObsoleteOrders() {
-
+        if(!obsoleteOrders.isEmpty())
+            for(Order order : obsoleteOrders)
+                surpriseBaskets.add(new SurpriseBasket(order));
     }
 
     /**
@@ -158,6 +165,13 @@ public class Store {
      */
     public void addToObsoleteOrders(Order order) {
         obsoleteOrders.add(order);
+    }
+
+    //TODO start timer at the open hour + 3h and stop it at the close hour
+    @Override
+    protected void OnTimeReached() {
+        checkObsoleteOrders();
+        startTimer();
     }
 }
 
