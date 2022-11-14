@@ -1,11 +1,12 @@
 package fr.unice.polytech.cod.store;
 
 import fr.unice.polytech.cod.*;
+import org.mockito.internal.matchers.Or;
 
 import java.util.List;
 import java.util.Optional;
 
-public class Chef {
+public class Chef extends UpdatableObject{
     private Schedule schedule;
     private Optional<Order> orderToPrepare;
     private ChefState state;
@@ -15,6 +16,7 @@ public class Chef {
     public static TimeClock ENDAFTERNOONTIME=new TimeClock(18,0);
 
     public Chef() {
+        super(TimeSlot.DURATION);
         this.schedule = new Schedule();
         this.state = ChefState.AVAILABLE;
     }
@@ -31,6 +33,17 @@ public class Chef {
 
     public boolean isAvailable() {
         return state == ChefState.AVAILABLE;
+    }
+
+    public void startOrder() throws Exception {
+        if(this.orderToPrepare.isEmpty())
+            throw new Exception("No order to prepare");
+        Order order = this.orderToPrepare.get();
+        this.state = ChefState.UNAVAILABLE;
+        order.updateState(OrderState.IN_PROGRESS);
+        super.setWaitingTime(computeIntervalDuration(order.getDuration());
+        start();
+        order.updateState(OrderState.READY);
     }
 
     public void makeOtherActivityDuringLeftTime() {
