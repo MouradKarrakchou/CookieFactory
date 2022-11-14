@@ -21,9 +21,9 @@ public class ManageTheKitchenPassageAndOrders {
     Bill bill;
     @Given("an chef who is \"([^\"]*)\"$")
     public void an_chef_who_is(ChefState chefState) {
-        chef = new Chef();
-        chef.setState(chefState);
         store=new Store("Magasin");
+        chef = new Chef(store);
+        chef.setState(chefState);
     }
     @And("An order at the state \"([^\"]*)\"$")
     public void an_order_at_the_state(OrderState orderState) {

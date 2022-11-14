@@ -201,7 +201,7 @@ public class CartManagementStepDef {
 
     @Given("an employee with disponibility only from {int} to {int}")
     public void anEmployeeWithDisponibilityOnlyFromTo(int startingHour, int finishingHour) {
-        Chef chef=new Chef();
+        Chef chef=new Chef(user.getStore());
         user.getStore().addChef(chef);
         List<TimeSlot> timeSlots=chef.getSchedule().getDaySlot().getTimeSlots();
         for (TimeSlot timeSlot:timeSlots){

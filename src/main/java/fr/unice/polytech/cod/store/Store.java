@@ -14,13 +14,15 @@ public class Store {
     private final Stock stock;
     public static int orderNumber = 0;
     Map<Ingredient, Double> taxes;
+    public TimeClock openHour=new TimeClock(8,0);
+    public TimeClock closeHour=new TimeClock(18,0);
 
     public Store(String name) {
         this.name=name;
         listChef=new ArrayList<>();
         this.orderList = new ArrayList<>();
         this.stock = new Stock();
-        listChef.add(new Chef());
+        listChef.add(new Chef(this));
 
         for(Ingredient ingredient : stock.getIngredients()) {
             taxes.put(ingredient, 0.0);
@@ -81,6 +83,27 @@ public class Store {
             chef.associateOrder(orderToPrepare);
             orderToPrepare.updateState(OrderState.IN_PROGRESS);
         }
+    }
+
+    /**
+     * change the openig hour of the restaurant(to do during the night because it reload all the schedule)
+     * @param open
+     * @param close
+     */
+    public void changeOpeningHour(TimeClock open,TimeClock close){
+        this.openHour=open;
+        this.closeHour=close;
+        for (Chef chef: listChef){
+            chef.updateSchedule(this);
+        }
+    }
+
+    public TimeClock getOpenHour() {
+        return openHour;
+    }
+
+    public TimeClock getCloseHour() {
+        return closeHour;
     }
 
     public void addChef(Chef chef){
