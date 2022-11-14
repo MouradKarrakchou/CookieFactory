@@ -10,6 +10,7 @@ import java.util.*;
 public class Store {
     String name;
     List<Order> orderList;
+    List<Order> obsoleteOrders;
     List<Chef> listChef;
     private final Stock stock;
     public static int orderNumber = 0;
@@ -19,6 +20,7 @@ public class Store {
         this.name=name;
         listChef=new ArrayList<>();
         this.orderList = new ArrayList<>();
+        this.obsoleteOrders = new ArrayList<>();
         this.stock = new Stock();
         listChef.add(new Chef());
 
@@ -109,6 +111,21 @@ public class Store {
 
     public List<Chef> getListChef() {
         return listChef;
+    }
+
+    /**
+     * Check if there are new obsoletes orders for Too Good to Go
+     */
+    private void checkObsoleteOrders() {
+
+    }
+
+    /**
+     * Add the order to the obsolete orders list
+     * @param order to add
+     */
+    public void addToObsoleteOrders(Order order) {
+        obsoleteOrders.add(order);
     }
 }
 
