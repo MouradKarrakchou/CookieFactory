@@ -69,4 +69,8 @@ public class Chef extends UpdatableObject{
     public Schedule getSchedule() {
         return schedule;
     }
+
+    public Optional<Order> getWork(TimeClock timeClock){
+        return schedule.getDaySlot().getOrderToPrepare(timeClock);
+    }
 }
