@@ -74,4 +74,11 @@ public class DaySlot {
     public List<TimeSlot> getTimeSlots() {
         return timeSlots;
     }
+
+    public Optional<Order> getOrderToPrepare(TimeClock timeClock) {
+        for (TimeSlot timeSlot: timeSlots){
+            if (timeSlot.getStartTime().equals(timeClock))  return timeSlot.getOrder();
+        }
+        return Optional.empty();
+    }
 }
