@@ -63,8 +63,9 @@ public class Order extends UpdatableObject {
      * When the waitingTime is reached the order become OBSOLETE.
      */
     @Override
-    protected void OnTimeReached() {
+    public void OnTimeReached() {
         this.orderState = OrderState.OBSOLETE;
+        cart.getStore().addToObsoleteOrders(this);
     }
 
     public User getUser() {
@@ -83,5 +84,9 @@ public class Order extends UpdatableObject {
 
     public int getDuration() {
         return 0;
+    }
+
+    public SmsNotifier getSmsNotifier(){
+        return smsNotifier;
     }
 }

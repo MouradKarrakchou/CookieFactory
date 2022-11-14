@@ -210,6 +210,13 @@ public class Cart {
         this.interval = intervals;
     }
 
+    public int getDuration() {
+        int duration = 15;
+        for(Item item: this.itemList){
+            duration+= item.getCookie().getPreparationTime();
+        }
+        return duration;
+    }
     public int getCanceled() {
         return canceled;
     }

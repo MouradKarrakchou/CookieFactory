@@ -1,7 +1,11 @@
 package fr.unice.polytech.cod.user.fidelityAccount;
 
 import fr.unice.polytech.cod.food.Item;
+import fr.unice.polytech.cod.helper.Display;
 import fr.unice.polytech.cod.order.Order;
+import fr.unice.polytech.cod.schedule.TimeClock;
+import fr.unice.polytech.cod.store.MailNotifier;
+import fr.unice.polytech.cod.store.Store;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +18,6 @@ public class FidelityAccount {
     private int numberOfCommandedCookies;
     private List<Order> orderList;
     private Optional<Discount> discount;
-
 
     //TODO Ajouter plus tard un UserID
     public FidelityAccount(String name, String email, String password) {
@@ -70,4 +73,16 @@ public class FidelityAccount {
         return this.discount;
     }
 
+    /**
+     * Subscribe to a store to receive mail notifications when a surprise basket is available
+     * @param store store at which the fidelity account subscribes
+     */
+    public void subscribeToSurpriseBasket(Store store, int todayDay, int day, int hour, int minute) {
+        store.addFidelityAccount(this, todayDay, day, hour, minute);
+        //TODO Maybe change the way we chose the date
+    }
+
+    public void notify(String message) {
+        Display.mailNotifier(message);
+    }
 }

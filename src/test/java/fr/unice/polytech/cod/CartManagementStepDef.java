@@ -69,6 +69,7 @@ public class CartManagementStepDef {
 
     @Given("a non-empty cart with {int} cookie")
     public void a_non_empty_cart_with_cookie(int nbCookies) {
+        if(nbCookies <= 0) return;
         cart = user.getCart();
         cart.getItemList().add(new Item(testCookie, nbCookies));
         TimeSlot timeSlot=new TimeSlot(new TimeClock(8,0),new TimeClock(8,15));
@@ -77,12 +78,6 @@ public class CartManagementStepDef {
         cart.setInterval(new Interval(timeSlots));
     }
 
-
-
-    @When("he add cookie to his cart")
-    public void he_add_cookie_to_his_cart() {
-        user.chooseCookies(testCookie, 1);
-    }
     @When("he remove a cookie from his cart")
     public void he_remove_a_cookie_from_his_cart() throws Exception {
         List<Item> allItems =  user.getAllItemsFromCart();
@@ -213,11 +208,13 @@ public class CartManagementStepDef {
                 timeSlot.setReserved(true);
         }
     }
-
-
+    @When("he add cookie to his cart")
+    public void he_add_cookie_to_his_cart() {
+        user.chooseCookies(testCookie, 1);
+    }
     @When("a user ask for {int} minute intervals possible")
-    public void aUserAskForMinuteIntervalsPossible(int duration ) {
-        availableIntervals=user.getAvailableIntervals(duration);
+    public void aUserAskForMinuteIntervalsPossible() {
+        availableIntervals=user.getAvailableIntervals(cart.getDuration());
     }
 
     @Then("he gets only intervals starting and finishing in the {int} to {int} time period with a {int} minute duration")

@@ -11,13 +11,12 @@ import fr.unice.polytech.cod.schedule.Interval;
 import fr.unice.polytech.cod.store.InvalidStoreException;
 import fr.unice.polytech.cod.store.Store;
 import fr.unice.polytech.cod.data.StoreManager;
+import fr.unice.polytech.cod.store.SurpriseBasket;
 import fr.unice.polytech.cod.user.fidelityAccount.Discount;
 import fr.unice.polytech.cod.user.fidelityAccount.FidelityAccount;
 
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class User {
     private CookieBook cookieBook;
@@ -88,6 +87,7 @@ public class User {
     public List<Interval> getAvailableIntervals(int minutesNeeded) {
         return (this.cart.getStore().timeSlotAvailables(minutesNeeded));
     }
+
 
     public void chooseInterval(Interval interval) {
         interval.reserve();
@@ -178,5 +178,29 @@ public class User {
     public void notify(String message){
         if(_subscription.isPresent()) Display.smsOk(_subscription.get().getName(), message);
         else Display.smsNok("Anonymous account.");
+    }
+
+    /**
+     * View all the stores that offer surprise baskets and their surprise baskets
+     * @return HashMap of stores and list of surprise baskets
+     */
+    private Map<Store, List<SurpriseBasket>> viewSurpriseBasket() {
+        Map<Store, List<SurpriseBasket>> storeSurpriseBasketMap = new HashMap<>();
+        List<Store> storeList = storeManager.getStoreList();
+        for(Store store : storeList) {
+            List<SurpriseBasket> surpriseBaskets = store.getSurpriseBaskets();
+            if(!surpriseBaskets.isEmpty())
+                storeSurpriseBasketMap.put(store, surpriseBaskets);
+        }
+        return storeSurpriseBasketMap;
+    }
+
+    /**
+     * Allow the user to see the description of a given surpriseBasket
+     * @param surpriseBasket of which the user wants to see the description
+     * @return a bill containing the description and the price
+     */
+    private Bill viewSurpriseBasketDescription(SurpriseBasket surpriseBasket) {
+        return surpriseBasket.getDescription();
     }
 }
