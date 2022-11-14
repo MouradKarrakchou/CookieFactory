@@ -88,6 +88,7 @@ public class User {
         return (this.cart.getStore().timeSlotAvailables(minutesNeeded));
     }
 
+
     public void chooseInterval(Interval interval) {
         interval.reserve();
         this.cart.setInterval(interval);

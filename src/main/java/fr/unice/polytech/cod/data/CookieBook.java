@@ -31,7 +31,7 @@ public class CookieBook {
                 List.of(ingredientCatalog.getTopping("milk chocolate"), ingredientCatalog.getTopping("white chocolate")),
                 new Mix(Mix.MixState.MIXED),
                 new Cooking(Cooking.CookingState.CHEWY),
-                10));
+                5));
 
         cookies.add(new Cookie("Cookie à la pistache",
                 ingredientCatalog.getDough("peanut butter"),
