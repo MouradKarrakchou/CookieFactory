@@ -19,7 +19,7 @@ public class Main {
         Display.start();
 
         Store store = new Store("Antibes");
-        CookieBook cookieBook = new CookieBook();
+        final CookieBook cookieBook = CookieBook.instance;
         Cart cart = new Cart();
         FidelityAccount fidelityAccount = new FidelityAccount();
         User user = new User(cookieBook, cart,new StoreManager());
