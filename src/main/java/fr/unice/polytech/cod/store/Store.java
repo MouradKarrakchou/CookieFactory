@@ -2,10 +2,10 @@ package fr.unice.polytech.cod.store;
 
 import fr.unice.polytech.cod.*;
 import fr.unice.polytech.cod.ingredient.Ingredient;
-import org.mockito.internal.matchers.Or;
+import fr.unice.polytech.cod.order.Order;
+import fr.unice.polytech.cod.order.OrderState;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Store {
     String name;
@@ -14,6 +14,7 @@ public class Store {
     private final Stock stock;
     public static int orderNumber = 0;
     Map<Ingredient, Double> taxes;
+    CookieBook cookieBook;
     public TimeClock openHour=new TimeClock(8,0);
     public TimeClock closeHour=new TimeClock(18,0);
 
@@ -23,6 +24,8 @@ public class Store {
         this.orderList = new ArrayList<>();
         this.stock = new Stock();
         listChef.add(new Chef(this));
+        this.cookieBook = new CookieBook();
+        listChef.add(new Chef());
 
         for(Ingredient ingredient : stock.getIngredients()) {
             taxes.put(ingredient, 0.0);
@@ -78,6 +81,10 @@ public class Store {
         this.orderList.add(order);
     }
 
+    public void removeOrder(Order order) {
+        this.orderList.remove(order);
+    }
+
     public void associateOrder(Chef chef, Order orderToPrepare) {
         if(chef.isAvailable()) {
             chef.associateOrder(orderToPrepare);
@@ -128,6 +135,10 @@ public class Store {
 
     public List<Chef> getListChef() {
         return listChef;
+    }
+
+    public CookieBook getCookieBook() {
+        return cookieBook;
     }
 }
 

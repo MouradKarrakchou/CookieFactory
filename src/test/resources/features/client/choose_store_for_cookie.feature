@@ -1,4 +1,3 @@
-
 Feature: Choose store for cookie
 
   Background:

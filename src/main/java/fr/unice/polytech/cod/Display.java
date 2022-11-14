@@ -49,4 +49,12 @@ public class Display {
         }
         LOGGER.info(output.toString());
     }
+
+    public static void smsOk(String name, String content){
+        LOGGER.info("SMS has been sent to " + name + ".\n Content: " + content);
+    }
+
+    public static void smsNok(String reason){
+        LOGGER.info("Can not send sms to the user. Reason: " + reason);
+    }
 }

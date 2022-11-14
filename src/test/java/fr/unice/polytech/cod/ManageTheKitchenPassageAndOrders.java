@@ -1,5 +1,7 @@
 package fr.unice.polytech.cod;
 
+import fr.unice.polytech.cod.order.Order;
+import fr.unice.polytech.cod.order.OrderState;
 import fr.unice.polytech.cod.store.Chef;
 import fr.unice.polytech.cod.store.ChefState;
 import fr.unice.polytech.cod.store.Store;
@@ -19,6 +21,7 @@ public class ManageTheKitchenPassageAndOrders {
     Order order;
     Store store;
     Bill bill;
+
     @Given("an chef who is \"([^\"]*)\"$")
     public void an_chef_who_is(ChefState chefState) {
         store=new Store("Magasin");

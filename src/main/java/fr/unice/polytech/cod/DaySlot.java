@@ -1,5 +1,6 @@
 package fr.unice.polytech.cod;
 
+import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.store.Chef;
 import fr.unice.polytech.cod.store.Store;
 
@@ -22,6 +23,9 @@ public class DaySlot {
      */
     private void initialiseTimeSlots(Store store) {
         this.timeSlots.addAll(creatingTimeSlots(store.getOpenHour(),store.getCloseHour()));
+    private void initialiseTimeSlots() {
+        this.timeSlots.addAll(creatingTimeSlots(Chef.START_MORNING_TIME,Chef.END_MORNING_TIME));
+        this.timeSlots.addAll(creatingTimeSlots(Chef.START_AFTERNOON_TIME,Chef.END_AFTERNOON_TIME));
     }
 
 
@@ -49,6 +53,7 @@ public class DaySlot {
             timeSlots.add(this.timeSlots.get(position+k));
         }
         return new Interval(timeSlots);
+
     }
 
 
@@ -72,5 +77,12 @@ public class DaySlot {
 
     public List<TimeSlot> getTimeSlots() {
         return timeSlots;
+    }
+
+    public Optional<Order> getOrderToPrepare(TimeClock timeClock) {
+        for (TimeSlot timeSlot: timeSlots){
+            if (timeSlot.getStartTime().equals(timeClock))  return timeSlot.getOrder();
+        }
+        return Optional.empty();
     }
 }

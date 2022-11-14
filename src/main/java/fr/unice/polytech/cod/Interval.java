@@ -1,7 +1,7 @@
 package fr.unice.polytech.cod;
 
-import java.sql.Time;
-import java.util.ArrayList;
+import fr.unice.polytech.cod.order.Order;
+
 import java.util.List;
 
 public class Interval implements Comparable {
@@ -21,6 +21,12 @@ public class Interval implements Comparable {
     public void validate(Order order){
         for (TimeSlot timeSlot:timeSlots){
             timeSlot.associate(order);
+        }
+    }
+
+    public void freedInterval() {
+        for(TimeSlot timeSlot : timeSlots) {
+            timeSlot.disassociate();
         }
     }
 

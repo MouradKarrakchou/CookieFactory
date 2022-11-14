@@ -1,4 +1,9 @@
-package fr.unice.polytech.cod;
+package fr.unice.polytech.cod.order;
+
+import fr.unice.polytech.cod.Cart;
+import fr.unice.polytech.cod.Discount;
+import fr.unice.polytech.cod.UpdatableObject;
+import fr.unice.polytech.cod.User;
 
 import java.util.Optional;
 
@@ -7,6 +12,7 @@ public class Order extends UpdatableObject {
     private final Cart cart;
     private final User user;
     private Optional<Discount> discount;
+    private SmsNotifier smsNotifier;
 
     public Order(Cart cart, User user) {
         super(7_200_000); // An order expire when 2h is reached
@@ -14,6 +20,7 @@ public class Order extends UpdatableObject {
         this.orderState = OrderState.PENDING;
         this.user = user;
         this.discount = Optional.empty();
+        smsNotifier = new SmsNotifier(user);
     }
 
     public Order(Cart cart, OrderState orderState, User user) {
@@ -22,6 +29,7 @@ public class Order extends UpdatableObject {
         this.orderState = orderState;
         this.user = user;
         this.discount = Optional.empty();
+        smsNotifier = new SmsNotifier(user);
     }
 
     /**
@@ -39,9 +47,16 @@ public class Order extends UpdatableObject {
      */
     public void updateState(OrderState state) {
         this.orderState = state;
+
         if(orderState == OrderState.READY){
-            start();
+            startTimer();
+            smsNotifier.startTimer();
         }
+        if(orderState == OrderState.RETRIEVE){
+            killCurrentThread();
+            smsNotifier.killCurrentThread();
+        }
+
     }
 
     /**
@@ -64,5 +79,9 @@ public class Order extends UpdatableObject {
 
     public void setDiscount(Optional<Discount> discount) {
         this.discount = discount;
+    }
+
+    public int getDuration() {
+        return 0;
     }
 }

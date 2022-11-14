@@ -1,6 +1,8 @@
 package fr.unice.polytech.cod.store;
 
 import fr.unice.polytech.cod.*;
+import fr.unice.polytech.cod.order.Order;
+import fr.unice.polytech.cod.order.OrderState;
 
 import java.util.List;
 import java.util.Optional;
@@ -29,12 +31,16 @@ public class Chef {
         //Dans
     }
 
-    public Optional<Order> getOrderToPrepare() {
-        return orderToPrepare;
-    }
-
     public boolean isAvailable() {
         return state == ChefState.AVAILABLE;
+    }
+
+    public void startWork() throws Exception {
+        if(this.orderToPrepare.isEmpty())
+            throw new Exception("No order to prepare");
+        Order order = this.orderToPrepare.get();
+        this.state = ChefState.UNAVAILABLE;
+        order.updateState(OrderState.IN_PROGRESS);
     }
 
     public void makeOtherActivityDuringLeftTime() {
@@ -55,5 +61,17 @@ public class Chef {
 
     public Schedule getSchedule() {
         return schedule;
+    }
+
+    public void updateCurrentOrder(TimeClock timeClock){
+        orderToPrepare = schedule.getDaySlot().getOrderToPrepare(timeClock);
+    }
+
+    public Optional<Order> getOrderToPrepare() {
+        return orderToPrepare;
+    }
+
+    public void terminateCurrentOrder(){
+        orderToPrepare.ifPresent(order -> order.updateState(OrderState.READY));
     }
 }

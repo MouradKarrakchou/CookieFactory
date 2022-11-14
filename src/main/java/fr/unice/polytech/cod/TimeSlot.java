@@ -1,10 +1,11 @@
 package fr.unice.polytech.cod;
 
-import java.sql.Time;
+import fr.unice.polytech.cod.order.Order;
+
 import java.util.Optional;
-import java.util.Timer;
 
 public class TimeSlot {
+    public static int DURATION = 15000; // in ms
     private TimeClock startTime;
     private TimeClock endTime;
     private Optional<Order> order;
@@ -21,7 +22,13 @@ public class TimeSlot {
      * @param order
      */
     public void associate(Order order){
-        this.order=Optional.of(order);}
+        this.order=Optional.of(order);
+    }
+
+    public void disassociate() {
+        this.order = Optional.empty();
+        this.reserved = false;
+    }
 
     public void setReserved(boolean reserved) {
         this.reserved = reserved;

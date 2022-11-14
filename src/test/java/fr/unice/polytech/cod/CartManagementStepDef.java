@@ -1,11 +1,11 @@
 package fr.unice.polytech.cod;
 
 import fr.unice.polytech.cod.ingredient.Dough;
-import fr.unice.polytech.cod.ingredient.Flavour;
 import fr.unice.polytech.cod.ingredient.Ingredient;
-import fr.unice.polytech.cod.ingredient.Topping;
 import fr.unice.polytech.cod.ingredient.*;
-import fr.unice.polytech.cod.store.InvalidStoreExepection;
+import fr.unice.polytech.cod.order.Order;
+import fr.unice.polytech.cod.order.OrderState;
+import fr.unice.polytech.cod.store.InvalidStoreException;
 import fr.unice.polytech.cod.store.Stock;
 import fr.unice.polytech.cod.store.Store;
 import fr.unice.polytech.cod.store.StoreManager;
@@ -33,6 +33,10 @@ public class CartManagementStepDef {
     Bill bill;
     StoreManager storeManager;
     List<Interval> availableIntervals;
+    Order pendingOrder;
+    Order inProgressOrder;
+
+    private final IngredientCatalog ingredientCatalog = IngredientCatalog.instance;
 
     @Given("a user")
     public void a_user() {
@@ -41,25 +45,17 @@ public class CartManagementStepDef {
     }
 
     @Given("a store named {string}")
-    public void the_antibes_store(String name) throws InvalidStoreExepection {
-        IngredientCatalog ingredientCatalog = new IngredientCatalog();
+    public void the_antibes_store(String name) throws InvalidStoreException {
         user.selectStore(name);
         for (int i =0; i <100; i++)
             user.getStore().getStock().addStockList(ingredientCatalog.getIngredientList());
     }
     @Given("a valid cookie")
     public void a_valid_cookie() {
-        IngredientCatalog ingredientCatalog = new IngredientCatalog();
-        testCookie = new Cookie("testCookie",
-                ingredientCatalog.getDoughList().get(0),
-                ingredientCatalog.getFlavourList().get(0),
-                ingredientCatalog.getToppingList(),
-                new Mix(Mix.MixState.MIXED),
-                new Cooking(Cooking.CookingState.CHEWY),
-                10);
+        testCookie = new CookieBook().getCookie("Cookie au chocolat");
     }
     @Given("a fidelity account")
-    public void a_fidelity_account() throws InvalidStoreExepection {
+    public void a_fidelity_account() throws InvalidStoreException {
         user.subscribeToFidelityAccount("name", "email", "password");
     }
 
@@ -82,7 +78,7 @@ public class CartManagementStepDef {
     @When("he remove a cookie from his cart")
     public void he_remove_a_cookie_from_his_cart() throws Exception {
         List<Item> allItems =  user.getAllItemsFromCart();
-        Item item = user.getItemFromCart("testCookie");
+        Item item = user.getItemFromCart("Cookie au chocolat");
         user.removeOneItemFromCart(item);
     }
     @When("he requests the cookie list")
@@ -96,14 +92,14 @@ public class CartManagementStepDef {
         bill = user.validateCart();
     }
     @When("we choose a valid store")
-    public void we_choose_a_valid_store() throws InvalidStoreExepection {
+    public void we_choose_a_valid_store() throws InvalidStoreException {
         user.selectStore("Antibes");
     }
     @When("we choose an invalid store")
     public void we_choose_an_invalid_store() {
         try {
             user.selectStore("invalidStore");
-        } catch (InvalidStoreExepection e) {
+        } catch (InvalidStoreException e) {
             this.exception=e;
         }
     }
@@ -112,12 +108,12 @@ public class CartManagementStepDef {
         user.subscribeToFidelityAccount(name, email, password);
     }
     @When("he order {int} cookies")
-    public void he_order_cookies(int numberOfCookies) throws InvalidStoreExepection {
+    public void he_order_cookies(int numberOfCookies) throws InvalidStoreException {
         user.chooseCookies(testCookie, numberOfCookies);
     }
 
     @Then("the bill is created")
-    public void the_bill_is_created() throws InvalidStoreExepection {
+    public void the_bill_is_created() throws InvalidStoreException {
        assertTrue(bill != null);
     }
     @Then("he take advantage of our loyalty program")
@@ -129,7 +125,7 @@ public class CartManagementStepDef {
     public void an_invalid_store_exception_is_triggered() {
         assertTrue(this.exception!=null);
         if (this.exception!=null)
-            assertTrue(this.exception instanceof InvalidStoreExepection);
+            assertTrue(this.exception instanceof InvalidStoreException);
     }
     @Then("the right store is selected in the cart")
     public void the_right_store_is_selected_in_the_cart() {
@@ -153,7 +149,7 @@ public class CartManagementStepDef {
     }
     @Then("his cart has one item less")
     public void his_cart_has_one_item_less() {
-       assertEquals(1, cart.getItemQuantity("testCookie"));
+       assertEquals(1, cart.getItemQuantity("Cookie au chocolat"));
     }
     @Then("he receive a discount for his next order")
     public void he_receive_a_discount_for_his_next_order() {
@@ -249,4 +245,40 @@ public class CartManagementStepDef {
         int numberOfInterval=numberOfMinute/15+1;
         assertEquals(numberOfInterval,availableIntervals.size());
     }
+
+    @Given("an order at the state \"([^\"]*)\"$")
+    public void an_order_at_the_state(OrderState state) {
+        pendingOrder = new Order(cart, user);
+        inProgressOrder = new Order(cart, user);
+        user.getOrders().add(pendingOrder);
+        user.getOrders().add(inProgressOrder);
+        if(state.equals(OrderState.PENDING)) pendingOrder.updateState(state);
+        else inProgressOrder.updateState(state);
+    }
+
+    @When("the user try to cancel his order at the state \"([^\"]*)\"$")
+    public void the_user_try_to_cancel_his_order_at_the_state_OrderState(OrderState state) {
+        if(state.equals(OrderState.PENDING)) user.cancelOrder(pendingOrder);
+        else user.cancelOrder(inProgressOrder);
+
+    }
+
+    @Then("the order is canceled")
+    public void the_order_is_canceled() {
+        assertFalse(user.getCart().getStore().getOrderList().contains(pendingOrder));
+    }
+
+    @Then("the user is notified")
+    public void the_user_is_notified() {
+        if(!user.getCart().getStore().getOrderList().contains(pendingOrder))
+            assertTrue(user.cancelOrder(pendingOrder));
+        if(user.getCart().getStore().getOrderList().contains(inProgressOrder))
+            assertFalse(user.cancelOrder(inProgressOrder));
+    }
+
+    @Then("the order cannot be canceled")
+    public void the_order_cannot_be_canceled() {
+        assertFalse(user.getCart().getStore().getOrderList().contains(inProgressOrder));
+    }
+
 }
