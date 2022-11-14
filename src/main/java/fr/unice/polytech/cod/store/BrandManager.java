@@ -1,15 +1,20 @@
 package fr.unice.polytech.cod.store;
 
 import fr.unice.polytech.cod.CookieBook;
+import fr.unice.polytech.cod.ingredient.Cookie;
 
 public class BrandManager {
-    CookieBook cookieBook;
+    StoreManager storeManager;
 
-    public BrandManager(CookieBook cookieBook) {
-        this.cookieBook = cookieBook;
+    public BrandManager(StoreManager storeManager) {
+        this.storeManager = storeManager;
     }
 
-    public CookieBook getCookieBook() {
-        return cookieBook;
+    public void validCookie(Cookie cookie, String store) throws Exception{
+        this.storeManager.addCookieStore(cookie, store);
+    }
+
+    public StoreManager getStoreManager() {
+        return this.storeManager;
     }
 }

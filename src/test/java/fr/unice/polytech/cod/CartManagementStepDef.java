@@ -36,13 +36,12 @@ public class CartManagementStepDef {
     Order pendingOrder;
     Order inProgressOrder;
 
-    private final CookieBook cookieBook = CookieBook.instance;
     private final IngredientCatalog ingredientCatalog = IngredientCatalog.instance;
 
     @Given("a user")
     public void a_user() {
         this.storeManager=new StoreManager();
-        user = new User(cookieBook,new Cart(),storeManager);
+        user = new User(new CookieBook(),new Cart(),storeManager);
     }
 
     @Given("a store named {string}")
@@ -53,7 +52,7 @@ public class CartManagementStepDef {
     }
     @Given("a valid cookie")
     public void a_valid_cookie() {
-        testCookie = cookieBook.getCookie("Cookie au chocolat");
+        testCookie = new CookieBook().getCookie("Cookie au chocolat");
     }
     @Given("a fidelity account")
     public void a_fidelity_account() throws InvalidStoreException {

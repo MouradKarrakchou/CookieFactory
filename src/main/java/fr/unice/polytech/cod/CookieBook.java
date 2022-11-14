@@ -12,9 +12,7 @@ public class CookieBook {
 
     private final IngredientCatalog ingredientCatalog = IngredientCatalog.instance;
 
-    public static CookieBook instance = new CookieBook();
-
-    private CookieBook() {
+    public CookieBook() {
         cookies = new ArrayList<>();
 
         cookies.add(new Cookie("Cookie au chocolat",
@@ -79,12 +77,16 @@ public class CookieBook {
      *
      * @param cookie un cookie
      */
-    public void addCookieRecipe(Cookie cookie) {
+    public void addCookieRecipe(Cookie cookie) throws Exception {
         if (!this.cookies.contains(cookie)) {
             for (Ingredient ingredient : cookie.getIngredients()) {
                 if (ingredientCatalog.isInCatalog(ingredient))
                     this.cookies.add(cookie);
+                else
+                    throw new Exception("Cookie composition not valid");
             }
+        } else {
+            throw new Exception("Cookie already exist");
         }
     }
 

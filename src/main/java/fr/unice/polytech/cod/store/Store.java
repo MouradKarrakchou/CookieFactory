@@ -14,12 +14,14 @@ public class Store {
     private final Stock stock;
     public static int orderNumber = 0;
     Map<Ingredient, Double> taxes;
+    CookieBook cookieBook;
 
     public Store(String name) {
         this.name=name;
         listChef=new ArrayList<>();
         this.orderList = new ArrayList<>();
         this.stock = new Stock();
+        this.cookieBook = new CookieBook();
         listChef.add(new Chef());
 
         for(Ingredient ingredient : stock.getIngredients()) {
@@ -109,6 +111,10 @@ public class Store {
 
     public List<Chef> getListChef() {
         return listChef;
+    }
+
+    public CookieBook getCookieBook() {
+        return cookieBook;
     }
 }
 
