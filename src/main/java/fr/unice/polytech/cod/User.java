@@ -1,6 +1,8 @@
 package fr.unice.polytech.cod;
 
 import fr.unice.polytech.cod.ingredient.Cookie;
+import fr.unice.polytech.cod.order.Order;
+import fr.unice.polytech.cod.order.OrderState;
 import fr.unice.polytech.cod.store.InvalidStoreException;
 import fr.unice.polytech.cod.store.Store;
 import fr.unice.polytech.cod.store.StoreManager;
@@ -16,14 +18,14 @@ public class User {
     private List<Order> userOrders;
     private StoreManager storeManager;
 
-    private Optional<FidelityAccount> subscription;
+    private Optional<FidelityAccount> _subscription;
 
     public User(CookieBook cookieBook, Cart cart, StoreManager storeManager) {
         this.cookieBook = cookieBook;
         this.cart = cart;
         this.userOrders = new ArrayList<>();
         this.storeManager = storeManager;
-        this.subscription = Optional.empty();
+        this._subscription = Optional.empty();
     }
 
     /**
@@ -102,8 +104,8 @@ public class User {
 
     public void addOrder(Order order) {
         this.userOrders.add(order);
-        if (this.subscription.isPresent())
-            this.subscription.get().addOrder(order);
+        if (this._subscription.isPresent())
+            this._subscription.get().addOrder(order);
     }
 
     public List<Order> getOrders() {
@@ -131,11 +133,11 @@ public class User {
     }
 
     public void subscribeToFidelityAccount(String name, String email, String password) {
-        this.subscription = Optional.of(new FidelityAccount(name, email, password));
+        this._subscription = Optional.of(new FidelityAccount(name, email, password));
     }
 
     public Optional<FidelityAccount> getSubscription() {
-        return subscription;
+        return _subscription;
     }
 
     public boolean hasDiscount() {
@@ -145,7 +147,7 @@ public class User {
     }
 
     public Optional<Discount> getDiscount() {
-        return subscription.get().getDiscount();
+        return _subscription.get().getDiscount();
     }
 
     public void useDiscount(Order order) {
@@ -160,5 +162,14 @@ public class User {
         }
         else
             return false; //Your order is already in progress. You cannot canceled it
+    }
+
+    /**
+     * This simulates a sms send to the user
+     * @param message The message send to the user.
+     */
+    public void notify(String message){
+        if(_subscription.isPresent()) Display.smsOk(_subscription.get().getName(), message);
+        else Display.smsNok("Anonymous account.");
     }
 }

@@ -1,5 +1,6 @@
 package fr.unice.polytech.cod;
 
+import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.store.Chef;
 
 import java.util.ArrayList;
@@ -20,8 +21,8 @@ public class DaySlot {
      * create the timeSlots of the chef for the morning and the afternoon
      */
     private void initialiseTimeSlots() {
-        this.timeSlots.addAll(creatingTimeSlots(Chef.STARTMORNINGTIME,Chef.ENDMORNINGTIME));
-        this.timeSlots.addAll(creatingTimeSlots(Chef.STARTAFTERNOONTIME,Chef.ENDAFTERNOONTIME));
+        this.timeSlots.addAll(creatingTimeSlots(Chef.START_MORNING_TIME,Chef.END_MORNING_TIME));
+        this.timeSlots.addAll(creatingTimeSlots(Chef.START_AFTERNOON_TIME,Chef.END_AFTERNOON_TIME));
     }
 
 
@@ -73,5 +74,12 @@ public class DaySlot {
 
     public List<TimeSlot> getTimeSlots() {
         return timeSlots;
+    }
+
+    public Optional<Order> getOrderToPrepare(TimeClock timeClock) {
+        for (TimeSlot timeSlot: timeSlots){
+            if (timeSlot.getStartTime().equals(timeClock))  return timeSlot.getOrder();
+        }
+        return Optional.empty();
     }
 }

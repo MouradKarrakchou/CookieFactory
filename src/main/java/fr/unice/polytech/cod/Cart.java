@@ -1,6 +1,7 @@
 package fr.unice.polytech.cod;
 
 import fr.unice.polytech.cod.ingredient.Ingredient;
+import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.store.Store;
 
 import java.time.Duration;

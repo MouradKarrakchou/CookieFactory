@@ -4,15 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class IngredientCatalog {
-    private List<Ingredient> ingredientList;
+    private final List<Ingredient> ingredientList;
+    public static IngredientCatalog instance = new IngredientCatalog();
 
-    public IngredientCatalog() {
+    private IngredientCatalog() {
         this.ingredientList = new ArrayList<>(
                 List.of(new Dough("plain", 0.002, 1),
                         new Dough("chocolate", 0.002, 1),
                         new Dough("peanut butter", 0.002, 1),
                         new Dough("oatmeal", 0.002, 1),
-                        new Dough("chocolate", 0.002, 1),
 
                         new Flavour("vanilla", 0.002, 1),
                         new Flavour("cinnamon", 0.002, 1),
@@ -29,33 +29,55 @@ public class IngredientCatalog {
         return ingredientList;
     }
 
-    public List<Dough> getDoughList() {
-        List<Dough> doughList = new ArrayList<>();
-        for (int i = 0; i < this.ingredientList.size(); i ++){
-            if(this.ingredientList.get(i) instanceof Dough){
-                doughList.add((Dough) this.ingredientList.get(i));
-            }
-        }
-        return doughList;
+    /**
+     * Check if a Ingredient is in the catalog
+     *
+     * @param ingredient a ingredient
+     * @return if the catalog contains the ingredient
+     */
+    public boolean isInCatalog(Ingredient ingredient){
+        return this.ingredientList.contains(ingredient);
     }
 
-    public List<Flavour> getFlavourList() {
-        List<Flavour> flavourList = new ArrayList<>();
-        for (int i = 0; i < this.ingredientList.size(); i ++){
-            if(this.ingredientList.get(i) instanceof Flavour){
-                flavourList.add((Flavour) this.ingredientList.get(i));
-            }
+    /**
+     * Find a Dough with a dough name in the catalog
+     *
+     * @param doughName a cookie name
+     * @return the Dough of the dough name
+     */
+    public Dough getDough(String doughName) {
+        for (Ingredient ingredient : this.ingredientList){
+            if(ingredient.name.equals(doughName))
+                return (Dough) ingredient;
         }
-        return flavourList;
+        return null;
     }
 
-    public List<Topping> getToppingList() {
-        List<Topping> toppingList = new ArrayList<>();
-        for (int i = 0; i < this.ingredientList.size(); i ++){
-            if(this.ingredientList.get(i) instanceof Topping){
-                toppingList.add((Topping) this.ingredientList.get(i));
-            }
+    /**
+     * Find a Dough with a flavour name in the catalog
+     *
+     * @param flavourName a flavour name
+     * @return the Dough of the flavour name
+     */
+    public Flavour getFlavour(String flavourName) {
+        for (Ingredient ingredient : this.ingredientList){
+            if(ingredient.name.equals(flavourName))
+                return (Flavour) ingredient;
         }
-        return toppingList;
+        return null;
+    }
+
+    /**
+     * Find a Topping with a topping name in the catalog
+     *
+     * @param toppingName a topping name
+     * @return the Dough of the topping name
+     */
+    public Topping getTopping(String toppingName) {
+        for (Ingredient ingredient : this.ingredientList){
+            if(ingredient.name.equals(toppingName))
+                return (Topping) ingredient;
+        }
+        return null;
     }
 }
