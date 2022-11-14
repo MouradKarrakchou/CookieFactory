@@ -20,8 +20,8 @@ public class DaySlot {
      * create the timeSlots of the chef for the morning and the afternoon
      */
     private void initialiseTimeSlots() {
-        this.timeSlots.addAll(creatingTimeSlots(Chef.STARTMORNINGTIME,Chef.ENDMORNINGTIME));
-        this.timeSlots.addAll(creatingTimeSlots(Chef.STARTAFTERNOONTIME,Chef.ENDAFTERNOONTIME));
+        this.timeSlots.addAll(creatingTimeSlots(Chef.START_MORNING_TIME,Chef.END_MORNING_TIME));
+        this.timeSlots.addAll(creatingTimeSlots(Chef.START_AFTERNOON_TIME,Chef.END_AFTERNOON_TIME));
     }
 
 
