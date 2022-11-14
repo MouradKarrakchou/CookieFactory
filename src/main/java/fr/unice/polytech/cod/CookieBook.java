@@ -10,19 +10,37 @@ import java.util.List;
 public class CookieBook {
     private final List<Cookie> cookies;
 
-    public CookieBook() {
+    private final IngredientCatalog ingredientCatalog = IngredientCatalog.instance;
+
+    public static CookieBook instance = new CookieBook();
+
+    private CookieBook() {
         cookies = new ArrayList<>();
-        IngredientCatalog ingredientCatalog = new IngredientCatalog();
 
         cookies.add(new Cookie("Cookie au chocolat",
-                ingredientCatalog.getDoughList().get(0),
-                ingredientCatalog.getFlavourList().get(0),
-                ingredientCatalog.getToppingList(),
+                ingredientCatalog.getDough("chocolate"),
+                ingredientCatalog.getFlavour("chili"),
+                List.of(ingredientCatalog.getTopping("milk chocolate"), ingredientCatalog.getTopping("M&M’s")),
                 new Mix(Mix.MixState.MIXED),
                 new Cooking(Cooking.CookingState.CHEWY),
                 10));
-        //cookies.add(new Cookie("Cookie à la vanille",null,null,new ArrayList<>()));
-        //cookies.add(new Cookie("Cookie à la pistache",null,null,new ArrayList<>()));
+
+        cookies.add(new Cookie("Cookie à la vanille",
+                ingredientCatalog.getDough("plain"),
+                ingredientCatalog.getFlavour("vanilla"),
+                List.of(ingredientCatalog.getTopping("milk chocolate"), ingredientCatalog.getTopping("white chocolate")),
+                new Mix(Mix.MixState.MIXED),
+                new Cooking(Cooking.CookingState.CHEWY),
+                10));
+
+        cookies.add(new Cookie("Cookie à la pistache",
+                ingredientCatalog.getDough("peanut butter"),
+                ingredientCatalog.getFlavour("chili"),
+                List.of(ingredientCatalog.getTopping("milk chocolate")),
+                new Mix(Mix.MixState.MIXED),
+                new Cooking(Cooking.CookingState.CHEWY),
+                10));
+
         // TODO : Add recipes here.
     }
 
@@ -39,5 +57,48 @@ public class CookieBook {
                 cookieAvailable.add(cookie);
         }
         return cookieAvailable;
+    }
+
+    /**
+     * Find a Dough with a cookie name in the book
+     *
+     * @param cookieName nom du cookie
+     * @return the Cookie of the cookie name
+     */
+    public Cookie getCookie(String cookieName) {
+        for (Cookie cookie : this.cookies) {
+            if (cookie.getName().equals(cookieName)) {
+                return cookie;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Add a cookie to the cookie book if it's not in the book and all the ingredients are in the catalog
+     *
+     * @param cookie un cookie
+     */
+    public void addCookieRecipe(Cookie cookie) {
+        if (!this.cookies.contains(cookie)) {
+            for (Ingredient ingredient : cookie.getIngredients()) {
+                if (ingredientCatalog.isInCatalog(ingredient))
+                    this.cookies.add(cookie);
+            }
+        }
+    }
+
+    /**
+     * Remove a cookie to the cookie book
+     *
+     * @param cookieToRemove un cookie
+     */
+    public void removeCookieRecipe(Cookie cookieToRemove) {
+        for (Cookie cookie1 : this.cookies) {
+            if (cookieToRemove.equals(cookie1)) {
+                cookies.remove(cookieToRemove);
+                break;
+            }
+        }
     }
 }
