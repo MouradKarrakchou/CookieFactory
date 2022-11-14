@@ -1,6 +1,7 @@
 package unitTest;
 
 import fr.unice.polytech.cod.*;
+import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.store.Store;
 import io.cucumber.java.sl.In;
 import org.junit.jupiter.api.BeforeEach;
