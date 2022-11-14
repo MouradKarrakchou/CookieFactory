@@ -8,6 +8,7 @@ import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.order.OrderState;
 import fr.unice.polytech.cod.schedule.Interval;
 import fr.unice.polytech.cod.schedule.TimeClock;
+import fr.unice.polytech.cod.user.fidelityAccount.FidelityAccount;
 
 import java.util.*;
 
@@ -16,6 +17,7 @@ public class Store extends UpdatableObject {
     List<Order> orderList;
     List<Order> obsoleteOrders;
     List<SurpriseBasket> surpriseBaskets;
+    List<FidelityAccount> fidelityAccountList;
     List<Chef> listChef;
     private final Stock stock;
     public static int orderNumber = 0;
@@ -31,6 +33,7 @@ public class Store extends UpdatableObject {
         this.orderList = new ArrayList<>();
         this.obsoleteOrders = new ArrayList<>();
         this.surpriseBaskets = new ArrayList<>();
+        this.fidelityAccountList = new ArrayList<>();
         this.stock = new Stock();
         listChef.add(new Chef(this));
         this.cookieBook = new CookieBook();
@@ -167,11 +170,25 @@ public class Store extends UpdatableObject {
         obsoleteOrders.add(order);
     }
 
+    public List<SurpriseBasket> getSurpriseBaskets() {
+        return surpriseBaskets;
+    }
+
     //TODO start timer at the open hour + 3h and stop it at the close hour
     @Override
     protected void OnTimeReached() {
         checkObsoleteOrders();
         startTimer();
+    }
+
+    public void addFidelityAccount(FidelityAccount fidelityAccount, int todayDay, int day, int hour, int minute) {
+        int waitingDay = Math.abs(day - todayDay);
+        int waitingTime = waitingDay*24*60*60*1000; //days in milliseconds
+        waitingTime += hour*60*60*1000; //hours in milliseconds
+        waitingTime += minute*60*1000; //minute in milliseconds
+        MailNotifier mailNotifier = new MailNotifier(waitingTime, this, fidelityAccount);
+        mailNotifier.OnTimeReached();
+        fidelityAccountList.add(fidelityAccount);
     }
 }
 
