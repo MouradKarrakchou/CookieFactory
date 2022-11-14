@@ -7,6 +7,7 @@ import fr.unice.polytech.cod.store.InvalidStoreException;
 import fr.unice.polytech.cod.store.Store;
 import fr.unice.polytech.cod.store.StoreManager;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -17,14 +18,14 @@ public class User {
     private List<Order> userOrders;
     private StoreManager storeManager;
 
-    private Optional<FidelityAccount> subscription;
+    private Optional<FidelityAccount> _subscription;
 
     public User(CookieBook cookieBook, Cart cart, StoreManager storeManager) {
         this.cookieBook = cookieBook;
         this.cart = cart;
         this.userOrders = new ArrayList<>();
         this.storeManager = storeManager;
-        this.subscription = Optional.empty();
+        this._subscription = Optional.empty();
     }
 
     /**
@@ -90,8 +91,8 @@ public class User {
      * If the cart is not empty, validate the cart to create an order
      */
     public Bill validateCart() throws Exception {
-        //userOrders.add(this.cart.createOrder());
-        if (!cart.isEmpty())
+        Instant time = Instant.now();
+        if (!cart.isEmpty() && !cart.isTherePenalty(time))
             return cart.validate(this);
         else
             throw new Exception("Panier vide impossible de le valider");
@@ -103,8 +104,8 @@ public class User {
 
     public void addOrder(Order order) {
         this.userOrders.add(order);
-        if (this.subscription.isPresent())
-            this.subscription.get().addOrder(order);
+        if (this._subscription.isPresent())
+            this._subscription.get().addOrder(order);
     }
 
     public List<Order> getOrders() {
@@ -132,11 +133,11 @@ public class User {
     }
 
     public void subscribeToFidelityAccount(String name, String email, String password) {
-        this.subscription = Optional.of(new FidelityAccount(name, email, password));
+        this._subscription = Optional.of(new FidelityAccount(name, email, password));
     }
 
     public Optional<FidelityAccount> getSubscription() {
-        return subscription;
+        return _subscription;
     }
 
     public boolean hasDiscount() {
@@ -146,7 +147,7 @@ public class User {
     }
 
     public Optional<Discount> getDiscount() {
-        return subscription.get().getDiscount();
+        return _subscription.get().getDiscount();
     }
 
     public void useDiscount(Order order) {
@@ -155,11 +156,20 @@ public class User {
     }
 
     public boolean cancelOrder(Order order) {
-        if(order.getOrderState().equals(OrderState.PENDING)) {
+        if(userOrders.contains(order) && order.getOrderState().equals(OrderState.PENDING)) {
             cart.cancelOrder(order);
             return true; //Your order has been canceled
         }
         else
             return false; //Your order is already in progress. You cannot canceled it
+    }
+
+    /**
+     * This simulates a sms send to the user
+     * @param message The message send to the user.
+     */
+    public void notify(String message){
+        if(_subscription.isPresent()) Display.smsOk(_subscription.get().getName(), message);
+        else Display.smsNok("Anonymous account.");
     }
 }

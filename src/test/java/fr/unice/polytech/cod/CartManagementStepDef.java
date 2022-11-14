@@ -250,6 +250,8 @@ public class CartManagementStepDef {
     public void an_order_at_the_state(OrderState state) {
         pendingOrder = new Order(cart, user);
         inProgressOrder = new Order(cart, user);
+        user.getOrders().add(pendingOrder);
+        user.getOrders().add(inProgressOrder);
         if(state.equals(OrderState.PENDING)) pendingOrder.updateState(state);
         else inProgressOrder.updateState(state);
     }
