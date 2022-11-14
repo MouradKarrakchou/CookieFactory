@@ -1,4 +1,4 @@
-package fr.unice.polytech.cod;
+package fr.unice.polytech.cod.user.fidelityAccount;
 
 public class Discount {
    String name;

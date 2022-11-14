@@ -1,6 +1,6 @@
 package fr.unice.polytech.cod.store;
 
-import fr.unice.polytech.cod.ingredient.Ingredient;
+import fr.unice.polytech.cod.food.ingredient.Ingredient;
 
 import java.util.*;
 

@@ -1,4 +1,4 @@
-package fr.unice.polytech.cod;
+package fr.unice.polytech.cod.schedule;
 
 import fr.unice.polytech.cod.order.Order;
 
@@ -32,6 +32,10 @@ public class TimeSlot {
 
     public void setReserved(boolean reserved) {
         this.reserved = reserved;
+    }
+
+    public boolean isReserved() {
+        return reserved;
     }
 
     public TimeClock getStartTime() {

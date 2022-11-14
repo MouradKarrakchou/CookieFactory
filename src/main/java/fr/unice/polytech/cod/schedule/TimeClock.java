@@ -1,4 +1,4 @@
-package fr.unice.polytech.cod;
+package fr.unice.polytech.cod.schedule;
 
 public class TimeClock implements Comparable{
     private int hour;

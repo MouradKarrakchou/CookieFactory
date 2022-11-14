@@ -1,9 +1,12 @@
 package unitTest;
 
-import fr.unice.polytech.cod.*;
 import fr.unice.polytech.cod.order.Order;
+import fr.unice.polytech.cod.schedule.Interval;
+import fr.unice.polytech.cod.schedule.TimeClock;
+import fr.unice.polytech.cod.schedule.TimeSlot;
 import fr.unice.polytech.cod.store.Store;
-import io.cucumber.java.sl.In;
+import fr.unice.polytech.cod.user.Cart;
+import fr.unice.polytech.cod.user.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

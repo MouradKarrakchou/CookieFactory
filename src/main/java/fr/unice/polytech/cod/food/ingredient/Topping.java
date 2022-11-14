@@ -1,4 +1,4 @@
-package fr.unice.polytech.cod.ingredient;
+package fr.unice.polytech.cod.food.ingredient;
 
 public class Topping extends Ingredient {
     public Topping(String name, double price, double quantity) {

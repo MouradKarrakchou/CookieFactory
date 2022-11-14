@@ -1,12 +1,10 @@
 package fr.unice.polytech.cod.decorator_pattern.decorator;
 
 import fr.unice.polytech.cod.decorator_pattern.CookieComponent;
-import fr.unice.polytech.cod.ingredient.Ingredient;
-import fr.unice.polytech.cod.ingredient.Mix;
-import fr.unice.polytech.cod.ingredient.Topping;
+import fr.unice.polytech.cod.food.ingredient.Ingredient;
+import fr.unice.polytech.cod.food.ingredient.Mix;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MixDecorator extends Decorator{
     protected Mix mix;

@@ -1,10 +1,10 @@
-package fr.unice.polytech.cod.ingredient;
+package fr.unice.polytech.cod.food.ingredient;
 
-public class  Flavour extends Ingredient {
-    public Flavour(String name, double price, double quantity) {
+public class Dough extends Ingredient {
+    public Dough(String name,double price, double quantity) {
         super(name, price, quantity);
     }
-        /**
+     /**
      * Check if 2 objects are the same (same name, same class)
      *
      * @param object The object to compare
@@ -17,10 +17,10 @@ public class  Flavour extends Ingredient {
             return true;
 
         // Check for the instance
-        if (!(object instanceof Flavour f))
+        if (!(object instanceof Dough d))
             return false;
 
         // Check for the name equality
-        return f.name.equals(name);
+        return d.name.equals(name);
     }
 }

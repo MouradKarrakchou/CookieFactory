@@ -1,4 +1,9 @@
-package fr.unice.polytech.cod.ingredient;
+package fr.unice.polytech.cod.data;
+
+import fr.unice.polytech.cod.food.ingredient.Dough;
+import fr.unice.polytech.cod.food.ingredient.Flavour;
+import fr.unice.polytech.cod.food.ingredient.Ingredient;
+import fr.unice.polytech.cod.food.ingredient.Topping;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +52,7 @@ public class IngredientCatalog {
      */
     public Dough getDough(String doughName) {
         for (Ingredient ingredient : this.ingredientList){
-            if(ingredient.name.equals(doughName))
+            if(ingredient.getName().equals(doughName))
                 return (Dough) ingredient;
         }
         return null;
@@ -61,7 +66,7 @@ public class IngredientCatalog {
      */
     public Flavour getFlavour(String flavourName) {
         for (Ingredient ingredient : this.ingredientList){
-            if(ingredient.name.equals(flavourName))
+            if(ingredient.getName().equals(flavourName))
                 return (Flavour) ingredient;
         }
         return null;
@@ -75,7 +80,7 @@ public class IngredientCatalog {
      */
     public Topping getTopping(String toppingName) {
         for (Ingredient ingredient : this.ingredientList){
-            if(ingredient.name.equals(toppingName))
+            if(ingredient.getName().equals(toppingName))
                 return (Topping) ingredient;
         }
         return null;
