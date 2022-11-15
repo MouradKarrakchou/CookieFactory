@@ -253,6 +253,16 @@ public class CartManagementStepDef {
 
     @Given("an order at the state \"([^\"]*)\"$")
     public void an_order_at_the_state(OrderState state) {
+        Dough dough = new Dough("DoughName", 1, 2);
+        Cookie cookie = new Cookie("CookieName", dough, null, new ArrayList<>(), null, null, 1);
+        Item item = new Item(cookie, 1);
+        List<Ingredient> ingredients = new ArrayList<>();
+        ingredients.add(dough);
+        Map<Ingredient, Double> taxes = new HashMap<>();
+        taxes.put(dough, 5.0);
+        cart.getStore().fillStock(ingredients, taxes);
+        cart.getItemList().clear();
+        cart.getItemList().add(item);
         pendingOrder = new Order(cart, user);
         inProgressOrder = new Order(cart, user);
         user.getOrders().add(pendingOrder);

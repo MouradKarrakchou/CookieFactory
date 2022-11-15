@@ -221,4 +221,8 @@ public class Cart {
     public int getCanceled() {
         return canceled;
     }
+
+    public void add(Item item) {
+        this.itemList.add(item);
+    }
 }
