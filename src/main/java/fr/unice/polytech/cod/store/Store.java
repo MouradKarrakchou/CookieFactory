@@ -22,7 +22,7 @@ public class Store extends UpdatableObject {
     List<Chef> listChef;
     private final Stock stock;
     public static int orderNumber = 0;
-    Map<Ingredient, Double> taxes = new HashMap<>();
+    Map<Ingredient, Double> taxes;
     CookieBook cookieBook;
     public TimeClock openHour=new TimeClock(8,0);
     public TimeClock closeHour=new TimeClock(18,0);
@@ -42,9 +42,7 @@ public class Store extends UpdatableObject {
         this.cookieBook = new CookieBook();
         this.partyCookieStoreManager = new PartyCookieStoreManager();
 
-        for(Ingredient ingredient : stock.getIngredients()) {
-            taxes.put(ingredient, 0.0);
-        }
+        taxes = new HashMap<>();
         startTimer();
     }
 
@@ -61,10 +59,10 @@ public class Store extends UpdatableObject {
      * Gets a list of available TimeSlots from all the employees of the store by Date;
      * @return
      */
-    public List<Interval> timeSlotAvailables(int minutes){
+    public List<Interval> timeSlotAvailables(int minutes,int numberOfDaysBeforeTheOrder){
         List<Interval> intervals = new ArrayList<>();
         for (Chef chef:listChef){
-            for (Interval interval: chef.getIntervalsAvailable(minutes))
+            for (Interval interval: chef.getIntervalsAvailable(minutes,numberOfDaysBeforeTheOrder))
                 if (!intervals.contains(interval)) intervals.add(interval);
         }
         Collections.sort(intervals);
@@ -205,12 +203,28 @@ public class Store extends UpdatableObject {
         fidelityAccountList.add(fidelityAccount);
     }
 
-    public void fillStock(List<Ingredient> ingredientList) {
+    public void fillStock(List<Ingredient> ingredientList, Map<Ingredient, Double> taxesValues) {
         stock.addStockList(ingredientList);
-        this.updateTaxe();
+        for(Ingredient ingredient : ingredientList) {
+            if(!taxes.containsKey(ingredient))
+                this.updateTaxes(ingredient, taxesValues.get(ingredient));
+        }
     }
 
-    private void updateTaxe() {
+    private void updateTaxes(Ingredient ingredient, double tax) {
+        taxes.put(ingredient, tax);
+    }
+
+    /**
+     * Return the available cookies based on the stock of the store
+     * @return The list of available cookies
+     */
+    public List<Cookie> getAvailableCookie() {
+        List<Cookie> cookieAvailable = new ArrayList<>();
+        cookieBook.getCookies().stream()
+                .filter(cookie -> hasEnoughIngredients(cookie.getIngredients()))
+                .forEach(cookieAvailable::add);
+        return cookieAvailable;
     }
 
     public boolean hasPartyChef() {

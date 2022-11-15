@@ -20,7 +20,7 @@ public class Cookie {
         this.name = cookieName;
         this.dough = dough;
         this.flavour = flavour;
-        this.toppingList = toppingList; //TODO: Make sure the given topping list isn't > 3
+        this.toppingList = toppingList;
         this.mix = mix;
         this.cooking = cooking;
         this.preparationTime = preparationTime;
