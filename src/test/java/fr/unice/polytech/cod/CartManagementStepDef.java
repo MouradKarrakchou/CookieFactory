@@ -23,7 +23,9 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.*;
 
@@ -42,7 +44,6 @@ public class CartManagementStepDef {
     Order inProgressOrder;
     Store store;
     StoreManager storeManager;
-    Stock stock;
 
     private final IngredientCatalog ingredientCatalog = IngredientCatalog.instance;
 
@@ -91,9 +92,6 @@ public class CartManagementStepDef {
     }
     @When("he validate his cart")
     public void he_validate_his_cart() throws Exception {
-        Set<Ingredient> ingredients = new HashSet<>();
-        ingredients.add(new Dough("Dough", 1, 100));
-        stock = new Stock();
         user.getCart().showCart();
         bill = user.validateCart();
     }
