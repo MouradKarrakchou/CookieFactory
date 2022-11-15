@@ -86,7 +86,7 @@ public class Order extends UpdatableObject {
     @Override
     public void OnTimeReached() {
         this.orderState = OrderState.OBSOLETE;
-        cart.getStore().addToObsoleteOrders(this);
+        if(cart != null) cart.getStore().addToObsoleteOrders(this);
     }
 
     public User getUser() {
