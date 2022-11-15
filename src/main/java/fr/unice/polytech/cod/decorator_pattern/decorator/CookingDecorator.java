@@ -1,6 +1,6 @@
 package fr.unice.polytech.cod.decorator_pattern.decorator;
 
-import fr.unice.polytech.cod.decorator_pattern.CookieComponent;
+import fr.unice.polytech.cod.decorator_pattern.PartyCookie;
 import fr.unice.polytech.cod.food.ingredient.Cooking;
 import fr.unice.polytech.cod.food.ingredient.Ingredient;
 
@@ -11,20 +11,20 @@ public class CookingDecorator extends Decorator{
     protected Cooking lastCooking;
 
 
-    public CookingDecorator(CookieComponent cookieComponent, Cooking cooking) {
-        super(cookieComponent, DecoratorState.ADD);
+    public CookingDecorator(PartyCookie partyCookie, Cooking cooking) {
+        super(partyCookie, DecoratorState.ADD);
         this.cooking = cooking;
         this.lastCooking = (Cooking) super.getIngredients().get(getLastCookingIndex());
     }
 
     @Override
     public String getName() {
-        return cookieComponent.getName().replaceAll("\\b"+this.lastCooking.getName()+"\\b", this.cooking.getName());
+        return partyCookie.getName().replaceAll("\\b"+this.lastCooking.getName()+"\\b", this.cooking.getName());
     }
 
     @Override
     public double getPrice() {
-        return cookieComponent.getPrice() - this.lastCooking.getPrice() + this.cooking.getPrice();
+        return partyCookie.getPrice() - this.lastCooking.getPrice() + this.cooking.getPrice();
     }
 
     @Override

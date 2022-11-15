@@ -1,24 +1,25 @@
 package fr.unice.polytech.cod.decorator_pattern.decorator;
 
-import fr.unice.polytech.cod.decorator_pattern.CookieComponent;
+import fr.unice.polytech.cod.decorator_pattern.PartyCookie;
 import fr.unice.polytech.cod.food.ingredient.Ingredient;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Decorator extends CookieComponent{
+public abstract class Decorator extends PartyCookie {
     public enum DecoratorState {
         ADD, REMOVE
     }
-    CookieComponent cookieComponent;
+    PartyCookie partyCookie;
     private String nameDecorator;
     private double priceDecorator;
     private int preparationTimeDecorator;
     private List<Ingredient> ingredientsDecorator;
     protected DecoratorState decoratorState;
 
-    public Decorator(CookieComponent cookieComponent, DecoratorState decoratorState) {
-        this.cookieComponent = cookieComponent;
+    public Decorator(PartyCookie partyCookie, DecoratorState decoratorState) {
+        super();
+        this.partyCookie = partyCookie;
         ingredientsDecorator = new ArrayList<>();
         this.decoratorState = decoratorState;
     }
@@ -26,28 +27,28 @@ public abstract class Decorator extends CookieComponent{
     @Override
     public String getName() {
         if(decoratorState.equals(DecoratorState.ADD))
-            return cookieComponent.getName() + " " + this.nameDecorator;
-        return cookieComponent.getName() +" without "+ this.nameDecorator;
+            return partyCookie.getName() + " " + this.nameDecorator;
+        return partyCookie.getName() +" without "+ this.nameDecorator;
     }
 
     @Override
     public double getPrice() {
         if(decoratorState.equals(DecoratorState.ADD))
-            return cookieComponent.getPrice() + this.priceDecorator;
-        return cookieComponent.getPrice() - this.priceDecorator;
+            return partyCookie.getPrice() + this.priceDecorator;
+        return partyCookie.getPrice() - this.priceDecorator;
     }
 
     @Override
     public int getPreparationTime() {
         if(decoratorState.equals(DecoratorState.ADD))
-            return cookieComponent.getPreparationTime() + this.preparationTimeDecorator;
-        return cookieComponent.getPreparationTime() - this.preparationTimeDecorator;
+            return partyCookie.getPreparationTime() + this.preparationTimeDecorator;
+        return partyCookie.getPreparationTime() - this.preparationTimeDecorator;
 
     }
 
     @Override
     public ArrayList<Ingredient> getIngredients() {
-        ArrayList<Ingredient> allIngredients = new ArrayList<Ingredient>(cookieComponent.getIngredients());
+        ArrayList<Ingredient> allIngredients = new ArrayList<Ingredient>(partyCookie.getIngredients());
         if(decoratorState.equals(DecoratorState.ADD))
             allIngredients.addAll(this.ingredientsDecorator);
         else
@@ -57,7 +58,7 @@ public abstract class Decorator extends CookieComponent{
 
     @Override
     public CookieSize getCookieSize() {
-        return cookieComponent.getCookieSize();
+        return partyCookie.getCookieSize();
     }
 
 
