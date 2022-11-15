@@ -14,7 +14,7 @@ public class Order extends UpdatableObject {
     protected OrderState orderState;
     protected final Cart cart;
     protected final User user;
-    protected Optional<Discount> discount;
+    protected Discount discount;
     protected double totalPrice;
     protected SmsNotifier smsNotifier;
 
@@ -24,23 +24,20 @@ public class Order extends UpdatableObject {
         this.cart = cart;
         this.orderState = OrderState.PENDING;
         this.user = user;
-        this.discount = Optional.empty();
         this.totalPrice = computeTotalPrice();
         smsNotifier = new SmsNotifier(user);
     }
 
-    private double computeTotalPrice(){
+    private double computeTotalPrice() {
         List<Item> items = this.cart.getItemList();
         double totalPrice = 0;
-        for(Item item : items) {
+        for (Item item : items) {
             Cookie cookie = item.getCookie();
-            double cookiePrice = Math.round(cookie.getPriceByStore(this.cart.getStore()) * 100)/100.0;
+            double cookiePrice = Math.round(cookie.getPriceByStore(this.cart.getStore()) * 100) / 100.0;
             totalPrice += cookiePrice;
         }
-        if(this.discount.isPresent()){
-            Discount discount = this.discount.get();
-            totalPrice-=totalPrice*discount.getValue();
-        }
+        if (discount != null)
+            totalPrice -= totalPrice * discount.getValue();
         return totalPrice;
     }
 
@@ -49,12 +46,12 @@ public class Order extends UpdatableObject {
         this.cart = cart;
         this.orderState = orderState;
         this.user = user;
-        this.discount = Optional.empty();
         smsNotifier = new SmsNotifier(user);
     }
 
     /**
      * Get the current state of th order
+     *
      * @return The current OrderState
      */
     public OrderState getOrderState() {
@@ -64,16 +61,17 @@ public class Order extends UpdatableObject {
     /**
      * Set the state of the order to the given OrderState
      * If the state is set to READY run the UpdatableObject thread
+     *
      * @param state The new state of the order
      */
     public void updateState(OrderState state) {
         this.orderState = state;
 
-        if(orderState == OrderState.READY){
+        if (orderState == OrderState.READY) {
             startTimer();
             smsNotifier.startTimer();
         }
-        if(orderState == OrderState.RETRIEVE){
+        if (orderState == OrderState.RETRIEVE) {
             killCurrentThread();
             smsNotifier.killCurrentThread();
         }
@@ -86,24 +84,26 @@ public class Order extends UpdatableObject {
     @Override
     public void OnTimeReached() {
         this.orderState = OrderState.OBSOLETE;
-        cart.getStore().addToObsoleteOrders(this);
+        if(cart != null) cart.getStore().addToObsoleteOrders(this);
     }
 
     public User getUser() {
         return user;
     }
 
-    public Cart getCart() { return cart;}
-
-    public Optional<Discount> getDiscount() {
-        return discount;
+    public Cart getCart() {
+        return cart;
     }
 
-    public void setDiscount(Optional<Discount> discount) {
+    public Optional<Discount> getDiscount() {
+        return Optional.of(discount);
+    }
+
+    public void setDiscount(Discount discount) {
         this.discount = discount;
     }
 
-    public SmsNotifier getSmsNotifier(){
+    public SmsNotifier getSmsNotifier() {
         return smsNotifier;
     }
 

@@ -57,7 +57,7 @@ public class TimeManagementTest {
         createChef(startingHour, finishingHour);
         createChef(startingHour, finishingHour);
 
-        List<Interval> availableIntervals = user.getAvailableIntervals(user.getCart().getDuration());
+        List<Interval> availableIntervals = user.getAvailableIntervals(user.getCart().getDuration(),0);
         for (Interval interval:availableIntervals){
             Assertions.assertTrue(interval.getStartTime().compareTo(new TimeClock(startingHour,0))>=0&&interval.getEndTime().compareTo(new TimeClock(finishingHour,0))<=0);
             Assertions.assertEquals(duration, interval.getStartTime().timeDifference(interval.getEndTime()));
@@ -85,7 +85,7 @@ public class TimeManagementTest {
         createChef(startingHour, finishingHour);
 
 
-        List<Interval> availableIntervals = user.getAvailableIntervals(user.getCart().getDuration());
+        List<Interval> availableIntervals = user.getAvailableIntervals(user.getCart().getDuration(),0);
         for (Interval interval:availableIntervals){
             Assertions.assertTrue(interval.getStartTime().compareTo(new TimeClock(startingHour,0))>=0&&interval.getEndTime().compareTo(new TimeClock(finishingHour,0))<=0);
             Assertions.assertEquals(durationCompute, interval.getStartTime().timeDifference(interval.getEndTime()));
@@ -113,7 +113,7 @@ public class TimeManagementTest {
         createChef(startingHour, finishingHour);
         createChef(10, 12);
 
-        List<Interval> availableIntervals = user.getAvailableIntervals(user.getCart().getDuration());
+        List<Interval> availableIntervals = user.getAvailableIntervals(user.getCart().getDuration(),0);
 
         for (Interval interval:availableIntervals){
             Assertions.assertTrue(interval.getStartTime().compareTo(new TimeClock(8,0))>=0&&interval.getEndTime().compareTo(new TimeClock(12,0))<=0);
@@ -130,7 +130,7 @@ public class TimeManagementTest {
     public Chef createChef(int start, int end){
         Chef chef=new Chef(user.getStore());
         user.getStore().addChef(chef);
-        List<TimeSlot> timeSlots=chef.getSchedule().getDaySlot().getTimeSlots();
+        List<TimeSlot> timeSlots=chef.getSchedule().getDaySlot(0).getTimeSlots();
         for (TimeSlot timeSlot:timeSlots){
             if(!(timeSlot.getStartTime().compareTo(new TimeClock(start,0))>=0&&timeSlot.getEndTime().compareTo(new TimeClock(end,0))<=0))
                 timeSlot.setReserved(true);

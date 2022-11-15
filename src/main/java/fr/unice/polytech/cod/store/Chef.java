@@ -58,16 +58,16 @@ public class Chef {
      * gives the Available TimeSlots of this Chef
      * @return
      */
-    public List<Interval> getIntervalsAvailable(int minutes){
-        return(this.schedule.getIntervals(minutes));
+    public List<Interval> getIntervalsAvailable(int minutes,int numberOfDaysBeforeTheOrder){
+        return(this.schedule.getIntervals(minutes,numberOfDaysBeforeTheOrder));
     }
 
     public Schedule getSchedule() {
         return schedule;
     }
 
-    public void updateCurrentOrder(TimeClock timeClock){
-        orderToPrepare = schedule.getDaySlot().getOrderToPrepare(timeClock);
+    public void updateCurrentOrder(TimeClock timeClock,int numberOfDaysBeforeTheOrder){
+        orderToPrepare = schedule.getDaySlot(numberOfDaysBeforeTheOrder).getOrderToPrepare(timeClock);
     }
 
     public Optional<Order> getOrderToPrepare() {
