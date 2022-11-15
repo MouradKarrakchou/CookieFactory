@@ -6,7 +6,6 @@ public class Discount {
 
     public Discount(String name, int value) {
         this.name = name;
-
         this.value = value;
     }
 
