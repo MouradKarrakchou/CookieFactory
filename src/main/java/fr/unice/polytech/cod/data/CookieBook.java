@@ -11,7 +11,6 @@ import java.util.List;
 
 public class CookieBook {
     private final List<Cookie> cookies;
-
     private final IngredientCatalog ingredientCatalog = IngredientCatalog.instance;
 
     public CookieBook() {

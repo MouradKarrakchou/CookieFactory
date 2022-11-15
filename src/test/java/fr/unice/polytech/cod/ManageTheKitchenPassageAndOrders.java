@@ -35,7 +35,7 @@ public class ManageTheKitchenPassageAndOrders {
     }
     @And("An order at the state \"([^\"]*)\"$")
     public void an_order_at_the_state(OrderState orderState) {
-        order = new Order(null, orderState, new User(new Cart(),new StoreLocation()));
+        order = new Order(null, orderState, new User(new Cart(),StoreLocation.intance));
         if(orderState == OrderState.READY) chef.associateOrder(order);
     }
 

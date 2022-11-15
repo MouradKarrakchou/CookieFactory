@@ -8,9 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StoreLocation {
-    List<Store> storeList;
-    public StoreLocation(){
-        storeList= new ArrayList<>();
+    private final List<Store> storeList;
+    public static StoreLocation intance = new StoreLocation();
+
+    private StoreLocation(){
+        storeList = new ArrayList<>();
         storeList.add(new Store("Antibes"));
         storeList.add(new Store("Nice"));
         storeList.add(new Store("Sophia"));

@@ -25,7 +25,7 @@ public class User {
 
     private Optional<FidelityAccount> _subscription;
 
-    public User(Cart cart, StoreLocation storeLocation) {
+    public User(Cart cart, StoreLocation storeLocation) {  //TODO enlever du constructeur le cart
         this.cart = cart;
         this.userOrders = new ArrayList<>();
         this.storeLocation = storeLocation;

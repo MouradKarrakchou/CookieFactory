@@ -25,16 +25,13 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class TimeManagementTest {
-    private StoreLocation storeLocation;
     private User user;
-
-
     private final IngredientCatalog ingredientCatalog = IngredientCatalog.instance;
+    private final StoreLocation storeLocation = StoreLocation.intance;
 
 
     @BeforeEach
     public void init() throws InvalidStoreException {
-        this.storeLocation=new StoreLocation();
         this.user = new User(new Cart(),storeLocation);
         this.user.selectStore("Antibes");
         for (int i = 0; i <100; i++)

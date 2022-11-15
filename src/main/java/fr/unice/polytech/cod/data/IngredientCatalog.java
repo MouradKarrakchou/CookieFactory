@@ -53,7 +53,7 @@ public class IngredientCatalog {
     public Dough getDough(String doughName) {
         for (Ingredient ingredient : this.ingredientList){
             if(ingredient.getName().equals(doughName))
-                return (Dough) ingredient;
+                return new Dough(ingredient.getName(),ingredient.getPrice(), ingredient.getQuantity());
         }
         return null;
     }
@@ -67,7 +67,7 @@ public class IngredientCatalog {
     public Flavour getFlavour(String flavourName) {
         for (Ingredient ingredient : this.ingredientList){
             if(ingredient.getName().equals(flavourName))
-                return (Flavour) ingredient;
+                return new Flavour(ingredient.getName(),ingredient.getPrice(), ingredient.getQuantity());
         }
         return null;
     }
@@ -81,7 +81,7 @@ public class IngredientCatalog {
     public Topping getTopping(String toppingName) {
         for (Ingredient ingredient : this.ingredientList){
             if(ingredient.getName().equals(toppingName))
-                return (Topping) ingredient;
+                return new Topping(ingredient.getName(),ingredient.getPrice(), ingredient.getQuantity());
         }
         return null;
     }
