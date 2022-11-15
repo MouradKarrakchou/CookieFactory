@@ -293,7 +293,7 @@ public class CartManagementStepDef {
 
     @When("the manager changes the opening time of the store from {int} to {int}")
     public void theManagerChangesTheOpeningTimeOfTheStoreFromTo(int startingHour, int endHour) {
-        this.storeManager.changeOpenningHour(new TimeClock(startingHour,0),new TimeClock(endHour,0));
+        this.storeManager.changeOpeningHour(new TimeClock(startingHour,0),new TimeClock(endHour,0));
     }
 
     @Then("the schedule of the employees start from {int} to {int}")
