@@ -1,6 +1,7 @@
 package fr.unice.polytech.cod.store;
 
 import fr.unice.polytech.cod.data.CookieBook;
+import fr.unice.polytech.cod.decorator_pattern.PartyCookie;
 import fr.unice.polytech.cod.food.ingredient.Ingredient;
 import fr.unice.polytech.cod.helper.UpdatableObject;
 import fr.unice.polytech.cod.order.Bill;
@@ -26,11 +27,12 @@ public class Store extends UpdatableObject {
     public TimeClock openHour=new TimeClock(8,0);
     public TimeClock closeHour=new TimeClock(18,0);
     StoreManager storeManager;
+    PartyCookieStoreManager partyCookieStoreManager;
 
     public Store(String name) {
         super(3*60*60*1000); //3 hours
         this.name=name;
-        listChef=new ArrayList<>();
+        this.listChef=new ArrayList<>();
         this.orderList = new ArrayList<>();
         this.obsoleteOrders = new ArrayList<>();
         this.surpriseBaskets = new ArrayList<>();
@@ -38,6 +40,7 @@ public class Store extends UpdatableObject {
         this.stock = new Stock();
         listChef.add(new Chef(this));
         this.cookieBook = new CookieBook();
+        this.partyCookieStoreManager = new PartyCookieStoreManager();
 
         for(Ingredient ingredient : stock.getIngredients()) {
             taxes.put(ingredient, 0.0);
@@ -208,6 +211,14 @@ public class Store extends UpdatableObject {
     }
 
     private void updateTaxe() {
+    }
+
+    public boolean hasPartyChef() {
+        return this.partyCookieStoreManager.hasPartyChef();
+    }
+
+    public ArrayList<PartyCookie> getPartyCookies() {
+        return this.partyCookieStoreManager.getPartyCookies();
     }
 }
 

@@ -1,7 +1,7 @@
 package unitTest;
 
-import fr.unice.polytech.cod.decorator_pattern.BirthdayCookie;
-import fr.unice.polytech.cod.decorator_pattern.CookieComponent;
+import fr.unice.polytech.cod.decorator_pattern.PartyCookie;
+import fr.unice.polytech.cod.decorator_pattern.PartyRecipe;
 import fr.unice.polytech.cod.decorator_pattern.decorator.*;
 import fr.unice.polytech.cod.food.ingredient.*;
 import org.junit.jupiter.api.Assertions;
@@ -17,9 +17,9 @@ public class PartyCookieTest {
 
     @Test
     public void toppingDecoratorPatternTest(){
-        CookieComponent myCookie = new BirthdayCookie();
+        PartyCookie myCookie = PartyRecipe.birthdayPartyCookie;
         Topping chocoTopping = new Topping("chocolate", 2,5);
-        CookieComponent myCustomBirthdayCookie = new ToppingDecorator(myCookie, Decorator.DecoratorState.ADD,chocoTopping);
+        PartyCookie myCustomBirthdayCookie = new ToppingDecorator(myCookie, Decorator.DecoratorState.ADD,chocoTopping);
 
         ArrayList<Ingredient> testList = new ArrayList<>(copyOf(myCookie.getIngredients()));
         testList.add(chocoTopping);
@@ -31,9 +31,9 @@ public class PartyCookieTest {
     }
     @Test
     public void cookingDecoratorPatternTest(){
-        CookieComponent myCookie = new BirthdayCookie();
+        PartyCookie myCookie = PartyRecipe.birthdayPartyCookie;
         Cooking cooking = new Cooking(Cooking.CookingState.CHEWY);
-        CookieComponent myCustomBirthdayCookie = new CookingDecorator(myCookie, cooking);
+        PartyCookie myCustomBirthdayCookie = new CookingDecorator(myCookie, cooking);
 
         Assertions.assertEquals(myCookie.getPrice(), myCustomBirthdayCookie.getPrice());
         Assertions.assertEquals(myCookie.getName(), myCustomBirthdayCookie.getName());
@@ -41,7 +41,7 @@ public class PartyCookieTest {
         Assertions.assertEquals(myCookie.getCookieSize(), myCustomBirthdayCookie.getCookieSize());
 
         Cooking cooking2 = new Cooking(Cooking.CookingState.CRUNCHY);
-        CookieComponent myCustomBirthdayCookie2 = new CookingDecorator(myCustomBirthdayCookie, cooking2);
+        PartyCookie myCustomBirthdayCookie2 = new CookingDecorator(myCustomBirthdayCookie, cooking2);
 
         ArrayList<Ingredient> testList = new ArrayList<>(copyOf(myCookie.getIngredients()));
         for(int i = 0 ; i < testList.size() ; i++){
@@ -57,9 +57,9 @@ public class PartyCookieTest {
 
     @Test
     public void mixDecoratorPatternTest(){
-        CookieComponent myCookie = new BirthdayCookie();
+        PartyCookie myCookie = PartyRecipe.birthdayPartyCookie;
         Mix mix = new Mix(Mix.MixState.MIXED);
-        CookieComponent myCustomBirtdayCookie = new MixDecorator(myCookie, mix);
+        PartyCookie myCustomBirtdayCookie = new MixDecorator(myCookie, mix);
 
         Assertions.assertEquals(myCookie.getPrice(), myCustomBirtdayCookie.getPrice());
         Assertions.assertEquals(myCookie.getName(), myCustomBirtdayCookie.getName());
@@ -67,7 +67,7 @@ public class PartyCookieTest {
         Assertions.assertEquals(myCookie.getCookieSize(), myCustomBirtdayCookie.getCookieSize());
 
         Mix mix2 = new Mix(Mix.MixState.TOPPED);
-        CookieComponent myCustomBirthdayCookie2 = new MixDecorator(myCustomBirtdayCookie, mix2);
+        PartyCookie myCustomBirthdayCookie2 = new MixDecorator(myCustomBirtdayCookie, mix2);
 
         ArrayList<Ingredient> testList = new ArrayList<>(copyOf(myCookie.getIngredients()));
         for(int i = 0 ; i < testList.size() ; i++){
@@ -83,9 +83,9 @@ public class PartyCookieTest {
 
     @Test
     public void flavourDecoratorPatternTest(){
-        CookieComponent myCookie = new BirthdayCookie();
+        PartyCookie myCookie = PartyRecipe.birthdayPartyCookie;
         Flavour flavour = new Flavour("chocolate", 12, 5);
-        CookieComponent myCustomBirtdayCookie = new FlavourDecorator(myCookie, flavour, Decorator.DecoratorState.ADD);
+        PartyCookie myCustomBirtdayCookie = new FlavourDecorator(myCookie, flavour, Decorator.DecoratorState.ADD);
 
         ArrayList<Ingredient> testList = new ArrayList<>(copyOf(myCookie.getIngredients()));
         testList.add(flavour);

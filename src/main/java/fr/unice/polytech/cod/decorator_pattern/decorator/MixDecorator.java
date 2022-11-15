@@ -1,6 +1,6 @@
 package fr.unice.polytech.cod.decorator_pattern.decorator;
 
-import fr.unice.polytech.cod.decorator_pattern.CookieComponent;
+import fr.unice.polytech.cod.decorator_pattern.PartyCookie;
 import fr.unice.polytech.cod.food.ingredient.Ingredient;
 import fr.unice.polytech.cod.food.ingredient.Mix;
 
@@ -11,20 +11,20 @@ public class MixDecorator extends Decorator{
     protected Mix lastMix;
 
 
-    public MixDecorator(CookieComponent cookieComponent, Mix mix) {
-        super(cookieComponent, DecoratorState.ADD);
+    public MixDecorator(PartyCookie partyCookie, Mix mix) {
+        super(partyCookie, DecoratorState.ADD);
         this.mix = mix;
         this.lastMix = (Mix) super.getIngredients().get(getLastMixIndex());
     }
 
     @Override
     public String getName() {
-        return cookieComponent.getName().replaceAll("\\b"+this.lastMix.getName()+"\\b", this.mix.getName());
+        return partyCookie.getName().replaceAll("\\b"+this.lastMix.getName()+"\\b", this.mix.getName());
     }
 
     @Override
     public double getPrice() {
-        return cookieComponent.getPrice() - this.lastMix.getPrice() + this.mix.getPrice();
+        return partyCookie.getPrice() - this.lastMix.getPrice() + this.mix.getPrice();
     }
 
     @Override

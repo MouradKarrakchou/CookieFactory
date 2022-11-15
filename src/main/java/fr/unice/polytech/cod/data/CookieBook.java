@@ -56,6 +56,9 @@ public class CookieBook {
             if (store.hasEnoughIngredients(cookie.getIngredients()))
                 cookieAvailable.add(cookie);
         }
+        if(store.hasPartyChef()){
+            cookieAvailable.addAll(store.getPartyCookies());
+        }
         return cookieAvailable;
     }
 
