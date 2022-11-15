@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 public class SpecialChef extends Chef{
-    List
     public SpecialChef(Store store) {
         super(store);
     }

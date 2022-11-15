@@ -14,9 +14,11 @@ public class BrandManager {
         this.storeLocation.addCookieStore(cookie, store);
     }
 
-    public StoreLocation getStoreManager() {
+    public StoreLocation getStoreLocation() {
         return this.storeLocation;
+    }
+
     public void removeCookie(Cookie cookie, String store) throws Exception{
-        this.storeManager.removeCookieStore(cookie, store);
+        this.storeLocation.removeCookieStore(cookie, store);
     }
 }
