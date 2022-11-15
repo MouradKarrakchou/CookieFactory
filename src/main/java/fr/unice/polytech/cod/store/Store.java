@@ -1,6 +1,7 @@
 package fr.unice.polytech.cod.store;
 
 import fr.unice.polytech.cod.data.CookieBook;
+import fr.unice.polytech.cod.food.Cookie;
 import fr.unice.polytech.cod.food.ingredient.Ingredient;
 import fr.unice.polytech.cod.helper.UpdatableObject;
 import fr.unice.polytech.cod.order.Bill;
@@ -208,6 +209,18 @@ public class Store extends UpdatableObject {
     }
 
     private void updateTaxe() {
+    }
+
+    /**
+     * Return the available cookies based on the stock of the store
+     * @return The list of available cookies
+     */
+    public List<Cookie> getAvailableCookie() {
+        List<Cookie> cookieAvailable = new ArrayList<>();
+        cookieBook.getCookies().stream()
+                .filter(cookie -> hasEnoughIngredients(cookie.getIngredients()))
+                .forEach(cookieAvailable::add);
+        return cookieAvailable;
     }
 }
 
