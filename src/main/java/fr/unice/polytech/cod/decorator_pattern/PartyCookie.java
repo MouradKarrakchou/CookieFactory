@@ -1,38 +1,15 @@
 package fr.unice.polytech.cod.decorator_pattern;
 
 import fr.unice.polytech.cod.food.Cookie;
-import fr.unice.polytech.cod.food.ingredient.*;
+import fr.unice.polytech.cod.food.ingredient.Ingredient;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class PartyCookie extends Cookie {
-    public enum CookieSize {
-        L , XL, XXL
-    }
-    protected String name;
-    protected double price;
-    protected ArrayList<Ingredient> ingredients;
-    protected CookieSize cookieSize;
-
-    public PartyCookie(Cookie cookie, CookieSize cookieSize) {
-        super(cookie);
-        this.cookieSize = cookieSize;
-    }
-
-    public String getName() {
-        return name;
-    }
-    public double getPrice() {
-        return price;
-    }
-    public ArrayList<Ingredient> getPartyCookieIngredients() {
-        return ingredients;
-    }
-
-    public CookieSize getCookieSize() {
-        return cookieSize;
-    }
+public class PartyCookie extends PartyCookieComponent {
+       public PartyCookie(Cookie cookie, CookieSize cookieSize) {
+            super.cookie = cookie;
+            super.cookieSize = cookieSize;
+       }
 
     @Override
     public String toString() {

@@ -2,10 +2,8 @@ package fr.unice.polytech.cod.food;
 
 import fr.unice.polytech.cod.food.ingredient.*;
 import fr.unice.polytech.cod.store.Store;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+
+import java.util.*;
 
 public class Cookie {
     protected final String name;
@@ -52,6 +50,11 @@ public class Cookie {
         return ingredients;
     }
 
+    public ArrayList<Ingredient> getIngredientsList() {
+       return new ArrayList<>(getIngredients().stream().toList());
+    }
+
+
     public String getName() {
         return name;
     }
@@ -75,6 +78,15 @@ public class Cookie {
         if(!toppingList.isEmpty()) {
             for(Topping topping : toppingList)
                 price += topping.getQuantity() * topping.getPrice() +taxes.get(topping);
+        }
+        return price;
+    }
+
+    public double getPriceHT(){
+        double price = dough.getQuantity() * dough.getPrice();
+        if(!toppingList.isEmpty()) {
+            for(Topping topping : toppingList)
+                price += topping.getQuantity() * topping.getPrice();
         }
         return price;
     }

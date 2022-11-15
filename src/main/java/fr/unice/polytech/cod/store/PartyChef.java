@@ -1,17 +1,17 @@
 package fr.unice.polytech.cod.store;
 
-import fr.unice.polytech.cod.decorator_pattern.PartyCookie;
+import fr.unice.polytech.cod.decorator_pattern.PartyCookieComponent;
 
 import java.util.ArrayList;
 
 public class PartyChef extends Chef{
-    ArrayList<PartyCookie> cookieRecipes;
+    ArrayList<PartyCookieComponent> cookieRecipes;
     public PartyChef(Store store) {
         super(store);
         this.cookieRecipes = new ArrayList<>();
     }
 
-    public ArrayList<PartyCookie> getRecipes() {
+    public ArrayList<PartyCookieComponent> getRecipes() {
         return this.cookieRecipes;
     }
 }
