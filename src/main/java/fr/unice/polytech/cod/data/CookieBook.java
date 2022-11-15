@@ -4,14 +4,12 @@ import fr.unice.polytech.cod.food.Cookie;
 import fr.unice.polytech.cod.food.ingredient.Cooking;
 import fr.unice.polytech.cod.food.ingredient.Ingredient;
 import fr.unice.polytech.cod.food.ingredient.Mix;
-import fr.unice.polytech.cod.store.Store;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CookieBook {
     private final List<Cookie> cookies;
-
     private final IngredientCatalog ingredientCatalog = IngredientCatalog.instance;
 
     public CookieBook() {
@@ -45,21 +43,8 @@ public class CookieBook {
     }
 
     /**
-     * Return the available cookies depend on the stock from the store
-     * @param store The store to check the availability
-     * @return The list of available cookies
-     */
-    public List<Cookie> getAvailableCookie(Store store) {
-        List<Cookie> cookieAvailable = new ArrayList<>();
-        for (Cookie cookie : cookies) {
-            if (store.hasEnoughIngredients(cookie.getIngredients()))
-                cookieAvailable.add(cookie);
-        }
-        return cookieAvailable;
-    }
-
-    /**
      * Find a Dough with a cookie name in the book
+     *
      * @param cookieName The name of the cookie
      * @return The Cookie with the given name
      */
@@ -74,6 +59,7 @@ public class CookieBook {
 
     /**
      * Add a cookie to the cookie book if it's not in the book and all the ingredients are in the catalog
+     *
      * @param cookie The given cookie
      */
     public void addCookieRecipe(Cookie cookie) throws Exception {
@@ -90,6 +76,7 @@ public class CookieBook {
 
     /**
      * Remove a cookie to the cookie book
+     *
      * @param cookieToRemove Yhe given cookie
      */
     public void removeCookieRecipe(Cookie cookieToRemove) {

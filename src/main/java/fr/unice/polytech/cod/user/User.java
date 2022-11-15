@@ -1,6 +1,5 @@
 package fr.unice.polytech.cod.user;
 
-import fr.unice.polytech.cod.data.CookieBook;
 import fr.unice.polytech.cod.food.Item;
 import fr.unice.polytech.cod.helper.Display;
 import fr.unice.polytech.cod.food.Cookie;
@@ -19,10 +18,9 @@ import java.time.Instant;
 import java.util.*;
 
 public class User {
-    private Cart cart;
-    private List<Order> userOrders;
-    private StoreLocation storeLocation;
-
+    private final Cart cart;
+    private final List<Order> userOrders;
+    private final StoreLocation storeLocation;
     private Optional<FidelityAccount> _subscription;
 
     public User(Cart cart, StoreLocation storeLocation) {
@@ -33,12 +31,11 @@ public class User {
     }
 
     /**
-     * return the list of available cookies based on the store
+     * Return the list of available cookies based on the store
      */
     public List<Cookie> viewCatalog() {
-        return cart.getStore().getCookieBook().getAvailableCookie(this.cart.getStore());
+        return cart.getStore().getAvailableCookie();
     }
-
 
     /**
      * Add cookies to cart
@@ -160,33 +157,34 @@ public class User {
     }
 
     public boolean cancelOrder(Order order) {
-        if(userOrders.contains(order) && order.getOrderState().equals(OrderState.PENDING)) {
+        if (userOrders.contains(order) && order.getOrderState().equals(OrderState.PENDING)) {
             cart.cancelOrder(order);
             return true; //Your order has been canceled
-        }
-        else
+        } else
             return false; //Your order is already in progress. You cannot canceled it
     }
 
     /**
      * This simulates a sms send to the user
+     *
      * @param message The message send to the user.
      */
-    public void notify(String message){
-        if(_subscription.isPresent()) Display.smsOk(_subscription.get().getName(), message);
+    public void notify(String message) {
+        if (_subscription.isPresent()) Display.smsOk(_subscription.get().getName(), message);
         else Display.smsNok("Anonymous account.");
     }
 
     /**
      * View all the stores that offer surprise baskets and their surprise baskets
+     *
      * @return HashMap of stores and list of surprise baskets
      */
     private Map<Store, List<SurpriseBasket>> viewSurpriseBasket() {
         Map<Store, List<SurpriseBasket>> storeSurpriseBasketMap = new HashMap<>();
         List<Store> storeList = storeLocation.getStoreList();
-        for(Store store : storeList) {
+        for (Store store : storeList) {
             List<SurpriseBasket> surpriseBaskets = store.getSurpriseBaskets();
-            if(!surpriseBaskets.isEmpty())
+            if (!surpriseBaskets.isEmpty())
                 storeSurpriseBasketMap.put(store, surpriseBaskets);
         }
         return storeSurpriseBasketMap;
@@ -194,10 +192,17 @@ public class User {
 
     /**
      * Allow the user to see the description of a given surpriseBasket
+     *
      * @param surpriseBasket of which the user wants to see the description
      * @return a bill containing the description and the price
      */
     private Bill viewSurpriseBasketDescription(SurpriseBasket surpriseBasket) {
         return surpriseBasket.getDescription();
+    }
+
+    public List<Order> getHistory() throws Exception{
+        if (this._subscription.isPresent())
+            return this._subscription.get().getRetrieveOrder();
+         throw new Exception("Your not subscribe to a fidelity account");
     }
 }
