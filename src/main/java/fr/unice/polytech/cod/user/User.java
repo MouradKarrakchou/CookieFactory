@@ -200,4 +200,10 @@ public class User {
     private Bill viewSurpriseBasketDescription(SurpriseBasket surpriseBasket) {
         return surpriseBasket.getDescription();
     }
+
+    public List<Order> getHistory() throws Exception{
+        if (this._subscription.isPresent())
+            return this._subscription.get().getRetrieveOrder();
+         throw new Exception("Your not subscribe to a fidelity account");
+    }
 }
