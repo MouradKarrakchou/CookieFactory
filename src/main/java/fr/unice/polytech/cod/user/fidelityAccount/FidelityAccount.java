@@ -3,9 +3,11 @@ package fr.unice.polytech.cod.user.fidelityAccount;
 import fr.unice.polytech.cod.food.Item;
 import fr.unice.polytech.cod.helper.Display;
 import fr.unice.polytech.cod.order.Order;
+import fr.unice.polytech.cod.order.OrderState;
 import fr.unice.polytech.cod.schedule.TimeClock;
 import fr.unice.polytech.cod.store.MailNotifier;
 import fr.unice.polytech.cod.store.Store;
+import org.mockito.internal.matchers.Or;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,5 +86,10 @@ public class FidelityAccount {
 
     public void notify(String message) {
         Display.mailNotifier(message);
+    }
+
+    public List<Order> getRetrieveOrder(){
+        return orderList.stream().filter(
+                order -> order.getOrderState().equals(OrderState.RETRIEVE)).toList();
     }
 }

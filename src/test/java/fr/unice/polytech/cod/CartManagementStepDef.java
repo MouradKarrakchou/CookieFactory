@@ -22,6 +22,7 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.mockito.internal.matchers.Or;
 
 import java.util.*;
 
@@ -40,8 +41,10 @@ public class CartManagementStepDef {
     List<Interval> availableIntervals;
     Order pendingOrder;
     Order inProgressOrder;
+    Order retrieveOrder;
     Store store;
     StoreManager storeManager;
+    List<Order> historic;
 
     private final IngredientCatalog ingredientCatalog = IngredientCatalog.instance;
 
@@ -202,7 +205,7 @@ public class CartManagementStepDef {
     public void anEmployeeWithDisponibilityOnlyFromTo(int startingHour, int finishingHour) {
         Chef chef=new Chef(store);
         store.addChef(chef);
-        List<TimeSlot> timeSlots=chef.getSchedule().getDaySlot().getTimeSlots();
+        List<TimeSlot> timeSlots=chef.getSchedule().getDaySlot(0).getTimeSlots();
         for (TimeSlot timeSlot:timeSlots){
             if(!(timeSlot.getStartTime().compareTo(new TimeClock(startingHour,0))>=0&&timeSlot.getEndTime().compareTo(new TimeClock(finishingHour,0))<=0))
                 timeSlot.setReserved(true);
@@ -214,7 +217,7 @@ public class CartManagementStepDef {
     }
     @When("a user ask for {int} minute intervals possible")
     public void aUserAskForMinuteIntervalsPossible() {
-        availableIntervals=user.getAvailableIntervals(cart.getDuration());
+        availableIntervals=user.getAvailableIntervals(cart.getDuration(),0);
     }
 
     @Then("he gets only intervals starting and finishing in the {int} to {int} time period with a {int} minute duration")
@@ -304,16 +307,36 @@ public class CartManagementStepDef {
 
     @When("the manager changes the opening time of the store from {int} to {int}")
     public void theManagerChangesTheOpeningTimeOfTheStoreFromTo(int startingHour, int endHour) {
-        this.storeManager.changeOpenningHour(new TimeClock(startingHour,0),new TimeClock(endHour,0));
+        this.storeManager.changeOpeningHour(new TimeClock(startingHour,0),new TimeClock(endHour,0));
     }
 
     @Then("the schedule of the employees start from {int} to {int}")
     public void theScheduleOfTheEmployeesStartFromTo(int startingHour, int endHour) {
         for(Chef chef:store.getListChef()){
-            List<TimeSlot> timeSlots=chef.getSchedule().getDaySlot().getTimeSlots();
+            List<TimeSlot> timeSlots=chef.getSchedule().getDaySlot(0).getTimeSlots();
             assertEquals(0,timeSlots.get(0).getStartTime().compareTo(new TimeClock(startingHour,0)));
             assertEquals(0,timeSlots.get(timeSlots.size()-1).getStartTime().compareTo(new TimeClock(endHour,0)));
 
         }
     }
+
+
+    //A client can check his last orders
+
+    @Given("past orders")
+    public void past_orders() {
+        retrieveOrder = new Order(user.getCart(),OrderState.RETRIEVE,user);
+    }
+    @When("a client ask for his history")
+    public void a_client_ask_for_his_history() throws Exception {
+        user.subscribeToFidelityAccount("name","email","pw");
+        user.getSubscription().get().addOrder(retrieveOrder);
+
+        historic = user.getHistory();
+    }
+    @Then("he gets all his past orders")
+    public void he_gets_all_his_past_orders() {
+        assertEquals(1, historic.size());
+    }
+
 }
