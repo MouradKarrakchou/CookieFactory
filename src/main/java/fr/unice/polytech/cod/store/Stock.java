@@ -78,6 +78,7 @@ public class Stock {
      * @param ingredients - The ingredient to add in the stock.
      */
     public void addStockList(List<Ingredient> ingredients) {
+
         for (Ingredient ingredient : ingredients) {
             this.addStock(ingredient);
         }

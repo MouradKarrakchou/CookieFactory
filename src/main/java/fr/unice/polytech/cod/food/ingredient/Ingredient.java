@@ -60,7 +60,7 @@ public class Ingredient {
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, price, quantity);
+        return Objects.hash(name, price);
     }
 
     @Override

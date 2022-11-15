@@ -23,9 +23,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.Assert.*;
 
@@ -59,8 +57,11 @@ public class CartManagementStepDef {
     public void the_antibes_store(String name) throws InvalidStoreException {
         user.selectStore(name);
         this.store=user.getStore();
+        Map<Ingredient, Double> taxesValues = new HashMap<>();
+        for(Ingredient ingredient : ingredientCatalog.getIngredientList())
+            taxesValues.put(ingredient, 3.0);
         for (int i =0; i <100; i++)
-            store.fillStock(ingredientCatalog.getIngredientList());
+            store.fillStock(ingredientCatalog.getIngredientList(), taxesValues);
     }
     @Given("a valid cookie")
     public void a_valid_cookie() {
@@ -203,7 +204,7 @@ public class CartManagementStepDef {
     public void anEmployeeWithDisponibilityOnlyFromTo(int startingHour, int finishingHour) {
         Chef chef=new Chef(store);
         store.addChef(chef);
-        List<TimeSlot> timeSlots=chef.getSchedule().getDaySlot().getTimeSlots();
+        List<TimeSlot> timeSlots=chef.getSchedule().getDaySlot(0).getTimeSlots();
         for (TimeSlot timeSlot:timeSlots){
             if(!(timeSlot.getStartTime().compareTo(new TimeClock(startingHour,0))>=0&&timeSlot.getEndTime().compareTo(new TimeClock(finishingHour,0))<=0))
                 timeSlot.setReserved(true);
@@ -215,7 +216,7 @@ public class CartManagementStepDef {
     }
     @When("a user ask for {int} minute intervals possible")
     public void aUserAskForMinuteIntervalsPossible() {
-        availableIntervals=user.getAvailableIntervals(cart.getDuration());
+        availableIntervals=user.getAvailableIntervals(cart.getDuration(),0);
     }
 
     @Then("he gets only intervals starting and finishing in the {int} to {int} time period with a {int} minute duration")
@@ -254,6 +255,16 @@ public class CartManagementStepDef {
 
     @Given("an order at the state \"([^\"]*)\"$")
     public void an_order_at_the_state(OrderState state) {
+        Dough dough = new Dough("DoughName", 1, 2);
+        Cookie cookie = new Cookie("CookieName", dough, null, new ArrayList<>(), null, null, 1);
+        Item item = new Item(cookie, 1);
+        List<Ingredient> ingredients = new ArrayList<>();
+        ingredients.add(dough);
+        Map<Ingredient, Double> taxes = new HashMap<>();
+        taxes.put(dough, 5.0);
+        cart.getStore().fillStock(ingredients, taxes);
+        cart.getItemList().clear();
+        cart.getItemList().add(item);
         pendingOrder = new Order(cart, user);
         inProgressOrder = new Order(cart, user);
         user.getOrders().add(pendingOrder);
@@ -301,7 +312,7 @@ public class CartManagementStepDef {
     @Then("the schedule of the employees start from {int} to {int}")
     public void theScheduleOfTheEmployeesStartFromTo(int startingHour, int endHour) {
         for(Chef chef:store.getListChef()){
-            List<TimeSlot> timeSlots=chef.getSchedule().getDaySlot().getTimeSlots();
+            List<TimeSlot> timeSlots=chef.getSchedule().getDaySlot(0).getTimeSlots();
             assertEquals(0,timeSlots.get(0).getStartTime().compareTo(new TimeClock(startingHour,0)));
             assertEquals(0,timeSlots.get(timeSlots.size()-1).getStartTime().compareTo(new TimeClock(endHour,0)));
 
