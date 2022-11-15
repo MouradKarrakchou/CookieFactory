@@ -8,14 +8,13 @@ import java.util.Map;
 import java.util.Set;
 
 public class Cookie {
-    private final String name;
-    private final Dough dough;
-    private final Flavour flavour;
-    private final List<Topping> toppingList;
-    Mix mix;
-    Cooking cooking;
-
-    private final int preparationTime; // In minutes
+    protected final String name;
+    protected final Dough dough;
+    protected final Flavour flavour;
+    protected final List<Topping> toppingList; // TODO : Maybe topping should be represented as a set
+    protected final Mix mix;
+    protected final Cooking cooking;
+    private final int preparationTime; // en minutes
 
     public Cookie(String cookieName, Dough dough, Flavour flavour, List<Topping> toppingList, Mix mix, Cooking cooking, int preparationTime) {
         this.name = cookieName;
@@ -27,8 +26,21 @@ public class Cookie {
         this.preparationTime = preparationTime;
     }
 
+    public Cookie(Cookie cookie) {
+        this(cookie.getName(), cookie.getDough(), cookie.getFlavour(), cookie.getToppingList(), cookie.getMix(), cookie.getCooking(), cookie.getPreparationTime());
+    }
+
+    private Cooking getCooking() {
+        return this.cooking;
+    }
+
+    private Mix getMix() {
+        return this.mix;
+    }
+
     /**
      * Give the set of all ingredients needed to produce one cookie base on its recipe.
+     *
      * @return The set of all ingredients needed.
      */
     public Set<Ingredient> getIngredients() {
@@ -50,6 +62,10 @@ public class Cookie {
 
     public Flavour getFlavour() {
         return flavour;
+    }
+
+    public List<Topping> getToppingList() {
+        return toppingList;
     }
 
     public double getPriceByStore(Store store) {

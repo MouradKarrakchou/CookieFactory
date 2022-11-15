@@ -35,7 +35,7 @@ public class ManageTheKitchenPassageAndOrders {
     }
     @And("An order at the state \"([^\"]*)\"$")
     public void an_order_at_the_state(OrderState orderState) {
-        order = new Order(null, orderState, new User(new Cart(),new StoreLocation()));
+        order = new Order(null, orderState, new User(new Cart(),StoreLocation.intance));
         if(orderState == OrderState.READY) chef.associateOrder(order);
     }
 
@@ -63,5 +63,21 @@ public class ManageTheKitchenPassageAndOrders {
     @When("client retrieve his order")
     public void client_retrieve_his_order() throws  Exception{
         this.store.retrieveOrder(bill);
+    }
+
+
+    @And("the chef is asking for work")
+    public void theChefIsAskingForWork() throws Exception {
+        chef.startWork();
+    }
+
+    @Then("the state of the chef should be \"([^\"]*)\"$")
+    public void theStateOfTheChefShouldBe(ChefState chefState) {
+        assertEquals(ChefState.UNAVAILABLE, chefState);
+    }
+
+    @When("the chef terminate his current order")
+    public void theChefTerminateHisCurrentOrder() {
+        chef.terminateCurrentOrder();
     }
 }

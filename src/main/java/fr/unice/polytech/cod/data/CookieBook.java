@@ -43,6 +43,24 @@ public class CookieBook {
     }
 
     /**
+     * return the availables cookies depend from the store
+     *
+     * @param store
+     * @return a list of cookies
+     */
+    public List<Cookie> getAvailableCookie(Store store) {
+        List<Cookie> cookieAvailable = new ArrayList<>();
+        for (Cookie cookie : cookies) {
+            if (store.hasEnoughIngredients(cookie.getIngredients()))
+                cookieAvailable.add(cookie);
+        }
+        if(store.hasPartyChef()){
+            cookieAvailable.addAll(store.getPartyCookies());
+        }
+        return cookieAvailable;
+    }
+
+    /**
      * Find a Dough with a cookie name in the book
      *
      * @param cookieName The name of the cookie
