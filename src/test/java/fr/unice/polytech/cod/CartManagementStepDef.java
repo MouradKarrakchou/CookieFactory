@@ -22,7 +22,6 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.junit.jupiter.api.Assertions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,14 +58,14 @@ public class CartManagementStepDef {
         user.selectStore(name);
         this.store=user.getStore();
         for (int i =0; i <100; i++)
-            store.getStock().addStockList(ingredientCatalog.getIngredientList());
+            store.fillStock(ingredientCatalog.getIngredientList());
     }
     @Given("a valid cookie")
     public void a_valid_cookie() {
         testCookie = new CookieBook().getCookie("Cookie au chocolat");
     }
     @Given("a fidelity account")
-    public void a_fidelity_account() throws InvalidStoreException {
+    public void a_fidelity_account() {
         user.subscribeToFidelityAccount("name", "email", "password");
     }
 
@@ -83,7 +82,6 @@ public class CartManagementStepDef {
 
     @When("he remove a cookie from his cart")
     public void he_remove_a_cookie_from_his_cart() throws Exception {
-        List<Item> allItems =  user.getAllItemsFromCart();
         Item item = user.getItemFromCart("Cookie au chocolat");
         user.removeOneItemFromCart(item);
     }
@@ -114,13 +112,13 @@ public class CartManagementStepDef {
         user.subscribeToFidelityAccount(name, email, password);
     }
     @When("he order {int} cookies")
-    public void he_order_cookies(int numberOfCookies) throws InvalidStoreException {
+    public void he_order_cookies(int numberOfCookies) {
         user.chooseCookies(testCookie, numberOfCookies);
     }
 
     @Then("the bill is created")
-    public void the_bill_is_created() throws InvalidStoreException {
-       assertTrue(bill != null);
+    public void the_bill_is_created() {
+        assertNotNull(bill);
     }
     @Then("he take advantage of our loyalty program")
     public void he_take_advantage_of_our_loyalty_program() {
@@ -129,21 +127,20 @@ public class CartManagementStepDef {
 
     @Then("an InvalidStoreException is triggered")
     public void an_invalid_store_exception_is_triggered() {
-        assertTrue(this.exception!=null);
-        if (this.exception!=null)
-            assertTrue(this.exception instanceof InvalidStoreException);
+        assertNotNull(this.exception);
+        assertTrue(this.exception instanceof InvalidStoreException);
     }
     @Then("the right store is selected in the cart")
     public void the_right_store_is_selected_in_the_cart() {
-        Assertions.assertTrue(user.getCart().getStore().getName().equals("Antibes"));
+        assertEquals("Antibes", user.getCart().getStore().getName());
     }
     @Then("his order is created")
     public void his_order_is_created(){
-        Assertions.assertEquals(1, user.getOrders().size());
-        Assertions.assertEquals(1, cart.getStore().getOrderList().size());
+        assertEquals(1, user.getOrders().size());
+        assertEquals(1, cart.getStore().getOrderList().size());
         Stock stock = cart.getStore().getStock();
         Optional<Ingredient> ingredient = stock.findIngredientInStock(new Dough("Pate verte", 25, 30));
-        Assertions.assertEquals(0, ingredient.get().getQuantity());
+        assertEquals(0, ingredient.get().getQuantity());
     }
     @Then("he receive the entire list")
     public void he_receive_the_entire_list() {
@@ -223,7 +220,7 @@ public class CartManagementStepDef {
     public void heGetsOnlyIntervalsStartingAndFinishingInTheToTimePeriodWithAMinuteDuration(int startingHour, int finishingHour,int duration) {
         for (Interval interval:availableIntervals){
             assertTrue(interval.getStartTime().compareTo(new TimeClock(startingHour,0))>=0&&interval.getEndTime().compareTo(new TimeClock(finishingHour,0))<=0);
-            assertTrue(interval.getStartTime().timeDifference(interval.getEndTime())==duration);
+            assertEquals(duration, interval.getStartTime().timeDifference(interval.getEndTime()));
         }
     }
 
@@ -238,7 +235,7 @@ public class CartManagementStepDef {
             boolean startBeforeEndOfFirstshift=interval.getStartTime().compareTo(new TimeClock(firstEndTime,0))<0;
             boolean endAfterFirstshift=interval.getEndTime().compareTo(new TimeClock(firstEndTime,0))>0;
             //xor
-            assertTrue(!(startBeforeEndOfFirstshift && endAfterFirstshift));
+            assertFalse(startBeforeEndOfFirstshift && endAfterFirstshift);
         }
     }
 

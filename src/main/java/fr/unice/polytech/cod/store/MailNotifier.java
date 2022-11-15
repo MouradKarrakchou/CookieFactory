@@ -20,7 +20,10 @@ public class MailNotifier extends UpdatableObject {
 
     @Override
     protected void OnTimeReached() {
-        fidelityAccount.notify("A surprise basket is available at the " + store.getName() + " store!");
+        if(!store.getSurpriseBaskets().isEmpty())
+            fidelityAccount.notify("A surprise basket is available at the " + store.getName() + " store!");
+        setWaitingTime(7*24*60*60*1000);
+        startTimer();
     }
 
 }

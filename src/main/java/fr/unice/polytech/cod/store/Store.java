@@ -21,7 +21,7 @@ public class Store extends UpdatableObject {
     List<Chef> listChef;
     private final Stock stock;
     public static int orderNumber = 0;
-    Map<Ingredient, Double> taxes;
+    Map<Ingredient, Double> taxes = new HashMap<>();
     CookieBook cookieBook;
     public TimeClock openHour=new TimeClock(8,0);
     public TimeClock closeHour=new TimeClock(18,0);
@@ -197,8 +197,17 @@ public class Store extends UpdatableObject {
         waitingTime += hour*60*60*1000; //hours in milliseconds
         waitingTime += minute*60*1000; //minute in milliseconds
         MailNotifier mailNotifier = new MailNotifier(waitingTime, this, fidelityAccount);
+        startTimer();
         mailNotifier.OnTimeReached();
         fidelityAccountList.add(fidelityAccount);
+    }
+
+    public void fillStock(List<Ingredient> ingredientList) {
+        stock.addStockList(ingredientList);
+        this.updateTaxe();
+    }
+
+    private void updateTaxe() {
     }
 }
 
