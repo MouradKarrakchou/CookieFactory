@@ -8,6 +8,7 @@ import fr.unice.polytech.cod.food.ingredient.Cooking;
 import fr.unice.polytech.cod.food.ingredient.Mix;
 import fr.unice.polytech.cod.store.BrandManager;
 import fr.unice.polytech.cod.store.InvalidStoreException;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
