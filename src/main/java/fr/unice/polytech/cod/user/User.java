@@ -21,13 +21,12 @@ public class User {
     private final Cart cart;
     private final List<Order> userOrders;
     private final StoreLocation storeLocation;
-    private Optional<FidelityAccount> _subscription;
+    private FidelityAccount fidelityAccount;
 
     public User(Cart cart, StoreLocation storeLocation) {
         this.cart = cart;
         this.userOrders = new ArrayList<>();
         this.storeLocation = storeLocation;
-        this._subscription = Optional.empty();
     }
 
     /**
@@ -40,12 +39,11 @@ public class User {
     /**
      * Add cookies to cart
      *
-     * @param cookie   the cookie to add to the cart
-     * @param quantity of the selected cookie
+     * @param cookie The cookie to add to the cart
+     * @param quantity The quantity of the selected cookie
      */
     public boolean chooseCookies(Cookie cookie, int quantity) {
-        Item item = new Item(cookie, quantity);
-        return cart.addToCart(item);
+        return cart.addToCart(new Item(cookie, quantity));
     }
 
     public List<Store> viewStoreAvailable() {
@@ -104,9 +102,9 @@ public class User {
     }
 
     public void addOrder(Order order) {
-        this.userOrders.add(order);
-        if (this._subscription.isPresent())
-            this._subscription.get().addOrder(order);
+        userOrders.add(order);
+        if (fidelityAccount != null)
+            fidelityAccount.addOrder(order);
     }
 
     public List<Order> getOrders() {
@@ -134,26 +132,29 @@ public class User {
     }
 
     public void subscribeToFidelityAccount(String name, String email, String password) {
-        this._subscription = Optional.of(new FidelityAccount(name, email, password));
+        fidelityAccount = new FidelityAccount(name, email, password);
     }
 
     public Optional<FidelityAccount> getSubscription() {
-        return _subscription;
+        if(fidelityAccount == null)
+            return Optional.empty();
+        return Optional.of(fidelityAccount);
     }
 
-    public boolean hasDiscount() {
-        if (this.getSubscription().isEmpty()) return false;
-        FidelityAccount subscription = this.getSubscription().get();
-        return subscription.getDiscount().isPresent();
-    }
-
-    public Optional<Discount> getDiscount() {
-        return _subscription.get().getDiscount();
+    public boolean hasFidelityAccount() {
+        return fidelityAccount != null;
     }
 
     public void useDiscount(Order order) {
-        order.setDiscount(this.getDiscount());
-        this.getSubscription().get().resetDiscount();
+        if(fidelityAccount == null)
+            return;
+        Optional<Discount> _discount = fidelityAccount.getDiscount();
+        if(_discount.isEmpty())
+            return;
+
+        Discount discount = _discount.get();
+        order.setDiscount(discount);
+        fidelityAccount.resetDiscount();
     }
 
     public boolean cancelOrder(Order order) {
@@ -170,8 +171,10 @@ public class User {
      * @param message The message send to the user.
      */
     public void notify(String message) {
-        if (_subscription.isPresent()) Display.smsOk(_subscription.get().getName(), message);
-        else Display.smsNok("Anonymous account.");
+        if (fidelityAccount == null)
+            Display.smsNok("Anonymous account.");
+        else
+            Display.smsOk(fidelityAccount.getName(), message);
     }
 
     /**
@@ -201,8 +204,8 @@ public class User {
     }
 
     public List<Order> getHistory() throws Exception{
-        if (this._subscription.isPresent())
-            return this._subscription.get().getRetrieveOrder();
-         throw new Exception("Your not subscribe to a fidelity account");
+        if(fidelityAccount == null)
+            throw new Exception("Your not subscribe to a fidelity account");
+        return fidelityAccount.getRetrieveOrder();
     }
 }

@@ -75,7 +75,7 @@ public class Cart {
             throw new Exception("Ingrédients indisponibles");
 
         Order order = new Order(this, user);
-        if (user.hasDiscount())
+        if (user.hasFidelityAccount())
             user.useDiscount(order);
         user.addOrder(order);
         store.addOrder(order, ingredientsNeeded);

@@ -22,7 +22,6 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.mockito.internal.matchers.Or;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -159,11 +158,11 @@ public class CartManagementStepDef {
     }
     @Then("he receive a discount for his next order")
     public void he_receive_a_discount_for_his_next_order() {
-        assertTrue(user.hasDiscount());
+        assertTrue(user.hasFidelityAccount());
     }
     @Then("he do not receive a discount for his next order")
     public void he_do_not_receive_a_discount_for_his_next_order() {
-        assertFalse(user.hasDiscount());
+        assertFalse(user.hasFidelityAccount());
     }
 
 
