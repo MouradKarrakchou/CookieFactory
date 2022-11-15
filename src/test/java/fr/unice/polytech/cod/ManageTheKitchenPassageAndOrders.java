@@ -64,4 +64,20 @@ public class ManageTheKitchenPassageAndOrders {
     public void client_retrieve_his_order() throws  Exception{
         this.store.retrieveOrder(bill);
     }
+
+
+    @And("the chef is asking for work")
+    public void theChefIsAskingForWork() throws Exception {
+        chef.startWork();
+    }
+
+    @Then("the state of the chef should be \"([^\"]*)\"$")
+    public void theStateOfTheChefShouldBe(ChefState chefState) {
+        assertEquals(ChefState.UNAVAILABLE, chefState);
+    }
+
+    @When("the chef terminate his current order")
+    public void theChefTerminateHisCurrentOrder() {
+        chef.terminateCurrentOrder();
+    }
 }
