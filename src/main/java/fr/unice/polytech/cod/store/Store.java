@@ -2,6 +2,7 @@ package fr.unice.polytech.cod.store;
 
 import fr.unice.polytech.cod.data.CookieBook;
 import fr.unice.polytech.cod.decorator_pattern.PartyCookie;
+import fr.unice.polytech.cod.food.Cookie;
 import fr.unice.polytech.cod.food.ingredient.Ingredient;
 import fr.unice.polytech.cod.helper.UpdatableObject;
 import fr.unice.polytech.cod.order.Bill;

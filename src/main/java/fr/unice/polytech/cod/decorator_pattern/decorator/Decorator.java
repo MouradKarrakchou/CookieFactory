@@ -18,7 +18,7 @@ public abstract class Decorator extends PartyCookie {
     protected DecoratorState decoratorState;
 
     public Decorator(PartyCookie partyCookie, DecoratorState decoratorState) {
-        super();
+        super(null,null);
         this.partyCookie = partyCookie;
         ingredientsDecorator = new ArrayList<>();
         this.decoratorState = decoratorState;
