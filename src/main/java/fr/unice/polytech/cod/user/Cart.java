@@ -139,8 +139,9 @@ public class Cart {
      * @return true if there still is the penalty
      */
     public boolean isTherePenalty(Instant time) {
-        if(time.isAfter(endPenaltyTime))
-            penalty = false;
+        if(endPenaltyTime != null)
+            if(time.isAfter(endPenaltyTime))
+                penalty = false;
 
         return penalty;
     }

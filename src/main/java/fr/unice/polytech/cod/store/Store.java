@@ -21,7 +21,7 @@ public class Store extends UpdatableObject {
     List<Chef> listChef;
     private final Stock stock;
     public static int orderNumber = 0;
-    Map<Ingredient, Double> taxes;
+    Map<Ingredient, Double> taxes = new HashMap<>();
     CookieBook cookieBook;
     public TimeClock openHour=new TimeClock(8,0);
     public TimeClock closeHour=new TimeClock(18,0);
