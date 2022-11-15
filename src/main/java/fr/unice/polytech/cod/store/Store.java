@@ -187,6 +187,7 @@ public class Store extends UpdatableObject {
         waitingTime += hour*60*60*1000; //hours in milliseconds
         waitingTime += minute*60*1000; //minute in milliseconds
         MailNotifier mailNotifier = new MailNotifier(waitingTime, this, fidelityAccount);
+        startTimer();
         mailNotifier.OnTimeReached();
         fidelityAccountList.add(fidelityAccount);
     }
