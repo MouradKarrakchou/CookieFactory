@@ -58,7 +58,7 @@ public class CartManagementStepDef {
         user.selectStore(name);
         this.store=user.getStore();
         for (int i =0; i <100; i++)
-            store.getStock().addStockList(ingredientCatalog.getIngredientList());
+            store.fillStock(ingredientCatalog.getIngredientList());
     }
     @Given("a valid cookie")
     public void a_valid_cookie() {

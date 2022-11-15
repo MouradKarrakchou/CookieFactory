@@ -201,6 +201,14 @@ public class Store extends UpdatableObject {
         mailNotifier.OnTimeReached();
         fidelityAccountList.add(fidelityAccount);
     }
+
+    public void fillStock(List<Ingredient> ingredientList) {
+        stock.addStockList(ingredientList);
+        this.updateTaxe();
+    }
+
+    private void updateTaxe() {
+    }
 }
 
 
