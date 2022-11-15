@@ -9,7 +9,7 @@ public class StoreManager {
         this.store=store;
     }
 
-    public void changeOpenningHour(TimeClock open,TimeClock close ){
+    public void changeOpeningHour(TimeClock open, TimeClock close ){
         store.changeOpeningHour(open,close);
     }
 }

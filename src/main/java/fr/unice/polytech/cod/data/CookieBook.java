@@ -45,10 +45,9 @@ public class CookieBook {
     }
 
     /**
-     * return the availables cookies depend from the store
-     *
-     * @param store
-     * @return a list of cookies
+     * Return the available cookies depend on the stock from the store
+     * @param store The store to check the availability
+     * @return The list of available cookies
      */
     public List<Cookie> getAvailableCookie(Store store) {
         List<Cookie> cookieAvailable = new ArrayList<>();
@@ -61,9 +60,8 @@ public class CookieBook {
 
     /**
      * Find a Dough with a cookie name in the book
-     *
-     * @param cookieName nom du cookie
-     * @return the Cookie of the cookie name
+     * @param cookieName The name of the cookie
+     * @return The Cookie with the given name
      */
     public Cookie getCookie(String cookieName) {
         for (Cookie cookie : this.cookies) {
@@ -76,8 +74,7 @@ public class CookieBook {
 
     /**
      * Add a cookie to the cookie book if it's not in the book and all the ingredients are in the catalog
-     *
-     * @param cookie un cookie
+     * @param cookie The given cookie
      */
     public void addCookieRecipe(Cookie cookie) throws Exception {
         if (!this.cookies.contains(cookie)) {
@@ -93,8 +90,7 @@ public class CookieBook {
 
     /**
      * Remove a cookie to the cookie book
-     *
-     * @param cookieToRemove un cookie
+     * @param cookieToRemove Yhe given cookie
      */
     public void removeCookieRecipe(Cookie cookieToRemove) {
         for (Cookie cookie1 : this.cookies) {

@@ -103,10 +103,6 @@ public class Order extends UpdatableObject {
         this.discount = discount;
     }
 
-    public int getDuration() {
-        return 0;
-    }
-
     public SmsNotifier getSmsNotifier(){
         return smsNotifier;
     }

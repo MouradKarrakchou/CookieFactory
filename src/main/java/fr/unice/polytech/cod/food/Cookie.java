@@ -11,17 +11,17 @@ public class Cookie {
     private final String name;
     private final Dough dough;
     private final Flavour flavour;
-    private final List<Topping> toppingList; // TODO : Maybe topping should be represented as a set
+    private final List<Topping> toppingList;
     Mix mix;
     Cooking cooking;
 
-    private final int preparationTime; // en minutes
+    private final int preparationTime; // In minutes
 
     public Cookie(String cookieName, Dough dough, Flavour flavour, List<Topping> toppingList, Mix mix, Cooking cooking, int preparationTime) {
         this.name = cookieName;
         this.dough = dough;
         this.flavour = flavour;
-        this.toppingList = toppingList; //TODO: Make sure the given topping list isn't > 3
+        this.toppingList = toppingList;
         this.mix = mix;
         this.cooking = cooking;
         this.preparationTime = preparationTime;
@@ -29,7 +29,6 @@ public class Cookie {
 
     /**
      * Give the set of all ingredients needed to produce one cookie base on its recipe.
-     *
      * @return The set of all ingredients needed.
      */
     public Set<Ingredient> getIngredients() {
@@ -51,10 +50,6 @@ public class Cookie {
 
     public Flavour getFlavour() {
         return flavour;
-    }
-
-    public List<Topping> getToppingList() {
-        return toppingList;
     }
 
     public double getPriceByStore(Store store) {

@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Item {
-    private Cookie cookie;
+    private final Cookie cookie;
     private int quantity;
 
 
@@ -32,7 +32,6 @@ public class Item {
 
     /**
      * Generate a set of all needed ingredients according to the cookie on the list and its quantity.
-     *
      * @return The number of needed ingredients
      */
     public Set<Ingredient> generateIngredientsNeeded(){
