@@ -10,7 +10,6 @@ import fr.unice.polytech.cod.order.OrderState;
 import fr.unice.polytech.cod.schedule.Interval;
 import fr.unice.polytech.cod.store.InvalidStoreException;
 import fr.unice.polytech.cod.store.Store;
-import fr.unice.polytech.cod.data.StoreManager;
 import fr.unice.polytech.cod.store.SurpriseBasket;
 import fr.unice.polytech.cod.data.StoreLocation;
 import fr.unice.polytech.cod.user.fidelityAccount.Discount;
@@ -125,8 +124,8 @@ public class User {
         return cart.getItem(itemName);
     }
 
-    public StoreManager getStoreManager() {
-        return storeManager;
+    public StoreLocation getStoreLocation() {
+        return storeLocation;
     }
 
     public Store getStore() {
@@ -184,7 +183,7 @@ public class User {
      */
     private Map<Store, List<SurpriseBasket>> viewSurpriseBasket() {
         Map<Store, List<SurpriseBasket>> storeSurpriseBasketMap = new HashMap<>();
-        List<Store> storeList = storeManager.getStoreList();
+        List<Store> storeList = storeLocation.getStoreList();
         for(Store store : storeList) {
             List<SurpriseBasket> surpriseBaskets = store.getSurpriseBaskets();
             if(!surpriseBaskets.isEmpty())

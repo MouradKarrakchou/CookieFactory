@@ -14,7 +14,7 @@ public class BrandManager {
         this.storeLocation.addCookieStore(cookie, store);
     }
 
-    public StoreLocation getStoreManager() {
+    public StoreLocation getStoreLocation() {
         return this.storeLocation;
     }
 
