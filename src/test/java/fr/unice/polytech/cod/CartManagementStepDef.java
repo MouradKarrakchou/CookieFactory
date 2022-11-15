@@ -36,7 +36,6 @@ public class CartManagementStepDef {
     Exception exception;
     Interval interval;
     Bill bill;
-    StoreLocation storeLocation;
     List<Interval> availableIntervals;
     Order pendingOrder;
     Order inProgressOrder;
@@ -46,11 +45,11 @@ public class CartManagementStepDef {
     List<Order> historic;
 
     private final IngredientCatalog ingredientCatalog = IngredientCatalog.instance;
+    private final StoreLocation storeLocation = StoreLocation.intance;
 
     @Given("a user")
     public void a_user() {
-        this.storeLocation =new StoreLocation();
-        user = new User(new Cart(), storeLocation);
+        this.user = new User(new Cart(), this.storeLocation);
     }
 
     @Given("a store named {string}")
@@ -77,6 +76,15 @@ public class CartManagementStepDef {
         if(nbCookies <= 0) return;
         cart = user.getCart();
         cart.getItemList().add(new Item(testCookie, nbCookies));
+        TimeSlot timeSlot=new TimeSlot(new TimeClock(8,0),new TimeClock(8,15));
+        List<TimeSlot> timeSlots=new ArrayList<>();
+        timeSlots.add(timeSlot);
+        cart.setInterval(new Interval(timeSlots));
+    }
+
+    @Given("an empty cart")
+    public void anEmptyCart() {
+        cart = user.getCart();
         TimeSlot timeSlot=new TimeSlot(new TimeClock(8,0),new TimeClock(8,15));
         List<TimeSlot> timeSlots=new ArrayList<>();
         timeSlots.add(timeSlot);

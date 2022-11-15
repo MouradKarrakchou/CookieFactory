@@ -8,6 +8,7 @@ import fr.unice.polytech.cod.food.ingredient.Cooking;
 import fr.unice.polytech.cod.food.ingredient.Mix;
 import fr.unice.polytech.cod.store.BrandManager;
 import fr.unice.polytech.cod.store.InvalidStoreException;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -21,8 +22,7 @@ public class EditCookieBook {
     Cookie newCookie;
     BrandManager brandManager;
     CookieBook cookieBook;
-    StoreLocation storeLocation;
-
+    private final StoreLocation storeLocation = StoreLocation.intance;
     private final IngredientCatalog ingredientCatalog = IngredientCatalog.instance;
 
     @Given("a cookie")
@@ -38,8 +38,7 @@ public class EditCookieBook {
 
     @Given("brandManager")
     public void brand_manager() {
-        storeLocation = new StoreLocation();
-        brandManager = new BrandManager(storeLocation);
+        this.brandManager = new BrandManager(this.storeLocation);
     }
 
     @Given("a cookieBook")
