@@ -12,6 +12,7 @@ import fr.unice.polytech.cod.store.InvalidStoreException;
 import fr.unice.polytech.cod.store.Store;
 import fr.unice.polytech.cod.data.StoreManager;
 import fr.unice.polytech.cod.store.SurpriseBasket;
+import fr.unice.polytech.cod.data.StoreLocation;
 import fr.unice.polytech.cod.user.fidelityAccount.Discount;
 import fr.unice.polytech.cod.user.fidelityAccount.FidelityAccount;
 
@@ -19,18 +20,16 @@ import java.time.Instant;
 import java.util.*;
 
 public class User {
-    private CookieBook cookieBook;
     private Cart cart;
     private List<Order> userOrders;
-    private StoreManager storeManager;
+    private StoreLocation storeLocation;
 
     private Optional<FidelityAccount> _subscription;
 
-    public User(CookieBook cookieBook, Cart cart, StoreManager storeManager) {
-        this.cookieBook = cookieBook;
+    public User(Cart cart, StoreLocation storeLocation) {
         this.cart = cart;
         this.userOrders = new ArrayList<>();
-        this.storeManager = storeManager;
+        this.storeLocation = storeLocation;
         this._subscription = Optional.empty();
     }
 
@@ -38,8 +37,7 @@ public class User {
      * return the list of available cookies based on the store
      */
     public List<Cookie> viewCatalog() {
-        //Display.displayCookies(cookieBook.getAvailableCookie(this.cart.getStore())); //useless non ?
-        return cookieBook.getAvailableCookie(this.cart.getStore());
+        return cart.getStore().getCookieBook().getAvailableCookie(this.cart.getStore());
     }
 
 
@@ -55,7 +53,7 @@ public class User {
     }
 
     public List<Store> viewStoreAvailable() {
-        return (storeManager.getStoreList());
+        return (storeLocation.getStoreList());
     }
 
     /**
@@ -66,7 +64,7 @@ public class User {
      * @throws InvalidStoreException
      */
     public Store selectStore(String name) throws InvalidStoreException {
-        Store store = storeManager.selectStore(name);
+        Store store = storeLocation.selectStore(name);
         this.cart.setStore(store);
         return (store);
     }

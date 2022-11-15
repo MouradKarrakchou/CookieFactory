@@ -10,13 +10,14 @@ import java.util.List;
 import java.util.Optional;
 
 public class Chef {
-    private Schedule schedule;
-    private Optional<Order> orderToPrepare;
-    private ChefState state;
+    protected Schedule schedule;
+    protected Optional<Order> orderToPrepare;
+    protected ChefState state;
 
     public Chef(Store store) {
         this.schedule = new Schedule(store);
         this.state = ChefState.AVAILABLE;
+        orderToPrepare = Optional.empty();
     }
 
     public void updateSchedule(Store store){

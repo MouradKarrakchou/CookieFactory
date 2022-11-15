@@ -1,18 +1,23 @@
 package fr.unice.polytech.cod.order;
 
+import fr.unice.polytech.cod.food.Cookie;
+import fr.unice.polytech.cod.food.Item;
 import fr.unice.polytech.cod.user.Cart;
 import fr.unice.polytech.cod.user.fidelityAccount.Discount;
 import fr.unice.polytech.cod.helper.UpdatableObject;
 import fr.unice.polytech.cod.user.User;
 
+import java.util.List;
 import java.util.Optional;
 
 public class Order extends UpdatableObject {
-    private OrderState orderState;
-    private final Cart cart;
-    private final User user;
-    private Optional<Discount> discount;
-    private SmsNotifier smsNotifier;
+    protected OrderState orderState;
+    protected final Cart cart;
+    protected final User user;
+    protected Optional<Discount> discount;
+    protected double totalPrice;
+    protected SmsNotifier smsNotifier;
+
 
     public Order(Cart cart, User user) {
         super(7_200_000); // An order expire when 2h is reached
@@ -20,7 +25,23 @@ public class Order extends UpdatableObject {
         this.orderState = OrderState.PENDING;
         this.user = user;
         this.discount = Optional.empty();
+        this.totalPrice = computeTotalPrice();
         smsNotifier = new SmsNotifier(user);
+    }
+
+    private double computeTotalPrice(){
+        List<Item> items = this.cart.getItemList();
+        double totalPrice = 0;
+        for(Item item : items) {
+            Cookie cookie = item.getCookie();
+            double cookiePrice = Math.round(cookie.getPriceByStore(this.cart.getStore()) * 100)/100.0;
+            totalPrice += cookiePrice;
+        }
+        if(this.discount.isPresent()){
+            Discount discount = this.discount.get();
+            totalPrice-=totalPrice*discount.getValue();
+        }
+        return totalPrice;
     }
 
     public Order(Cart cart, OrderState orderState, User user) {
@@ -88,5 +109,9 @@ public class Order extends UpdatableObject {
 
     public SmsNotifier getSmsNotifier(){
         return smsNotifier;
+    }
+
+    public double getTotalPrice() {
+        return totalPrice;
     }
 }

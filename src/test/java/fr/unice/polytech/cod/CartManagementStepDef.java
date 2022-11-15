@@ -14,7 +14,7 @@ import fr.unice.polytech.cod.schedule.TimeSlot;
 import fr.unice.polytech.cod.store.InvalidStoreException;
 import fr.unice.polytech.cod.store.Stock;
 import fr.unice.polytech.cod.store.Store;
-import fr.unice.polytech.cod.data.StoreManager;
+import fr.unice.polytech.cod.data.StoreLocation;
 import fr.unice.polytech.cod.store.*;
 import fr.unice.polytech.cod.user.Cart;
 import fr.unice.polytech.cod.user.User;
@@ -39,24 +39,27 @@ public class CartManagementStepDef {
     Exception exception;
     Interval interval;
     Bill bill;
-    StoreManager storeManager;
+    StoreLocation storeLocation;
     List<Interval> availableIntervals;
     Order pendingOrder;
     Order inProgressOrder;
+    Store store;
+    StoreManager storeManager;
 
     private final IngredientCatalog ingredientCatalog = IngredientCatalog.instance;
 
     @Given("a user")
     public void a_user() {
-        this.storeManager=new StoreManager();
-        user = new User(new CookieBook(),new Cart(),storeManager);
+        this.storeLocation =new StoreLocation();
+        user = new User(new Cart(), storeLocation);
     }
 
     @Given("a store named {string}")
     public void the_antibes_store(String name) throws InvalidStoreException {
         user.selectStore(name);
+        this.store=user.getStore();
         for (int i =0; i <100; i++)
-            user.getStore().getStock().addStockList(ingredientCatalog.getIngredientList());
+            store.getStock().addStockList(ingredientCatalog.getIngredientList());
     }
     @Given("a valid cookie")
     public void a_valid_cookie() {
@@ -184,7 +187,6 @@ public class CartManagementStepDef {
 
     @Then("the order is associated with the Time slots composing the interval are")
     public void theOrderIsAssociatedWithTheTimeSlotsComposingTheIntervalAre() {
-        Store store=this.user.getStore();
         assertEquals(1,store.getOrderList().size());
         for(TimeSlot timeSlot:interval.getTimeSlots())
         {assertTrue(timeSlot.getOrder().isPresent());
@@ -200,8 +202,8 @@ public class CartManagementStepDef {
 
     @Given("an employee with disponibility only from {int} to {int}")
     public void anEmployeeWithDisponibilityOnlyFromTo(int startingHour, int finishingHour) {
-        Chef chef=new Chef(user.getStore());
-        user.getStore().addChef(chef);
+        Chef chef=new Chef(store);
+        store.addChef(chef);
         List<TimeSlot> timeSlots=chef.getSchedule().getDaySlot().getTimeSlots();
         for (TimeSlot timeSlot:timeSlots){
             if(!(timeSlot.getStartTime().compareTo(new TimeClock(startingHour,0))>=0&&timeSlot.getEndTime().compareTo(new TimeClock(finishingHour,0))<=0))
@@ -227,7 +229,7 @@ public class CartManagementStepDef {
 
     @And("the store has no employ")
     public void theStoreHasNoEmploy() {
-        user.getStore().getListChef().clear();
+        store.getListChef().clear();
     }
 
     @And("he gets no intervals starting before {int} and finishing after")
@@ -286,4 +288,24 @@ public class CartManagementStepDef {
         assertFalse(user.getCart().getStore().getOrderList().contains(inProgressOrder));
     }
 
+    @Given("a manager")
+    public void aManager() {
+        storeManager=new StoreManager(store);
+        store.setStoreManager(storeManager);
+    }
+
+    @When("the manager changes the opening time of the store from {int} to {int}")
+    public void theManagerChangesTheOpeningTimeOfTheStoreFromTo(int startingHour, int endHour) {
+        this.storeManager.changeOpenningHour(new TimeClock(startingHour,0),new TimeClock(endHour,0));
+    }
+
+    @Then("the schedule of the employees start from {int} to {int}")
+    public void theScheduleOfTheEmployeesStartFromTo(int startingHour, int endHour) {
+        for(Chef chef:store.getListChef()){
+            List<TimeSlot> timeSlots=chef.getSchedule().getDaySlot().getTimeSlots();
+            assertEquals(0,timeSlots.get(0).getStartTime().compareTo(new TimeClock(startingHour,0)));
+            assertEquals(0,timeSlots.get(timeSlots.size()-1).getStartTime().compareTo(new TimeClock(endHour,0)));
+
+        }
+    }
 }

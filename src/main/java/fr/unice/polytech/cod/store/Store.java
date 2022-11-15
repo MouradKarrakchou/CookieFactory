@@ -25,6 +25,7 @@ public class Store extends UpdatableObject {
     CookieBook cookieBook;
     public TimeClock openHour=new TimeClock(8,0);
     public TimeClock closeHour=new TimeClock(18,0);
+    StoreManager storeManager;
 
     public Store(String name) {
         super(3*60*60*1000); //3 hours
@@ -115,6 +116,15 @@ public class Store extends UpdatableObject {
         for (Chef chef: listChef){
             chef.updateSchedule(this);
         }
+    }
+
+
+    public void setStoreManager(StoreManager storeManager) {
+        this.storeManager = storeManager;
+    }
+
+    public StoreManager getStoreManager() {
+        return storeManager;
     }
 
     public TimeClock getOpenHour() {
