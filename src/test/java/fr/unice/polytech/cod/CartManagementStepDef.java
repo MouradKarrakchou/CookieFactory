@@ -22,6 +22,7 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.mockito.internal.matchers.Or;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,8 +43,10 @@ public class CartManagementStepDef {
     List<Interval> availableIntervals;
     Order pendingOrder;
     Order inProgressOrder;
+    Order retrieveOrder;
     Store store;
     StoreManager storeManager;
+    List<Order> historic;
 
     private final IngredientCatalog ingredientCatalog = IngredientCatalog.instance;
 
@@ -305,4 +308,24 @@ public class CartManagementStepDef {
 
         }
     }
+
+
+    //A client can check his last orders
+
+    @Given("past orders")
+    public void past_orders() {
+        retrieveOrder = new Order(user.getCart(),OrderState.RETRIEVE,user);
+    }
+    @When("a client ask for his history")
+    public void a_client_ask_for_his_history() throws Exception {
+        user.subscribeToFidelityAccount("name","email","pw");
+        user.getSubscription().get().addOrder(retrieveOrder);
+
+        historic = user.getHistory();
+    }
+    @Then("he gets all his past orders")
+    public void he_gets_all_his_past_orders() {
+        assertEquals(1, historic.size());
+    }
+
 }
