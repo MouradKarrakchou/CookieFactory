@@ -83,6 +83,15 @@ public class CartManagementStepDef {
         cart.setInterval(new Interval(timeSlots));
     }
 
+    @Given("an empty cart")
+    public void anEmptyCart() {
+        cart = user.getCart();
+        TimeSlot timeSlot=new TimeSlot(new TimeClock(8,0),new TimeClock(8,15));
+        List<TimeSlot> timeSlots=new ArrayList<>();
+        timeSlots.add(timeSlot);
+        cart.setInterval(new Interval(timeSlots));
+    }
+
     @When("he remove a cookie from his cart")
     public void he_remove_a_cookie_from_his_cart() throws Exception {
         Item item = user.getItemFromCart("Cookie au chocolat");
