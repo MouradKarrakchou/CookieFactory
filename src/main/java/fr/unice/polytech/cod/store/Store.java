@@ -21,7 +21,7 @@ public class Store extends UpdatableObject {
     List<Chef> listChef;
     private final Stock stock;
     public static int orderNumber = 0;
-    Map<Ingredient, Double> taxes = new HashMap<>();
+    Map<Ingredient, Double> taxes;
     CookieBook cookieBook;
     public TimeClock openHour=new TimeClock(8,0);
     public TimeClock closeHour=new TimeClock(18,0);
@@ -39,9 +39,7 @@ public class Store extends UpdatableObject {
         listChef.add(new Chef(this));
         this.cookieBook = new CookieBook();
 
-        for(Ingredient ingredient : stock.getIngredients()) {
-            taxes.put(ingredient, 0.0);
-        }
+        taxes = new HashMap<>();
         startTimer();
     }
 
@@ -202,13 +200,19 @@ public class Store extends UpdatableObject {
         fidelityAccountList.add(fidelityAccount);
     }
 
-    public void fillStock(List<Ingredient> ingredientList) {
+    public void fillStock(List<Ingredient> ingredientList, Map<Ingredient, Double> taxesValues) {
         stock.addStockList(ingredientList);
-        this.updateTaxe();
+        for(Ingredient ingredient : ingredientList) {
+            if(!taxes.containsKey(ingredient))
+                this.updateTaxes(ingredient, taxesValues.get(ingredient));
+        }
     }
 
-    private void updateTaxe() {
+    private void updateTaxes(Ingredient ingredient, double tax) {
+        taxes.put(ingredient, tax);
     }
+
+
 }
 
 

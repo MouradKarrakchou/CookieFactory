@@ -23,9 +23,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.Assert.*;
 
@@ -57,8 +55,11 @@ public class CartManagementStepDef {
     public void the_antibes_store(String name) throws InvalidStoreException {
         user.selectStore(name);
         this.store=user.getStore();
+        Map<Ingredient, Double> taxesValues = new HashMap<>();
+        for(Ingredient ingredient : ingredientCatalog.getIngredientList())
+            taxesValues.put(ingredient, 3.0);
         for (int i =0; i <100; i++)
-            store.fillStock(ingredientCatalog.getIngredientList());
+            store.fillStock(ingredientCatalog.getIngredientList(), taxesValues);
     }
     @Given("a valid cookie")
     public void a_valid_cookie() {
