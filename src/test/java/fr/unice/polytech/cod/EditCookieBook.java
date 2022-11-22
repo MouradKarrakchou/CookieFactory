@@ -22,7 +22,7 @@ public class EditCookieBook {
     Cookie newCookie;
     BrandManager brandManager;
     CookieBook cookieBook;
-    private final StoreLocation storeLocation = StoreLocation.intance;
+    private StoreLocation storeLocation;
     private final IngredientCatalog ingredientCatalog = IngredientCatalog.instance;
 
     @Given("a cookie")
@@ -65,4 +65,8 @@ public class EditCookieBook {
         assertEquals(2, cookieBook.getCookies().size());
     }
 
+    @Given("a storeLocattion")
+    public void aStoreLocattion() {
+        this.storeLocation = StoreLocation.getInstance();
+    }
 }

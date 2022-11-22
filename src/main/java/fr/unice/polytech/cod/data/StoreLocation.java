@@ -46,4 +46,8 @@ public class StoreLocation {
         Store store1 = this.selectStore(store);
         store1.getCookieBook().removeCookieRecipe(cookie);
     }
+
+    public static StoreLocation getInstance(){
+        return new StoreLocation();
+    }
 }
