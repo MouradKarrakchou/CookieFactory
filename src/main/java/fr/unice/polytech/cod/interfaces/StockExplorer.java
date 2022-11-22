@@ -6,7 +6,7 @@ import fr.unice.polytech.cod.store.Stock;
 import java.util.Optional;
 import java.util.Set;
 
-public interface StockOutputs {
+public interface StockExplorer {
     Optional<Ingredient> findIngredient(Stock stock, Ingredient ingredient);
     boolean hasEnoughIngredient(Stock stock, Ingredient ingredient);
     boolean hasEnoughIngredients(Stock stock, Set<Ingredient> ingredients);
