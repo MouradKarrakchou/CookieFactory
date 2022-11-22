@@ -1,4 +1,4 @@
-package fr.unice.polytech.cod.store;
+package fr.unice.polytech.cod.exceptions;
 
 public class InvalidStoreException extends Exception{
     public InvalidStoreException(){

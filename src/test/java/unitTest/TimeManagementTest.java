@@ -1,7 +1,5 @@
 package unitTest;
 
-import fr.unice.polytech.cod.*;
-import fr.unice.polytech.cod.data.CookieBook;
 import fr.unice.polytech.cod.data.IngredientCatalog;
 import fr.unice.polytech.cod.data.StoreLocation;
 import fr.unice.polytech.cod.food.Cookie;
@@ -10,8 +8,7 @@ import fr.unice.polytech.cod.schedule.Interval;
 import fr.unice.polytech.cod.schedule.TimeClock;
 import fr.unice.polytech.cod.schedule.TimeSlot;
 import fr.unice.polytech.cod.store.Chef;
-import fr.unice.polytech.cod.store.InvalidStoreException;
-import fr.unice.polytech.cod.store.StoreManager;
+import fr.unice.polytech.cod.exceptions.InvalidStoreException;
 import fr.unice.polytech.cod.user.Cart;
 import fr.unice.polytech.cod.user.User;
 import org.junit.jupiter.api.Assertions;

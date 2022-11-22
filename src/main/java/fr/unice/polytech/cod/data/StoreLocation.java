@@ -1,7 +1,7 @@
 package fr.unice.polytech.cod.data;
 
 import fr.unice.polytech.cod.food.Cookie;
-import fr.unice.polytech.cod.store.InvalidStoreException;
+import fr.unice.polytech.cod.exceptions.InvalidStoreException;
 import fr.unice.polytech.cod.store.Store;
 
 import java.util.ArrayList;

@@ -1,25 +1,5 @@
 package fr.unice.polytech.cod;
 
-import fr.unice.polytech.cod.data.CookieBook;
-import fr.unice.polytech.cod.data.IngredientCatalog;
-import fr.unice.polytech.cod.food.ingredient.Cooking;
-import fr.unice.polytech.cod.food.ingredient.Dough;
-import fr.unice.polytech.cod.food.ingredient.Flavour;
-import fr.unice.polytech.cod.food.ingredient.Mix;
-import fr.unice.polytech.cod.helper.Display;
-import fr.unice.polytech.cod.food.*;
-import fr.unice.polytech.cod.store.InvalidStoreException;
-import fr.unice.polytech.cod.store.Stock;
-import fr.unice.polytech.cod.store.Store;
-import fr.unice.polytech.cod.data.StoreLocation;
-import fr.unice.polytech.cod.user.Cart;
-import fr.unice.polytech.cod.user.fidelityAccount.FidelityAccount;
-import fr.unice.polytech.cod.user.User;
-
-import java.sql.SQLOutput;
-import java.util.ArrayList;
-import java.util.List;
-
 public class Main {
 
     public static void main(String[] args) {

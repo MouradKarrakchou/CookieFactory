@@ -1,5 +1,7 @@
 package fr.unice.polytech.cod.data;
 
+import fr.unice.polytech.cod.exceptions.CookieAlreadyExistingException;
+import fr.unice.polytech.cod.exceptions.NotMatchingCatalogRequirementException;
 import fr.unice.polytech.cod.food.Cookie;
 import fr.unice.polytech.cod.food.ingredient.Cooking;
 import fr.unice.polytech.cod.food.ingredient.Ingredient;
@@ -81,15 +83,15 @@ public class CookieBook {
      *
      * @param cookie The given cookie
      */
-    public void addCookieRecipe(Cookie cookie) throws Exception {
+    public void addCookieRecipe(Cookie cookie) throws NotMatchingCatalogRequirementException, CookieAlreadyExistingException {
         if (!this.cookies.contains(cookie)) {
             for (Ingredient ingredient : cookie.getIngredients()) {
                 if (!ingredientCatalog.isInCatalog(ingredient))
-                    throw new Exception("Cookie composition not valid");
+                    throw new NotMatchingCatalogRequirementException();
             }
             this.cookies.add(cookie);
         } else {
-            throw new Exception("Cookie already exist");
+            throw new CookieAlreadyExistingException();
         }
     }
 

@@ -11,7 +11,7 @@ import fr.unice.polytech.cod.order.OrderState;
 import fr.unice.polytech.cod.schedule.Interval;
 import fr.unice.polytech.cod.schedule.TimeClock;
 import fr.unice.polytech.cod.schedule.TimeSlot;
-import fr.unice.polytech.cod.store.InvalidStoreException;
+import fr.unice.polytech.cod.exceptions.InvalidStoreException;
 import fr.unice.polytech.cod.store.Stock;
 import fr.unice.polytech.cod.store.Store;
 import fr.unice.polytech.cod.data.StoreLocation;
