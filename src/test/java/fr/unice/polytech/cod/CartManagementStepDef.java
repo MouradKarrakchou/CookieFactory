@@ -346,4 +346,9 @@ public class CartManagementStepDef {
         assertEquals(1, historic.size());
     }
 
+    @Given("the stock contain ingredients for {string}")
+    public void theStockContainIngredientsFor(String cookieName) {
+        Cookie cookie = store.getCookieBook().getCookie(cookieName);
+        store.fillStock(cookie.getIngredientsList(), store.getTaxes());
+    }
 }
