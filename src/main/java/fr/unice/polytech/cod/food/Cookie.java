@@ -25,7 +25,15 @@ public class Cookie {
     }
 
     public Cookie(Cookie cookie) {
-        this(cookie.getName(), cookie.getDough(), cookie.getFlavour(), cookie.getToppingList(), cookie.getMix(), cookie.getCooking(), cookie.getPreparationTime());
+        name = cookie.getName();
+        dough = new Dough(cookie.getDough());
+        flavour = new Flavour(cookie.getFlavour());
+        toppingList =  new ArrayList<>();
+        cookie.getToppingList().forEach(topping -> toppingList.add(new Topping(topping)));
+
+        mix = cookie.getMix();
+        cooking = cookie.getCooking();
+        preparationTime = cookie.getPreparationTime();
     }
 
     private Cooking getCooking() {

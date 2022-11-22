@@ -4,7 +4,12 @@ public class  Flavour extends Ingredient {
     public Flavour(String name, double price, double quantity) {
         super(name, price, quantity);
     }
-        /**
+
+    public Flavour(Flavour flavour){
+        super(flavour);
+    }
+
+    /**
      * Check if 2 objects are the same (same name, same class)
      *
      * @param object The object to compare
