@@ -2,6 +2,7 @@ Feature: edit cookie in the cookie book
 
   Background:
     Given a cookie
+    Given a storeLocattion
     And brandManager
     And a cookieBook
 
