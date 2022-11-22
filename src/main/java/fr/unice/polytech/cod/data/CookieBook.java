@@ -70,7 +70,7 @@ public class CookieBook {
     public Cookie getCookie(String cookieName) {
         for (Cookie cookie : this.cookies) {
             if (cookie.getName().equals(cookieName)) {
-                return cookie;
+                return new Cookie(cookie);
             }
         }
         return null;

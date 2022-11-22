@@ -8,6 +8,12 @@ public class Ingredient {
     protected double price;
     protected double quantity;
 
+    public Ingredient(Ingredient i){
+        this.name = i.name;
+        this.price = i.price;
+        this.quantity = i.quantity;
+    }
+
     public Ingredient(String name, double price, double quantity) {  //Ce constructeur c'est juste pour les tests !?
         this.name = name;
         this.price = price;
