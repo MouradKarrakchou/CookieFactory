@@ -1,18 +1,19 @@
 package fr.unice.polytech.cod.food;
 
+import fr.unice.polytech.cod.Saleable;
 import fr.unice.polytech.cod.food.ingredient.*;
 import fr.unice.polytech.cod.store.Store;
 
 import java.util.*;
 
-public class Cookie {
+public class Cookie implements Saleable {
     protected final String name;
     protected final Dough dough;
     protected final Flavour flavour;
-    protected final List<Topping> toppingList; // TODO : Maybe topping should be represented as a set
-    protected final Mix mix;
-    protected final Cooking cooking;
-    private final int preparationTime; // en minutes
+    protected List<Topping> toppingList; // TODO : Maybe topping should be represented as a set
+    protected  Mix mix;
+    protected  Cooking cooking;
+    private int preparationTime; // en minutes
 
     public Cookie(String cookieName, Dough dough, Flavour flavour, List<Topping> toppingList, Mix mix, Cooking cooking, int preparationTime) {
         this.name = cookieName;
@@ -36,7 +37,7 @@ public class Cookie {
         preparationTime = cookie.getPreparationTime();
     }
 
-    private Cooking getCooking() {
+    public Cooking getCooking() {
         return this.cooking;
     }
 
@@ -62,7 +63,7 @@ public class Cookie {
        return new ArrayList<>(getIngredients().stream().toList());
     }
 
-
+    @Override
     public String getName() {
         return name;
     }
@@ -79,6 +80,7 @@ public class Cookie {
         return toppingList;
     }
 
+    @Override
     public double getPriceByStore(Store store) {
         Map<Ingredient, Double> taxes = store.getTaxes();
         double price = dough.getQuantity() * dough.getPrice() + taxes.get(dough);
@@ -90,6 +92,7 @@ public class Cookie {
         return price;
     }
 
+    @Override
     public double getPriceHT(){
         double price = dough.getQuantity() * dough.getPrice();
         if(!toppingList.isEmpty()) {
@@ -124,5 +127,9 @@ public class Cookie {
 
     public int getPreparationTime() {
         return preparationTime;
+    }
+
+    public void setCooking(Cooking cooking) {
+        this.cooking = cooking;
     }
 }
