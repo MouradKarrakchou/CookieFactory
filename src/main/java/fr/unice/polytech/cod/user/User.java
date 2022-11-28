@@ -177,32 +177,6 @@ public class User {
             Display.smsOk(fidelityAccount.getName(), message);
     }
 
-    /**
-     * View all the stores that offer surprise baskets and their surprise baskets
-     *
-     * @return HashMap of stores and list of surprise baskets
-     */
-    private Map<Store, List<SurpriseBasket>> viewSurpriseBasket() {
-        Map<Store, List<SurpriseBasket>> storeSurpriseBasketMap = new HashMap<>();
-        List<Store> storeList = storeLocation.getStoreList();
-        for (Store store : storeList) {
-            List<SurpriseBasket> surpriseBaskets = store.getSurpriseBaskets();
-            if (!surpriseBaskets.isEmpty())
-                storeSurpriseBasketMap.put(store, surpriseBaskets);
-        }
-        return storeSurpriseBasketMap;
-    }
-
-    /**
-     * Allow the user to see the description of a given surpriseBasket
-     *
-     * @param surpriseBasket of which the user wants to see the description
-     * @return a bill containing the description and the price
-     */
-    private Bill viewSurpriseBasketDescription(SurpriseBasket surpriseBasket) {
-        return surpriseBasket.getDescription();
-    }
-
     public List<Order> getHistory() throws Exception{
         if(fidelityAccount == null)
             throw new Exception("Your not subscribe to a fidelity account");
