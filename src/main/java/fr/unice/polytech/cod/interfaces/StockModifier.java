@@ -5,7 +5,7 @@ import fr.unice.polytech.cod.store.Stock;
 
 import java.util.List;
 
-public interface StockInputs {
+public interface StockModifier {
     boolean lock(Stock stock, Ingredient ingredient);
     void addIngredient(Stock stock, Ingredient ingredient);
     void addIngredients(Stock stock, List<Ingredient> ingredients);

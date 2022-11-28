@@ -1,7 +1,7 @@
 package fr.unice.polytech.cod.data;
 
 import fr.unice.polytech.cod.food.Cookie;
-import fr.unice.polytech.cod.store.InvalidStoreException;
+import fr.unice.polytech.cod.exceptions.InvalidStoreException;
 import fr.unice.polytech.cod.store.Store;
 
 import java.util.ArrayList;
@@ -45,5 +45,9 @@ public class StoreLocation {
     public void removeCookieStore(Cookie cookie, String store) throws Exception {
         Store store1 = this.selectStore(store);
         store1.getCookieBook().removeCookieRecipe(cookie);
+    }
+
+    public static StoreLocation getInstance(){
+        return new StoreLocation();
     }
 }
