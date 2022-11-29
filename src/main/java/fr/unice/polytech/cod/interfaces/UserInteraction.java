@@ -28,5 +28,4 @@ public interface UserInteraction {
     boolean hasFidelityAccount(User user);
     void notify(String message);
     List<Order> getHistory() throws Exception;
-
 }
