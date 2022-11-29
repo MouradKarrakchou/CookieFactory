@@ -1,6 +1,6 @@
-package fr.unice.polytech.cod.store;
+package fr.unice.polytech.cod.helper;
 
-import fr.unice.polytech.cod.helper.UpdatableObject;
+import fr.unice.polytech.cod.store.Store;
 import fr.unice.polytech.cod.user.fidelityAccount.FidelityAccount;
 
 public class MailNotifier extends UpdatableObject {
@@ -19,7 +19,7 @@ public class MailNotifier extends UpdatableObject {
     }
 
     @Override
-    protected void OnTimeReached() {
+    public void OnTimeReached() {
         if(!store.getSurpriseBaskets().isEmpty())
             fidelityAccount.notify("A surprise basket is available at the " + store.getName() + " store!");
         setWaitingTime(7*24*60*60*1000);
