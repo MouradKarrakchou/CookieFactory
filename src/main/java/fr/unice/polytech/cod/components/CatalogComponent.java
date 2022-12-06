@@ -13,29 +13,41 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class Catalog implements CatalogExplorer {
+public class CatalogComponent implements CatalogExplorer {
     @Override
     public List<Ingredient> getIngredientList(IngredientCatalog ingredientCatalog) {
-        return null; //TODO
+        return ingredientCatalog.ingredientList;
     }
 
     @Override
     public boolean isInCatalog(IngredientCatalog ingredientCatalog, Ingredient ingredient) {
-        return false; //TODO
+        return ingredientCatalog.ingredientList.contains(ingredient);
     }
 
     @Override
     public Dough getDough(IngredientCatalog ingredientCatalog, String name) {
-        return null; //TODO
+        for (Ingredient ingredient : ingredientCatalog.ingredientList){
+            if(ingredient.getName().equals(name))
+                return new Dough(ingredient.getName(),ingredient.getPrice(), ingredient.getQuantity());
+        }
+        return null;
     }
 
     @Override
     public Flavour getFlavour(IngredientCatalog ingredientCatalog, String name) {
-        return null; //TODO
+        for (Ingredient ingredient : ingredientCatalog.ingredientList){
+            if(ingredient.getName().equals(name))
+                return new Flavour(ingredient.getName(),ingredient.getPrice(), ingredient.getQuantity());
+        }
+        return null;
     }
 
     @Override
     public Topping getTopping(IngredientCatalog ingredientCatalog, String name) {
-        return null; //TODO
+        for (Ingredient ingredient : ingredientCatalog.ingredientList){
+            if(ingredient.getName().equals(name))
+                return new Topping(ingredient.getName(),ingredient.getPrice(), ingredient.getQuantity());
+        }
+        return null;
     }
 }

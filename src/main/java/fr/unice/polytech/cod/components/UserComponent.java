@@ -8,6 +8,7 @@ import fr.unice.polytech.cod.interfaces.UserAction;
 import fr.unice.polytech.cod.interfaces.UserInteraction;
 import fr.unice.polytech.cod.order.Bill;
 import fr.unice.polytech.cod.order.Order;
+import fr.unice.polytech.cod.order.OrderState;
 import fr.unice.polytech.cod.schedule.Interval;
 import fr.unice.polytech.cod.store.Store;
 import fr.unice.polytech.cod.user.Cart;
@@ -60,7 +61,11 @@ public class UserComponent implements UserAction, UserInteraction {
 
     @Override
     public boolean cancelOrder(User user, Order order) {
-        return false;
+        if (user.getOrders().contains(order) && order.getOrderState().equals(OrderState.PENDING)) {
+            user.getCart().cancelOrder(order);
+            return true; //Your order has been canceled
+        } else
+            return false; //Your order is already in progress. You cannot canceled it
     }
 
     @Override

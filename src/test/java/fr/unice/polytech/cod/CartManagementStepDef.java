@@ -1,5 +1,6 @@
 package fr.unice.polytech.cod;
 
+import fr.unice.polytech.cod.components.UserComponent;
 import fr.unice.polytech.cod.data.CookieBook;
 import fr.unice.polytech.cod.data.IngredientCatalog;
 import fr.unice.polytech.cod.food.ingredient.Dough;
@@ -22,12 +23,18 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.*;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
+@SpringBootTest
 public class CartManagementStepDef {
+
+    @Autowired
+    UserComponent userComponent = new UserComponent();
 
     User user;
     Cart cart;
@@ -284,9 +291,8 @@ public class CartManagementStepDef {
 
     @When("the user try to cancel his order at the state \"([^\"]*)\"$")
     public void the_user_try_to_cancel_his_order_at_the_state_OrderState(OrderState state) {
-        if(state.equals(OrderState.PENDING)) user.cancelOrder(pendingOrder);
-        else user.cancelOrder(inProgressOrder);
-
+        if(state.equals(OrderState.PENDING)) userComponent.cancelOrder(user,pendingOrder);
+        else userComponent.cancelOrder(user, inProgressOrder);
     }
 
     @Then("the order is canceled")
