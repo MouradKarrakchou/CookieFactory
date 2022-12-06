@@ -13,8 +13,8 @@ import java.time.Instant;
 import java.util.*;
 
 public class Cart {
-    private Store store;
-    private final Set<Item> itemSet;
+    public Store store;
+    public final Set<Item> itemSet;
     private Interval interval;
     private int canceled;
     private Instant lastTimeCanceled;

@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Component
@@ -27,12 +28,19 @@ public class CartHandler implements CartActions {
 
     @Override
     public boolean addToCart(Cart cart, Item item) {
-        stockExplorer.hasEnoughIngredients(cart.store.stock, itemActions.generateIngredientsNeeded(item));
+        Optional<Item> _item =  cart.itemSet.stream()
+                .filter(currentItem -> currentItem.equals(item)).findFirst();
 
-        if (! .hasEnoughIngredients(item.generateIngredientsNeeded()))
+        if (_item.isPresent())
+            _item.get().updateQuantity(item.getQuantity());
+        else
+            cart.itemSet.add(item);
+
+        if(!stockExplorer.hasEnoughIngredients(cart.store.stock, itemActions.generateIngredientsNeeded(cart.itemSet))){
+            removeFromCart(cart, item);
             return false;
+        }
 
-        itemList.add(item);
         return true;
     }
 
