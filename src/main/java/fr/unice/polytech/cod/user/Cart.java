@@ -15,7 +15,7 @@ import java.util.*;
 public class Cart {
     public Store store;
     public final Set<Item> itemSet;
-    private Interval interval;
+    public Interval interval;
     private int canceled;
     private Instant lastTimeCanceled;
     private Instant endPenaltyTime;

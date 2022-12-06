@@ -6,12 +6,13 @@ import fr.unice.polytech.cod.interfaces.CartActions;
 import fr.unice.polytech.cod.interfaces.ItemActions;
 import fr.unice.polytech.cod.interfaces.StockExplorer;
 import fr.unice.polytech.cod.order.Bill;
-import fr.unice.polytech.cod.store.Store;
+import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.user.Cart;
+import fr.unice.polytech.cod.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
@@ -26,6 +27,12 @@ public class CartHandler implements CartActions {
         this.itemActions = itemActions;
     }
 
+    /**
+     * If the store as the ingredients, add an item to the cart
+     *
+     * @param item
+     * @return boolean
+     */
     @Override
     public boolean addToCart(Cart cart, Item item) {
         Optional<Item> _item =  cart.itemSet.stream()
@@ -46,36 +53,68 @@ public class CartHandler implements CartActions {
 
     @Override
     public void removeFromCart(Cart cart, Item item) {
-        // TODO
+        Optional<Item> _item =  cart.itemSet.stream().filter(currentItem -> currentItem.equals(item)).findFirst();
+        if (_item.isEmpty())
+            return;
+
+        Item inCartItem = _item.get();
+        inCartItem.updateQuantity(- item.getQuantity());
     }
 
     @Override
-    public Bill validate(Cart cart) throws Exception {
-        return null; // TODO
+    public Bill validate(Cart cart, User user) throws Exception {
+        Set<Ingredient> ingredientsNeeded = itemActions.generateIngredientsNeeded(cart.itemSet);
+        if (!cart.store.hasEnoughIngredients(ingredientsNeeded))
+            throw new Exception("Ingrédients indisponibles");
+
+        Order order = new Order(cart, user);
+        if (user.hasFidelityAccount())
+            user.useDiscount(order);
+        user.addOrder(order);
+        cart.store.addOrder(order, ingredientsNeeded);
+
+        cart.interval.validate(order);
+        cart.itemSet.clear();
+
+        return new Bill(order);
     }
 
     @Override
-    public Store getStore(Cart cart) {
-        return null; // TODO
+    public Set<Ingredient> generateIngredientsNeeded(Cart cart, Set<Item> items) {
+        Set<Ingredient> neededIngredients = new HashSet<>();
+        // Check the list of items
+        for (Item item : items) {
+            // Generating all needed ingredients for each item
+            for (Ingredient ingredient : item.generateIngredientsNeeded()) {
+                // Merging all needed ingredients together
+                boolean isAdded = false;
+                for (Ingredient neededIngredient : neededIngredients) {
+                    if (neededIngredient.equals(ingredient)) {
+                        neededIngredient.increaseQuantity(ingredient.getQuantity());
+                        isAdded = true;
+                    }
+                }
+                if (!isAdded)
+                    neededIngredients.add(ingredient);
+            }
+        }
+        return neededIngredients;
     }
 
     @Override
-    public Set<Ingredient> generateIngredientsNeeded(Cart cart) {
-        return null; // TODO
-    }
-
-    @Override
-    public List<Item> getItemList(Cart cart) {
-        return null; // TODO
-    }
-
-    @Override
-    public Item findItem(Cart cart, String cookieName) {
-        return null; // TODO
+    public Item findItem(Cart cart, String cookieName) throws Exception {
+        Item itemFounded = cart.itemSet.stream()
+                .filter(item -> cookieName.equals(item.getCookie().getName()))
+                .findAny()
+                .orElse(null);
+        if (itemFounded == null)
+            throw new Exception("Can't find this item into the cart: " + cookieName);
+        else
+            return itemFounded;
     }
 
     @Override
     public boolean isEmpty(Cart cart) {
-        return false; // TODO
+        return cart.itemSet.isEmpty();
     }
 }
