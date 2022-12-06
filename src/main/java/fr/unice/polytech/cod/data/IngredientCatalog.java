@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class IngredientCatalog {
-    private final List<Ingredient> ingredientList;
+    public final List<Ingredient> ingredientList;
     public static IngredientCatalog instance = new IngredientCatalog();
 
     private IngredientCatalog() {
