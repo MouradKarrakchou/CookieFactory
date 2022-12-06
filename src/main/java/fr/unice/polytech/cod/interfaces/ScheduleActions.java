@@ -9,7 +9,7 @@ import fr.unice.polytech.cod.schedule.TimeClock;
 import java.util.List;
 import java.util.Optional;
 
-public interface Schedule {
+public interface ScheduleActions {
     List<Interval> getIntervals(Calendar calendar, int minutes, int numberOfDaysBeforeTheOrder);
     DaySlot getDaySlot(Calendar calendar, int numberOfDaysBefore);
     Optional<Order> getOrderToPrepare(Calendar calendar, int numberOfDaysBeforeTheOrder, TimeClock timeClock);

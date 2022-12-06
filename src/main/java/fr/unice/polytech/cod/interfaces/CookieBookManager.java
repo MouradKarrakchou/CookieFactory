@@ -16,5 +16,4 @@ public interface CookieBookManager {
     List<Cookie> getCookies(CookieBook cookieBook);
 
     Cookie getCookie(CookieBook cookieBook, String cookieName);
-
 }

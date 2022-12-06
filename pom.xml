@@ -102,6 +102,11 @@
             <version>4.8.1</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>5.3.23</version>
+        </dependency>
         <!--
         dependencies.dependency[fr.unice.polytech.cf:demo:1.0-SNAPSHOT]' for fr.unice.polytech.cf:demo:1.0-SNAPSHOT is referencing itself. @ line 79, column 21
 

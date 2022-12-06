@@ -2,10 +2,8 @@ package fr.unice.polytech.cod.interfaces;
 
 import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.order.OrderState;
-import fr.unice.polytech.cod.user.Cart;
 import fr.unice.polytech.cod.user.User;
 import fr.unice.polytech.cod.user.fidelityAccount.Discount;
-import org.mockito.internal.matchers.Or;
 
 import java.time.Instant;
 import java.util.Optional;
@@ -20,5 +18,5 @@ public interface OrderActions {
     boolean isCanceledTwiceInARow(Order order, Instant time);
     double computeTotalPrice(Order order);
     OrderState getOrderState(Order order);
-    Optional<Discount> getDiscount();
+    Optional<Discount> getDiscount(Order order);
 }
