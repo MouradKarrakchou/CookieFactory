@@ -19,6 +19,6 @@ public interface CartActions {
     Store getStore(Cart cart);
     Set<Ingredient> generateIngredientsNeeded(Cart cart);
     List<Item> getItemList(Cart cart);
-    Item findItem(String cookieName);
+    Item findItem(Cart cart, String cookieName);
     boolean isEmpty(Cart cart);
 }

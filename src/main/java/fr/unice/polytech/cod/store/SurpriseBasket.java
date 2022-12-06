@@ -4,6 +4,7 @@ import fr.unice.polytech.cod.order.Bill;
 import fr.unice.polytech.cod.order.Order;
 
 public class SurpriseBasket {
+
     Order order;
 
     public SurpriseBasket(Order order) {
@@ -11,7 +12,7 @@ public class SurpriseBasket {
     }
 
     /**
-     * As the user wants to see the description and the price of the surprise basket, a bill is created
+     * Bill for the user trough Too Good To Go
      * @return a bill containing description and price
      */
     public Bill getDescription() {

@@ -65,7 +65,6 @@ public class Chef {
     public Schedule getSchedule() {
         return schedule;
     }
-
     public void updateCurrentOrder(TimeClock timeClock,int numberOfDaysBeforeTheOrder){
         orderToPrepare = schedule.getOrderToPrepare(numberOfDaysBeforeTheOrder,timeClock);
 

@@ -2,6 +2,7 @@ package fr.unice.polytech.cod.order;
 
 import fr.unice.polytech.cod.food.Cookie;
 import fr.unice.polytech.cod.food.Item;
+import fr.unice.polytech.cod.helper.SmsNotifier;
 import fr.unice.polytech.cod.user.Cart;
 import fr.unice.polytech.cod.user.fidelityAccount.Discount;
 import fr.unice.polytech.cod.helper.UpdatableObject;

@@ -15,6 +15,4 @@ public interface CatalogExplorer {
     Dough getDough(IngredientCatalog ingredientCatalog, String name);
     Flavour getFlavour(IngredientCatalog ingredientCatalog, String name);
     Topping getTopping(IngredientCatalog ingredientCatalog, String name);
-
-
 }

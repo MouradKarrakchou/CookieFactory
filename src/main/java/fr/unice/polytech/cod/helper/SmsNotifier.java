@@ -1,6 +1,5 @@
-package fr.unice.polytech.cod.order;
+package fr.unice.polytech.cod.helper;
 
-import fr.unice.polytech.cod.helper.UpdatableObject;
 import fr.unice.polytech.cod.user.User;
 
 public class SmsNotifier extends UpdatableObject {
