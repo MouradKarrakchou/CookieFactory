@@ -9,7 +9,7 @@ import io.cucumber.java.en.When;
 
 import java.util.Optional;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class StockStepDef {
     private Stock stock;

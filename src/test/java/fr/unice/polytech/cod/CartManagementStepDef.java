@@ -34,7 +34,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CartManagementStepDef {
 
     @Autowired
-    UserComponent userComponent = new UserComponent();
+    UserComponent userComponent;
 
     User user;
     Cart cart;

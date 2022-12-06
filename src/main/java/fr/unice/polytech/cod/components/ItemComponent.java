@@ -30,6 +30,11 @@ public class ItemComponent implements ItemActions {
     }
 
     @Override
+    public Set<Ingredient> generateIngredientsNeeded(Set<Item> items) {
+        return null;
+    }
+
+    @Override
     public Set<Ingredient> generateIngredientsNeeded(List<Item> items) {
         return null; //TODO
     }

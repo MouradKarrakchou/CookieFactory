@@ -17,9 +17,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 import java.util.List;
-
-import static org.junit.Assert.*;
-
+import static org.junit.jupiter.api.Assertions.*;
 public class ManageTheKitchenPassageAndOrders {
     Schedule schedule;
     Chef chef;

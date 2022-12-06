@@ -16,4 +16,6 @@ public interface ItemActions {
     Cookie getCookie(Item item);
     Set<Ingredient> generateIngredientsNeeded(Item item);
     Set<Ingredient> generateIngredientsNeeded(Set<Item> items);
+
+    Set<Ingredient> generateIngredientsNeeded(List<Item> items);
 }

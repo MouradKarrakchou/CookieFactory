@@ -21,4 +21,5 @@ public interface CartActions {
     List<Item> getItemList(Cart cart);
     Item findItem(Cart cart, String cookieName);
     boolean isEmpty(Cart cart);
+
 }
