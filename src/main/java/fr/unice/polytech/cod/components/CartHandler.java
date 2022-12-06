@@ -3,19 +3,45 @@ package fr.unice.polytech.cod.components;
 import fr.unice.polytech.cod.food.Item;
 import fr.unice.polytech.cod.food.ingredient.Ingredient;
 import fr.unice.polytech.cod.interfaces.CartActions;
+import fr.unice.polytech.cod.interfaces.ItemActions;
+import fr.unice.polytech.cod.interfaces.StockExplorer;
 import fr.unice.polytech.cod.order.Bill;
 import fr.unice.polytech.cod.store.Store;
 import fr.unice.polytech.cod.user.Cart;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Component
 public class CartHandler implements CartActions {
+    StockExplorer stockExplorer;
+    ItemActions itemActions;
+
+    @Autowired
+    public CartHandler(StockExplorer stockExplorer, ItemActions itemActions) {
+        this.stockExplorer = stockExplorer;
+        this.itemActions = itemActions;
+    }
+
     @Override
     public boolean addToCart(Cart cart, Item item) {
-        return false; // TODO
+        Optional<Item> _item =  cart.itemSet.stream()
+                .filter(currentItem -> currentItem.equals(item)).findFirst();
+
+        if (_item.isPresent())
+            _item.get().updateQuantity(item.getQuantity());
+        else
+            cart.itemSet.add(item);
+
+        if(!stockExplorer.hasEnoughIngredients(cart.store.stock, itemActions.generateIngredientsNeeded(cart.itemSet))){
+            removeFromCart(cart, item);
+            return false;
+        }
+
+        return true;
     }
 
     @Override

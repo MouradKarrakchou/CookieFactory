@@ -23,7 +23,7 @@ public class Store extends UpdatableObject {
     List<SurpriseBasket> surpriseBaskets;
     List<FidelityAccount> fidelityAccountList;
     List<Chef> listChef;
-    private final Stock stock;
+    public final Stock stock;
     public static int orderNumber = 0;
     Map<Ingredient, Double> taxes;
     CookieBook cookieBook;
