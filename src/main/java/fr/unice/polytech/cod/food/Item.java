@@ -2,6 +2,7 @@ package fr.unice.polytech.cod.food;
 
 import fr.unice.polytech.cod.food.ingredient.Ingredient;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 public class Item {
@@ -36,7 +37,8 @@ public class Item {
      */
     public Set<Ingredient> generateIngredientsNeeded(){
         // Cloning the list of ingredients
-        Set<Ingredient> ingredientsClone = new HashSet<>(cookie.getIngredients());
+        cookie.getIngredients();
+        Set<Ingredient> ingredientsClone = new HashSet<>(cookie.getIngredientsCloned());
 
         // Multiplying each ingredient needed by the number of cookies
         for(Ingredient ingredient : ingredientsClone)
@@ -44,4 +46,33 @@ public class Item {
 
         return ingredientsClone;
     }
+
+    /**
+     * Return a set of the ingredients of the item
+     * @return A set of the ingredients
+     */
+    public Set<Ingredient> generateIngredients(){
+        // Cloning the list of ingredients
+        return new HashSet<>(cookie.getIngredients());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(cookie.name);
+    }
+
+    @Override
+    public boolean equals(Object object){
+        // Check for the address
+        if (object == this)
+            return true;
+
+        // Check for the instance
+        if (!(object instanceof Item i))
+            return false;
+
+        // Check for the name equality
+        return i.cookie.name.equals(cookie.name);
+    }
+
 }

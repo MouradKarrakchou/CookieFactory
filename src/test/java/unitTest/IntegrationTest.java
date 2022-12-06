@@ -2,13 +2,20 @@ package unitTest;
 
 import fr.unice.polytech.cod.data.IngredientCatalog;
 import fr.unice.polytech.cod.data.StoreLocation;
+import fr.unice.polytech.cod.food.Cookie;
+import fr.unice.polytech.cod.food.Item;
 import fr.unice.polytech.cod.food.ingredient.Ingredient;
 import fr.unice.polytech.cod.exceptions.InvalidStoreException;
+import fr.unice.polytech.cod.order.Bill;
+import fr.unice.polytech.cod.schedule.Interval;
+import fr.unice.polytech.cod.schedule.TimeClock;
+import fr.unice.polytech.cod.schedule.TimeSlot;
 import fr.unice.polytech.cod.store.Store;
 import fr.unice.polytech.cod.user.Cart;
 import fr.unice.polytech.cod.user.User;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -68,10 +75,35 @@ public class IntegrationTest {
         // Check if the user can select the given amount of cookie
         assertTrue(user.chooseCookies(store.getCookieBook().getCookie("Cookie au chocolat"), 5));
         assertTrue(user.chooseCookies(store.getCookieBook().getCookie("Cookie au chocolat"), 15));
-        assertTrue(user.chooseCookies(store.getCookieBook().getCookie("Cookie à la vanille"), 20));
+        assertTrue(user.chooseCookies(store.getCookieBook().getCookie("Cookie à la vanille"), 19));
 
-        assertTrue(user.chooseCookies(store.getCookieBook().getCookie("Cookie au chocolat"), 1));
-        assertTrue(user.chooseCookies(store.getCookieBook().getCookie("Cookie à la vanille"), 1));
+        assertFalse(user.chooseCookies(store.getCookieBook().getCookie("Cookie au chocolat"), 1));
+        assertFalse(user.chooseCookies(store.getCookieBook().getCookie("Cookie à la vanille"), 2));
+
+        try {
+            assertEquals(20, user.getCart().getItem("Cookie au chocolat").getQuantity());
+            assertEquals(19, user.getCart().getItem("Cookie à la vanille").getQuantity());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        user.recapCart();
+
+        TimeSlot timeSlot=new TimeSlot(new TimeClock(8,0),new TimeClock(8,15));
+        List<TimeSlot> timeSlots=new ArrayList<>();
+        timeSlots.add(timeSlot);
+        user.getCart().setInterval(new Interval(timeSlots));
+
+        Bill userBill = null;
+
+        try {
+            userBill = user.validateCart();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        assertFalse(userBill == null);  //TODO bug "méthode getDiscount() dans Order" quand on fait userBill.toString();
+
 /*
         aRandom.recapCart();
 

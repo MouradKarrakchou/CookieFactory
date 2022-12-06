@@ -1,8 +1,35 @@
 package fr.unice.polytech.cod;
 
+import fr.unice.polytech.cod.data.IngredientCatalog;
+import fr.unice.polytech.cod.food.Cookie;
+import fr.unice.polytech.cod.food.Item;
+import fr.unice.polytech.cod.food.ingredient.Cooking;
+import fr.unice.polytech.cod.food.ingredient.Ingredient;
+import fr.unice.polytech.cod.food.ingredient.Mix;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 public class Main {
 
     public static void main(String[] args) {
+        final IngredientCatalog ingredientCatalog = IngredientCatalog.instance;
+
+        Cookie cookie = new Cookie("Cookie à la pistache",
+                ingredientCatalog.getDough("peanut butter"),
+                ingredientCatalog.getFlavour("chili"),
+                List.of(ingredientCatalog.getTopping("milk chocolate")),
+                new Mix(Mix.MixState.MIXED),
+                new Cooking(Cooking.CookingState.CHEWY),
+                10);
+
+        Cookie cookie1 = cookie.clone();
+
+        cookie.getDough().increaseQuantity(33);
+        cookie1.getDough().increaseQuantity(5);
+
+        System.out.println(cookie.getDough().getQuantity() + " / " + cookie1.getDough().getQuantity() );
 
 /**
 

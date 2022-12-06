@@ -5,7 +5,7 @@ import fr.unice.polytech.cod.food.Item;
 import fr.unice.polytech.cod.food.Cookie;
 import fr.unice.polytech.cod.store.Store;
 
-import java.util.List;
+import java.util.Set;
 
 public class Bill {
     Order order;
@@ -24,7 +24,7 @@ public class Bill {
 
         String storeName = order.getCart().getStore().getName();
         receipt.append("===============").append(storeName).append("===============\n");
-        List<Item> items = order.getCart().getItemList();
+        Set<Item> items = order.getCart().getItemSet();
 
         double cookiePrice;
         double totalPrice = 0;

@@ -1,12 +1,12 @@
 package fr.unice.polytech.cod.food;
 
-import fr.unice.polytech.cod.Saleable;
 import fr.unice.polytech.cod.food.ingredient.*;
+import fr.unice.polytech.cod.interfaces.Saleable;
 import fr.unice.polytech.cod.store.Store;
 
 import java.util.*;
 
-public class Cookie implements Saleable {
+public class Cookie implements Saleable, Cloneable {
     protected final String name;
     protected final Dough dough;
     protected final Flavour flavour;
@@ -56,6 +56,20 @@ public class Cookie implements Saleable {
         if (dough != null) ingredients.add(dough);
         if (flavour != null) ingredients.add(flavour);
         ingredients.addAll(toppingList);
+        return ingredients;
+    }
+
+    /**
+     * Give the set of all ingredients cloned needed to produce one cookie base on its recipe.
+     *
+     * @return The set of all ingredients cloned needed.
+     */
+    public Set<Ingredient> getIngredientsCloned() {
+        Set<Ingredient> ingredients = new HashSet<>();
+
+        if (dough != null) ingredients.add(dough.clone());
+        if (flavour != null) ingredients.add(flavour.clone());
+        toppingList.forEach(topping -> ingredients.add(topping.clone()));
         return ingredients;
     }
 
@@ -131,5 +145,16 @@ public class Cookie implements Saleable {
 
     public void setCooking(Cooking cooking) {
         this.cooking = cooking;
+    }
+
+    public Cookie clone() {
+        Cookie cookie = null;
+        try {
+            cookie = (Cookie) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
+        // on renvoie le clone
+        return cookie;
     }
 }
