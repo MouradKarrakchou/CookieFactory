@@ -10,5 +10,4 @@ public interface StockExplorer {
     Optional<Ingredient> findIngredient(Stock stock, Ingredient ingredient);
     boolean hasEnoughIngredient(Stock stock, Ingredient ingredient);
     boolean hasEnoughIngredients(Stock stock, Set<Ingredient> ingredients);
-    Set<Ingredient> getIngredients(Stock stock);
 }

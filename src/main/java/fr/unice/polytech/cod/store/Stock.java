@@ -5,8 +5,8 @@ import fr.unice.polytech.cod.food.ingredient.Ingredient;
 import java.util.*;
 
 public class Stock {
-    final Set<Ingredient> ingredients;
-    private final Set<Ingredient> lockedIngredients;
+    public final Set<Ingredient> ingredients;
+    public final Set<Ingredient> lockedIngredients;
 
     public Stock() {
         ingredients = new HashSet<>();
