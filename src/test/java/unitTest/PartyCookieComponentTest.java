@@ -10,8 +10,6 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 
 import static java.util.List.copyOf;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 public class PartyCookieComponentTest {
 
