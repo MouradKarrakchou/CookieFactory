@@ -4,6 +4,7 @@ import fr.unice.polytech.cod.food.Item;
 import fr.unice.polytech.cod.food.Cookie;
 
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Logger;
 
 import static com.diogonunes.jcolor.Ansi.colorize;
@@ -41,7 +42,7 @@ public class Display {
         LOGGER.info(string);
     }
 
-    public static void showItems(List<Item> items) {
+    public static void showItems(Set<Item> items) {
         StringBuilder output = new StringBuilder();
         for(Item item : items){
             output.append("    - ")

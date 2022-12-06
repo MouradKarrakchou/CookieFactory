@@ -13,8 +13,8 @@ import java.time.Instant;
 import java.util.*;
 
 public class Cart {
-    public Store store;
-    private List<Item> itemList;
+    private Store store;
+    private final Set<Item> itemSet;
     private Interval interval;
     private int canceled;
     private Instant lastTimeCanceled;
@@ -23,13 +23,13 @@ public class Cart {
 
 
     public Cart() {
-        this.itemList = new ArrayList<>();
+        this.itemSet = new HashSet<>();
         this.canceled = 0;
         this.penalty = false;
     }
 
     public void showCart() {
-        Display.showItems(itemList);
+        Display.showItems(itemSet);
     }
 
     /**
@@ -39,27 +39,37 @@ public class Cart {
      * @return
      */
     public boolean addToCart(Item item) {
-        if (!store.hasEnoughIngredients(item.generateIngredientsNeeded()))
-            return false;
+        Optional<Item> _item =  itemSet.stream().filter(currentItem -> currentItem.equals(item)).findFirst();
+        if (_item.isPresent())
+            _item.get().updateQuantity(item.getQuantity());
+        else
+            itemSet.add(item);
 
-        itemList.add(item);
+        if (!store.hasEnoughIngredients(generateIngredientsNeeded(itemSet))){
+            System.out.println("hggvhjgv");
+            removeFromCart(item);
+            return false;
+        }
+
         return true;
     }
 
     /**
-     * Remove one from the quantity of the item, if the item is present as one copy, then it is deleted
+     * Remove the given item quantity from the quantity of the item, if the item is present as one copy, then it is deleted
      *
      * @param item The item present in the cart.
      */
-    public void removeOneFromCart(Item item) {
-        if (item.getQuantity() == 1)
-            itemList.remove(item);
-        else
-            item.updateQuantity(-1);
+    public void removeFromCart(Item item) {
+        Optional<Item> _item =  itemSet.stream().filter(currentItem -> currentItem.equals(item)).findFirst();
+        if (_item.isEmpty())
+            return;
+
+        Item inCartItem = _item.get();
+        inCartItem.updateQuantity(- item.getQuantity());
     }
 
-    public List<Item> getItemList() {
-        return itemList;
+    public Set<Item> getItemSet() {
+        return itemSet;
     }
 
     /**
@@ -70,7 +80,7 @@ public class Cart {
      * @return
      */
     public Bill validate(User user) throws Exception {
-        Set<Ingredient> ingredientsNeeded = generateIngredientsNeeded(this.itemList);
+        Set<Ingredient> ingredientsNeeded = generateIngredientsNeeded(this.itemSet);
         if (!store.hasEnoughIngredients(ingredientsNeeded))
             throw new Exception("Ingrédients indisponibles");
 
@@ -81,7 +91,7 @@ public class Cart {
         store.addOrder(order, ingredientsNeeded);
 
         this.interval.validate(order);
-        itemList.clear();
+        itemSet.clear();
 
         return new Bill(order);
     }
@@ -147,7 +157,7 @@ public class Cart {
     }
 
     public boolean isEmpty() {
-        return this.itemList.isEmpty();
+        return this.itemSet.isEmpty();
     }
 
     /**
@@ -156,7 +166,7 @@ public class Cart {
      * @param items
      * @return A set of the ingredients needed
      */
-    private Set<Ingredient> generateIngredientsNeeded(List<Item> items) {
+    private Set<Ingredient> generateIngredientsNeeded(Set<Item> items) {
         Set<Ingredient> neededIngredients = new HashSet<>();
         // Check the list of items
         for (Item item : items) {
@@ -182,7 +192,7 @@ public class Cart {
     }
 
     public Item getItem(String itemName) throws Exception {
-        Item itemFounded = itemList.stream()
+        Item itemFounded = itemSet.stream()
                 .filter(item -> itemName.equals(item.getCookie().getName()))
                 .findAny()
                 .orElse(null);
@@ -213,7 +223,7 @@ public class Cart {
 
     public int getDuration() {
         int duration = 15;
-        for(Item item: this.itemList){
+        for(Item item: this.itemSet){
             duration+= item.getCookie().getPreparationTime();
         }
         return duration;
@@ -223,6 +233,6 @@ public class Cart {
     }
 
     public void add(Item item) {
-        this.itemList.add(item);
+        this.itemSet.add(item);
     }
 }

@@ -9,6 +9,7 @@ import fr.unice.polytech.cod.store.Store;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public class FidelityAccount {
     private final String name;
@@ -41,7 +42,7 @@ public class FidelityAccount {
 
     public void addOrder(Order order) {
         this.orderList.add(order);
-        List<Item> items = order.getCart().getItemList();
+        Set<Item> items = order.getCart().getItemSet();
         for (Item item : items) numberOfCommandedCookies += item.getQuantity();
         if (numberOfCommandedCookies >= 30) {
             discount = new Discount("Loyalty program", 10);

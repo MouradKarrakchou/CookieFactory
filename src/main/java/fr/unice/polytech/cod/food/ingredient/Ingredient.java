@@ -2,7 +2,7 @@ package fr.unice.polytech.cod.food.ingredient;
 
 import java.util.Objects;
 
-public class Ingredient {
+public class Ingredient implements Cloneable {
     protected String name;
     //price per g
     protected double price;
@@ -74,4 +74,15 @@ public class Ingredient {
 
         return name;
     }
+
+    public Ingredient clone() {
+        Ingredient ingredient = null;
+        try {
+            ingredient = (Ingredient) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
+        // on renvoie le clone
+            return ingredient;
+        }
 }

@@ -48,8 +48,8 @@ public class TimeManagementTest {
         int duration = 30;
         int numberOfHour = 1;
         int intervalDuration = 30;
-        this.user.getCart().getItemList().add(new Item(testCookie5Min, 1));
-        this.user.getCart().getItemList().add(new Item(testCookie10Min, 1));
+        this.user.getCart().getItemSet().add(new Item(testCookie5Min, 1));
+        this.user.getCart().getItemSet().add(new Item(testCookie10Min, 1));
         createChef(startingHour, finishingHour);
         createChef(startingHour, finishingHour);
         createChef(startingHour, finishingHour);
@@ -77,8 +77,8 @@ public class TimeManagementTest {
 
         int numberOfHour = 3;
         int intervalDuration = 45;
-        this.user.getCart().getItemList().add(new Item(testCookie10Min, 1));
-        this.user.getCart().getItemList().add(new Item(testCookie10Min, 1));
+        this.user.getCart().getItemSet().add(new Item(testCookie10Min, 1));
+        this.user.getCart().getItemSet().add(new Item(testCookie10Min, 1));
         createChef(startingHour, finishingHour);
 
 
@@ -105,8 +105,8 @@ public class TimeManagementTest {
 
         int numberOfHour = 3;
         int intervalDuration = 45;
-        this.user.getCart().getItemList().add(new Item(testCookie10Min, 1));
-        this.user.getCart().getItemList().add(new Item(testCookie10Min, 1));
+        this.user.getCart().getItemSet().add(new Item(testCookie10Min, 1));
+        this.user.getCart().getItemSet().add(new Item(testCookie10Min, 1));
         createChef(startingHour, finishingHour);
         createChef(10, 12);
 
