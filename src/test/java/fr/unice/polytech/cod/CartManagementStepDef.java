@@ -75,7 +75,7 @@ public class CartManagementStepDef {
     public void a_non_empty_cart_with_cookie(int nbCookies) {
         if(nbCookies <= 0) return;
         cart = user.getCart();
-        cart.getItemList().add(new Item(testCookie, nbCookies));
+        cart.getItemSet().add(new Item(testCookie, nbCookies));
         TimeSlot timeSlot=new TimeSlot(new TimeClock(8,0),new TimeClock(8,15));
         List<TimeSlot> timeSlots=new ArrayList<>();
         timeSlots.add(timeSlot);
@@ -159,10 +159,11 @@ public class CartManagementStepDef {
     }
     @Then("a cookie is added to his cart")
     public void a_cookie_is_added_to_his_cart() {
-        assertEquals(2, user.getCart().getItemList().size());
+        assertEquals(2, user.getCart().getItemSet().size());
     }
     @Then("his cart has one item less")
     public void his_cart_has_one_item_less() {
+        System.out.println(cart.getItemSet().size());
        assertEquals(1, cart.getItemQuantity("Cookie au chocolat"));
     }
     @Then("he receive a discount for his next order")
@@ -271,8 +272,8 @@ public class CartManagementStepDef {
         Map<Ingredient, Double> taxes = new HashMap<>();
         taxes.put(dough, 5.0);
         cart.getStore().fillStock(ingredients, taxes);
-        cart.getItemList().clear();
-        cart.getItemList().add(item);
+        cart.getItemSet().clear();
+        cart.getItemSet().add(item);
         pendingOrder = new Order(cart, user);
         inProgressOrder = new Order(cart, user);
         user.getOrders().add(pendingOrder);

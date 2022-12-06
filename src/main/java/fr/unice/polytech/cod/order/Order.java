@@ -8,8 +8,8 @@ import fr.unice.polytech.cod.user.fidelityAccount.Discount;
 import fr.unice.polytech.cod.helper.UpdatableObject;
 import fr.unice.polytech.cod.user.User;
 
-import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public class Order extends UpdatableObject {
     protected OrderState orderState;
@@ -30,7 +30,7 @@ public class Order extends UpdatableObject {
     }
 
     private double computeTotalPrice() {
-        List<Item> items = this.cart.getItemList();
+        Set<Item> items = this.cart.getItemSet();
         double totalPrice = 0;
         for (Item item : items) {
             Cookie cookie = item.getCookie();

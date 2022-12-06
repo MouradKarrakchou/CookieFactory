@@ -9,7 +9,6 @@ import fr.unice.polytech.cod.order.OrderState;
 import fr.unice.polytech.cod.schedule.Interval;
 import fr.unice.polytech.cod.exceptions.InvalidStoreException;
 import fr.unice.polytech.cod.store.Store;
-import fr.unice.polytech.cod.store.SurpriseBasket;
 import fr.unice.polytech.cod.data.StoreLocation;
 import fr.unice.polytech.cod.user.fidelityAccount.Discount;
 import fr.unice.polytech.cod.user.fidelityAccount.FidelityAccount;
@@ -111,8 +110,8 @@ public class User {
         return userOrders;
     }
 
-    public List<Item> getAllItemsFromCart() {
-        return cart.getItemList();
+    public Set<Item> getAllItemsFromCart() {
+        return cart.getItemSet();
     }
 
     public Item getItemFromCart(String itemName) throws Exception {
@@ -128,7 +127,7 @@ public class User {
     }
 
     public void removeOneItemFromCart(Item item) {
-        cart.removeOneFromCart(item);
+        cart.removeFromCart(item);
     }
 
     public void subscribeToFidelityAccount(String name, String email, String password) {
