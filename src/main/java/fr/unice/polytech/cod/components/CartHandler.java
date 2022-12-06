@@ -7,13 +7,12 @@ import fr.unice.polytech.cod.interfaces.ItemActions;
 import fr.unice.polytech.cod.interfaces.StockExplorer;
 import fr.unice.polytech.cod.order.Bill;
 import fr.unice.polytech.cod.order.Order;
-import fr.unice.polytech.cod.store.Store;
 import fr.unice.polytech.cod.user.Cart;
 import fr.unice.polytech.cod.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
@@ -81,27 +80,41 @@ public class CartHandler implements CartActions {
     }
 
     @Override
-    public Store getStore(Cart cart) {
-        return null; // TODO
+    public Set<Ingredient> generateIngredientsNeeded(Cart cart, Set<Item> items) {
+        Set<Ingredient> neededIngredients = new HashSet<>();
+        // Check the list of items
+        for (Item item : items) {
+            // Generating all needed ingredients for each item
+            for (Ingredient ingredient : item.generateIngredientsNeeded()) {
+                // Merging all needed ingredients together
+                boolean isAdded = false;
+                for (Ingredient neededIngredient : neededIngredients) {
+                    if (neededIngredient.equals(ingredient)) {
+                        neededIngredient.increaseQuantity(ingredient.getQuantity());
+                        isAdded = true;
+                    }
+                }
+                if (!isAdded)
+                    neededIngredients.add(ingredient);
+            }
+        }
+        return neededIngredients;
     }
 
     @Override
-    public Set<Ingredient> generateIngredientsNeeded(Cart cart) {
-        return null; // TODO
-    }
-
-    @Override
-    public List<Item> getItemList(Cart cart) {
-        return null; // TODO
-    }
-
-    @Override
-    public Item findItem(Cart cart, String cookieName) {
-        return null; // TODO
+    public Item findItem(Cart cart, String cookieName) throws Exception {
+        Item itemFounded = cart.itemSet.stream()
+                .filter(item -> cookieName.equals(item.getCookie().getName()))
+                .findAny()
+                .orElse(null);
+        if (itemFounded == null)
+            throw new Exception("Can't find this item into the cart: " + cookieName);
+        else
+            return itemFounded;
     }
 
     @Override
     public boolean isEmpty(Cart cart) {
-        return false; // TODO
+        return cart.itemSet.isEmpty();
     }
 }
