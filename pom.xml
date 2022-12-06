@@ -11,26 +11,21 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>fr.unice.polytech.cf</groupId> <!-- CHANGE ME -->
-    <artifactId>The_Cookie_Factory_K</artifactId> <!-- CHANGE ME -->
-    <version>1.0-SNAPSHOT</version> <!-- CHANGE ME -->
+    <groupId>fr.univ-cotedazur</groupId>
+    <artifactId>cookie-factory</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>very-simple-cookie-factory</name>
+    <description>Very Simple Cookie Factory</description>
 
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>17</java.version>
-        <junit.jupiter.version>5.8.0</junit.jupiter.version>
-        <cucumber.version>7.6.0</cucumber.version>
-   </properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <cucumber.version>7.9.0</cucumber.version>
+    </properties>
 
     <dependencyManagement>
         <dependencies>
-            <dependency>
-                <groupId>org.junit</groupId>
-                <artifactId>junit-bom</artifactId>
-                <version>5.9.0</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
             <dependency>
                 <groupId>io.cucumber</groupId>
                 <artifactId>cucumber-bom</artifactId>
@@ -82,36 +77,16 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.10.1</version>
-                <configuration>
-                    <encoding>UTF-8</encoding>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M7</version>
                 <configuration>
                     <properties>
-                        <!-- Work around. Surefire does not include enough
-                             information to disambiguate between different
-                             examples and scenarios. -->
                         <configurationParameters>
                             cucumber.junit-platform.naming-strategy=long
                         </configurationParameters>
                     </properties>
                 </configuration>
             </plugin>
-
-            <plugin>
-                <groupId>org.sonarsource.scanner.maven</groupId>
-                <artifactId>sonar-maven-plugin</artifactId>
-                <version>3.9.1.2184</version>
-            </plugin>
-
         </plugins>
     </build>
+
 </project>
