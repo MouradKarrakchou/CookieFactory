@@ -28,9 +28,8 @@ public class Store extends UpdatableObject {
     public static int orderNumber = 0;
     Map<Ingredient, Double> taxes;
     CookieBook cookieBook;
-    public TimeClock openHour=new TimeClock(8,0);
-    public TimeClock closeHour=new TimeClock(18,0);
-    StoreManager storeManager;
+    public TimeClock openHour = new TimeClock(8,0);
+    public TimeClock closeHour = new TimeClock(18,0);
     PartyCookieStoreManager partyCookieStoreManager;
 
     public Store(String name) {
@@ -73,20 +72,6 @@ public class Store extends UpdatableObject {
         return(intervals);
     }
 
-    /**
-     * //TODO : Remove
-     * LEGACY : Please use spring instead
-     * For a given set of ingredients check if there is enough of these ingredients in the stock.
-     *
-     * @param ingredients - The given set of ingredients to check.
-     * @return boolean - If there is enough of these ingredients in the stock.
-     */
-    public boolean hasEnoughIngredients(Set<Ingredient> ingredients) {
-        for (Ingredient ingredient : ingredients)
-            if (!stock.hasEnough(ingredient)) return false;
-        return true;
-    }
-
     public void setOrderList(List<Order> orderList) {
         this.orderList = new ArrayList<>(orderList);
     }
@@ -125,14 +110,6 @@ public class Store extends UpdatableObject {
         }
     }
 
-
-    public void setStoreManager(StoreManager storeManager) {
-        this.storeManager = storeManager;
-    }
-
-    public StoreManager getStoreManager() {
-        return storeManager;
-    }
 
     public TimeClock getOpenHour() {
         return openHour;
@@ -221,17 +198,6 @@ public class Store extends UpdatableObject {
         taxes.put(ingredient, tax);
     }
 
-    /**
-     * Return the available cookies based on the stock of the store
-     * @return The list of available cookies
-     */
-    public List<Cookie> getAvailableCookie() {
-        List<Cookie> cookieAvailable = new ArrayList<>();
-        cookieBook.getCookies().stream()
-                .filter(cookie -> hasEnoughIngredients(cookie.getIngredients()))
-                .forEach(cookieAvailable::add);
-        return cookieAvailable;
-    }
 
     public boolean hasPartyChef() {
         return this.partyCookieStoreManager.hasPartyChef();
