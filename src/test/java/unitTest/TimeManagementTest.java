@@ -24,7 +24,7 @@ import static org.junit.Assert.assertTrue;
 public class TimeManagementTest {
     private User user;
     private final IngredientCatalog ingredientCatalog = IngredientCatalog.instance;
-    private final StoreLocation storeLocation = StoreLocation.intance;
+    private final StoreLocation storeLocation = StoreLocation.instance;
 
 
     @BeforeEach

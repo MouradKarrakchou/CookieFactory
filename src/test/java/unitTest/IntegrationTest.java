@@ -28,7 +28,7 @@ public class IntegrationTest {
 
     @Test
     void orderingTest() throws InvalidStoreException {
-        user = new User(new Cart(), StoreLocation.intance);
+        user = new User(new Cart(), StoreLocation.instance);
         user.subscribeToFidelityAccount("Kalem", "kamel@gmail.coml", "123456");
 
         // Check if the store has been associated

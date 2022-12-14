@@ -49,7 +49,7 @@ public class CartManagementStepDef {
     List<Order> historic;
 
     private final IngredientCatalog ingredientCatalog = IngredientCatalog.instance;
-    private final StoreLocation storeLocation = StoreLocation.intance;
+    private final StoreLocation storeLocation = StoreLocation.instance;
 
     @Given("a user")
     public void a_user() {

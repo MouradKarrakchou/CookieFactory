@@ -9,7 +9,7 @@ import java.util.List;
 
 public class StoreLocation {
     private final List<Store> storeList;
-    public static StoreLocation intance = new StoreLocation();
+    public static StoreLocation instance = new StoreLocation();
 
     private StoreLocation(){
         storeList = new ArrayList<>();
