@@ -3,12 +3,14 @@ package fr.unice.polytech.cod.components;
 import fr.unice.polytech.cod.food.ingredient.Ingredient;
 import fr.unice.polytech.cod.interfaces.StockExplorer;
 import fr.unice.polytech.cod.interfaces.StockModifier;
-import fr.unice.polytech.cod.store.Stock;
+import fr.unice.polytech.cod.pojo.Stock;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+@Component
 public class StockComponent implements StockExplorer, StockModifier {
 
     @Override
@@ -24,15 +26,15 @@ public class StockComponent implements StockExplorer, StockModifier {
      * @return If the stock has enough ingredient
      */
     @Override
-    public boolean hasEnoughIngredient(Stock stock, Ingredient ingredient) {
-        Optional<Ingredient> optionalIngredient = findIngredient(stock, ingredient);
-        if (optionalIngredient.isEmpty())
+    public boolean hasEnoughIngredients(Stock stock, Ingredient ingredient) {
+        Optional<Ingredient> _ingredient = findIngredient(stock, ingredient);
+        if (_ingredient.isEmpty())
             return false;
-        return optionalIngredient.get().getQuantity() >= ingredient.getQuantity();
+        return _ingredient.get().getQuantity() >= ingredient.getQuantity();
     }
 
     /**
-     * Check if the stock has enough of the given ingredients
+     * Check if the stock has enough of the given set of ingredients
      *
      * @param stock The stock to check the ingredients
      * @param ingredients the ingredients to check
@@ -41,7 +43,7 @@ public class StockComponent implements StockExplorer, StockModifier {
     @Override
     public boolean hasEnoughIngredients(Stock stock, Set<Ingredient> ingredients) {
         for (Ingredient ingredient : ingredients)
-            if (!stock.hasEnough(ingredient)) return false;
+            if (!hasEnoughIngredients(stock, ingredient)) return false;
         return true;
     }
 
@@ -74,7 +76,7 @@ public class StockComponent implements StockExplorer, StockModifier {
     }
 
     /**
-     * Add an ingredient
+     * Add a clone of the ingredient to the stock
      * @param stock The stock to add the ingredient
      * @param ingredient The ingredient to add
      */
@@ -92,7 +94,7 @@ public class StockComponent implements StockExplorer, StockModifier {
     }
 
     /**
-     * Add ingredients
+     * Add a clone of each ingredient of the list to the stock
      * @param stock The stock to add the ingredient
      * @param ingredients The set of ingredients to add
      */

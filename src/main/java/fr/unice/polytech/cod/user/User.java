@@ -1,6 +1,6 @@
 package fr.unice.polytech.cod.user;
 
-import fr.unice.polytech.cod.food.Item;
+import fr.unice.polytech.cod.pojo.Item;
 import fr.unice.polytech.cod.helper.Display;
 import fr.unice.polytech.cod.food.Cookie;
 import fr.unice.polytech.cod.order.Bill;
@@ -9,7 +9,7 @@ import fr.unice.polytech.cod.order.OrderState;
 import fr.unice.polytech.cod.schedule.Interval;
 import fr.unice.polytech.cod.exceptions.InvalidStoreException;
 import fr.unice.polytech.cod.store.Store;
-import fr.unice.polytech.cod.data.StoreLocation;
+import fr.unice.polytech.cod.pojo.StoreLocation;
 import fr.unice.polytech.cod.user.fidelityAccount.Discount;
 import fr.unice.polytech.cod.user.fidelityAccount.FidelityAccount;
 

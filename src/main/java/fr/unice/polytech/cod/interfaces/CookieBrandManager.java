@@ -1,6 +1,6 @@
 package fr.unice.polytech.cod.interfaces;
 
-import fr.unice.polytech.cod.data.StoreLocation;
+import fr.unice.polytech.cod.pojo.StoreLocation;
 import fr.unice.polytech.cod.food.Cookie;
 import fr.unice.polytech.cod.store.BrandManager;
 

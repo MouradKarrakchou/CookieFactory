@@ -46,25 +46,11 @@ public class Cookie implements Saleable, Cloneable {
     }
 
     /**
-     * Give the set of all ingredients needed to produce one cookie base on its recipe.
-     *
-     * @return The set of all ingredients needed.
-     */
-    public Set<Ingredient> getIngredients() {
-        Set<Ingredient> ingredients = new HashSet<>();
-
-        if (dough != null) ingredients.add(dough);
-        if (flavour != null) ingredients.add(flavour);
-        ingredients.addAll(toppingList);
-        return ingredients;
-    }
-
-    /**
      * Give the set of all ingredients cloned needed to produce one cookie base on its recipe.
      *
      * @return The set of all ingredients cloned needed.
      */
-    public Set<Ingredient> getIngredientsCloned() {
+    public Set<Ingredient> getIngredients() {
         Set<Ingredient> ingredients = new HashSet<>();
 
         if (dough != null) ingredients.add(dough.clone());

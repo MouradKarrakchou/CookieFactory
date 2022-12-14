@@ -1,6 +1,7 @@
 package fr.unice.polytech.cod.store;
 
-import fr.unice.polytech.cod.data.CookieBook;
+import fr.unice.polytech.cod.pojo.CookieBook;
+import fr.unice.polytech.cod.pojo.Stock;
 import fr.unice.polytech.cod.decorator_pattern.PartyCookieComponent;
 import fr.unice.polytech.cod.food.Cookie;
 import fr.unice.polytech.cod.food.ingredient.Ingredient;
@@ -73,6 +74,8 @@ public class Store extends UpdatableObject {
     }
 
     /**
+     * //TODO : Remove
+     * LEGACY : Please use spring instead
      * For a given set of ingredients check if there is enough of these ingredients in the stock.
      *
      * @param ingredients - The given set of ingredients to check.

@@ -1,7 +1,7 @@
 package fr.unice.polytech.cod.order;
 
 import fr.unice.polytech.cod.user.fidelityAccount.Discount;
-import fr.unice.polytech.cod.food.Item;
+import fr.unice.polytech.cod.pojo.Item;
 import fr.unice.polytech.cod.food.Cookie;
 import fr.unice.polytech.cod.store.Store;
 

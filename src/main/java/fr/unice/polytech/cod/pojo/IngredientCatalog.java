@@ -1,4 +1,4 @@
-package fr.unice.polytech.cod.data;
+package fr.unice.polytech.cod.pojo;
 
 import fr.unice.polytech.cod.food.ingredient.Dough;
 import fr.unice.polytech.cod.food.ingredient.Flavour;

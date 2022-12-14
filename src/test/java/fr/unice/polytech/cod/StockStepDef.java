@@ -1,7 +1,7 @@
 package fr.unice.polytech.cod;
 
 import fr.unice.polytech.cod.food.ingredient.Ingredient;
-import fr.unice.polytech.cod.store.Stock;
+import fr.unice.polytech.cod.pojo.Stock;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;

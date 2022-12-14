@@ -1,9 +1,7 @@
 package unitTest;
 
-import fr.unice.polytech.cod.data.IngredientCatalog;
-import fr.unice.polytech.cod.data.StoreLocation;
-import fr.unice.polytech.cod.food.Cookie;
-import fr.unice.polytech.cod.food.Item;
+import fr.unice.polytech.cod.pojo.IngredientCatalog;
+import fr.unice.polytech.cod.pojo.StoreLocation;
 import fr.unice.polytech.cod.food.ingredient.Ingredient;
 import fr.unice.polytech.cod.exceptions.InvalidStoreException;
 import fr.unice.polytech.cod.order.Bill;

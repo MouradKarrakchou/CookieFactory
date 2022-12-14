@@ -1,7 +1,7 @@
 package fr.unice.polytech.cod.interfaces;
 
 import fr.unice.polytech.cod.food.ingredient.Ingredient;
-import fr.unice.polytech.cod.store.Stock;
+import fr.unice.polytech.cod.pojo.Stock;
 
 import java.util.List;
 

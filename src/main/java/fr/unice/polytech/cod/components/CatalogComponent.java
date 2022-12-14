@@ -1,6 +1,6 @@
 package fr.unice.polytech.cod.components;
 
-import fr.unice.polytech.cod.data.IngredientCatalog;
+import fr.unice.polytech.cod.pojo.IngredientCatalog;
 import fr.unice.polytech.cod.food.ingredient.Dough;
 import fr.unice.polytech.cod.food.ingredient.Flavour;
 import fr.unice.polytech.cod.food.ingredient.Ingredient;

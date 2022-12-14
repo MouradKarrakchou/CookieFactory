@@ -1,6 +1,6 @@
 package fr.unice.polytech.cod.user.fidelityAccount;
 
-import fr.unice.polytech.cod.food.Item;
+import fr.unice.polytech.cod.pojo.Item;
 import fr.unice.polytech.cod.helper.Display;
 import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.order.OrderState;
