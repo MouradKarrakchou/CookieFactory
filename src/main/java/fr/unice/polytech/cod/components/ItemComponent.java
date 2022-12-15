@@ -4,10 +4,12 @@ import fr.unice.polytech.cod.food.Cookie;
 import fr.unice.polytech.cod.food.Item;
 import fr.unice.polytech.cod.food.ingredient.Ingredient;
 import fr.unice.polytech.cod.interfaces.ItemActions;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Set;
 
+@Component
 public class ItemComponent implements ItemActions {
     @Override
     public void updateQuantity(Item item, int value) {

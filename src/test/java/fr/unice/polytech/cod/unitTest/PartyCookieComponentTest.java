@@ -1,4 +1,4 @@
-package unitTest;
+package fr.unice.polytech.cod.unitTest;
 
 import fr.unice.polytech.cod.decorator_pattern.PartyCookieComponent;
 import fr.unice.polytech.cod.decorator_pattern.PartyRecipe;

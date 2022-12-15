@@ -14,10 +14,12 @@ import fr.unice.polytech.cod.store.Store;
 import fr.unice.polytech.cod.user.Cart;
 import fr.unice.polytech.cod.user.User;
 import fr.unice.polytech.cod.user.fidelityAccount.FidelityAccount;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
 
+@Component
 public class UserComponent implements UserAction, UserInteraction {
     @Override
     public boolean chooseCookies(User user, Cookie cookie, int quantity) {

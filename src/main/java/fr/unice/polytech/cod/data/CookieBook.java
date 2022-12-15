@@ -42,7 +42,6 @@ public class CookieBook {
                 new Cooking(Cooking.CookingState.CHEWY),
                 10));
 
-        // TODO : Add recipes here.
     }
 
     /**

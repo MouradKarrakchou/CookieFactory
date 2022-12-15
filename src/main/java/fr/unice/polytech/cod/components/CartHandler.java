@@ -21,11 +21,13 @@ public class CartHandler implements CartActions {
     StockExplorer stockExplorer;
     ItemActions itemActions;
 
+    /*
     @Autowired
     public CartHandler(StockExplorer stockExplorer, ItemActions itemActions) {
         this.stockExplorer = stockExplorer;
         this.itemActions = itemActions;
     }
+    */
 
     /**
      * If the store as the ingredients, add an item to the cart

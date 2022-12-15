@@ -1,4 +1,4 @@
-package fr.unice.polytech.cod;
+package fr.unice.polytech.cod.cucumber;
 
 import fr.unice.polytech.cod.components.UserComponent;
 import fr.unice.polytech.cod.data.CookieBook;
@@ -23,6 +23,7 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.cucumber.spring.CucumberContextConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -30,7 +31,6 @@ import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
 public class CartManagementStepDef {
 
     @Autowired

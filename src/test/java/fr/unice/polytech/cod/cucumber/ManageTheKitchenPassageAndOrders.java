@@ -1,4 +1,4 @@
-package fr.unice.polytech.cod;
+package fr.unice.polytech.cod.cucumber;
 
 import fr.unice.polytech.cod.data.CookieBook;
 import fr.unice.polytech.cod.order.Bill;
