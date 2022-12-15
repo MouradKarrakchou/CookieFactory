@@ -2,7 +2,7 @@ package fr.unice.polytech.cod.user;
 
 import fr.unice.polytech.cod.helper.Display;
 import fr.unice.polytech.cod.schedule.Interval;
-import fr.unice.polytech.cod.food.Item;
+import fr.unice.polytech.cod.pojo.Item;
 import fr.unice.polytech.cod.food.ingredient.Ingredient;
 import fr.unice.polytech.cod.order.Bill;
 import fr.unice.polytech.cod.order.Order;

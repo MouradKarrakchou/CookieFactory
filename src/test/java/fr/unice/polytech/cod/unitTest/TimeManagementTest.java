@@ -1,9 +1,9 @@
 package fr.unice.polytech.cod.unitTest;
 
-import fr.unice.polytech.cod.data.IngredientCatalog;
-import fr.unice.polytech.cod.data.StoreLocation;
+import fr.unice.polytech.cod.pojo.IngredientCatalog;
+import fr.unice.polytech.cod.pojo.StoreLocation;
 import fr.unice.polytech.cod.food.Cookie;
-import fr.unice.polytech.cod.food.Item;
+import fr.unice.polytech.cod.pojo.Item;
 import fr.unice.polytech.cod.schedule.Interval;
 import fr.unice.polytech.cod.schedule.TimeClock;
 import fr.unice.polytech.cod.schedule.TimeSlot;
@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class TimeManagementTest {
     private User user;
     private final IngredientCatalog ingredientCatalog = IngredientCatalog.instance;
-    private final StoreLocation storeLocation = StoreLocation.intance;
+    private final StoreLocation storeLocation = StoreLocation.instance;
 
 
     @BeforeEach

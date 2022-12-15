@@ -6,7 +6,7 @@ public class Ingredient implements Cloneable {
     protected String name;
     //price per g
     protected double price;
-    protected double quantity;
+    public double quantity;
 
     public Ingredient(Ingredient i){
         this.name = i.name;
@@ -14,11 +14,12 @@ public class Ingredient implements Cloneable {
         this.quantity = i.quantity;
     }
 
-    public Ingredient(String name, double price, double quantity) {  //Ce constructeur c'est juste pour les tests !?
+    public Ingredient(String name, double price, double quantity) {
         this.name = name;
         this.price = price;
         this.quantity = quantity;
     }
+
     /**
      * Multiply the quantity by n. Used in Item to get the total of quantity needed for n cookies.
      *
@@ -71,7 +72,6 @@ public class Ingredient implements Cloneable {
 
     @Override
     public String toString() {
-
         return name;
     }
 

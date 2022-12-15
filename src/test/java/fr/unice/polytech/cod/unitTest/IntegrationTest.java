@@ -1,9 +1,7 @@
 package fr.unice.polytech.cod.unitTest;
 
-import fr.unice.polytech.cod.data.IngredientCatalog;
-import fr.unice.polytech.cod.data.StoreLocation;
-import fr.unice.polytech.cod.food.Cookie;
-import fr.unice.polytech.cod.food.Item;
+import fr.unice.polytech.cod.pojo.IngredientCatalog;
+import fr.unice.polytech.cod.pojo.StoreLocation;
 import fr.unice.polytech.cod.food.ingredient.Ingredient;
 import fr.unice.polytech.cod.exceptions.InvalidStoreException;
 import fr.unice.polytech.cod.order.Bill;
@@ -30,7 +28,7 @@ public class IntegrationTest {
 
     @Test
     void orderingTest() throws InvalidStoreException {
-        user = new User(new Cart(), StoreLocation.intance);
+        user = new User(new Cart(), StoreLocation.instance);
         user.subscribeToFidelityAccount("Kalem", "kamel@gmail.coml", "123456");
 
         // Check if the store has been associated

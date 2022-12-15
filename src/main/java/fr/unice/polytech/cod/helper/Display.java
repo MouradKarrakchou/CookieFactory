@@ -1,6 +1,6 @@
 package fr.unice.polytech.cod.helper;
 
-import fr.unice.polytech.cod.food.Item;
+import fr.unice.polytech.cod.pojo.Item;
 import fr.unice.polytech.cod.food.Cookie;
 
 import java.util.List;

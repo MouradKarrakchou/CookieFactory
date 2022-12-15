@@ -1,6 +1,6 @@
 package fr.unice.polytech.cod.store;
 
-import fr.unice.polytech.cod.data.StoreLocation;
+import fr.unice.polytech.cod.pojo.StoreLocation;
 import fr.unice.polytech.cod.food.Cookie;
 
 public class BrandManager {

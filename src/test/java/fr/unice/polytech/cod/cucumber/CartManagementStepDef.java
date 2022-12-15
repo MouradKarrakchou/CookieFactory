@@ -1,8 +1,7 @@
 package fr.unice.polytech.cod.cucumber;
 
 import fr.unice.polytech.cod.components.UserComponent;
-import fr.unice.polytech.cod.data.CookieBook;
-import fr.unice.polytech.cod.data.IngredientCatalog;
+import fr.unice.polytech.cod.pojo.*;
 import fr.unice.polytech.cod.food.ingredient.Dough;
 import fr.unice.polytech.cod.food.ingredient.Ingredient;
 import fr.unice.polytech.cod.food.*;
@@ -13,9 +12,7 @@ import fr.unice.polytech.cod.schedule.Interval;
 import fr.unice.polytech.cod.schedule.TimeClock;
 import fr.unice.polytech.cod.schedule.TimeSlot;
 import fr.unice.polytech.cod.exceptions.InvalidStoreException;
-import fr.unice.polytech.cod.store.Stock;
 import fr.unice.polytech.cod.store.Store;
-import fr.unice.polytech.cod.data.StoreLocation;
 import fr.unice.polytech.cod.store.*;
 import fr.unice.polytech.cod.user.Cart;
 import fr.unice.polytech.cod.user.User;
@@ -52,7 +49,7 @@ public class CartManagementStepDef {
     List<Order> historic;
 
     private final IngredientCatalog ingredientCatalog = IngredientCatalog.instance;
-    private final StoreLocation storeLocation = StoreLocation.intance;
+    private final StoreLocation storeLocation = StoreLocation.instance;
 
     @Given("a user")
     public void a_user() {

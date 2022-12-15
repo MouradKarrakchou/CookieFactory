@@ -1,9 +1,9 @@
 package fr.unice.polytech.cod.components;
 
-import fr.unice.polytech.cod.data.StoreLocation;
+import fr.unice.polytech.cod.pojo.StoreLocation;
 import fr.unice.polytech.cod.exceptions.InvalidStoreException;
 import fr.unice.polytech.cod.food.Cookie;
-import fr.unice.polytech.cod.food.Item;
+import fr.unice.polytech.cod.pojo.Item;
 import fr.unice.polytech.cod.interfaces.UserAction;
 import fr.unice.polytech.cod.interfaces.UserInteraction;
 import fr.unice.polytech.cod.order.Bill;

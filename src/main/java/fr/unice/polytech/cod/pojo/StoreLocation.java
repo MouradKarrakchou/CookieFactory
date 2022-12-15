@@ -1,4 +1,4 @@
-package fr.unice.polytech.cod.data;
+package fr.unice.polytech.cod.pojo;
 
 import fr.unice.polytech.cod.food.Cookie;
 import fr.unice.polytech.cod.exceptions.InvalidStoreException;
@@ -9,7 +9,7 @@ import java.util.List;
 
 public class StoreLocation {
     private final List<Store> storeList;
-    public static StoreLocation intance = new StoreLocation();
+    public static StoreLocation instance = new StoreLocation();
 
     private StoreLocation(){
         storeList = new ArrayList<>();

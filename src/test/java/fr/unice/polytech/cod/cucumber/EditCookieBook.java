@@ -1,8 +1,8 @@
 package fr.unice.polytech.cod.cucumber;
 
-import fr.unice.polytech.cod.data.CookieBook;
-import fr.unice.polytech.cod.data.IngredientCatalog;
-import fr.unice.polytech.cod.data.StoreLocation;
+import fr.unice.polytech.cod.pojo.CookieBook;
+import fr.unice.polytech.cod.pojo.IngredientCatalog;
+import fr.unice.polytech.cod.pojo.StoreLocation;
 import fr.unice.polytech.cod.food.Cookie;
 import fr.unice.polytech.cod.food.ingredient.Cooking;
 import fr.unice.polytech.cod.food.ingredient.Mix;

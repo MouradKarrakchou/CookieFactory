@@ -1,6 +1,5 @@
 package fr.unice.polytech.cod.cucumber;
 
-import fr.unice.polytech.cod.data.CookieBook;
 import fr.unice.polytech.cod.order.Bill;
 import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.order.OrderState;
@@ -8,7 +7,7 @@ import fr.unice.polytech.cod.schedule.Schedule;
 import fr.unice.polytech.cod.store.Chef;
 import fr.unice.polytech.cod.store.ChefState;
 import fr.unice.polytech.cod.store.Store;
-import fr.unice.polytech.cod.data.StoreLocation;
+import fr.unice.polytech.cod.pojo.StoreLocation;
 import fr.unice.polytech.cod.user.Cart;
 import fr.unice.polytech.cod.user.User;
 import io.cucumber.java.en.And;
@@ -33,7 +32,7 @@ public class ManageTheKitchenPassageAndOrders {
     }
     @And("An order at the state \"([^\"]*)\"$")
     public void an_order_at_the_state(OrderState orderState) {
-        order = new Order(null, orderState, new User(new Cart(),StoreLocation.intance));
+        order = new Order(null, orderState, new User(new Cart(),StoreLocation.instance));
         if(orderState == OrderState.READY) chef.associateOrder(order);
     }
 
