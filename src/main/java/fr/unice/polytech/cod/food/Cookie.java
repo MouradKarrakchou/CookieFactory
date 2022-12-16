@@ -82,12 +82,11 @@ public class Cookie implements Saleable, Cloneable {
 
     @Override
     public double getPriceByStore(Store store) {
-        Map<Ingredient, Double> taxes = store.getTaxes();
-        double price = dough.getQuantity() * dough.getPrice() + taxes.get(dough);
-        if(flavour != null) price += flavour.getQuantity() * flavour.getPrice() + taxes.get(flavour);
+        double price = dough.getQuantity() * dough.getPrice();
+        if(flavour != null) price += flavour.getQuantity() * flavour.getPrice() ;
         if(!toppingList.isEmpty()) {
             for(Topping topping : toppingList)
-                price += topping.getQuantity() * topping.getPrice() +taxes.get(topping);
+                price += topping.getQuantity() * topping.getPrice() ;
         }
         return price;
     }

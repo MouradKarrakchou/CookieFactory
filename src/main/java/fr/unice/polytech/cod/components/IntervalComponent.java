@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 
 public class IntervalComponent implements IntervalManager {
+    @Autowired
+    TimeSlotComponent timeSlotComponent;
     @Override
     public void reserve(Interval interval) {
         interval.getTimeSlots().forEach(timeSlot -> timeSlot.setReserved(true));
@@ -16,7 +18,7 @@ public class IntervalComponent implements IntervalManager {
 
     @Override
     public void validate(Interval interval, Order order) {
-        interval.getTimeSlots().forEach(timeSlot -> timeSlot.associate(order));
+        interval.getTimeSlots().forEach(timeSlot -> timeSlotComponent.associate(timeSlot,order));
     }
 
     @Override
