@@ -69,9 +69,13 @@ public class CartManagementStepDef {
     StockExplorer stockExplorer;
     @Autowired
     IntervalManager intervalManager;
-
     @Autowired
     CatalogExplorer catalogExplorer;
+    @Autowired
+    ScheduleActions scheduleActions;
+
+    @Autowired
+    StoreFinder storeFinder;
 
     @Autowired
     OrderStatesAction orderStatesAction;
@@ -338,22 +342,21 @@ public class CartManagementStepDef {
 
     @Given("a manager")
     public void aManager() {
-        storeManager=new StoreManager(store);
+        storeManager = new StoreManager(store);
         store.setStoreManager(storeManager);
     }
 
     @When("the manager changes the opening time of the store from {int} to {int}")
     public void theManagerChangesTheOpeningTimeOfTheStoreFromTo(int startingHour, int endHour) {
-        this.storeManager.changeOpeningHour(new TimeClock(startingHour,0),new TimeClock(endHour,0));
+        storeModifier.changeOpeningHour(store, new TimeClock(startingHour,0),new TimeClock(endHour,0));
     }
 
     @Then("the schedule of the employees start from {int} to {int}")
     public void theScheduleOfTheEmployeesStartFromTo(int startingHour, int endHour) {
         for(Chef chef:store.getListChef()){
-            List<TimeSlot> timeSlots=chef.getSchedule().getDaySlot(0).getTimeSlots();
+            List<TimeSlot> timeSlots = scheduleActions.getDaySlot(chef.getSchedule(), 0).getTimeSlots();
             assertEquals(0,timeSlots.get(0).getStartTime().compareTo(new TimeClock(startingHour,0)));
             assertEquals(0,timeSlots.get(timeSlots.size()-1).getStartTime().compareTo(new TimeClock(endHour,0)));
-
         }
     }
 
@@ -366,7 +369,7 @@ public class CartManagementStepDef {
     }
     @When("a client ask for his history")
     public void a_client_ask_for_his_history() throws Exception {
-        user.subscribeToFidelityAccount("name","email","pw");
+        userAction.subscribeToFidelityAccount(this.user, "name","email","pw");
         user.getSubscription().get().addOrder(retrieveOrder);
 
         historic = user.getHistory();
