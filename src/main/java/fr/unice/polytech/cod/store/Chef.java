@@ -24,19 +24,6 @@ public class Chef {
         this.schedule = new Schedule(store);
     }
 
-
-    public boolean isAvailable() {
-        return state == ChefState.AVAILABLE;
-    }
-
-    public void startWork() throws Exception {
-        if(this.orderToPrepare.isEmpty())
-            throw new Exception("No order to prepare");
-        Order order = this.orderToPrepare.get();
-        this.state = ChefState.UNAVAILABLE;
-        order.updateState(OrderState.IN_PROGRESS);
-    }
-
     public void makeOtherActivityDuringLeftTime() {
         //TODO he can clean, help or take a break
     }
@@ -71,5 +58,13 @@ public class Chef {
 
     public void setOrderToPrepare(Optional<Order> orderToPrepare) {
         this.orderToPrepare = orderToPrepare;
+    }
+
+    public ChefState getState() {
+        return state;
+    }
+
+    public void setSchedule(Schedule schedule) {
+        this.schedule = schedule;
     }
 }

@@ -17,7 +17,7 @@ public class Order extends UpdatableObject {
     protected final User user;
     protected Discount discount;
     protected SmsNotifier smsNotifier;
-    
+
     public Order(Cart cart, User user) {
         super(7_200_000); // An order expire when 2h is reached
         this.cart = cart;
