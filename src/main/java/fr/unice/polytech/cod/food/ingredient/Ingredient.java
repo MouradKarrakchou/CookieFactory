@@ -4,8 +4,7 @@ import java.util.Objects;
 
 public class Ingredient implements Cloneable {
     protected String name;
-    //price per g
-    protected double price;
+    protected double price; //price per g
     private double quantity;
 
     public Ingredient(Ingredient i){
@@ -20,19 +19,6 @@ public class Ingredient implements Cloneable {
         this.quantity = quantity;
     }
 
-    /**
-     * Multiply the quantity by n. Used in Item to get the total of quantity needed for n cookies.
-     *
-     * @param n - The number to multiply the quantity by.
-     */
-    public void multiplyQuantity(int n) {
-        quantity *= n;
-    }
-
-    public void increaseQuantity(double quantity){
-        this.quantity += quantity;
-    }
-
     public double getQuantity(){
         return quantity;
     }
@@ -43,6 +29,10 @@ public class Ingredient implements Cloneable {
 
     public double getPrice() {
         return price;
+    }
+
+    public void setPrice(double price){
+        this.price = price;
     }
 
     public String getName() {
@@ -79,8 +69,9 @@ public class Ingredient implements Cloneable {
         return name;
     }
 
+    @Override
     public Ingredient clone() {
-        Ingredient ingredient = null;
+        Ingredient ingredient;
         try {
             ingredient = (Ingredient) super.clone();
         } catch (CloneNotSupportedException e) {
@@ -89,4 +80,5 @@ public class Ingredient implements Cloneable {
         // on renvoie le clone
             return ingredient;
         }
+
 }

@@ -7,10 +7,21 @@ import java.util.List;
 import java.util.Set;
 
 public interface ItemActions {
-    // Setters
+
+    /**
+     * Increase the quantity by a given value.
+     *
+     * @param item - The item.
+     * @param value - The value to increase the quantity.
+     */
     void updateQuantity(Item item, int value);
 
-    // Getters
+    /**
+     * Generate a set of all needed ingredients according to the cookie on the list and its quantity.
+     *
+     * @param item - The item.
+     * @return the set of needed ingredients
+     */
     Set<Ingredient> generateIngredientsNeeded(Item item);
     Set<Ingredient> generateIngredientsNeeded(Set<Item> items);
 

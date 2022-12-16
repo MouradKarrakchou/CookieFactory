@@ -23,13 +23,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import static java.lang.Thread.sleep;
 
 @Component
 public class OrderComponent implements OrderActions, OrderStatesAction {
     StockComponent stockComponent;
     CartHandler cartHandler;
-
     ChefAction chefAction;
 
     @Autowired

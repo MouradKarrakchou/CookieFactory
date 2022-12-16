@@ -1,7 +1,6 @@
 package fr.unice.polytech.cod.components;
 
 import fr.unice.polytech.cod.interfaces.ChefAction;
-import fr.unice.polytech.cod.interfaces.OrderActions;
 import fr.unice.polytech.cod.interfaces.OrderStatesAction;
 import fr.unice.polytech.cod.interfaces.ScheduleActions;
 import fr.unice.polytech.cod.order.Order;
@@ -25,7 +24,7 @@ public class ChefComponent implements ChefAction {
     private final OrderStatesAction orderStatesAction;
 
     @Autowired
-    public ChefComponent(ScheduleActions scheduleActions, OrderStatesAction orderStatesAction){
+    public ChefComponent(ScheduleActions scheduleActions, OrderStatesAction orderStatesAction) {
         this.scheduleActions = scheduleActions;
         this.orderStatesAction = orderStatesAction;
     }
@@ -47,7 +46,7 @@ public class ChefComponent implements ChefAction {
 
     @Override
     public void startWork(Chef chef) throws Exception {
-        if(chef.getOrderToPrepare().isEmpty())
+        if (chef.getOrderToPrepare().isEmpty())
             throw new Exception("No order to prepare");
         Order order = chef.getOrderToPrepare().get();
         chef.setState(ChefState.UNAVAILABLE);
@@ -56,15 +55,17 @@ public class ChefComponent implements ChefAction {
 
     @Override
     public List<Interval> getIntervalsAvailable(Chef chef, int minutes, int numberOfDaysBeforeTheOrder) {
-        return(chef.getSchedule().getIntervals(minutes,numberOfDaysBeforeTheOrder));
+        return scheduleActions.getIntervals(chef.getSchedule(), minutes, numberOfDaysBeforeTheOrder);
     }
+
     @Override
     public void updateCurrentOrder(Chef chef, TimeClock timeClock, int numberOfDaysBeforeTheOrder) {
-        chef.setOrderToPrepare(chef.getSchedule().getOrderToPrepare(numberOfDaysBeforeTheOrder,timeClock));
+        scheduleActions.getOrderToPrepare(chef.getSchedule(), numberOfDaysBeforeTheOrder, timeClock);
     }
+
     @Override
     public void terminateCurrentOrder(Chef chef) {
-        if(chef.getOrderToPrepare().isPresent())
+        if (chef.getOrderToPrepare().isPresent())
             orderStatesAction.updateState(chef.getOrderToPrepare().get(), OrderState.READY);
     }
 
