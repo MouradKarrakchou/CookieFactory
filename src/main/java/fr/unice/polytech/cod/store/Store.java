@@ -97,14 +97,6 @@ public class Store extends UpdatableObject {
         return cookieBook;
     }
 
-    /**
-     * Check if there are new obsoletes orders for Too Good to Go
-     */
-    private void checkObsoleteOrders() {
-        if(!obsoleteOrders.isEmpty())
-            for(Order order : obsoleteOrders)
-                surpriseBaskets.add(new SurpriseBasket(order));
-    }
 
     /**
      * Add the order to the obsolete orders list

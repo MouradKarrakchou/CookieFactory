@@ -3,10 +3,7 @@ package fr.unice.polytech.cod.components;
 import fr.unice.polytech.cod.exceptions.CookieAlreadyExistingException;
 import fr.unice.polytech.cod.exceptions.NotMatchingCatalogRequirementException;
 import fr.unice.polytech.cod.food.Cookie;
-import fr.unice.polytech.cod.interfaces.ChefAction;
-import fr.unice.polytech.cod.interfaces.StockExplorer;
-import fr.unice.polytech.cod.interfaces.StoreAccessor;
-import fr.unice.polytech.cod.interfaces.StoreModifier;
+import fr.unice.polytech.cod.interfaces.*;
 import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.schedule.TimeClock;
 import fr.unice.polytech.cod.store.Chef;
@@ -19,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class StoreComponent implements StoreModifier, StoreAccessor {
+public class StoreComponent implements StoreModifier, StoreAccessor, StoreAction {
 
 
     private final ChefAction chefAction;
@@ -41,6 +38,7 @@ public class StoreComponent implements StoreModifier, StoreAccessor {
         }
     }
 
+
     /**
      * Return the cookies a store can make based on the stock of the store and the recipes in the store's cookie book
      * @return The list of available cookies
@@ -54,15 +52,17 @@ public class StoreComponent implements StoreModifier, StoreAccessor {
                 .forEach(cookieAvailable::add);
         return cookieAvailable;
     }
+
     @Override
     public void addChef(Store store,Chef chef){
         store.getListChef().add(chef);
     }
 
+    @Override
     /**
      * Check if there are new obsoletes orders for Too Good to Go
      */
-    private void checkObsoleteOrders(Store store) {
+    public void checkObsoleteOrders(Store store) {
         if(!store.getObsoleteOrders().isEmpty())
             for(Order order : store.getObsoleteOrders())
                 store.getSurpriseBaskets().add(new SurpriseBasket(order));

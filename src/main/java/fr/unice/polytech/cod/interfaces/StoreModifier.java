@@ -14,5 +14,5 @@ public interface StoreModifier {
      * @param close
      */
     void changeOpeningHour(Store store, TimeClock open, TimeClock close);
-    void addChef(Chef chef);
+    void addChef(Store store,Chef chef);
 }
