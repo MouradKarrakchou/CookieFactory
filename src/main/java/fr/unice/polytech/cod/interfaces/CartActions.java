@@ -1,5 +1,6 @@
 package fr.unice.polytech.cod.interfaces;
 
+import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.pojo.Item;
 import fr.unice.polytech.cod.food.ingredient.Ingredient;
 import fr.unice.polytech.cod.order.Bill;
@@ -37,9 +38,37 @@ public interface CartActions {
      */
     Bill validate(Cart cart, User user) throws Exception;
 
+    /**
+     * Cancel the client order.
+     *
+     * @param cart - The cart.
+     * @param order - Order to cancel.
+     */
+    void cancelOrder(Cart cart, Order order);
+
     // Getters
     Set<Ingredient> generateIngredientsNeeded(Cart cart, Set<Item> items);
+
+    /**
+     * Find a item in a cart.
+     *
+     * @param cart - The cart.
+     * @param cookieName - A cookie name.
+     * @return The cookie.
+     * @throws Exception if the cookie doesn't in the cart.
+     */
     Item findItem(Cart cart, String cookieName) throws Exception;
+
+    int getItemQuantity(Cart cart, String itemName);
+
+    int getDuration(Cart cart);
+
+    /**
+     * Is cart empty
+     *
+     * @param cart - The cart
+     * @return if the cart is empty
+     */
     boolean isEmpty(Cart cart);
 
 }

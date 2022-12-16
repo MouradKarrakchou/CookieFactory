@@ -5,12 +5,9 @@ import fr.unice.polytech.cod.interfaces.ItemActions;
 import fr.unice.polytech.cod.schedule.Interval;
 import fr.unice.polytech.cod.pojo.Item;
 import fr.unice.polytech.cod.food.ingredient.Ingredient;
-import fr.unice.polytech.cod.order.Bill;
-import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.store.Store;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.time.Duration;
 import java.time.Instant;
 import java.util.*;
 
@@ -35,76 +32,6 @@ public class Cart {
 
     public void showCart() {
         Display.showItems(itemSet);
-    }
-
-
-    public Set<Item> getItemSet() {
-        return itemSet;
-    }
-
-
-    /**
-     * Cancel the client order
-     * @param order to cancel
-     */
-    public void cancelOrder(Order order) {
-        store.removeOrder(order);
-        this.interval.freedInterval();
-        canceled++;
-        Instant time = Instant.now();
-
-        cancelPenalty(time);
-    }
-
-    /**
-     * Manage the necessity of the penalty
-     * @param time at which the client has canceled his order
-     */
-    private void cancelPenalty(Instant time) {
-        if(canceled == 2) {
-            boolean isCanceledTwiceInARow = isCanceledTwiceInARow(time);
-            if(isCanceledTwiceInARow)
-                penalty(time);
-            else
-                canceled = 0;
-        }
-
-        lastTimeCanceled = time;
-    }
-
-    /**
-     * Check if another order has been canceled less than 8 minutes ago
-     * @param time at which the order has been canceled
-     * @return true if 2 orders has been canceled in 8 minutes or less
-     */
-    private boolean isCanceledTwiceInARow(Instant time) {
-        return Duration.between(lastTimeCanceled, time).toMinutes() <= 8;
-    }
-
-    /**
-     * Apply the 10 minutes penalty
-     * @param time at which the order has been canceled and at which the penalty starts
-     */
-    private void penalty(Instant time) {
-        endPenaltyTime = time.plusSeconds(600); //10 minutes
-        penalty = true;
-    }
-
-    /**
-     * Check if the penalty is over and if so, update the attribute
-     * @param time at which we check if the there is the penalty
-     * @return true if there still is the penalty
-     */
-    public boolean isTherePenalty(Instant time) {
-        if(endPenaltyTime != null)
-            if(time.isAfter(endPenaltyTime))
-                penalty = false;
-
-        return penalty;
-    }
-
-    public boolean isEmpty() {
-        return this.itemSet.isEmpty();
     }
 
     /**
@@ -138,53 +65,28 @@ public class Cart {
         return this.store;
     }
 
-    public Item getItem(String itemName) throws Exception {
-        Item itemFounded = itemSet.stream()
-                .filter(item -> itemName.equals(item.getCookie().getName()))
-                .findAny()
-                .orElse(null);
-        if (itemFounded == null)
-            throw new Exception("Can't find this item into the cart: " + itemName);
-        else
-            return itemFounded;
+    public void add(Item item) {
+        this.itemSet.add(item);
     }
 
-    public int getItemQuantity(String itemName) {
-        Item item = null;
-        try {
-            item = getItem(itemName);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        if (item == null) return 0;
-        return item.getQuantity();
-    }
-
-    public void setStore(Store store) {
-        this.store = store;
+    public Interval getInterval() {
+        return this.interval;
     }
 
     public void setInterval(Interval intervals) {
         this.interval = intervals;
     }
 
-    public Interval getInterval() {
-         return this.interval;
+    public Set<Item> getItemSet() {
+        return itemSet;
     }
 
-    public int getDuration() {
-        int duration = 15;
-        for(Item item: this.itemSet){
-            duration+= item.getCookie().getPreparationTime();
-        }
-        return duration;
+    public void setStore(Store store) {
+        this.store = store;
     }
+
     public int getCanceled() {
         return canceled;
-    }
-
-    public void add(Item item) {
-        this.itemSet.add(item);
     }
 
     public void setCanceled(int canceled) {
@@ -214,4 +116,6 @@ public class Cart {
     public boolean isPenalty() {
         return penalty;
     }
+
+
 }

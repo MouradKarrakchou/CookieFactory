@@ -79,8 +79,8 @@ public class IntegrationTest {
         assertFalse(user.chooseCookies(store.getCookieBook().getCookie("Cookie à la vanille"), 2));
 
         try {
-            assertEquals(20, user.getCart().getItem("Cookie au chocolat").getQuantity());
-            assertEquals(19, user.getCart().getItem("Cookie à la vanille").getQuantity());
+            assertEquals(20, user.getCart().findItem("Cookie au chocolat").getQuantity());
+            assertEquals(19, user.getCart().findItem("Cookie à la vanille").getQuantity());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

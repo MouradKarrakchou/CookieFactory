@@ -115,7 +115,7 @@ public class User {
     }
 
     public Item getItemFromCart(String itemName) throws Exception {
-        return cart.getItem(itemName);
+        return cart.findItem(itemName);
     }
 
     public StoreLocation getStoreLocation() {

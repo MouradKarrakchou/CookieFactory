@@ -22,12 +22,14 @@ public class CartHandler implements CartActions, CartPenalty {
     StockExplorer stockExplorer;
     ItemActions itemActions;
     IngredientActions ingredientActions;
+    OrderActions orderActions;
 
     @Autowired
-    public CartHandler(StockExplorer stockExplorer, ItemActions itemActions, IngredientActions ingredientActions) {
+    public CartHandler(StockExplorer stockExplorer, ItemActions itemActions, IngredientActions ingredientActions, OrderActions orderActions) {
         this.stockExplorer = stockExplorer;
         this.itemActions = itemActions;
         this.ingredientActions = ingredientActions;
+        this.orderActions = orderActions;
     }
 
     @Override
@@ -69,12 +71,22 @@ public class CartHandler implements CartActions, CartPenalty {
         if (user.hasFidelityAccount())
             user.useDiscount(order);
         user.addOrder(order);
-        cart.getStore().addOrder(order, ingredientsNeeded);
+        orderActions.addOrder(cart.getStore().getStock(), cart.getStore().getOrderList(), order, ingredientsNeeded);
 
         cart.getInterval().validate(order);
         cart.getItemSet().clear();
 
         return new Bill(order);
+    }
+
+    @Override
+    public void cancelOrder(Cart cart, Order order) {
+        store.removeOrder(order);
+        cart.getInterval().freedInterval();
+        cart.setCanceled(cart.getCanceled() + 1);
+        Instant time = Instant.now();
+
+        cancelPenalty(cart, time);
     }
 
     @Override
@@ -109,6 +121,27 @@ public class CartHandler implements CartActions, CartPenalty {
             throw new Exception("Can't find this item into the cart: " + cookieName);
         else
             return itemFounded;
+    }
+
+    @Override
+    public int getItemQuantity(Cart cart, String itemName) {
+        Item item = null;
+        try {
+            item = findItem(cart, itemName);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        if (item == null) return 0;
+        return item.getQuantity();
+    }
+
+    @Override
+    public int getDuration(Cart cart) {
+        int duration = 15;
+        for(Item item: cart.getItemSet()){
+            duration+= item.getCookie().getPreparationTime();
+        }
+        return duration;
     }
 
     @Override
@@ -148,4 +181,6 @@ public class CartHandler implements CartActions, CartPenalty {
         cart.setEndPenaltyTime(time.plusSeconds(600));  //10 minutes
         cart.setPenalty(true);
     }
+
+
 }
