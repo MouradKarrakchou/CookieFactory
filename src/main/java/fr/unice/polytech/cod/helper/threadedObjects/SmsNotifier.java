@@ -13,6 +13,7 @@ public class SmsNotifier extends UpdatableObject {
 
     @Override
     protected void OnTimeReached() {
-        user.notify("Your cookie is ready, come get it in our store.");
+        if(user.getFidelityAccount() != null)
+            System.out.println(user.getFidelityAccount().getName() + " has been notified");
     }
 }

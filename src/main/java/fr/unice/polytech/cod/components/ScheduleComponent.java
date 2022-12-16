@@ -1,8 +1,10 @@
 package fr.unice.polytech.cod.components;
 
 import fr.unice.polytech.cod.interfaces.ScheduleActions;
+import fr.unice.polytech.cod.interfaces.TimeSlotAction;
 import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.schedule.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -11,6 +13,13 @@ import java.util.Optional;
 
 @Component
 public class ScheduleComponent implements ScheduleActions {
+
+    TimeSlotAction timeSlotAction;
+
+    @Autowired
+    public ScheduleComponent(TimeSlotAction timeSlotAction) {
+        this.timeSlotAction = timeSlotAction;
+    }
 
     @Override
     public List<Interval> getIntervals(Schedule schedule, int minutes, int numberOfDaysBeforeTheOrder) {
@@ -38,7 +47,7 @@ public class ScheduleComponent implements ScheduleActions {
         //Slot available that are one after the other
         int slotAvailableCount = 0;
         for (int k = 0; k < daySlot.getTimeSlots().size(); k++) {
-            if (daySlot.getTimeSlots().get(k).isAvailable()) slotAvailableCount++;
+            if (timeSlotAction.isAvailable(daySlot.getTimeSlots().get(k))) slotAvailableCount++;
             if (slotAvailableCount == numberOfSlotNeeded) {
                 //we will see if we can create another Interval with the next Timeslot and without the first TimeSlot of this group.
                 slotAvailableCount--;

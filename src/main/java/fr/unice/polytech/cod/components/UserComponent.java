@@ -3,6 +3,7 @@ package fr.unice.polytech.cod.components;
 import fr.unice.polytech.cod.exceptions.InvalidStoreException;
 import fr.unice.polytech.cod.food.Cookie;
 import fr.unice.polytech.cod.interfaces.UserAction;
+import fr.unice.polytech.cod.interfaces.UserEndpoint;
 import fr.unice.polytech.cod.interfaces.UserRequest;
 import fr.unice.polytech.cod.order.Bill;
 import fr.unice.polytech.cod.order.Order;
@@ -15,56 +16,53 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class UserComponent {
+public class UserComponent implements UserEndpoint {
 
     @Autowired
     UserAction userAction;
     @Autowired
     UserRequest userRequest;
 
-    User user;
 
-    public UserComponent(){
-        user = new User();
-    }
+    public UserComponent(){}
 
-    public List<Store> viewStoreAvailable() {
+    public List<Store> viewStoreAvailable(User user) {
         return userRequest.viewStoreAvailable();
     }
 
-    public Store selectStore(String storeName) throws InvalidStoreException {
+    public Store selectStore(User user, String storeName) throws InvalidStoreException {
         return userAction.selectStore(storeName, user.getCart());
     }
 
-    public List<Cookie> viewStoreCatalogue(){
-        return userRequest.viewCatalog(user.getStore());
+    public List<Cookie> viewStoreCatalogue(User user){
+        return userRequest.viewCatalog(user.getCart().getStore());
     }
 
-    public boolean addCookieToCart(Cookie cookie, int quantity){
+    public boolean addCookieToCart(User user, Cookie cookie, int quantity){
         return userAction.addCookies(cookie, quantity, user.getCart());
     }
 
-    public Bill validateCart() throws Exception {
+    public Bill validateCart(User user) throws Exception {
         return userAction.validateCart(user, user.getCart()); //TODO aller corriger les methodes de CartHandler
     }
 
-    public boolean removeCookieFromCart(Cookie cookie, int quantity){
+    public boolean removeCookieFromCart(User user, Cookie cookie, int quantity){
         return userAction.removeCookies(cookie, quantity, user.getCart());
     }
 
-    public List<Interval> getRetrieveCookieHours(int numberOfDayBeforeTheOrder){
-        return userRequest.getAvailableIntervals(user.getStore(), user.getCart(), numberOfDayBeforeTheOrder);
+    public List<Interval> getRetrieveCookieHours(User user, int numberOfDayBeforeTheOrder){
+        return userRequest.getAvailableIntervals(user.getCart().getStore(), user.getCart(), numberOfDayBeforeTheOrder);
     }
 
-    public boolean cancelOrder(Order orderToCancel){
-        return userAction.cancelOrder(user.getCart(), user.getOrders(), orderToCancel);
+    public boolean cancelOrder(User user, Order orderToCancel){
+        return userAction.cancelOrder(user.getCart(), user.getUserOrders(), orderToCancel);
     }
 
-    public void createFidelityAccount(String name, String email, String password){
+    public void createFidelityAccount(User user, String name, String email, String password){
         userAction.subscribeToFidelityAccount(user, name, email, password);
     }
 
-    public List<Order> getPreviousOrders() throws Exception {
+    public List<Order> getPreviousOrders(User user) throws Exception {
         return userRequest.getHistory(user.getFidelityAccount());
     }
 }
