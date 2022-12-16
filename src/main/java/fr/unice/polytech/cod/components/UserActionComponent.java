@@ -87,7 +87,7 @@ public class UserActionComponent implements UserAction {
         user.getUserOrders().add(order);
         FidelityAccount fidelityAccount = user.getFidelityAccount();
         if (fidelityAccount != null)
-            fidelityAccount.addOrder(order);
+            fidelityAccountComponent.addOrder(fidelityAccount, order);
     }
 
     @Override
