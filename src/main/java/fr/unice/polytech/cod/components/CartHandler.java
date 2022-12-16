@@ -1,5 +1,6 @@
 package fr.unice.polytech.cod.components;
 
+import fr.unice.polytech.cod.helper.Display;
 import fr.unice.polytech.cod.interfaces.*;
 import fr.unice.polytech.cod.pojo.Item;
 import fr.unice.polytech.cod.food.ingredient.Ingredient;
@@ -145,8 +146,18 @@ public class CartHandler implements CartActions, CartPenalty {
     }
 
     @Override
+    public void add(Cart cart, Item item) {
+        cart.getItemSet().add(item);
+    }
+
+    @Override
     public boolean isEmpty(Cart cart) {
         return cart.getItemSet().isEmpty();
+    }
+
+    @Override
+    public void showCart(Cart cart) {
+        Display.showItems(cart.getItemSet());
     }
 
     @Override

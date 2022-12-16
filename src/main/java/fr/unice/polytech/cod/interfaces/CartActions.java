@@ -46,7 +46,13 @@ public interface CartActions {
      */
     void cancelOrder(Cart cart, Order order);
 
-    // Getters
+    /**
+     * Take a list of ingredients and return a set of the ingredients needed.
+     *
+     * @param cart - The cart.
+     * @param items - list of ingredients.
+     * @return a set of the ingredients needed
+     */
     Set<Ingredient> generateIngredientsNeeded(Cart cart, Set<Item> items);
 
     /**
@@ -59,20 +65,35 @@ public interface CartActions {
      */
     Item findItem(Cart cart, String cookieName) throws Exception;
 
+    /**
+     * Calcul the
+     *
+     * @param cart
+     * @param itemName
+     * @return
+     */
     int getItemQuantity(Cart cart, String itemName);
 
     int getDuration(Cart cart);
 
     /**
-     * Is cart empty
+     * Add a item in the cart.
      *
      * @param cart - The cart
-     * @return if the cart is empty
+     * @param item - The item to add to the cart.
+     */
+    void add(Cart cart, Item item);
+
+    /**
+     * Is cart empty.
+     *
+     * @param cart - The cart.
+     * @return if the cart is empty.
      */
     boolean isEmpty(Cart cart);
 
     /**
-     * Show all the cookies in our order and give the choice to validate or add/delete more cookies
+     * Show all the cookies in our order and give the choice to validate or add/delete more cookies.
      */
     void showCart(Cart cart);
 }
