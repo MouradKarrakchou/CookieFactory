@@ -61,15 +61,13 @@ public class StoreComponent implements StoreModifier, StoreAccessor {
     }
 
     @Override
-    public void addCookieStore(Store store, Cookie cookie, String storeName) throws Exception {
-        Store store1 = this.storeFinder.findStore(storeName);
-        cookieBookManager.addCookieRecipe(store1.getCookieBook(), cookie);
+    public void addCookieStore(Store store, Cookie cookie) throws Exception {
+        cookieBookManager.addCookieRecipe(store.getCookieBook(), cookie);
     }
 
     @Override
-    public void removeCookieStore(Store store, Cookie cookie, String storeName) throws Exception {
-        Store store1 = this.storeFinder.findStore(storeName);
-        cookieBookManager.removeCookieRecipe(store1.getCookieBook(), cookie);
+    public void removeCookieStore(Store store, Cookie cookie) throws Exception {
+        cookieBookManager.removeCookieRecipe(store.getCookieBook(), cookie);
     }
 
     @Override
