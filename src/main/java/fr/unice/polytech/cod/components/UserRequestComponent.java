@@ -80,8 +80,7 @@ public class UserRequestComponent implements UserRequest {
     }
 
     @Override
-    public List<Order> getHistory(User user) throws Exception {
-        FidelityAccount fidelityAccount = user.getFidelityAccount();
+    public List<Order> getHistory(FidelityAccount fidelityAccount) throws Exception {
         if(fidelityAccount == null)
             throw new Exception("Your not subscribe to a fidelity account");
         return fidelityAccount.getRetrieveOrder();    }

@@ -60,5 +60,11 @@ public class UserComponent {
         return userAction.cancelOrder(user.getCart(), user.getOrders(), orderToCancel);
     }
 
+    public void createFidelityAccount(String name, String email, String password){
+        userAction.subscribeToFidelityAccount(user, name, email, password);
+    }
 
+    public List<Order> getPreviousOrders() throws Exception {
+        return userRequest.getHistory(user.getFidelityAccount());
+    }
 }

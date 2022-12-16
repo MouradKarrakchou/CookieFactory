@@ -28,5 +28,5 @@ public interface UserRequest {
     Optional<FidelityAccount> getSubscription(User user) ;
     boolean hasFidelityAccount(User user);
     void notify(User user, String message);
-    List<Order> getHistory(User user) throws Exception;
+    List<Order> getHistory(FidelityAccount fidelityAccount) throws Exception;
 }
