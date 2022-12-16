@@ -71,10 +71,6 @@ public class Store {
         return taxes;
     }
 
-    public void setTaxes(Map<Ingredient, Double> taxes) {
-        this.taxes = taxes;
-    }
-
     public List<Chef> getListChef() {
         return listChef;
     }
@@ -105,11 +101,6 @@ public class Store {
                 this.updateTaxes(ingredient, taxesValues.get(ingredient));
         }
     }
-
-    private void updateTaxes(Ingredient ingredient, double tax) {
-        taxes.put(ingredient, tax);
-    }
-
 
     public boolean hasPartyChef() {
         return this.partyCookieStoreManager.hasPartyChef();
