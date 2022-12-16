@@ -8,6 +8,7 @@ import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.order.OrderState;
 import fr.unice.polytech.cod.pojo.Stock;
 import fr.unice.polytech.cod.store.Chef;
+import fr.unice.polytech.cod.store.ChefState;
 import fr.unice.polytech.cod.store.Store;
 import fr.unice.polytech.cod.store.SurpriseBasket;
 import fr.unice.polytech.cod.user.User;
@@ -72,13 +73,19 @@ public class OrderComponent implements OrderActions, OrderStatesAction {
         }else
             throw new Exception("Order doesn't exist");
     }
+    /**
+     * Associate the chef with an order, the chef is now unavailable
+     * @param orderToPrepare
+     */
     @Override
     public void associateOrder(Chef chef, Order orderToPrepare) {
         if(chef.isAvailable()) {
-            chef.associateOrder(orderToPrepare);
+            chef.setOrderToPrepare(Optional.of(orderToPrepare));
+            chef.setState(ChefState.UNAVAILABLE);
             orderToPrepare.updateState(OrderState.IN_PROGRESS);
         }
     }
+    @Override
     public void removeOrder(List<Order> orderList,Order order){
         orderList.remove(order);
     }
