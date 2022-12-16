@@ -331,9 +331,9 @@ public class CartManagementStepDef {
     @Then("the user is notified")
     public void the_user_is_notified() {
         if(!user.getCart().getStore().getOrderList().contains(pendingOrder))
-            assertTrue(user.cancelOrder(pendingOrder));
+            assertTrue(userAction.cancelOrder(user.getCart(), user.getUserOrders(), pendingOrder));
         if(user.getCart().getStore().getOrderList().contains(inProgressOrder))
-            assertFalse(user.cancelOrder(inProgressOrder));
+            assertFalse(userAction.cancelOrder(user.getCart(), user.getUserOrders(), inProgressOrder));
     }
 
     @Then("the order cannot be canceled")
