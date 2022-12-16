@@ -15,7 +15,6 @@ import java.util.*;
 public class Store {
     String name;
     List<Order> orderList;
-    List<SurpriseBasket> surpriseBaskets;
     List<FidelityAccount> fidelityAccountList;
     List<Chef> listChef;
     public final Stock stock;
@@ -30,7 +29,6 @@ public class Store {
         this.name=name;
         this.listChef=new ArrayList<>();
         this.orderList = new ArrayList<>();
-        this.surpriseBaskets = new ArrayList<>();
         this.fidelityAccountList = new ArrayList<>();
         this.stock = new Stock();
         listChef.add(new Chef(this));
@@ -81,11 +79,6 @@ public class Store {
         return cookieBook;
     }
 
-    public List<SurpriseBasket> getSurpriseBaskets() {
-        return surpriseBaskets;
-    }
-
-
     public void addFidelityAccount(FidelityAccount fidelityAccount, int todayDay, int day, int hour, int minute) {
         int waitingDay = Math.abs(day - todayDay);
         int waitingTime = waitingDay*24*60*60*1000; //days in milliseconds
@@ -119,10 +112,6 @@ public class Store {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public void setSurpriseBaskets(List<SurpriseBasket> surpriseBaskets) {
-        this.surpriseBaskets = surpriseBaskets;
     }
 
     public void setFidelityAccountList(List<FidelityAccount> fidelityAccountList) {
