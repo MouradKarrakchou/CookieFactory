@@ -365,9 +365,9 @@ public class CartManagementStepDef {
     @When("a client ask for his history")
     public void a_client_ask_for_his_history() throws Exception {
         userAction.subscribeToFidelityAccount(this.user, "name","email","pw");
-        user.getSubscription().get().addOrder(retrieveOrder);
+        fidelityAccountManager.addOrder(userRequest.getSubscription(this.user).get(), retrieveOrder);
 
-        historic = user.getHistory();
+        historic = userRequest.getHistory(user.getFidelityAccount());
     }
     @Then("he gets all his past orders")
     public void he_gets_all_his_past_orders() {
