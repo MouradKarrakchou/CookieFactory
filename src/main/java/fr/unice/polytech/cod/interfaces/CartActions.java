@@ -25,7 +25,7 @@ public interface CartActions {
      * @param cart - The cart.
      * @param item - The item present in the cart.
      */
-    void removeFromCart(Cart cart, Item item);
+    Boolean removeFromCart(Cart cart, Item item);
 
     /**
      * Validate the cart and create an order, that is added to the user and the sore.
