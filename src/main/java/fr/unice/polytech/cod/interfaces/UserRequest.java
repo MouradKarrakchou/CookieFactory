@@ -13,9 +13,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserRequest {
-    List<Cookie> viewCatalog(User user);
-    List<Store> viewStoreAvailable(User user);
-    void recapCart(User user);
+    List<Cookie> viewCatalog(Store store);
+    List<Store> viewStoreAvailable();
+    void recapCart();
     List<Interval> getAvailableIntervals(User user, int minutesNeeded, int numberOfDaysBeforeTheOrder);
     Cart getCart(User user);
     List<Order> getOrders(User user);
