@@ -16,10 +16,13 @@ public interface UserAction {
 
     Store selectStore(String name, Cart cart) throws InvalidStoreException;
 
-    void chooseInterval(User user, Interval interval);
-    Bill validateCart(User user) throws Exception;
+    void chooseInterval(User user, Interval interval, Cart cart);
+
+    Bill validateCart(User user, Cart cart) throws Exception;
+
     void addOrder(User user, Order order);
-    void removeOneItemFromCart(User user, Item item);
+    void removeOneItemFromCart(User user, Item item, Cart cart);
+
     void subscribeToFidelityAccount(User user, String name, String email, String password) ;
     void useDiscount(User user, Order order);
     boolean cancelOrder(User user, Order order);

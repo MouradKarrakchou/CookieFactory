@@ -181,4 +181,12 @@ public class User {
             throw new Exception("Your not subscribe to a fidelity account");
         return fidelityAccount.getRetrieveOrder();
     }
+
+    public FidelityAccount getFidelityAccount() {
+        return fidelityAccount;
+    }
+
+    public void setFidelityAccount(FidelityAccount fidelityAccount) {
+        this.fidelityAccount = fidelityAccount;
+    }
 }
