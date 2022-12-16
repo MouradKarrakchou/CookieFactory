@@ -74,6 +74,9 @@ public class CartManagementStepDef {
     @Autowired
     ScheduleActions scheduleActions;
 
+    @Autowired
+    StoreFinder storeFinder;
+
     @Given("a user")
     public void a_user() {
         this.user = new User();
