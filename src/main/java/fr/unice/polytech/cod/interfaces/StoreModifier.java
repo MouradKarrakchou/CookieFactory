@@ -6,7 +6,10 @@ import fr.unice.polytech.cod.helper.threadedObjects.MailNotifier;
 import fr.unice.polytech.cod.schedule.TimeClock;
 import fr.unice.polytech.cod.store.Chef;
 import fr.unice.polytech.cod.store.Store;
+import fr.unice.polytech.cod.store.SurpriseBasket;
 import fr.unice.polytech.cod.user.fidelityAccount.FidelityAccount;
+
+import java.util.List;
 
 public interface StoreModifier {
     /**
@@ -33,4 +36,6 @@ public interface StoreModifier {
      */
     boolean setTax(Store store, String ingredient, double newPrice);
     void addFidelityAccount(Store store, FidelityAccount fidelityAccount, int todayDay, int day, int hour, int minute);
+
+    void updateSurpriseBasket(Store store);
 }
