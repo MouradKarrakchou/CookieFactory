@@ -19,17 +19,22 @@ import java.util.Set;
 
 @Component
 public class CartHandler implements CartActions, CartPenalty {
-    StockExplorer stockExplorer;
-    ItemActions itemActions;
-    IngredientActions ingredientActions;
-    OrderActions orderActions;
+    private StockExplorer stockExplorer;
+    private ItemActions itemActions;
+    private IngredientActions ingredientActions;
+    private OrderActions orderActions;
+    private UserRequestComponent userRequestComponent;
+    private UserActionComponent userActionComponent;
+
 
     @Autowired
-    public CartHandler(StockExplorer stockExplorer, ItemActions itemActions, IngredientActions ingredientActions, OrderActions orderActions) {
+    public CartHandler(StockExplorer stockExplorer, ItemActions itemActions, IngredientActions ingredientActions, OrderActions orderActions, UserRequestComponent userRequestComponent, UserActionComponent userActionComponent) {
         this.stockExplorer = stockExplorer;
         this.itemActions = itemActions;
         this.ingredientActions = ingredientActions;
         this.orderActions = orderActions;
+        this.userRequestComponent = userRequestComponent;
+        this.userActionComponent = userActionComponent;
     }
 
     @Override
@@ -42,7 +47,7 @@ public class CartHandler implements CartActions, CartPenalty {
         else
             cart.getItemSet().add(item);
 
-        if(!stockExplorer.hasEnoughIngredients(cart.store.stock, itemActions.generateIngredientsNeeded(cart.getItemSet()))){
+        if(!stockExplorer.hasEnoughIngredients(cart.getStore().getStock(), itemActions.generateIngredientsNeeded(cart.getItemSet()))){
             removeFromCart(cart, item);
             return false;
         }
@@ -65,13 +70,13 @@ public class CartHandler implements CartActions, CartPenalty {
     public Bill validate(Cart cart, User user) throws Exception {
         Set<Ingredient> ingredientsNeeded = itemActions.generateIngredientsNeeded(cart.itemSet);
         if (!stockExplorer.hasEnoughIngredients(cart.getStore().getStock(), ingredientsNeeded))
-            throw new Exception("Ingrédients indisponibles");
+            throw new Exception("Unavailable Ingredients");
 
         Order order = new Order(cart, user);
 
-        if (user.hasFidelityAccount())
-            user.useDiscount(order);
-        user.addOrder(order);
+        if (userRequestComponent.hasFidelityAccount(user))
+            userActionComponent.useDiscount(user.getFidelityAccount(), order);
+        userActionComponent.addOrder(user, order);
         orderActions.addOrder(cart.getStore().getStock(), cart.getStore().getOrderList(), order, ingredientsNeeded);
 
         cart.getInterval().validate(order);
@@ -126,7 +131,7 @@ public class CartHandler implements CartActions, CartPenalty {
 
     @Override
     public int getItemQuantity(Cart cart, String itemName) {
-        Item item = null;
+        Item item;
         try {
             item = findItem(cart, itemName);
         } catch (Exception e) {

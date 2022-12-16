@@ -31,7 +31,7 @@ public class StockComponent implements StockExplorer, StockModifier {
     /**
      * Check if the stock has enough of the given ingredient
      *
-     * @param stock The stock to check the ingredient
+     * @param stock      The stock to check the ingredient
      * @param ingredient the ingredient to check
      * @return If the stock has enough ingredient
      */
@@ -46,7 +46,7 @@ public class StockComponent implements StockExplorer, StockModifier {
     /**
      * Check if the stock has enough of the given set of ingredients
      *
-     * @param stock The stock to check the ingredients
+     * @param stock       The stock to check the ingredients
      * @param ingredients the ingredients to check
      * @return If the stock has enough ingredients
      */
@@ -59,7 +59,8 @@ public class StockComponent implements StockExplorer, StockModifier {
 
     /**
      * Lock an ingredient
-     * @param stock The stock to lock the ingredient
+     *
+     * @param stock      The stock to lock the ingredient
      * @param ingredient The ingredient to lock
      * @return If the ingredient has been locked
      */
@@ -79,7 +80,7 @@ public class StockComponent implements StockExplorer, StockModifier {
             return false;
 
         // Removing quantity from stock ingredient & add this quantity to locked ingredient
-        stockIngredient.increaseQuantity(-ingredient.getQuantity());
+        ingredientActions.increaseQuantity(stockIngredient, -ingredient.getQuantity());
         addToLockedIngredients(stock, ingredient);
 
         return true;
@@ -87,7 +88,8 @@ public class StockComponent implements StockExplorer, StockModifier {
 
     /**
      * Add a clone of the ingredient to the stock
-     * @param stock The stock to add the ingredient
+     *
+     * @param stock      The stock to add the ingredient
      * @param ingredient The ingredient to add
      */
     @Override
@@ -98,14 +100,15 @@ public class StockComponent implements StockExplorer, StockModifier {
         if (optionalIngredient.isEmpty())
             stock.getIngredients().add(ingredient.clone());
 
-        // If the ingredient is in the stock, we increase the quantity of it.
+            // If the ingredient is in the stock, we increase the quantity of it.
         else
-            optionalIngredient.get().increaseQuantity(ingredient.getQuantity());
+            ingredientActions.increaseQuantity(optionalIngredient.get(), ingredient.getQuantity());
     }
 
     /**
      * Add a clone of each ingredient of the list to the stock
-     * @param stock The stock to add the ingredient
+     *
+     * @param stock       The stock to add the ingredient
      * @param ingredients The set of ingredients to add
      */
     @Override
@@ -116,7 +119,8 @@ public class StockComponent implements StockExplorer, StockModifier {
 
     /**
      * Add an ingredient to the locked stock
-     * @param stock The stock to lock the ingredient
+     *
+     * @param stock      The stock to lock the ingredient
      * @param ingredient If the ingredient has been locked
      */
     private void addToLockedIngredients(Stock stock, Ingredient ingredient) {
@@ -130,6 +134,6 @@ public class StockComponent implements StockExplorer, StockModifier {
 
         // If the ingredient is in the locked stock, we increase the quantity of it.
         else
-            _lockedIngredient.get().increaseQuantity(ingredient.getQuantity());
+            ingredientActions.increaseQuantity(_lockedIngredient.get(), ingredient.getQuantity());
     }
 }
