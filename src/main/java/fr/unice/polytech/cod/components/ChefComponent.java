@@ -34,10 +34,11 @@ public class ChefComponent implements ChefAction {
         chef.setSchedule(new Schedule(store));
     }
 
+    /*
     @Override
     public void associateOrder(Chef chef, Order orderToPrepare) {
         chef.setOrderToPrepare(Optional.of(orderToPrepare));
-    }
+    }*/
 
     @Override
     public boolean isAvailable(Chef chef) {
