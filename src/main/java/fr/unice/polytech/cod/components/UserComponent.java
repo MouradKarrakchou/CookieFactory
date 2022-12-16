@@ -43,7 +43,7 @@ public class UserComponent implements UserEndpoint {
     }
 
     public Bill validateCart(User user) throws Exception {
-        return userAction.validateCart(user, user.getCart()); //TODO aller corriger les methodes de CartHandler
+        return userAction.validateCart(user); //TODO aller corriger les methodes de CartHandler
     }
 
     public boolean removeCookieFromCart(User user, Cookie cookie, int quantity){

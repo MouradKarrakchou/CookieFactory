@@ -12,6 +12,7 @@ import fr.unice.polytech.cod.store.Store;
 import fr.unice.polytech.cod.user.Cart;
 import fr.unice.polytech.cod.user.User;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,6 +22,7 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.*;
 
 
+@SpringBootTest
 public class IntegrationTest {
     /*
 

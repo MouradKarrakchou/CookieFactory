@@ -6,11 +6,13 @@ import fr.unice.polytech.cod.decorator_pattern.decorator.*;
 import fr.unice.polytech.cod.food.ingredient.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 
 import static java.util.List.copyOf;
 
+@SpringBootTest
 public class PartyCookieComponentTest {
 
     @Test

@@ -2,14 +2,13 @@ package fr.unice.polytech.cod.food;
 
 import fr.unice.polytech.cod.food.ingredient.*;
 import fr.unice.polytech.cod.interfaces.Saleable;
-import fr.unice.polytech.cod.store.Store;
 
 import java.util.*;
 
 public class Cookie implements Saleable, Cloneable {
     protected final String name;
-    protected final Dough dough;
-    protected final Flavour flavour;
+    protected Dough dough;
+    protected Flavour flavour;
     protected List<Topping> toppingList; // TODO : Maybe topping should be represented as a set
     protected  Mix mix;
     protected  Cooking cooking;
@@ -81,7 +80,7 @@ public class Cookie implements Saleable, Cloneable {
     }
 
     @Override
-    public double getPriceByStore(Store store) {
+    public double getPrice() {
         double price = dough.getQuantity() * dough.getPrice();
         if(flavour != null) price += flavour.getQuantity() * flavour.getPrice() ;
         if(!toppingList.isEmpty()) {
@@ -91,15 +90,6 @@ public class Cookie implements Saleable, Cloneable {
         return price;
     }
 
-    @Override
-    public double getPriceHT(){
-        double price = dough.getQuantity() * dough.getPrice();
-        if(!toppingList.isEmpty()) {
-            for(Topping topping : toppingList)
-                price += topping.getQuantity() * topping.getPrice();
-        }
-        return price;
-    }
 
     @Override
     public String toString() {
