@@ -59,7 +59,7 @@ public class FidelityAccountComponent implements FidelityAccountManager {
     }
 
     @Override
-    public List<Order> getRetrieveOrder(FidelityAccount fidelityAccount) {
+    public List<Order> getRetrievedOrder(FidelityAccount fidelityAccount) {
         return fidelityAccount.getOrderList().stream().filter(
                 order -> order.getOrderState().equals(OrderState.RETRIEVE)).toList();
     }

@@ -22,6 +22,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 public class IntegrationTest {
+    /*
+
     private Store store;
     private User user;
 
@@ -102,10 +104,12 @@ public class IntegrationTest {
 
         assertFalse(userBill == null);  //TODO bug "méthode getDiscount() dans Order" quand on fait userBill.toString();
 
-/*
+
         aRandom.recapCart();
 
-        Display.displayCookies(aRandom.viewCatalog());*/
+        Display.displayCookies(aRandom.viewCatalog());
+
     }
+    */
 
 }

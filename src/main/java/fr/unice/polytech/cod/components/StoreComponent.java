@@ -6,6 +6,7 @@ import fr.unice.polytech.cod.helper.threadedObjects.MailNotifier;
 import fr.unice.polytech.cod.interfaces.*;
 import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.order.OrderState;
+import fr.unice.polytech.cod.pojo.CookieBook;
 import fr.unice.polytech.cod.schedule.TimeClock;
 import fr.unice.polytech.cod.store.Chef;
 import fr.unice.polytech.cod.store.Store;
@@ -22,12 +23,17 @@ import java.util.Optional;
 public class StoreComponent implements StoreModifier, StoreAccessor {
     private final ChefAction chefAction;
     private final StockExplorer stockExplorer;
+    private final StoreFinder storeFinder;
+    private final CookieBookManager cookieBookManager;
     private final OrderStatesAction orderStatesAction;
 
     @Autowired
+    public StoreComponent(ChefAction chefAction, StockExplorer stockExplorer, StoreFinder storeFinder,CookieBookManager cookieBookManager) {
     public StoreComponent(ChefAction chefAction, StockExplorer stockExplorer, OrderStatesAction orderStatesAction) {
         this.chefAction = chefAction;
         this.stockExplorer = stockExplorer;
+        this.storeFinder = storeFinder;
+        this.cookieBookManager = cookieBookManager;
         this.orderStatesAction = orderStatesAction;
     }
 
@@ -53,6 +59,18 @@ public class StoreComponent implements StoreModifier, StoreAccessor {
     @Override
     public void addChef(Store store,Chef chef){
         store.getListChef().add(chef);
+    }
+
+    @Override
+    public void addCookieStore(Store store, Cookie cookie, String storeName) throws Exception {
+        Store store1 = this.storeFinder.findStore(storeName);
+        cookieBookManager.addCookieRecipe(store1.getCookieBook(), cookie);
+    }
+
+    @Override
+    public void removeCookieStore(Store store, Cookie cookie, String storeName) throws Exception {
+        Store store1 = this.storeFinder.findStore(storeName);
+        cookieBookManager.removeCookieRecipe(store1.getCookieBook(), cookie);
     }
 
     @Override
