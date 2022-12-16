@@ -39,7 +39,7 @@ public class BillCompoment implements BillAction {
         for(Item item : items) {
             Cookie cookie = item.getCookie();
             //Math.round(price * 100) / 100 allows to round the price to 2 figures
-            cookiePrice = Math.round(cookie.getPriceByStore(bill.getOrder().getCart().getStore()) * 100)/100.0;
+            cookiePrice = Math.round(cookie.getPrice() * 100)/100.0;
 
             receipt.append(cookie.getName()).append("..........").append(cookiePrice).append("€\n");
             totalPrice += cookiePrice;

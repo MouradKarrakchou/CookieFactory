@@ -355,4 +355,21 @@ public class CartManagementStepDef {
         Cookie cookie = store.getCookieBook().getCookie(cookieName);
         store.fillStock(cookie.getIngredientsList(), store.getTaxes());
     }
+
+    @When("he order {string} a party cookie {string} customized with additional M&Ms")
+    public void heOrderAPartyCookieCustomizedWithAdditionalMMs(String size, String cookieName) {
+        Cookie cookie = new CookieBook().getCookie(cookieName);
+        HashMap<Ingredient, Boolean> additional= new HashMap<>();
+        additional.put(new Ingredient("M&M's", 1.0, 1), true);
+        PartyCookie partyCookie = new PartyCookie(cookie, getSize(size), additional);
+        user.chooseCookies(partyCookie, 1);
+    }
+    public PartyCookie.CookieSize getSize(String size) throws Exception {
+        return switch (size) {
+            case "L" -> PartyCookie.CookieSize.L;
+            case "XL" -> PartyCookie.CookieSize.XL;
+            case "XXL" -> PartyCookie.CookieSize.XXL;
+            default -> throw new Exception("ERROR incorrect size of cookie");
+        };
+    }
 }
