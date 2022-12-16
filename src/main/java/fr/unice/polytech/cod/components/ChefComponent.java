@@ -1,6 +1,8 @@
 package fr.unice.polytech.cod.components;
 
 import fr.unice.polytech.cod.interfaces.ChefAction;
+import fr.unice.polytech.cod.interfaces.OrderActions;
+import fr.unice.polytech.cod.interfaces.OrderStatesAction;
 import fr.unice.polytech.cod.interfaces.ScheduleActions;
 import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.order.OrderState;
@@ -17,11 +19,13 @@ import java.util.List;
 
 @Component
 public class ChefComponent implements ChefAction {
-    ScheduleActions scheduleActions;
+    private final ScheduleActions scheduleActions;
+    private final OrderStatesAction orderStatesAction;
 
     @Autowired
-    public ChefComponent(ScheduleActions scheduleActions){
+    public ChefComponent(ScheduleActions scheduleActions, OrderStatesAction orderStatesAction){
         this.scheduleActions = scheduleActions;
+        this.orderStatesAction = orderStatesAction;
     }
 
     @Override
@@ -58,6 +62,7 @@ public class ChefComponent implements ChefAction {
     }
     @Override
     public void terminateCurrentOrder(Chef chef) {
-        // TODO
+        if(chef.getOrderToPrepare().isPresent())
+            orderStatesAction.updateState(chef.getOrderToPrepare().get(), OrderState.READY);
     }
 }
