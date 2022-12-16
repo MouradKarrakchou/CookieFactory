@@ -28,8 +28,7 @@ public class StoreComponent implements StoreModifier, StoreAccessor {
     private final OrderStatesAction orderStatesAction;
 
     @Autowired
-    public StoreComponent(ChefAction chefAction, StockExplorer stockExplorer, StoreFinder storeFinder,CookieBookManager cookieBookManager) {
-    public StoreComponent(ChefAction chefAction, StockExplorer stockExplorer, OrderStatesAction orderStatesAction) {
+    public StoreComponent(ChefAction chefAction, StockExplorer stockExplorer, StoreFinder storeFinder,CookieBookManager cookieBookManager, OrderStatesAction orderStatesAction) {
         this.chefAction = chefAction;
         this.stockExplorer = stockExplorer;
         this.storeFinder = storeFinder;
