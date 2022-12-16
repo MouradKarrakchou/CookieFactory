@@ -65,10 +65,6 @@ public class Chef {
         return orderToPrepare;
     }
 
-    public void terminateCurrentOrder(){
-        orderToPrepare.ifPresent(order -> order.updateState(OrderState.READY));
-    }
-
     public void setOrderToPrepare(Optional<Order> orderToPrepare) {
         this.orderToPrepare = orderToPrepare;
     }
