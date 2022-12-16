@@ -71,4 +71,8 @@ public interface CartActions {
      */
     boolean isEmpty(Cart cart);
 
+    /**
+     * Show all the cookies in our order and give the choice to validate or add/delete more cookies
+     */
+    void showCart(Cart cart);
 }

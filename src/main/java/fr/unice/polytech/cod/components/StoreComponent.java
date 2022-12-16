@@ -68,4 +68,8 @@ public class StoreComponent implements StoreModifier, StoreAccessor, StoreAction
                 store.getSurpriseBaskets().add(new SurpriseBasket(order));
     }
 
+    public void addToObsoleteOrders(Store store,Order order) {
+        store.getObsoleteOrders().add(order);
+    }
+
 }

@@ -22,7 +22,7 @@ public class StoreFinderComponent implements StoreFinder {
     }
 
     @Override
-    public List<Store> getStores(StoreLocation storeLocation) {
+    public List<Store> getStores() {
         return storeList;
     }
 

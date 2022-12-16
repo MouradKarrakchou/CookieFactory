@@ -26,6 +26,7 @@ public class UserActionComponent implements UserAction {
 
     @Autowired
     CartActions cartActions;
+    //pas de autowired car on l'instancie comme un singleton donc pas d'injection de dépendance necessaire
     StoreFinder storeFinder = StoreFinderComponent.getInstance();
 
     public UserActionComponent(){}
@@ -102,8 +103,8 @@ public class UserActionComponent implements UserAction {
     @Override
     public boolean cancelOrder(User user, Order order) {
 
-        if (userOrders.contains(order) && order.getOrderState().equals(OrderState.PENDING)) {
-            cart.cancelOrder(order);
+        if (user.getOrders().contains(order) && order.getOrderState().equals(OrderState.PENDING)) {
+            cartActions.cancelOrder(order);
             return true; //Your order has been canceled
         } else
             return false; //Your order is already in progress. You cannot canceled it

@@ -1,6 +1,10 @@
 package fr.unice.polytech.cod.components;
 
 import fr.unice.polytech.cod.food.Cookie;
+import fr.unice.polytech.cod.helper.Display;
+import fr.unice.polytech.cod.interfaces.CartActions;
+import fr.unice.polytech.cod.interfaces.StoreAccessor;
+import fr.unice.polytech.cod.interfaces.StoreFinder;
 import fr.unice.polytech.cod.interfaces.UserRequest;
 import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.pojo.Item;
@@ -10,6 +14,7 @@ import fr.unice.polytech.cod.store.Store;
 import fr.unice.polytech.cod.user.Cart;
 import fr.unice.polytech.cod.user.User;
 import fr.unice.polytech.cod.user.fidelityAccount.FidelityAccount;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -17,19 +22,28 @@ import java.util.Optional;
 
 @Component
 public class UserRequestComponent implements UserRequest {
+    @Autowired
+    CartActions cartActions;
+
+    @Autowired
+    StoreAccessor storeAccessor;
+
+    StoreFinder storeFinder = StoreFinderComponent.getInstance();
+
     @Override
-    public List<Cookie> viewCatalog(User user) {
-        return null;
+    public List<Cookie> viewCatalog(Store store) {
+        return storeAccessor.getAvailableCookie(store);
     }
 
     @Override
-    public List<Store> viewStoreAvailable(User user) {
-        return null;
+    public List<Store> viewStoreAvailable() {
+        return storeFinder.getStores();
     }
 
     @Override
-    public void recapCart(User user) {
-
+    public void recapCart(Cart cart) {
+        Display.title("Your cart:");
+        cartActions.showCart(cart);
     }
 
     @Override
