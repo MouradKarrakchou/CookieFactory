@@ -23,14 +23,12 @@ import java.util.Map;
 public class StoreComponent implements StoreModifier, StoreAccessor {
     private final ChefAction chefAction;
     private final StockExplorer stockExplorer;
-    Map<Ingredient, Double> taxes;
     private final OrderStatesAction orderStatesAction;
 
     @Autowired
     public StoreComponent(ChefAction chefAction, StockExplorer stockExplorer, OrderStatesAction orderStatesAction) {
         this.chefAction = chefAction;
         this.stockExplorer = stockExplorer;
-        this.taxes = new HashMap<>();
         this.orderStatesAction = orderStatesAction;
     }
 
@@ -66,12 +64,12 @@ public class StoreComponent implements StoreModifier, StoreAccessor {
 
     @Override
     public void updateTaxes(Store store, Ingredient ingredient, double tax) {
-        taxes.put(ingredient, tax);
+        store.getTaxes().put(ingredient, tax);
     }
 
     @Override
     public void setTaxes(Store store, Map<Ingredient, Double> taxes) {
-        this.taxes = taxes;
+        store.setTaxes(taxes);
     }
 
     @Override

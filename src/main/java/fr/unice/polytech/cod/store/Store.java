@@ -1,10 +1,10 @@
 package fr.unice.polytech.cod.store;
 
+import fr.unice.polytech.cod.helper.threadedObjects.MailNotifier;
 import fr.unice.polytech.cod.pojo.CookieBook;
 import fr.unice.polytech.cod.pojo.Stock;
 import fr.unice.polytech.cod.decorator_pattern.PartyCookieComponent;
 import fr.unice.polytech.cod.food.ingredient.Ingredient;
-import fr.unice.polytech.cod.helper.MailNotifier;
 import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.schedule.TimeClock;
 import fr.unice.polytech.cod.user.fidelityAccount.FidelityAccount;
@@ -15,17 +15,17 @@ import java.util.List;
 import java.util.Map;
 
 public class Store {
-    String name;
-    List<Order> orderList;
-    List<FidelityAccount> fidelityAccountList;
-    List<Chef> listChef;
-    public final Stock stock;
+    private String name;
+    private List<Order> orderList;
+    private List<FidelityAccount> fidelityAccountList;
+    private List<Chef> listChef;
+    private final Stock stock;
     public static int orderNumber = 0;
-    Map<Ingredient, Double> taxes;
-    CookieBook cookieBook;
-    public TimeClock openHour = new TimeClock(8,0);
-    public TimeClock closeHour = new TimeClock(18,0);
-    PartyCookieStoreManager partyCookieStoreManager;
+    private Map<Ingredient, Double> taxes;
+    private CookieBook cookieBook;
+    private TimeClock openHour = new TimeClock(8,0);
+    private TimeClock closeHour = new TimeClock(18,0);
+    private PartyCookieStoreManager partyCookieStoreManager;
 
     public Store(String name) {
         this.name=name;
