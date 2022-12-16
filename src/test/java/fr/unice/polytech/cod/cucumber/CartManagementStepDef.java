@@ -336,7 +336,7 @@ public class CartManagementStepDef {
 
     @Given("a manager")
     public void aManager() {
-        storeManager=new StoreManager(store);
+        storeManager = new StoreManager(store);
         store.setStoreManager(storeManager);
     }
 
