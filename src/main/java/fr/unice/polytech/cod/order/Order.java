@@ -1,17 +1,15 @@
 package fr.unice.polytech.cod.order;
 
-import fr.unice.polytech.cod.food.Cookie;
-import fr.unice.polytech.cod.pojo.Item;
-import fr.unice.polytech.cod.helper.SmsNotifier;
+import fr.unice.polytech.cod.helper.threadedObjects.SmsNotifier;
 import fr.unice.polytech.cod.user.Cart;
 import fr.unice.polytech.cod.user.fidelityAccount.Discount;
-import fr.unice.polytech.cod.helper.UpdatableObject;
+import fr.unice.polytech.cod.helper.threadedObjects.UpdatableObject;
 import fr.unice.polytech.cod.user.User;
 
 import java.util.Optional;
-import java.util.Set;
 
 public class Order extends UpdatableObject {
+    private static final int EXPIRATION_TIME = 7_200_000; // An order expire when 2h is reached
     protected OrderState orderState;
     protected final Cart cart;
     protected final User user;
@@ -19,7 +17,7 @@ public class Order extends UpdatableObject {
     protected SmsNotifier smsNotifier;
 
     public Order(Cart cart, User user) {
-        super(7_200_000); // An order expire when 2h is reached
+        super(EXPIRATION_TIME);
         this.cart = cart;
         this.orderState = OrderState.PENDING;
         this.user = user;
@@ -27,7 +25,7 @@ public class Order extends UpdatableObject {
     }
 
     public Order(Cart cart, OrderState orderState, User user) {
-        super(7_200_000); // An order expire when 2h is reached
+        super(EXPIRATION_TIME);
         this.cart = cart;
         this.orderState = orderState;
         this.user = user;
@@ -44,14 +42,12 @@ public class Order extends UpdatableObject {
     }
 
 
-    //TODO on fait comment ?
     /**
      * When the waitingTime is reached the order become OBSOLETE.
      */
     @Override
     public void OnTimeReached() {
         this.orderState = OrderState.OBSOLETE;
-        if(cart != null) cart.getStore().addToObsoleteOrders(this);
     }
 
     public User getUser() {

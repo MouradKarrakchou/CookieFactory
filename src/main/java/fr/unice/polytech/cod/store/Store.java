@@ -1,28 +1,22 @@
 package fr.unice.polytech.cod.store;
 
-import fr.unice.polytech.cod.components.StoreComponent;
 import fr.unice.polytech.cod.pojo.CookieBook;
 import fr.unice.polytech.cod.pojo.Stock;
 import fr.unice.polytech.cod.decorator_pattern.PartyCookieComponent;
-import fr.unice.polytech.cod.food.Cookie;
 import fr.unice.polytech.cod.food.ingredient.Ingredient;
-import fr.unice.polytech.cod.helper.UpdatableObject;
-import fr.unice.polytech.cod.order.Bill;
+import fr.unice.polytech.cod.helper.MailNotifier;
 import fr.unice.polytech.cod.order.Order;
-import fr.unice.polytech.cod.order.OrderState;
-import fr.unice.polytech.cod.schedule.Interval;
 import fr.unice.polytech.cod.schedule.TimeClock;
 import fr.unice.polytech.cod.user.fidelityAccount.FidelityAccount;
-import fr.unice.polytech.cod.helper.MailNotifier;
-import org.springframework.stereotype.Component;
 
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Store {
     String name;
     List<Order> orderList;
-    List<Order> obsoleteOrders;
     List<SurpriseBasket> surpriseBaskets;
     List<FidelityAccount> fidelityAccountList;
     List<Chef> listChef;
@@ -38,7 +32,6 @@ public class Store {
         this.name=name;
         this.listChef=new ArrayList<>();
         this.orderList = new ArrayList<>();
-        this.obsoleteOrders = new ArrayList<>();
         this.surpriseBaskets = new ArrayList<>();
         this.fidelityAccountList = new ArrayList<>();
         this.stock = new Stock();
@@ -130,10 +123,6 @@ public class Store {
         this.name = name;
     }
 
-    public void setObsoleteOrders(List<Order> obsoleteOrders) {
-        this.obsoleteOrders = obsoleteOrders;
-    }
-
     public void setSurpriseBaskets(List<SurpriseBasket> surpriseBaskets) {
         this.surpriseBaskets = surpriseBaskets;
     }
@@ -164,10 +153,6 @@ public class Store {
 
     public void setPartyCookieStoreManager(PartyCookieStoreManager partyCookieStoreManager) {
         this.partyCookieStoreManager = partyCookieStoreManager;
-    }
-
-    public List<Order> getObsoleteOrders() {
-        return obsoleteOrders;
     }
 }
 
