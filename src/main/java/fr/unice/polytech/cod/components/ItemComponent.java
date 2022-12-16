@@ -15,8 +15,9 @@ import java.util.Set;
 
 @Component
 public class ItemComponent implements ItemActions {
-
     IngredientActions ingredientActions;
+
+
     @Autowired
     public ItemComponent(IngredientActions ingredientActions) {
         this.ingredientActions = ingredientActions;
@@ -41,11 +42,24 @@ public class ItemComponent implements ItemActions {
 
     @Override
     public Set<Ingredient> generateIngredientsNeeded(Set<Item> items) {
-        return null;
-    }
-
-    @Override
-    public Set<Ingredient> generateIngredientsNeeded(List<Item> items) {
-        return null; //TODO
+        Set<Ingredient> neededIngredients = new HashSet<>();
+        // Check the list of items
+        for (Item item : items) {
+            // Generating all needed ingredients for each item
+            for (Ingredient ingredient : generateIngredientsNeeded(item)) {
+                // Merging all needed ingredients together
+                boolean isAdded = false;
+                for (Ingredient neededIngredient : neededIngredients) {
+                    if (neededIngredient.equals(ingredient)) {
+                        ingredientActions.increaseQuantity(neededIngredient, ingredient.getQuantity());
+                        isAdded = true;
+                        break;
+                    }
+                }
+                if (!isAdded)
+                    neededIngredients.add(ingredient);
+            }
+        }
+        return neededIngredients;
     }
 }
