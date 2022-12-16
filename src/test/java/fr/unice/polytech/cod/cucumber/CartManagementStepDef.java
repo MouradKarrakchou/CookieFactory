@@ -376,8 +376,8 @@ public class CartManagementStepDef {
 
     @Given("the stock contain ingredients for {string}")
     public void theStockContainIngredientsFor(String cookieName) {
-        Cookie cookie = store.getCookieBook().getCookie(cookieName);
-        store.fillStock(cookie.getIngredientsList(), store.getTaxes());
+        Cookie cookie = cookieBookManager.getCookie(new CookieBook(),cookieName);
+        stockModifier.addIngredients(store.getStock(), cookie.getIngredientsList());
     }
 
     @When("he order {string} a party cookie {string} customized with additional M&Ms")
