@@ -2,6 +2,8 @@ package fr.unice.polytech.cod.components;
 
 import fr.unice.polytech.cod.food.Cookie;
 import fr.unice.polytech.cod.food.ingredient.Ingredient;
+
+import fr.unice.polytech.cod.interfaces.ChefAction;
 import fr.unice.polytech.cod.interfaces.OrderActions;
 import fr.unice.polytech.cod.interfaces.OrderStatesAction;
 import fr.unice.polytech.cod.order.Bill;
@@ -11,13 +13,8 @@ import fr.unice.polytech.cod.pojo.Item;
 import fr.unice.polytech.cod.pojo.Stock;
 import fr.unice.polytech.cod.store.Chef;
 import fr.unice.polytech.cod.store.ChefState;
-import fr.unice.polytech.cod.store.Store;
-import fr.unice.polytech.cod.store.SurpriseBasket;
-import fr.unice.polytech.cod.user.Cart;
 import fr.unice.polytech.cod.user.User;
 import fr.unice.polytech.cod.user.fidelityAccount.Discount;
-import io.cucumber.java.sv.Och;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -26,15 +23,20 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import static java.lang.Thread.sleep;
+
 @Component
 public class OrderComponent implements OrderActions, OrderStatesAction {
     StockComponent stockComponent;
     CartHandler cartHandler;
 
+    ChefAction chefAction;
+
     @Autowired
-    public OrderComponent(StockComponent stockComponent, CartHandler cartHandler) {
+    public OrderComponent(StockComponent stockComponent, CartHandler cartHandler, ChefAction chefAction) {
         this.stockComponent = stockComponent;
         this.cartHandler = cartHandler;
+        this.chefAction = chefAction;
     }
 
     @Override
@@ -109,7 +111,7 @@ public class OrderComponent implements OrderActions, OrderStatesAction {
 
     @Override
     public void associateOrder(Chef chef, Order orderToPrepare) {
-        if (chef.isAvailable()) {
+        if (chefAction.isAvailable(chef)) {
             chef.setOrderToPrepare(Optional.of(orderToPrepare));
             chef.setState(ChefState.UNAVAILABLE);
             orderToPrepare.setOrderState(OrderState.IN_PROGRESS);
@@ -120,5 +122,4 @@ public class OrderComponent implements OrderActions, OrderStatesAction {
     public void removeOrder(List<Order> orderList, Order order) {
         orderList.remove(order);
     }
-
 }

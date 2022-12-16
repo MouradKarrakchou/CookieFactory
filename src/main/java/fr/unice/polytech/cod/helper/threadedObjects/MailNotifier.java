@@ -1,5 +1,6 @@
-package fr.unice.polytech.cod.helper;
+package fr.unice.polytech.cod.helper.threadedObjects;
 
+import fr.unice.polytech.cod.helper.threadedObjects.UpdatableObject;
 import fr.unice.polytech.cod.store.Store;
 import fr.unice.polytech.cod.user.fidelityAccount.FidelityAccount;
 

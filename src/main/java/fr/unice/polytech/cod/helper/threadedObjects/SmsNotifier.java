@@ -1,5 +1,6 @@
-package fr.unice.polytech.cod.helper;
+package fr.unice.polytech.cod.helper.threadedObjects;
 
+import fr.unice.polytech.cod.helper.threadedObjects.UpdatableObject;
 import fr.unice.polytech.cod.user.User;
 
 public class SmsNotifier extends UpdatableObject {
