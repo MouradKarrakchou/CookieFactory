@@ -6,17 +6,34 @@ import fr.unice.polytech.cod.interfaces.StoreFinder;
 import fr.unice.polytech.cod.store.Store;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
 public class StoreFinderComponent implements StoreFinder {
-    @Override
-    public List<Store> getStores(StoreLocation storeLocation) {
-        return null; //TODO
+    private final List<Store> storeList;
+
+    private StoreFinderComponent() {
+        storeList = new ArrayList<>();
+        storeList.add(new Store("Antibes"));
+        storeList.add(new Store("Nice"));
+        storeList.add(new Store("Sophia"));
     }
 
     @Override
-    public Store findStore(StoreLocation storeLocation, String name) throws InvalidStoreException {
-        return null; //TODO
+    public List<Store> getStores(StoreLocation storeLocation) {
+        return storeList;
+    }
+
+    @Override
+    public Store findStore(String name) throws InvalidStoreException {
+        for (Store store : storeList) {
+            if (store.getName().equals(name)) return store;
+        }
+        throw new InvalidStoreException();
+    }
+
+    public static StoreFinderComponent getInstance(){
+        return new StoreFinderComponent();
     }
 }
