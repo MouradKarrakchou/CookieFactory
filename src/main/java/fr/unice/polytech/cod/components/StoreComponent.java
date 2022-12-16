@@ -21,15 +21,13 @@ import java.util.Map;
 
 @Component
 public class StoreComponent implements StoreModifier, StoreAccessor {
-    private final ChefAction chefAction;
-    private final StockExplorer stockExplorer;
-    private final OrderStatesAction orderStatesAction;
+    final ChefAction chefAction;
+    final StockExplorer stockExplorer;
 
     @Autowired
-    public StoreComponent(ChefAction chefAction, StockExplorer stockExplorer, OrderStatesAction orderStatesAction) {
+    public StoreComponent(ChefAction chefAction, StockExplorer stockExplorer) {
         this.chefAction = chefAction;
         this.stockExplorer = stockExplorer;
-        this.orderStatesAction = orderStatesAction;
     }
 
 
@@ -42,11 +40,6 @@ public class StoreComponent implements StoreModifier, StoreAccessor {
         }
     }
 
-
-    /**
-     * Return the cookies a store can make based on the stock of the store and the recipes in the store's cookie book
-     * @return The list of available cookies
-     */
     @Override
     public List<Cookie> getAvailableCookie(Store store) {
         List<Cookie> cookieAvailable = new ArrayList<>();
