@@ -331,9 +331,9 @@ public class CartManagementStepDef {
     @Then("the user is notified")
     public void the_user_is_notified() {
         if(!user.getCart().getStore().getOrderList().contains(pendingOrder))
-            assertTrue(user.cancelOrder(pendingOrder));
+            assertTrue(userAction.cancelOrder(user.getCart(), user.getUserOrders(), pendingOrder));
         if(user.getCart().getStore().getOrderList().contains(inProgressOrder))
-            assertFalse(user.cancelOrder(inProgressOrder));
+            assertFalse(userAction.cancelOrder(user.getCart(), user.getUserOrders(), inProgressOrder));
     }
 
     @Then("the order cannot be canceled")
@@ -365,9 +365,9 @@ public class CartManagementStepDef {
     @When("a client ask for his history")
     public void a_client_ask_for_his_history() throws Exception {
         userAction.subscribeToFidelityAccount(this.user, "name","email","pw");
-        user.getSubscription().get().addOrder(retrieveOrder);
+        fidelityAccountManager.addOrder(userRequest.getSubscription(this.user).get(), retrieveOrder);
 
-        historic = user.getHistory();
+        historic = userRequest.getHistory(user.getFidelityAccount());
     }
     @Then("he gets all his past orders")
     public void he_gets_all_his_past_orders() {
@@ -376,8 +376,8 @@ public class CartManagementStepDef {
 
     @Given("the stock contain ingredients for {string}")
     public void theStockContainIngredientsFor(String cookieName) {
-        Cookie cookie = store.getCookieBook().getCookie(cookieName);
-        store.fillStock(cookie.getIngredientsList(), store.getTaxes());
+        Cookie cookie = cookieBookManager.getCookie(new CookieBook(),cookieName);
+        stockModifier.addIngredients(store.getStock(), cookie.getIngredientsList());
     }
 
     @When("he order {string} a party cookie {string} customized with additional M&Ms")
