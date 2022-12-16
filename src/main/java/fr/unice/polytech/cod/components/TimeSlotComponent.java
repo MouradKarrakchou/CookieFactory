@@ -4,11 +4,13 @@ import fr.unice.polytech.cod.interfaces.ChefAction;
 import fr.unice.polytech.cod.interfaces.TimeSlotAction;
 import fr.unice.polytech.cod.schedule.Interval;
 import fr.unice.polytech.cod.store.Chef;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+@Component
 public class TimeSlotComponent implements TimeSlotAction {
     ChefAction chefAction;
     @Override
