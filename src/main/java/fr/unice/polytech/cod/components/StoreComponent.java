@@ -36,10 +36,6 @@ public class StoreComponent implements StoreModifier, StoreAccessor {
         }
     }
 
-    /**
-     * Return the cookies a store can make based on the stock of the store and the recipes in the store's cookie book
-     * @return The list of available cookies
-     */
     @Override
     public List<Cookie> getAvailableCookie(Store store) {
         List<Cookie> cookieAvailable = new ArrayList<>();

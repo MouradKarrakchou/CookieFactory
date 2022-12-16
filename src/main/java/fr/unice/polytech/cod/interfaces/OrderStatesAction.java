@@ -19,8 +19,6 @@ public interface OrderStatesAction {
      */
     void updateState(Order order, OrderState newState);
 
-
-
     public void retrieveOrder(List<Order> orderList,Bill bill) throws Exception;
     OrderState getOrderState(Order order);
 

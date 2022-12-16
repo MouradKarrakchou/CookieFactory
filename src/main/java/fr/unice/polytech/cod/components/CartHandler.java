@@ -19,12 +19,12 @@ import java.util.Set;
 
 @Component
 public class CartHandler implements CartActions, CartPenalty {
-    StockExplorer stockExplorer;
-    ItemActions itemActions;
-    IngredientActions ingredientActions;
-    OrderActions orderActions;
-    UserRequestComponent userRequestComponent;
-    UserActionComponent userActionComponent;
+    private StockExplorer stockExplorer;
+    private ItemActions itemActions;
+    private IngredientActions ingredientActions;
+    private OrderActions orderActions;
+    private UserRequestComponent userRequestComponent;
+    private UserActionComponent userActionComponent;
 
 
     @Autowired
