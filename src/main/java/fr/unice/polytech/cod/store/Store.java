@@ -58,7 +58,6 @@ public class Store {
         return orderList;
     }
 
-
     public TimeClock getOpenHour() {
         return openHour;
     }
