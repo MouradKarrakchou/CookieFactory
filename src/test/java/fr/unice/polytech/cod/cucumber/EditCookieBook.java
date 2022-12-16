@@ -1,11 +1,11 @@
 package fr.unice.polytech.cod.cucumber;
 
 import fr.unice.polytech.cod.components.CookieBookComponent;
+import fr.unice.polytech.cod.interfaces.BrandManagerActions;
 import fr.unice.polytech.cod.interfaces.CatalogExplorer;
 import fr.unice.polytech.cod.interfaces.UserAction;
 import fr.unice.polytech.cod.pojo.CookieBook;
 import fr.unice.polytech.cod.pojo.IngredientCatalog;
-import fr.unice.polytech.cod.pojo.StoreLocation;
 import fr.unice.polytech.cod.food.Cookie;
 import fr.unice.polytech.cod.food.ingredient.Cooking;
 import fr.unice.polytech.cod.food.ingredient.Mix;
@@ -23,10 +23,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class EditCookieBook {
     Cart cart;
     Cookie newCookie;
-    BrandManager brandManager;
     CookieBook cookieBook;
-    private StoreLocation storeLocation;
-    private final IngredientCatalog ingredientCatalog = IngredientCatalog.instance;
+    final IngredientCatalog ingredientCatalog = IngredientCatalog.instance;
 
     @Autowired
     CatalogExplorer catalogExplorer;
@@ -36,6 +34,9 @@ public class EditCookieBook {
 
     @Autowired
     CookieBookComponent cookieBookComponent;
+
+    @Autowired
+    BrandManagerActions brandManagerActions;
 
     @Given("a cookie")
     public void a_cookie() {
@@ -48,11 +49,6 @@ public class EditCookieBook {
                 10);
     }
 
-    @Given("brandManager")
-    public void brand_manager() {
-        this.brandManager = new BrandManager(this.storeLocation);
-    }
-
     @Given("a cookieBook")
     public void a_cookieBook() throws InvalidStoreException {
         cookieBook = userAction.selectStore("Antibes", cart).getCookieBook();
@@ -60,7 +56,7 @@ public class EditCookieBook {
 
     @When("when a brandManager add a cookie to the cookie book")
     public void when_a_brand_manager_add_a_cookie_to_the_cookie_book() throws Exception {
-        brandManager.validCookie(newCookie, "Antibes");
+        brandManagerActions.validCookie(newCookie, "Antibes");
     }
 
     @Then("the cookkie is add to the cookie book")
@@ -70,15 +66,10 @@ public class EditCookieBook {
 
     @When("when a brandManager remove a cookie to the cookie book")
     public void when_a_brand_manager_remove_a_cookie_to_the_cookie_book() throws Exception {
-        brandManager.removeCookie(cookieBookComponent.getCookie(cookieBook, "Cookie au chocolat"), "Antibes");
+        brandManagerActions.removeCookie(cookieBookComponent.getCookie(cookieBook, "Cookie au chocolat"), "Antibes");
     }
     @Then("the cookkie is remove to the cookie book")
     public void the_cookkie_is_remove_to_the_cookie_book() {
         assertEquals(2, cookieBook.getCookies().size());
-    }
-
-    @Given("a storeLocattion")
-    public void aStoreLocattion() {
-        this.storeLocation = StoreLocation.getInstance();
     }
 }
