@@ -13,14 +13,13 @@ public interface TimeSlotAction {
     /**
      * Gets a list of available TimeSlots from all the employees of the store by Date.
      *
-     * @param timeSlot
      * @param store
      * @param chefs
      * @param minutes
      * @param numberOfDaysBeforeTheOrder
      * @return
      */
-    List<Interval> timeSlotAvailable(TimeSlot timeSlot, Store store, List<Chef> chefs, int minutes, int numberOfDaysBeforeTheOrder);
+    List<Interval> timeSlotAvailable(Store store, List<Chef> chefs, int minutes, int numberOfDaysBeforeTheOrder);
 
     /**
      * If there is no order set for this timeSlot return himself else return empty.
