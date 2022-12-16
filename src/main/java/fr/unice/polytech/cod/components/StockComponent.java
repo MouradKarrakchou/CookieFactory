@@ -28,6 +28,11 @@ public class StockComponent implements StockExplorer, StockModifier {
         return stock.getIngredients().stream().filter(i -> i.getName().equals(ingredient)).findFirst();
     }
 
+    @Override
+    public Optional<Ingredient> findIngredient(Stock stock, Ingredient ingredient) {
+        return stock.getIngredients().stream().filter(i -> i.equals(ingredient)).findFirst();
+    }
+
     /**
      * Check if the stock has enough of the given ingredient
      *

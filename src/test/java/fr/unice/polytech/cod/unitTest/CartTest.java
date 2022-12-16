@@ -1,5 +1,8 @@
 package fr.unice.polytech.cod.unitTest;
 
+import fr.unice.polytech.cod.components.CartHandler;
+import fr.unice.polytech.cod.interfaces.ItemActions;
+import fr.unice.polytech.cod.interfaces.OrderActions;
 import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.schedule.Interval;
 import fr.unice.polytech.cod.schedule.TimeClock;
@@ -9,6 +12,7 @@ import fr.unice.polytech.cod.user.Cart;
 import fr.unice.polytech.cod.user.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -27,6 +31,15 @@ public class CartTest {
     TimeSlot timeSlot;
     List<TimeSlot> timeSlotList;
 
+    @Autowired
+    OrderActions orderActions;
+
+    @Autowired
+    ItemActions itemActions;
+
+    @Autowired
+    CartHandler cartHandler;
+
     @BeforeEach
     void initialisation() {
         cart = new Cart();
@@ -40,10 +53,10 @@ public class CartTest {
 
     @Test
     void cancelOrderTest() {
-        store.addOrder(order, new HashSet<>());
+        orderActions.addOrder(store.getStock(), store.getOrderList(), order, itemActions.generateIngredientsNeeded(order.getCart().getItemSet()));
         cart.setInterval(interval);
         cart.setStore(store);
-        cart.cancelOrder(order);
+        cartHandler.cancelOrder(order.getCart(), order);
 
         assertTrue(store.getOrderList().isEmpty());
         assertEquals(1, cart.getCanceled());
