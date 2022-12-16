@@ -3,6 +3,7 @@ package fr.unice.polytech.cod.components;
 import fr.unice.polytech.cod.exceptions.InvalidStoreException;
 import fr.unice.polytech.cod.food.Cookie;
 import fr.unice.polytech.cod.interfaces.CartActions;
+import fr.unice.polytech.cod.interfaces.CartPenalty;
 import fr.unice.polytech.cod.interfaces.StoreFinder;
 import fr.unice.polytech.cod.interfaces.UserAction;
 import fr.unice.polytech.cod.order.Bill;
@@ -19,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -26,6 +28,9 @@ public class UserActionComponent implements UserAction {
 
     @Autowired
     CartActions cartActions;
+
+    @Autowired
+    CartPenalty cartPenalty;
     //pas de autowired car on l'instancie comme un singleton donc pas d'injection de dépendance necessaire
     StoreFinder storeFinder = StoreFinderComponent.getInstance();
 
@@ -37,8 +42,13 @@ public class UserActionComponent implements UserAction {
      * @param quantity The quantity of the selected cookie
      */
     @Override
-    public boolean chooseCookies(User user, Cookie cookie, int quantity, Cart cart) {
+    public boolean addCookies(Cookie cookie, int quantity, Cart cart) {
         return cartActions.addToCart(cart, new Item(cookie, quantity));
+    }
+
+    @Override
+    public boolean removeCookies(Cookie cookie, int quantity, Cart cart) {
+        return cartActions.removeFromCart(cart, new Item(cookie, quantity));
     }
 
     /**
@@ -55,7 +65,7 @@ public class UserActionComponent implements UserAction {
         return (store);    }
 
     @Override
-    public void chooseInterval(User user, Interval interval, Cart cart) {
+    public void chooseInterval(Interval interval, Cart cart) {
         interval.reserve();
         cart.setInterval(interval);
     }
@@ -63,7 +73,7 @@ public class UserActionComponent implements UserAction {
     @Override
     public Bill validateCart(User user, Cart cart) throws Exception {
         Instant time = Instant.now();
-        if (!cart.isEmpty() && !cart.isTherePenalty(time))
+        if (!cartActions.isEmpty(cart) && !cartPenalty.isTherePenalty(cart, time))
             return cartActions.validate(cart, user);
         else
             throw new Exception("Panier vide impossible de le valider");    }
@@ -77,7 +87,7 @@ public class UserActionComponent implements UserAction {
     }
 
     @Override
-    public void removeOneItemFromCart(User user, Item item, Cart cart) {
+    public void removeOneItemFromCart(Item item, Cart cart) {
         cartActions.removeFromCart(cart, item);
     }
 
@@ -87,8 +97,7 @@ public class UserActionComponent implements UserAction {
     }
 
     @Override
-    public void useDiscount(User user, Order order) {
-        FidelityAccount fidelityAccount = user.getFidelityAccount();
+    public void useDiscount(FidelityAccount fidelityAccount, Order order) {
         if(fidelityAccount == null)
             return;
         Optional<Discount> _discount = fidelityAccount.getDiscount();
@@ -101,10 +110,10 @@ public class UserActionComponent implements UserAction {
     }
 
     @Override
-    public boolean cancelOrder(User user, Order order) {
+    public boolean cancelOrder(Cart cart, List<Order> userOrders, Order order) {
 
-        if (user.getOrders().contains(order) && order.getOrderState().equals(OrderState.PENDING)) {
-            cartActions.cancelOrder(order);
+        if (userOrders.contains(order) && order.getOrderState().equals(OrderState.PENDING)) {
+            cartActions.cancelOrder(cart, order);
             return true; //Your order has been canceled
         } else
             return false; //Your order is already in progress. You cannot canceled it
