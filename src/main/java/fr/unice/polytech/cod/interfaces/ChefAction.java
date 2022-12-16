@@ -13,7 +13,7 @@ import java.util.concurrent.ExecutionException;
 
 public interface ChefAction {
     void updateSchedule(Chef chef, Store store);
-    void associateOrder(Chef chef,Order orderToPrepare);
+    //void associateOrder(Chef chef,Order orderToPrepare);
     boolean isAvailable(Chef chef);
     void startWork(Chef chef) throws Exception;
 
