@@ -1,5 +1,6 @@
 package fr.unice.polytech.cod.pojo;
 import fr.unice.polytech.cod.food.Cookie;
+import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -7,6 +8,8 @@ import java.util.Objects;
 /**
  * Pojo class : Item
  */
+
+@Component
 public class Item implements Serializable {
     private final Cookie cookie;
     private int quantity;

@@ -21,13 +21,13 @@ public class CartHandler implements CartActions {
     StockExplorer stockExplorer;
     ItemActions itemActions;
 
-    /*
+
     @Autowired
     public CartHandler(StockExplorer stockExplorer, ItemActions itemActions) {
         this.stockExplorer = stockExplorer;
         this.itemActions = itemActions;
     }
-    */
+
 
     /**
      * If the store as the ingredients, add an item to the cart
@@ -41,7 +41,7 @@ public class CartHandler implements CartActions {
                 .filter(currentItem -> currentItem.equals(item)).findFirst();
 
         if (_item.isPresent())
-            _item.get().updateQuantity(item.getQuantity());
+            itemActions.updateQuantity(_item.get(), item.getQuantity());
         else
             cart.itemSet.add(item);
 
@@ -60,7 +60,7 @@ public class CartHandler implements CartActions {
             return;
 
         Item inCartItem = _item.get();
-        inCartItem.updateQuantity(- item.getQuantity());
+        itemActions.updateQuantity(inCartItem, - item.getQuantity());
     }
 
     @Override
@@ -87,7 +87,7 @@ public class CartHandler implements CartActions {
         // Check the list of items
         for (Item item : items) {
             // Generating all needed ingredients for each item
-            for (Ingredient ingredient : item.generateIngredientsNeeded()) {
+            for (Ingredient ingredient : itemActions.generateIngredientsNeeded(item)) {
                 // Merging all needed ingredients together
                 boolean isAdded = false;
                 for (Ingredient neededIngredient : neededIngredients) {
