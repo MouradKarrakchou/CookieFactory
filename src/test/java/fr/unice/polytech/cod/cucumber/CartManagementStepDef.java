@@ -1,5 +1,6 @@
 package fr.unice.polytech.cod.cucumber;
 
+import fr.unice.polytech.cod.components.CartHandler;
 import fr.unice.polytech.cod.components.UserComponent;
 import fr.unice.polytech.cod.interfaces.*;
 import fr.unice.polytech.cod.pojo.*;
@@ -53,25 +54,34 @@ public class CartManagementStepDef {
 
     @Autowired
     CartActions cartActions;
+
     @Autowired
     UserAction userAction;
+
     @Autowired
     StockModifier stockModifier;
+
     @Autowired
     StoreModifier storeModifier;
+
     @Autowired
     CookieBookManager cookieBookManager;
+
     @Autowired
     FidelityAccountManager fidelityAccountManager;
+
     @Autowired
     UserRequest userRequest;
+
     @Autowired
     StockExplorer stockExplorer;
+
     @Autowired
     IntervalManager intervalManager;
 
     @Autowired
     CatalogExplorer catalogExplorer;
+
     @Autowired
     ScheduleActions scheduleActions;
 
@@ -80,6 +90,9 @@ public class CartManagementStepDef {
 
     @Autowired
     OrderStatesAction orderStatesAction;
+
+    @Autowired
+    CartHandler cartHandler;
 
     @Given("a user")
     public void a_user() {
