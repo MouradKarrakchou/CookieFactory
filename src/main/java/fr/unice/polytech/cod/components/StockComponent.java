@@ -69,7 +69,7 @@ public class StockComponent implements StockExplorer, StockModifier {
             return false;
 
         // Removing quantity from stock ingredient & add this quantity to locked ingredient
-        stockIngredient.quantity -= ingredient.getQuantity();
+        stockIngredient.increaseQuantity(-ingredient.getQuantity());
         addToLockedIngredients(stock, ingredient);
 
         return true;

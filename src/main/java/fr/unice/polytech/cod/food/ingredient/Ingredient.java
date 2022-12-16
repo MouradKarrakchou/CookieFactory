@@ -6,7 +6,7 @@ public class Ingredient implements Cloneable {
     protected String name;
     //price per g
     protected double price;
-    public double quantity;
+    private double quantity;
 
     public Ingredient(Ingredient i){
         this.name = i.name;
