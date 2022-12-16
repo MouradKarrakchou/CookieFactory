@@ -73,6 +73,9 @@ public class CartManagementStepDef {
     @Autowired
     CatalogExplorer catalogExplorer;
 
+    @Autowired
+    StoreFinder storeFinder;
+
     @Given("a user")
     public void a_user() {
         this.user = new User();
