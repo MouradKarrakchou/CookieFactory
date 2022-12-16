@@ -51,28 +51,6 @@ public class Store extends UpdatableObject {
         startTimer();
     }
 
-    public void retrieveOrder(Bill bill) throws Exception{
-        Order order = bill.getOrder();
-        if (this.orderList.contains(order)){
-            order.updateState(OrderState.RETRIEVE);
-            this.orderList.remove(order);
-        }else
-            throw new Exception("Order doesn't exist");
-    }
-
-    /**
-     * Gets a list of available TimeSlots from all the employees of the store by Date;
-     * @return
-     */
-    public List<Interval> timeSlotAvailables(int minutes,int numberOfDaysBeforeTheOrder){
-        List<Interval> intervals = new ArrayList<>();
-        for (Chef chef:listChef){
-            for (Interval interval: chef.getIntervalsAvailable(minutes,numberOfDaysBeforeTheOrder))
-                if (!intervals.contains(interval)) intervals.add(interval);
-        }
-        Collections.sort(intervals);
-        return(intervals);
-    }
 
     public void setOrderList(List<Order> orderList) {
         this.orderList = new ArrayList<>(orderList);
@@ -207,6 +185,46 @@ public class Store extends UpdatableObject {
 
     public ArrayList<PartyCookieComponent> getPartyCookies() {
         return this.partyCookieStoreManager.getPartyCookies();
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setObsoleteOrders(List<Order> obsoleteOrders) {
+        this.obsoleteOrders = obsoleteOrders;
+    }
+
+    public void setSurpriseBaskets(List<SurpriseBasket> surpriseBaskets) {
+        this.surpriseBaskets = surpriseBaskets;
+    }
+
+    public void setFidelityAccountList(List<FidelityAccount> fidelityAccountList) {
+        this.fidelityAccountList = fidelityAccountList;
+    }
+
+    public void setListChef(List<Chef> listChef) {
+        this.listChef = listChef;
+    }
+
+    public static void setOrderNumber(int orderNumber) {
+        Store.orderNumber = orderNumber;
+    }
+
+    public void setCookieBook(CookieBook cookieBook) {
+        this.cookieBook = cookieBook;
+    }
+
+    public void setOpenHour(TimeClock openHour) {
+        this.openHour = openHour;
+    }
+
+    public void setCloseHour(TimeClock closeHour) {
+        this.closeHour = closeHour;
+    }
+
+    public void setPartyCookieStoreManager(PartyCookieStoreManager partyCookieStoreManager) {
+        this.partyCookieStoreManager = partyCookieStoreManager;
     }
 }
 

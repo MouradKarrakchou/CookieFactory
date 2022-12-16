@@ -59,6 +59,7 @@ public class ManageTheKitchenPassageAndOrders {
     }
     @When("client retrieve his order")
     public void client_retrieve_his_order() throws  Exception{
+        //la methode retrive Order est mtn dans OrderComponent
         this.store.retrieveOrder(bill);
     }
 

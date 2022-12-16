@@ -18,25 +18,24 @@ import java.util.List;
 
 @Component
 public class StoreComponent implements StoreModifier, StoreAccessor {
-    StockExplorer stockExplorer;
-    public TimeClock openHour = new TimeClock(8,0);
-    public TimeClock closeHour = new TimeClock(18,0);
-    List<Chef> listChef;
-    ChefAction chefAction;
+
+
+    private final ChefAction chefAction;
+    private final StockExplorer stockExplorer;
 
     @Autowired
-    public StoreComponent(StockExplorer stockExplorer,ChefAction chefAction){
+    public StoreComponent(ChefAction chefAction, StockExplorer stockExplorer) {
+        this.chefAction = chefAction;
         this.stockExplorer = stockExplorer;
-        this.chefAction=chefAction;
     }
 
 
     @Override
     public void changeOpeningHour(Store store, TimeClock open, TimeClock close) {
-        this.openHour=open;
-        this.closeHour=close;
-        for (Chef chef: listChef){
-            chef.updateSchedule(this);
+        store.setOpenHour(open);
+        store.setCloseHour(close);
+        for (Chef chef: store.getListChef()){
+            chefAction.updateSchedule(chef,store);
         }
     }
 

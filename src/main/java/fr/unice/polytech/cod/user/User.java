@@ -76,7 +76,7 @@ public class User {
      * @return
      */
     public List<Interval> getAvailableIntervals(int minutesNeeded,int numberOfDaysBeforeTheOrder) {
-        return (this.cart.getStore().timeSlotAvailables(minutesNeeded,numberOfDaysBeforeTheOrder));
+        return (this.cart.getStore().timeSlotAvailable(minutesNeeded,numberOfDaysBeforeTheOrder));
     }
 
 
