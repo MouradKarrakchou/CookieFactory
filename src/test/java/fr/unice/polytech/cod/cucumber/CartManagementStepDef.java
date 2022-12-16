@@ -73,6 +73,9 @@ public class CartManagementStepDef {
     @Autowired
     CatalogExplorer catalogExplorer;
 
+    @Autowired
+    OrderStatesAction orderStatesAction;
+
     @Given("a user")
     public void a_user() {
         this.user = new User();
@@ -298,15 +301,15 @@ public class CartManagementStepDef {
         ingredients.add(dough);
         Map<Ingredient, Double> taxes = new HashMap<>();
         taxes.put(dough, 5.0);
-        cart.getStore().fillStock(ingredients, taxes);
+        stockModifier.addIngredients(store.getStock(), ingredients);
         cart.getItemSet().clear();
         cart.getItemSet().add(item);
         pendingOrder = new Order(cart, user);
         inProgressOrder = new Order(cart, user);
-        user.getOrders().add(pendingOrder);
-        user.getOrders().add(inProgressOrder);
-        if(state.equals(OrderState.PENDING)) pendingOrder.updateState(state);
-        else inProgressOrder.updateState(state);
+        user.getUserOrders().add(pendingOrder);
+        user.getUserOrders().add(inProgressOrder);
+        if(state.equals(OrderState.PENDING))orderStatesAction.updateState(pendingOrder, state);
+        else orderStatesAction.updateState(inProgressOrder, state);
     }
 
     @When("the user try to cancel his order at the state \"([^\"]*)\"$")
