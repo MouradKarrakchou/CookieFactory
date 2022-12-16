@@ -2,6 +2,7 @@ package fr.unice.polytech.cod.unitTest;
 
 import fr.unice.polytech.cod.food.*;
 import fr.unice.polytech.cod.food.ingredient.*;
+import fr.unice.polytech.cod.interfaces.CartActions;
 import fr.unice.polytech.cod.interfaces.StockModifier;
 import fr.unice.polytech.cod.interfaces.StoreAccessor;
 import fr.unice.polytech.cod.interfaces.StoreModifier;
@@ -39,37 +40,29 @@ public class BillTest {
     StoreModifier storeModifier;
     @Autowired
     StockModifier stockModifier;
+    @Autowired
+    CartActions cartActions;
 
     @Test
     void showBillTest() {
-        taxes.put(dough, 0.5);
-        taxes.put(flavour, 0.6);
-        taxes.put(topping1, 0.8);
-        taxes.put(topping2, 0.9);
 
-        ingredients.add(new Dough("Pâte", 0.5, 1000000));
-        ingredients.add(new Flavour("Chocolat", 1.2, 1000000));
-        ingredients.add(new Topping("Pépites", 2, 1000000));
-        ingredients.add(new Topping("Crème", 1.5, 1000000));
+        stockModifier.addIngredient(store.getStock(),new Dough("Pâte", 0.5, 1000000));
+        storeModifier.setTax(store,"Pâte",0.5);
 
-        for (Ingredient ingredient:ingredients){
-            stockModifier.addIngredient(store.getStock(),ingredient.clone());
-            storeModifier.setTax(store,ingredient.clone(),0.5);
-        }
+        stockModifier.addIngredient(store.getStock(),new Flavour("Chocolat", 1.2, 1000000));
+        storeModifier.setTax(store,"Chocolat",0.6);
 
-        stockModifier.addIngredient(store.getStock(),dough);
-        storeModifier.setTax(store,dough.clone(),0.5);
-        Stock stock = store.getStock();
+        stockModifier.addIngredient(store.getStock(),new Topping("Pépites", 2, 1000000));
+        storeModifier.setTax(store,"Pépites",0.8);
+
+        stockModifier.addIngredient(store.getStock(),new Topping("Crème", 1.5, 1000000));
+        storeModifier.setTax(store,"Crème",0.9);
+
         cart.setStore(store);
-
-        stock.addStock(new Dough("Pâte", 0.5, 1000000));
-        stock.addStock(new Flavour("Chocolat", 1.2, 1000000));
-        stock.addStock(new Topping("Pépites", 2, 1000000));
-        stock.addStock(new Topping("Crème", 1.5, 1000000));
 
         Cookie cookie = new Cookie("CooKie", dough, flavour, new ArrayList<>(), new Mix(Mix.MixState.MIXED),new Cooking(Cooking.CookingState.CRUNCHY),10);
         Item item = new Item(cookie, 1);
-        cart.addToCart(item);
+        cartActions.addToCart(cart,item);
         String receipt = """
                 ===============StoRe===============
                 CooKie..........123.1€
@@ -83,7 +76,7 @@ public class BillTest {
 
         cookie = new Cookie("CooKYZ", dough, flavour, toppings, new Mix(Mix.MixState.MIXED),new Cooking(Cooking.CookingState.CRUNCHY),10);
         item = new Item(cookie, 1);
-        cart.addToCart(item);
+        cartActions.addToCart(cart,item);
         receipt = """
                 ===============StoRe===============
                 CooKie..........123.1€
