@@ -215,7 +215,7 @@ public class CartManagementStepDef {
 
     @When("a user chooses an interval")
     public void aUserChoosesAnInterval() {
-        this.user.chooseInterval(interval);
+        userAction.chooseInterval(interval,user.getCart());
     }
 
     @Then("the order is associated with the Time slots composing the interval are")
@@ -236,8 +236,8 @@ public class CartManagementStepDef {
     @Given("an employee with disponibility only from {int} to {int}")
     public void anEmployeeWithDisponibilityOnlyFromTo(int startingHour, int finishingHour) {
         Chef chef=new Chef(store);
-        store.addChef(chef);
-        List<TimeSlot> timeSlots=chef.getSchedule().getDaySlot(0).getTimeSlots();
+        storeModifier.addChef(store,chef);
+        List<TimeSlot> timeSlots=chef.getSchedule().getDaySlots().get(0).getTimeSlots();
         for (TimeSlot timeSlot:timeSlots){
             if(!(timeSlot.getStartTime().compareTo(new TimeClock(startingHour,0))>=0&&timeSlot.getEndTime().compareTo(new TimeClock(finishingHour,0))<=0))
                 timeSlot.setReserved(true);
