@@ -363,7 +363,7 @@ public class CartManagementStepDef {
     }
     @When("a client ask for his history")
     public void a_client_ask_for_his_history() throws Exception {
-        user.subscribeToFidelityAccount("name","email","pw");
+        userAction.subscribeToFidelityAccount(this.user, "name","email","pw");
         user.getSubscription().get().addOrder(retrieveOrder);
 
         historic = user.getHistory();
