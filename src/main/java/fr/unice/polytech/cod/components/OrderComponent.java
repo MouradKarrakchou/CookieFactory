@@ -72,13 +72,17 @@ public class OrderComponent implements OrderActions, OrderStatesAction {
         }else
             throw new Exception("Order doesn't exist");
     }
-
+    @Override
     public void associateOrder(Chef chef, Order orderToPrepare) {
         if(chef.isAvailable()) {
             chef.associateOrder(orderToPrepare);
             orderToPrepare.updateState(OrderState.IN_PROGRESS);
         }
     }
+    public void removeOrder(List<Order> orderList,Order order){
+        orderList.remove(order);
+    }
+
 
 
 

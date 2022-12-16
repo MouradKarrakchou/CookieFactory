@@ -22,4 +22,5 @@ public interface OrderActions {
 
     void addOrder(Stock stock, List<Order> orderList, Order order, Set<Ingredient> ingredientsNeeded);
     void associateOrder(Chef chef, Order orderToPrepare);
+    public void removeOrder(List<Order> orderList,Order order);
 }

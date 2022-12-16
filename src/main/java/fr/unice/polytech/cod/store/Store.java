@@ -58,10 +58,6 @@ public class Store {
         return orderList;
     }
 
-    public void removeOrder(Order order) {
-        this.orderList.remove(order);
-    }
-
 
     public TimeClock getOpenHour() {
         return openHour;
