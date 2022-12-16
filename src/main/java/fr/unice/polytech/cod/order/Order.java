@@ -15,7 +15,7 @@ public class Order extends UpdatableObject {
     protected final User user;
     protected Discount discount;
     protected SmsNotifier smsNotifier;
-    
+
     public Order(Cart cart, User user) {
         super(EXPIRATION_TIME);
         this.cart = cart;

@@ -28,6 +28,10 @@ public class User {
         this.storeLocation = storeLocation;
     }
 
+    public User() {
+
+    }
+
     /**
      * Return the list of available cookies based on the store
      */
@@ -75,7 +79,7 @@ public class User {
      *
      * @return
      */
-    public List<Interval> getAvailableIntervals(int minutesNeeded,int numberOfDaysBeforeTheOrder) {
+    public List<Interval> getAvailableIntervals(Store store, int minutesNeeded,int numberOfDaysBeforeTheOrder) {
         return (this.cart.getStore().timeSlotAvailable(minutesNeeded,numberOfDaysBeforeTheOrder));
     }
 

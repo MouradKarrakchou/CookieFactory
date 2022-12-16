@@ -2,10 +2,7 @@ package fr.unice.polytech.cod.components;
 
 import fr.unice.polytech.cod.food.Cookie;
 import fr.unice.polytech.cod.helper.Display;
-import fr.unice.polytech.cod.interfaces.CartActions;
-import fr.unice.polytech.cod.interfaces.StoreAccessor;
-import fr.unice.polytech.cod.interfaces.StoreFinder;
-import fr.unice.polytech.cod.interfaces.UserRequest;
+import fr.unice.polytech.cod.interfaces.*;
 import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.pojo.Item;
 import fr.unice.polytech.cod.pojo.StoreLocation;
@@ -24,6 +21,9 @@ import java.util.Optional;
 public class UserRequestComponent implements UserRequest {
     @Autowired
     CartActions cartActions;
+
+    @Autowired
+    TimeSlotAction timeSlotAction;
 
     @Autowired
     StoreAccessor storeAccessor;
@@ -47,57 +47,42 @@ public class UserRequestComponent implements UserRequest {
     }
 
     @Override
-    public List<Interval> getAvailableIntervals(User user, int minutesNeeded, int numberOfDaysBeforeTheOrder) {
-        return null;
+    public List<Interval> getAvailableIntervals(Store store, Cart cart, int numberOfDaysBeforeTheOrder) {
+        return timeSlotAction.timeSlotAvailable(store, store.getListChef(), cartActions.getDuration(cart), numberOfDaysBeforeTheOrder);
     }
 
-    @Override
-    public Cart getCart(User user) {
-        return null;
-    }
 
     @Override
-    public List<Order> getOrders(User user) {
-        return null;
-    }
-
-    @Override
-    public List<Item> getAllItemsFromCart(User user) {
-        return null;
-    }
-
-    @Override
-    public Item getItemFromCart(User user, String itemName) throws Exception {
-        return null;
-    }
-
-    @Override
-    public StoreLocation getStoreLocation(User user) {
-        return null;
-    }
-
-    @Override
-    public Store getStore(User user) {
-        return null;
+    public Item getItemFromCart(Cart cart, String itemName) throws Exception {
+        return cartActions.findItem(cart, itemName);
     }
 
     @Override
     public Optional<FidelityAccount> getSubscription(User user) {
-        return Optional.empty();
+        FidelityAccount fidelityAccount = user.getFidelityAccount();
+        if(user.getFidelityAccount() == null)
+            return Optional.empty();
+        return Optional.of(fidelityAccount);
     }
 
     @Override
     public boolean hasFidelityAccount(User user) {
-        return false;
+        return user.getFidelityAccount() != null;
     }
 
     @Override
-    public void notify(String message) {
-
+    public void notify(User user, String message) {
+        FidelityAccount fidelityAccount = user.getFidelityAccount();
+        if (fidelityAccount == null)
+            Display.smsNok("Anonymous account.");
+        else
+            Display.smsOk(fidelityAccount.getName(), message);
     }
 
     @Override
-    public List<Order> getHistory() throws Exception {
-        return null;
-    }
+    public List<Order> getHistory(User user) throws Exception {
+        FidelityAccount fidelityAccount = user.getFidelityAccount();
+        if(fidelityAccount == null)
+            throw new Exception("Your not subscribe to a fidelity account");
+        return fidelityAccount.getRetrieveOrder();    }
 }
