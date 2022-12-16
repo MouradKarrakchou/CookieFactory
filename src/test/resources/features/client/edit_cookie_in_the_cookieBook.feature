@@ -2,10 +2,9 @@ Feature: edit cookie in the cookie book
 
   Background:
     Given a cookie
-    Given a storeLocattion
-    And brandManager
     And a cookieBook
 
+    #Le BrandManager n'existe plus !
   Scenario: add a cookie to the cookie book
     When when a brandManager add a cookie to the cookie book
     Then the cookkie is add to the cookie book

@@ -1,5 +1,6 @@
 package fr.unice.polytech.cod.cucumber;
 
+import fr.unice.polytech.cod.interfaces.OrderStatesAction;
 import fr.unice.polytech.cod.order.Bill;
 import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.order.OrderState;
@@ -9,6 +10,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
@@ -21,32 +23,15 @@ public class UpdatableObjectDef {
     private User user;
     private Order order;
 
+     @Autowired
+     OrderStatesAction orderStatesAction;
+
     public UpdatableObjectDef() {
     }
 
     @Given("a mocked user")
     public void aMockedUser() {
         user = Mockito.mock(User.class);
-    }
-
-    @When("the order change to \"([^\"]*)\"$")
-    public void theOrderChangeTo(OrderState orderState) {
-        order.updateState(orderState);
-    }
-
-    @Then("a notification should not be sent")
-    public void aNotificationShouldNotBeSent() {
-        verify(user, times(0)).notify(anyString());
-    }
-
-    @When("the client overdue the timer")
-    public void theClientOverdueTheTimer() throws InterruptedException {
-        sleep(1000);
-    }
-
-    @Then("a notification should have be sent")
-    public void aNotificationShouldHaveBeSent() {
-        verify(user, times(1)).notify(anyString());
     }
 
     @Given("an order with the state \"([^\"]*)\"$")

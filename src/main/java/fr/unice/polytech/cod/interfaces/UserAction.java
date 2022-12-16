@@ -21,7 +21,7 @@ public interface UserAction {
 
     void chooseInterval(Interval interval, Cart cart);
 
-    Bill validateCart(User user, Cart cart) throws Exception;
+    Bill validateCart(User user) throws Exception;
 
     void addOrder(User user, Order order);
     void removeOneItemFromCart(Item item, Cart cart);
