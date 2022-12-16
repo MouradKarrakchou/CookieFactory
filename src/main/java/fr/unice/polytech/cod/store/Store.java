@@ -60,34 +60,8 @@ public class Store extends UpdatableObject {
         return orderList;
     }
 
-    public void addOrder(Order order, Set<Ingredient> ingredientsNeeded) {
-        for(Ingredient ingredient : ingredientsNeeded)
-            stock.lock(ingredient);
-        this.orderList.add(order);
-    }
-
     public void removeOrder(Order order) {
         this.orderList.remove(order);
-    }
-
-    public void associateOrder(Chef chef, Order orderToPrepare) {
-        if(chef.isAvailable()) {
-            chef.associateOrder(orderToPrepare);
-            orderToPrepare.updateState(OrderState.IN_PROGRESS);
-        }
-    }
-
-    /**
-     * change the openig hour of the restaurant(to do during the night because it reload all the schedule)
-     * @param open
-     * @param close
-     */
-    public void changeOpeningHour(TimeClock open,TimeClock close){
-        this.openHour=open;
-        this.closeHour=close;
-        for (Chef chef: listChef){
-            chef.updateSchedule(this);
-        }
     }
 
 
@@ -97,10 +71,6 @@ public class Store extends UpdatableObject {
 
     public TimeClock getCloseHour() {
         return closeHour;
-    }
-
-    public void addChef(Chef chef){
-        this.listChef.add(chef);
     }
 
     public Stock getStock() {
@@ -127,14 +97,6 @@ public class Store extends UpdatableObject {
         return cookieBook;
     }
 
-    /**
-     * Check if there are new obsoletes orders for Too Good to Go
-     */
-    private void checkObsoleteOrders() {
-        if(!obsoleteOrders.isEmpty())
-            for(Order order : obsoleteOrders)
-                surpriseBaskets.add(new SurpriseBasket(order));
-    }
 
     /**
      * Add the order to the obsolete orders list
@@ -225,6 +187,10 @@ public class Store extends UpdatableObject {
 
     public void setPartyCookieStoreManager(PartyCookieStoreManager partyCookieStoreManager) {
         this.partyCookieStoreManager = partyCookieStoreManager;
+    }
+
+    public List<Order> getObsoleteOrders() {
+        return obsoleteOrders;
     }
 }
 

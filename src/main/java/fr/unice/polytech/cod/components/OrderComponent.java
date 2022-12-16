@@ -7,6 +7,9 @@ import fr.unice.polytech.cod.order.Bill;
 import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.order.OrderState;
 import fr.unice.polytech.cod.pojo.Stock;
+import fr.unice.polytech.cod.store.Chef;
+import fr.unice.polytech.cod.store.Store;
+import fr.unice.polytech.cod.store.SurpriseBasket;
 import fr.unice.polytech.cod.user.User;
 import fr.unice.polytech.cod.user.fidelityAccount.Discount;
 import org.springframework.stereotype.Component;
@@ -69,5 +72,14 @@ public class OrderComponent implements OrderActions, OrderStatesAction {
         }else
             throw new Exception("Order doesn't exist");
     }
+
+    public void associateOrder(Chef chef, Order orderToPrepare) {
+        if(chef.isAvailable()) {
+            chef.associateOrder(orderToPrepare);
+            orderToPrepare.updateState(OrderState.IN_PROGRESS);
+        }
+    }
+
+
 
 }

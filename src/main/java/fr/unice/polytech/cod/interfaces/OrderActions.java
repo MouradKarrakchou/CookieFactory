@@ -4,6 +4,7 @@ import fr.unice.polytech.cod.food.ingredient.Ingredient;
 import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.order.OrderState;
 import fr.unice.polytech.cod.pojo.Stock;
+import fr.unice.polytech.cod.store.Chef;
 import fr.unice.polytech.cod.user.User;
 import fr.unice.polytech.cod.user.fidelityAccount.Discount;
 
@@ -20,4 +21,5 @@ public interface OrderActions {
     Optional<Discount> getDiscount(Order order);
 
     void addOrder(Stock stock, List<Order> orderList, Order order, Set<Ingredient> ingredientsNeeded);
+    void associateOrder(Chef chef, Order orderToPrepare);
 }

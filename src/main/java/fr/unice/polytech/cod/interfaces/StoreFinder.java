@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface StoreFinder {
     List<Store> getStores(StoreLocation storeLocation);
-    Store findStore(StoreLocation storeLocation, String name) throws InvalidStoreException;
+    Store findStore(String name) throws InvalidStoreException;
 }

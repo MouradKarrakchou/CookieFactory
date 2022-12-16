@@ -12,8 +12,7 @@ import fr.unice.polytech.cod.user.fidelityAccount.FidelityAccount;
 import java.util.List;
 import java.util.Optional;
 
-public interface UserInteraction {
-
+public interface UserRequest {
     List<Cookie> viewCatalog(User user);
     List<Store> viewStoreAvailable(User user);
     void recapCart(User user);
