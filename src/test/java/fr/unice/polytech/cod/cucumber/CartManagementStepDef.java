@@ -69,12 +69,16 @@ public class CartManagementStepDef {
     StockExplorer stockExplorer;
     @Autowired
     IntervalManager intervalManager;
-
     @Autowired
     CatalogExplorer catalogExplorer;
+    @Autowired
+    ScheduleActions scheduleActions;
 
     @Autowired
     StoreFinder storeFinder;
+
+    @Autowired
+    OrderStatesAction orderStatesAction;
 
     @Given("a user")
     public void a_user() {
@@ -301,15 +305,15 @@ public class CartManagementStepDef {
         ingredients.add(dough);
         Map<Ingredient, Double> taxes = new HashMap<>();
         taxes.put(dough, 5.0);
-        cart.getStore().fillStock(ingredients, taxes);
+        stockModifier.addIngredients(store.getStock(), ingredients);
         cart.getItemSet().clear();
         cart.getItemSet().add(item);
         pendingOrder = new Order(cart, user);
         inProgressOrder = new Order(cart, user);
-        user.getOrders().add(pendingOrder);
-        user.getOrders().add(inProgressOrder);
-        if(state.equals(OrderState.PENDING)) pendingOrder.updateState(state);
-        else inProgressOrder.updateState(state);
+        user.getUserOrders().add(pendingOrder);
+        user.getUserOrders().add(inProgressOrder);
+        if(state.equals(OrderState.PENDING))orderStatesAction.updateState(pendingOrder, state);
+        else orderStatesAction.updateState(inProgressOrder, state);
     }
 
     @When("the user try to cancel his order at the state \"([^\"]*)\"$")
@@ -338,13 +342,13 @@ public class CartManagementStepDef {
 
     @When("the manager changes the opening time of the store from {int} to {int}")
     public void theManagerChangesTheOpeningTimeOfTheStoreFromTo(int startingHour, int endHour) {
-        this.storeManager.changeOpeningHour(new TimeClock(startingHour,0),new TimeClock(endHour,0));
+        storeModifier.changeOpeningHour(store, new TimeClock(startingHour,0),new TimeClock(endHour,0));
     }
 
     @Then("the schedule of the employees start from {int} to {int}")
     public void theScheduleOfTheEmployeesStartFromTo(int startingHour, int endHour) {
         for(Chef chef:store.getListChef()){
-            List<TimeSlot> timeSlots = chef.getSchedule().getDaySlot(0).getTimeSlots();
+            List<TimeSlot> timeSlots = scheduleActions.getDaySlot(chef.getSchedule(), 0).getTimeSlots();
             assertEquals(0,timeSlots.get(0).getStartTime().compareTo(new TimeClock(startingHour,0)));
             assertEquals(0,timeSlots.get(timeSlots.size()-1).getStartTime().compareTo(new TimeClock(endHour,0)));
         }
@@ -359,7 +363,7 @@ public class CartManagementStepDef {
     }
     @When("a client ask for his history")
     public void a_client_ask_for_his_history() throws Exception {
-        user.subscribeToFidelityAccount("name","email","pw");
+        userAction.subscribeToFidelityAccount(this.user, "name","email","pw");
         user.getSubscription().get().addOrder(retrieveOrder);
 
         historic = user.getHistory();
