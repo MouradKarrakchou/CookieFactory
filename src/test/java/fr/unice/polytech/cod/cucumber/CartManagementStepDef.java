@@ -1,10 +1,7 @@
 package fr.unice.polytech.cod.cucumber;
 
 import fr.unice.polytech.cod.components.UserComponent;
-import fr.unice.polytech.cod.interfaces.CartActions;
-import fr.unice.polytech.cod.interfaces.StockModifier;
-import fr.unice.polytech.cod.interfaces.StoreAccessor;
-import fr.unice.polytech.cod.interfaces.UserAction;
+import fr.unice.polytech.cod.interfaces.*;
 import fr.unice.polytech.cod.pojo.*;
 import fr.unice.polytech.cod.food.ingredient.Dough;
 import fr.unice.polytech.cod.food.ingredient.Ingredient;
@@ -61,6 +58,9 @@ public class CartManagementStepDef {
     UserAction userAction;
     @Autowired
     StockModifier stockModifier;
+
+    @Autowired
+    CatalogExplorer catalogExplorer;
 
     @Given("a user")
     public void a_user() {
@@ -368,12 +368,11 @@ public class CartManagementStepDef {
     }
 
     @When("he order {string} a party cookie {string} customized with additional M&Ms")
-    public void heOrderAPartyCookieCustomizedWithAdditionalMMs(String size, String cookieName) {
-        Cookie cookie = new CookieBook().getCookie(cookieName);
+    public void heOrderAPartyCookieCustomizedWithAdditionalMMs(String size, String cookieName) throws Exception {
         HashMap<Ingredient, Boolean> additional= new HashMap<>();
         additional.put(new Ingredient("M&M's", 1.0, 1), true);
-        PartyCookie partyCookie = new PartyCookie(cookie, getSize(size), additional);
-        user.chooseCookies(partyCookie, 1);
+        PartyCookie partyCookie = new PartyCookie(testCookie, getSize(size), "princesse", PartyCookie.Event.Anniversary,additional);
+        userAction.addCookies(partyCookie, 1, cart);
     }
     public PartyCookie.CookieSize getSize(String size) throws Exception {
         return switch (size) {

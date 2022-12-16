@@ -1,6 +1,6 @@
 package fr.unice.polytech.cod.store;
 
-import fr.unice.polytech.cod.decorator_pattern.PartyCookieComponent;
+import fr.unice.polytech.cod.food.PartyCookie;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,8 +21,8 @@ public class PartyCookieStoreManager {
         return listPartyChef;
     }
 
-    public ArrayList<PartyCookieComponent> getPartyCookies() {
-        ArrayList<PartyCookieComponent> partyCookieComponents = new ArrayList<>();
+    public ArrayList<PartyCookie> getPartyCookies() {
+        ArrayList<PartyCookie> partyCookieComponents = new ArrayList<>();
         for(PartyChef partyChef : listPartyChef){
             partyCookieComponents.addAll(partyChef.getRecipes());
         }

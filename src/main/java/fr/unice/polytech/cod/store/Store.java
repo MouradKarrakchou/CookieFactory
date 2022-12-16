@@ -3,7 +3,6 @@ package fr.unice.polytech.cod.store;
 import fr.unice.polytech.cod.helper.threadedObjects.MailNotifier;
 import fr.unice.polytech.cod.pojo.CookieBook;
 import fr.unice.polytech.cod.pojo.Stock;
-import fr.unice.polytech.cod.decorator_pattern.PartyCookieComponent;
 import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.schedule.TimeClock;
 import fr.unice.polytech.cod.user.fidelityAccount.FidelityAccount;
@@ -77,13 +76,10 @@ public class Store {
         return fidelityAccountList;
     }
 
-    public boolean hasPartyChef() {
+    /*public boolean hasPartyChef() {
         return this.partyCookieStoreManager.hasPartyChef();
     }
-
-    public ArrayList<PartyCookieComponent> getPartyCookies() {
-        return this.partyCookieStoreManager.getPartyCookies();
-    }
+    */
 
     public void setName(String name) {
         this.name = name;
