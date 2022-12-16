@@ -12,15 +12,17 @@ import fr.unice.polytech.cod.user.Cart;
 import fr.unice.polytech.cod.user.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@SpringBootTest
 public class BillTest {
     Store store = new Store("StoRe");
-    User user = new User(null, null, null, null); // Added null caused compile error
+    User user = new User(); // Added null caused compile error
     Cart cart = new Cart();
     Order order = new Order(cart, user);
     Bill bill = new Bill(order);
