@@ -71,19 +71,6 @@ public class Store extends UpdatableObject {
         }
     }
 
-    /**
-     * change the openig hour of the restaurant(to do during the night because it reload all the schedule)
-     * @param open
-     * @param close
-     */
-    public void changeOpeningHour(TimeClock open,TimeClock close){
-        this.openHour=open;
-        this.closeHour=close;
-        for (Chef chef: listChef){
-            chef.updateSchedule(this);
-        }
-    }
-
 
     public TimeClock getOpenHour() {
         return openHour;
