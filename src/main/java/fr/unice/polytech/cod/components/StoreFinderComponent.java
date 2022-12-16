@@ -6,6 +6,7 @@ import fr.unice.polytech.cod.interfaces.StoreFinder;
 import fr.unice.polytech.cod.store.Store;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +34,7 @@ public class StoreFinderComponent implements StoreFinder {
         throw new InvalidStoreException();
     }
 
+    @PostConstruct
     public static StoreFinderComponent getInstance(){
         return new StoreFinderComponent();
     }

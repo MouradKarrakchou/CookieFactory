@@ -20,9 +20,7 @@ public class UserActionComponent implements UserAction {
 
     @Autowired
     CartActions cartActions;
-
-    @Autowired
-    StoreFinder storsFinder;
+    StoreFinder storeFinder = StoreFinderComponent.getInstance();
 
     public UserActionComponent(){}
     /**
@@ -45,7 +43,7 @@ public class UserActionComponent implements UserAction {
      */
     @Override
     public Store selectStore(String name, Cart cart) throws InvalidStoreException {
-        Store store = storsFinder.findStore(name);
+        Store store = storeFinder.findStore(name);
         cart.setStore(store);
         return (store);    }
 
