@@ -15,4 +15,5 @@ public class IngredientComponent implements IngredientActions {
     public void increaseQuantity(Ingredient ingredient, double quantity) {
         ingredient.setQuantity(ingredient.getQuantity() + quantity);
     }
+
 }

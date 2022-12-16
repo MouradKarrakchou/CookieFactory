@@ -8,8 +8,6 @@ import java.util.Objects;
 /**
  * Pojo class : Item
  */
-
-@Component
 public class Item implements Serializable {
     private final Cookie cookie;
     private int quantity;
