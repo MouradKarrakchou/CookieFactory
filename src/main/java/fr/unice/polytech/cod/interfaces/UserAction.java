@@ -9,22 +9,25 @@ import fr.unice.polytech.cod.schedule.Interval;
 import fr.unice.polytech.cod.store.Store;
 import fr.unice.polytech.cod.user.Cart;
 import fr.unice.polytech.cod.user.User;
+import fr.unice.polytech.cod.user.fidelityAccount.FidelityAccount;
+
+import java.util.List;
 
 public interface UserAction {
 
-    boolean chooseCookies(User user, Cookie cookie, int quantity, Cart cart);
-
+    boolean addCookies(Cookie cookie, int quantity, Cart cart);
+    boolean removeCookies(Cookie cookie, int quantity, Cart cart);
     Store selectStore(String name, Cart cart) throws InvalidStoreException;
 
-    void chooseInterval(User user, Interval interval, Cart cart);
+    void chooseInterval(Interval interval, Cart cart);
 
     Bill validateCart(User user, Cart cart) throws Exception;
 
     void addOrder(User user, Order order);
-    void removeOneItemFromCart(User user, Item item, Cart cart);
+    void removeOneItemFromCart(Item item, Cart cart);
 
     void subscribeToFidelityAccount(User user, String name, String email, String password) ;
-    void useDiscount(User user, Order order);
-    boolean cancelOrder(User user, Order order);
+    void useDiscount(FidelityAccount fidelityAccount, Order order);
+    boolean cancelOrder(Cart cart, List<Order> userOrders, Order orderToCancel);
 
 }

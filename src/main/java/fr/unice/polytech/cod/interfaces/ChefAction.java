@@ -9,15 +9,23 @@ import fr.unice.polytech.cod.store.Store;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.ExecutionException;
 
 public interface ChefAction {
     void updateSchedule(Chef chef, Store store);
     void associateOrder(Chef chef,Order orderToPrepare);
     boolean isAvailable(Chef chef);
-    void startWork(Chef chef);
+    void startWork(Chef chef) throws Exception;
+
+    /**
+     * Gives the Available TimeSlots of this Chef.
+     *
+     * @param chef - The chef.
+     * @param minutes - The slot of time you need.
+     * @param numberOfDaysBeforeTheOrder - The number of days before the order.
+     * @return intervals available.
+     */
     List<Interval> getIntervalsAvailable(Chef chef,int minutes,int numberOfDaysBeforeTheOrder);
-    Schedule getSchedule(Chef chef);
     void updateCurrentOrder(Chef chef,TimeClock timeClock, int numberOfDaysBeforeTheOrder);
-    Optional<Order> getOrderToPrepare(Chef chef);
     void terminateCurrentOrder(Chef chef);
 }
