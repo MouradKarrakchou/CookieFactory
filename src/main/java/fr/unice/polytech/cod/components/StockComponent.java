@@ -15,7 +15,7 @@ public class StockComponent implements StockExplorer, StockModifier {
 
     @Override
     public Optional<Ingredient> findIngredient(Stock stock, Ingredient ingredient) {
-        return stock.ingredients.stream().filter(i -> i.equals(ingredient)).findFirst();
+        return stock.getIngredients().stream().filter(i -> i.equals(ingredient)).findFirst();
     }
 
     /**
@@ -69,7 +69,7 @@ public class StockComponent implements StockExplorer, StockModifier {
             return false;
 
         // Removing quantity from stock ingredient & add this quantity to locked ingredient
-        stockIngredient.quantity -= ingredient.getQuantity();
+        stockIngredient.increaseQuantity(-ingredient.getQuantity());
         addToLockedIngredients(stock, ingredient);
 
         return true;
@@ -86,7 +86,7 @@ public class StockComponent implements StockExplorer, StockModifier {
 
         // If the ingredient isn't in the stock, we add it.
         if (optionalIngredient.isEmpty())
-            stock.ingredients.add(ingredient.clone());
+            stock.getIngredients().add(ingredient.clone());
 
         // If the ingredient is in the stock, we increase the quantity of it.
         else
@@ -110,12 +110,12 @@ public class StockComponent implements StockExplorer, StockModifier {
      * @param ingredient If the ingredient has been locked
      */
     private void addToLockedIngredients(Stock stock, Ingredient ingredient) {
-        Optional<Ingredient> _lockedIngredient = stock.lockedIngredients.stream()
+        Optional<Ingredient> _lockedIngredient = stock.getLockedIngredients().stream()
                 .filter(i -> i.equals(ingredient)).findFirst();
 
         // If the ingredient isn't in the locked stock, we add it.
         if (_lockedIngredient.isEmpty()) {
-            stock.lockedIngredients.add(ingredient.clone());
+            stock.getLockedIngredients().add(ingredient.clone());
         }
 
         // If the ingredient is in the locked stock, we increase the quantity of it.
