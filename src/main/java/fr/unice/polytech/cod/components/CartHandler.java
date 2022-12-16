@@ -1,5 +1,6 @@
 package fr.unice.polytech.cod.components;
 
+import fr.unice.polytech.cod.interfaces.IngredientActions;
 import fr.unice.polytech.cod.pojo.Item;
 import fr.unice.polytech.cod.food.ingredient.Ingredient;
 import fr.unice.polytech.cod.interfaces.CartActions;
@@ -20,12 +21,13 @@ import java.util.Set;
 public class CartHandler implements CartActions {
     StockExplorer stockExplorer;
     ItemActions itemActions;
-
+    IngredientActions ingredientActions;
 
     @Autowired
-    public CartHandler(StockExplorer stockExplorer, ItemActions itemActions) {
+    public CartHandler(StockExplorer stockExplorer, ItemActions itemActions, IngredientActions ingredientActions) {
         this.stockExplorer = stockExplorer;
         this.itemActions = itemActions;
+        this.ingredientActions = ingredientActions;
     }
 
 
@@ -37,15 +39,15 @@ public class CartHandler implements CartActions {
      */
     @Override
     public boolean addToCart(Cart cart, Item item) {
-        Optional<Item> _item =  cart.itemSet.stream()
+        Optional<Item> _item =  cart.getItemSet().stream()
                 .filter(currentItem -> currentItem.equals(item)).findFirst();
 
         if (_item.isPresent())
             itemActions.updateQuantity(_item.get(), item.getQuantity());
         else
-            cart.itemSet.add(item);
+            cart.getItemSet().add(item);
 
-        if(!stockExplorer.hasEnoughIngredients(cart.store.stock, itemActions.generateIngredientsNeeded(cart.itemSet))){
+        if(!stockExplorer.hasEnoughIngredients(cart.store.stock, itemActions.generateIngredientsNeeded(cart.getItemSet()))){
             removeFromCart(cart, item);
             return false;
         }
@@ -55,7 +57,7 @@ public class CartHandler implements CartActions {
 
     @Override
     public void removeFromCart(Cart cart, Item item) {
-        Optional<Item> _item =  cart.itemSet.stream().filter(currentItem -> currentItem.equals(item)).findFirst();
+        Optional<Item> _item =  cart.getItemSet().stream().filter(currentItem -> currentItem.equals(item)).findFirst();
         if (_item.isEmpty())
             return;
 
@@ -66,17 +68,18 @@ public class CartHandler implements CartActions {
     @Override
     public Bill validate(Cart cart, User user) throws Exception {
         Set<Ingredient> ingredientsNeeded = itemActions.generateIngredientsNeeded(cart.itemSet);
-        if (!cart.store.hasEnoughIngredients(ingredientsNeeded))
+        if (!stockExplorer.hasEnoughIngredients(cart.getStore().getStock(), ingredientsNeeded));
             throw new Exception("Ingrédients indisponibles");
 
-        Order order = new Order(cart, user);
+        Order order = new Order(cart, user); //TODO bug (on arrive jamais la) ...
+
         if (user.hasFidelityAccount())
             user.useDiscount(order);
         user.addOrder(order);
-        cart.store.addOrder(order, ingredientsNeeded);
+        cart.getStore().addOrder(order, ingredientsNeeded);
 
-        cart.interval.validate(order);
-        cart.itemSet.clear();
+        cart.getInterval().validate(order);
+        cart.getItemSet().clear();
 
         return new Bill(order);
     }
@@ -92,7 +95,7 @@ public class CartHandler implements CartActions {
                 boolean isAdded = false;
                 for (Ingredient neededIngredient : neededIngredients) {
                     if (neededIngredient.equals(ingredient)) {
-                        neededIngredient.increaseQuantity(ingredient.getQuantity());
+                        ingredientActions.increaseQuantity(ingredient, ingredient.getQuantity());
                         isAdded = true;
                     }
                 }
@@ -105,7 +108,7 @@ public class CartHandler implements CartActions {
 
     @Override
     public Item findItem(Cart cart, String cookieName) throws Exception {
-        Item itemFounded = cart.itemSet.stream()
+        Item itemFounded = cart.getItemSet().stream()
                 .filter(item -> cookieName.equals(item.getCookie().getName()))
                 .findAny()
                 .orElse(null);
@@ -117,6 +120,6 @@ public class CartHandler implements CartActions {
 
     @Override
     public boolean isEmpty(Cart cart) {
-        return cart.itemSet.isEmpty();
+        return cart.getItemSet().isEmpty();
     }
 }

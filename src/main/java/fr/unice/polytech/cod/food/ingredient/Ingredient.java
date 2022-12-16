@@ -37,6 +37,10 @@ public class Ingredient implements Cloneable {
         return quantity;
     }
 
+    public void setQuantity(double quantity) {
+        this.quantity = quantity;
+    }
+
     public double getPrice() {
         return price;
     }
