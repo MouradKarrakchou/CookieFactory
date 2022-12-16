@@ -13,6 +13,8 @@ import java.util.Set;
 @Component
 public class StockComponent implements StockExplorer, StockModifier {
 
+
+
     @Override
     public Optional<Ingredient> findIngredient(Stock stock, Ingredient ingredient) {
         return stock.getIngredients().stream().filter(i -> i.equals(ingredient)).findFirst();
