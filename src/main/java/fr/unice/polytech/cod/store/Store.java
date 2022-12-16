@@ -4,15 +4,12 @@ import fr.unice.polytech.cod.helper.threadedObjects.MailNotifier;
 import fr.unice.polytech.cod.pojo.CookieBook;
 import fr.unice.polytech.cod.pojo.Stock;
 import fr.unice.polytech.cod.decorator_pattern.PartyCookieComponent;
-import fr.unice.polytech.cod.food.ingredient.Ingredient;
 import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.schedule.TimeClock;
 import fr.unice.polytech.cod.user.fidelityAccount.FidelityAccount;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Store {
     private String name;
@@ -21,7 +18,6 @@ public class Store {
     private List<Chef> listChef;
     private final Stock stock;
     public static int orderNumber = 0;
-    private Map<Ingredient, Double> taxes;
     private CookieBook cookieBook;
     private TimeClock openHour = new TimeClock(8,0);
     private TimeClock closeHour = new TimeClock(18,0);
@@ -36,8 +32,6 @@ public class Store {
         listChef.add(new Chef(this));
         this.cookieBook = new CookieBook();
         this.partyCookieStoreManager = new PartyCookieStoreManager();
-
-        taxes = new HashMap<>();
     }
 
 
@@ -65,9 +59,6 @@ public class Store {
         return name;
     }
 
-    public Map<Ingredient, Double> getTaxes() {
-        return taxes;
-    }
 
     public List<Chef> getListChef() {
         return listChef;
@@ -85,14 +76,6 @@ public class Store {
         MailNotifier mailNotifier = new MailNotifier(waitingTime, this, fidelityAccount);
         mailNotifier.OnTimeReached();
         fidelityAccountList.add(fidelityAccount);
-    }
-
-    public void fillStock(List<Ingredient> ingredientList, Map<Ingredient, Double> taxesValues) {
-        stock.addStockList(ingredientList);
-        for(Ingredient ingredient : ingredientList) {
-            if(!taxes.containsKey(ingredient))
-                this.updateTaxes(ingredient, taxesValues.get(ingredient));
-        }
     }
 
     public boolean hasPartyChef() {

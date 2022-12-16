@@ -1,7 +1,5 @@
 package fr.unice.polytech.cod.components;
 
-import fr.unice.polytech.cod.exceptions.CookieAlreadyExistingException;
-import fr.unice.polytech.cod.exceptions.NotMatchingCatalogRequirementException;
 import fr.unice.polytech.cod.food.Cookie;
 import fr.unice.polytech.cod.food.ingredient.Ingredient;
 import fr.unice.polytech.cod.interfaces.*;
@@ -15,21 +13,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Optional;
 
 @Component
 public class StoreComponent implements StoreModifier, StoreAccessor {
-    final ChefAction chefAction;
-    final StockExplorer stockExplorer;
+    private final ChefAction chefAction;
+    private final StockExplorer stockExplorer;
 
     @Autowired
     public StoreComponent(ChefAction chefAction, StockExplorer stockExplorer) {
         this.chefAction = chefAction;
         this.stockExplorer = stockExplorer;
     }
-
 
     @Override
     public void changeOpeningHour(Store store, TimeClock open, TimeClock close) {
@@ -56,13 +52,13 @@ public class StoreComponent implements StoreModifier, StoreAccessor {
     }
 
     @Override
-    public void updateTaxes(Store store, Ingredient ingredient, double tax) {
-        store.getTaxes().put(ingredient, tax);
-    }
+    public boolean setTax(Store store, Ingredient ingredient, double newPrice) {
+        Optional<Ingredient> _stockIngredient = stockExplorer.findIngredient(store.getStock(), ingredient);
+        if(_stockIngredient.isEmpty())
+            return false;
 
-    @Override
-    public void setTaxes(Store store, Map<Ingredient, Double> taxes) {
-        store.setTaxes(taxes);
+        _stockIngredient.get().setPrice(newPrice);
+        return true;
     }
 
     @Override

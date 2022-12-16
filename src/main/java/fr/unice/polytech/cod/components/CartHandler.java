@@ -23,13 +23,18 @@ public class CartHandler implements CartActions, CartPenalty {
     ItemActions itemActions;
     IngredientActions ingredientActions;
     OrderActions orderActions;
+    UserRequestComponent userRequestComponent;
+    UserActionComponent userActionComponent;
+
 
     @Autowired
-    public CartHandler(StockExplorer stockExplorer, ItemActions itemActions, IngredientActions ingredientActions, OrderActions orderActions) {
+    public CartHandler(StockExplorer stockExplorer, ItemActions itemActions, IngredientActions ingredientActions, OrderActions orderActions, UserRequestComponent userRequestComponent, UserActionComponent userActionComponent) {
         this.stockExplorer = stockExplorer;
         this.itemActions = itemActions;
         this.ingredientActions = ingredientActions;
         this.orderActions = orderActions;
+        this.userRequestComponent = userRequestComponent;
+        this.userActionComponent = userActionComponent;
     }
 
     @Override
@@ -69,9 +74,9 @@ public class CartHandler implements CartActions, CartPenalty {
 
         Order order = new Order(cart, user);
 
-        if (user.hasFidelityAccount())
-            user.useDiscount(order);
-        user.addOrder(order);
+        if (userRequestComponent.hasFidelityAccount(user))
+            userActionComponent.useDiscount(user.getFidelityAccount(), order);
+        userActionComponent.addOrder(user, order);
         orderActions.addOrder(cart.getStore().getStock(), cart.getStore().getOrderList(), order, ingredientsNeeded);
 
         cart.getInterval().validate(order);
@@ -83,7 +88,7 @@ public class CartHandler implements CartActions, CartPenalty {
     @Override
     public void cancelOrder(Cart cart, Order order) {
         orderActions.removeOrder(cart.getStore().getOrderList(), order);
-        cart.getInterval().freedInterval();
+        cart.get l().freedInterval();
         cart.setCanceled(cart.getCanceled() + 1);
         Instant time = Instant.now();
 
