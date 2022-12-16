@@ -7,7 +7,5 @@ import fr.unice.polytech.cod.schedule.TimeClock;
 import fr.unice.polytech.cod.store.Store;
 
 public interface StoreModifier {
-    void addCookie(Store store, Cookie cookie) throws NotMatchingCatalogRequirementException, CookieAlreadyExistingException;
-    void removeCookie(Store store, Cookie cookie);
     void changeOpeningHour(Store store, TimeClock open, TimeClock close);
 }

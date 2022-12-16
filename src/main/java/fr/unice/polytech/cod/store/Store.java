@@ -1,5 +1,6 @@
 package fr.unice.polytech.cod.store;
 
+import fr.unice.polytech.cod.components.StoreComponent;
 import fr.unice.polytech.cod.pojo.CookieBook;
 import fr.unice.polytech.cod.pojo.Stock;
 import fr.unice.polytech.cod.decorator_pattern.PartyCookieComponent;
@@ -13,6 +14,7 @@ import fr.unice.polytech.cod.schedule.Interval;
 import fr.unice.polytech.cod.schedule.TimeClock;
 import fr.unice.polytech.cod.user.fidelityAccount.FidelityAccount;
 import fr.unice.polytech.cod.helper.MailNotifier;
+import org.springframework.stereotype.Component;
 
 
 import java.util.*;
