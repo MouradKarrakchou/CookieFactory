@@ -64,13 +64,6 @@ public class Store extends UpdatableObject {
         this.orderList.remove(order);
     }
 
-    public void associateOrder(Chef chef, Order orderToPrepare) {
-        if(chef.isAvailable()) {
-            chef.associateOrder(orderToPrepare);
-            orderToPrepare.updateState(OrderState.IN_PROGRESS);
-        }
-    }
-
 
     public TimeClock getOpenHour() {
         return openHour;
@@ -78,10 +71,6 @@ public class Store extends UpdatableObject {
 
     public TimeClock getCloseHour() {
         return closeHour;
-    }
-
-    public void addChef(Chef chef){
-        this.listChef.add(chef);
     }
 
     public Stock getStock() {
@@ -206,6 +195,10 @@ public class Store extends UpdatableObject {
 
     public void setPartyCookieStoreManager(PartyCookieStoreManager partyCookieStoreManager) {
         this.partyCookieStoreManager = partyCookieStoreManager;
+    }
+
+    public List<Order> getObsoleteOrders() {
+        return obsoleteOrders;
     }
 }
 

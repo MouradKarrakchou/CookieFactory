@@ -4,6 +4,7 @@ import fr.unice.polytech.cod.exceptions.CookieAlreadyExistingException;
 import fr.unice.polytech.cod.exceptions.NotMatchingCatalogRequirementException;
 import fr.unice.polytech.cod.food.Cookie;
 import fr.unice.polytech.cod.schedule.TimeClock;
+import fr.unice.polytech.cod.store.Chef;
 import fr.unice.polytech.cod.store.Store;
 
 public interface StoreModifier {
@@ -13,4 +14,5 @@ public interface StoreModifier {
      * @param close
      */
     void changeOpeningHour(Store store, TimeClock open, TimeClock close);
+    void addChef(Chef chef);
 }

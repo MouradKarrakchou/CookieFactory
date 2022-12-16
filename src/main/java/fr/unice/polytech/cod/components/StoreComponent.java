@@ -7,9 +7,11 @@ import fr.unice.polytech.cod.interfaces.ChefAction;
 import fr.unice.polytech.cod.interfaces.StockExplorer;
 import fr.unice.polytech.cod.interfaces.StoreAccessor;
 import fr.unice.polytech.cod.interfaces.StoreModifier;
+import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.schedule.TimeClock;
 import fr.unice.polytech.cod.store.Chef;
 import fr.unice.polytech.cod.store.Store;
+import fr.unice.polytech.cod.store.SurpriseBasket;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -52,4 +54,18 @@ public class StoreComponent implements StoreModifier, StoreAccessor {
                 .forEach(cookieAvailable::add);
         return cookieAvailable;
     }
+    @Override
+    public void addChef(Store store,Chef chef){
+        store.getListChef().add(chef);
+    }
+
+    /**
+     * Check if there are new obsoletes orders for Too Good to Go
+     */
+    private void checkObsoleteOrders(Store store) {
+        if(!store.getObsoleteOrders().isEmpty())
+            for(Order order : store.getObsoleteOrders())
+                store.getSurpriseBaskets().add(new SurpriseBasket(order));
+    }
+
 }
