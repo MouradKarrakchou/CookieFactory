@@ -15,16 +15,18 @@ import java.util.Optional;
 public interface UserRequest {
     List<Cookie> viewCatalog(Store store);
     List<Store> viewStoreAvailable();
-    void recapCart();
-    List<Interval> getAvailableIntervals(User user, int minutesNeeded, int numberOfDaysBeforeTheOrder);
-    Cart getCart(User user);
-    List<Order> getOrders(User user);
-    List<Item> getAllItemsFromCart(User user);
-    Item getItemFromCart(User user, String itemName) throws Exception;
-    StoreLocation getStoreLocation(User user);
-    Store getStore(User user);
+    void recapCart(Cart cart);
+
+    /**
+     * Gets a list of available TimeSlots by Date;
+     *
+     * @return
+     */
+    List<Interval> getAvailableIntervals(Store store, Cart cart, int numberOfDaysBeforeTheOrder);
+
+    Item getItemFromCart(Cart cart, String itemName) throws Exception;
     Optional<FidelityAccount> getSubscription(User user) ;
     boolean hasFidelityAccount(User user);
-    void notify(String message);
-    List<Order> getHistory() throws Exception;
+    void notify(User user, String message);
+    List<Order> getHistory(FidelityAccount fidelityAccount) throws Exception;
 }

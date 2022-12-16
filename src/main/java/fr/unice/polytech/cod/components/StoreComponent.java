@@ -6,6 +6,7 @@ import fr.unice.polytech.cod.food.Cookie;
 import fr.unice.polytech.cod.food.ingredient.Ingredient;
 import fr.unice.polytech.cod.interfaces.*;
 import fr.unice.polytech.cod.order.Order;
+import fr.unice.polytech.cod.order.OrderState;
 import fr.unice.polytech.cod.schedule.TimeClock;
 import fr.unice.polytech.cod.store.Chef;
 import fr.unice.polytech.cod.store.Store;
@@ -19,18 +20,16 @@ import java.util.List;
 import java.util.Map;
 
 @Component
-public class StoreComponent implements StoreModifier, StoreAccessor, StoreAction {
-
-
+public class StoreComponent implements StoreModifier, StoreAccessor {
     private final ChefAction chefAction;
     private final StockExplorer stockExplorer;
-    Map<Ingredient, Double> taxes;
+    private final OrderStatesAction orderStatesAction;
 
     @Autowired
-    public StoreComponent(ChefAction chefAction, StockExplorer stockExplorer) {
+    public StoreComponent(ChefAction chefAction, StockExplorer stockExplorer, OrderStatesAction orderStatesAction) {
         this.chefAction = chefAction;
         this.stockExplorer = stockExplorer;
-        this.taxes = new HashMap<>();
+        this.orderStatesAction = orderStatesAction;
     }
 
 
@@ -65,26 +64,25 @@ public class StoreComponent implements StoreModifier, StoreAccessor, StoreAction
 
     @Override
     public void updateTaxes(Store store, Ingredient ingredient, double tax) {
-        taxes.put(ingredient, tax);
+        store.getTaxes().put(ingredient, tax);
     }
 
     @Override
     public void setTaxes(Store store, Map<Ingredient, Double> taxes) {
-        this.taxes = taxes;
+        store.setTaxes(taxes);
     }
 
     @Override
-    /**
-     * Check if there are new obsoletes orders for Too Good to Go
-     */
-    public void checkObsoleteOrders(Store store) {
-        if(!store.getObsoleteOrders().isEmpty())
-            for(Order order : store.getObsoleteOrders())
-                store.getSurpriseBaskets().add(new SurpriseBasket(order));
+    public List<SurpriseBasket> getAllSurpriseBasket(Store store) {
+        List<SurpriseBasket> surpriseBaskets = new ArrayList<>();
+        getObsoleteOrders(store).forEach(obsoleteOrder -> surpriseBaskets.add(new SurpriseBasket(obsoleteOrder)));
+        return surpriseBaskets;
     }
 
-    public void addToObsoleteOrders(Store store,Order order) {
-        store.getObsoleteOrders().add(order);
+    @Override
+    public List<Order> getObsoleteOrders(Store store) {
+        return store.getOrderList().stream()
+                .filter(order -> order.getOrderState() == OrderState.OBSOLETE)
+                .toList();
     }
-
 }
