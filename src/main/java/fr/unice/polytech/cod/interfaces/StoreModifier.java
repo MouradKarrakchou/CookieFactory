@@ -21,5 +21,5 @@ public interface StoreModifier {
      * @param newPrice The new price according to a tax
      * @return boolean : The ingredient's price has been updated
      */
-    boolean setTax(Store store, Ingredient ingredient, double newPrice);
+    boolean setTax(Store store, String ingredient, double newPrice);
 }

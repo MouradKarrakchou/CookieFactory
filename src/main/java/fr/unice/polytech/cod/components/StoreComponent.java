@@ -52,8 +52,8 @@ public class StoreComponent implements StoreModifier, StoreAccessor {
     }
 
     @Override
-    public boolean setTax(Store store, Ingredient ingredient, double newPrice) {
-        Optional<Ingredient> _stockIngredient = stockExplorer.findIngredient(store.getStock(), ingredient);
+    public boolean setTax(Store store, String ingredientName, double newPrice) {
+        Optional<Ingredient> _stockIngredient = stockExplorer.findIngredient(store.getStock(), ingredientName);
         if(_stockIngredient.isEmpty())
             return false;
 
