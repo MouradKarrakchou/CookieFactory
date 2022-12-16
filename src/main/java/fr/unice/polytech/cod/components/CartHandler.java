@@ -51,22 +51,23 @@ public class CartHandler implements CartActions, CartPenalty {
     }
 
     @Override
-    public void removeFromCart(Cart cart, Item item) {
+    public Boolean removeFromCart(Cart cart, Item item) {
         Optional<Item> _item =  cart.getItemSet().stream().filter(currentItem -> currentItem.equals(item)).findFirst();
         if (_item.isEmpty())
-            return;
+            return false;
 
         Item inCartItem = _item.get();
         itemActions.updateQuantity(inCartItem, - item.getQuantity());
+        return true;
     }
 
     @Override
     public Bill validate(Cart cart, User user) throws Exception {
         Set<Ingredient> ingredientsNeeded = itemActions.generateIngredientsNeeded(cart.itemSet);
-        if (!stockExplorer.hasEnoughIngredients(cart.getStore().getStock(), ingredientsNeeded));
+        if (!stockExplorer.hasEnoughIngredients(cart.getStore().getStock(), ingredientsNeeded))
             throw new Exception("Ingrédients indisponibles");
 
-        Order order = new Order(cart, user); //TODO bug (on arrive jamais la) ...
+        Order order = new Order(cart, user);
 
         if (user.hasFidelityAccount())
             user.useDiscount(order);
