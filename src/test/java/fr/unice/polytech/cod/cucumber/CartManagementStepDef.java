@@ -70,6 +70,9 @@ public class CartManagementStepDef {
     @Autowired
     IntervalManager intervalManager;
 
+    @Autowired
+    CatalogExplorer catalogExplorer;
+
     @Given("a user")
     public void a_user() {
         this.user = new User();
@@ -377,12 +380,11 @@ public class CartManagementStepDef {
     }
 
     @When("he order {string} a party cookie {string} customized with additional M&Ms")
-    public void heOrderAPartyCookieCustomizedWithAdditionalMMs(String size, String cookieName) {
-        Cookie cookie = new CookieBook().getCookie(cookieName);
+    public void heOrderAPartyCookieCustomizedWithAdditionalMMs(String size, String cookieName) throws Exception {
         HashMap<Ingredient, Boolean> additional= new HashMap<>();
         additional.put(new Ingredient("M&M's", 1.0, 1), true);
-        PartyCookie partyCookie = new PartyCookie(cookie, getSize(size), additional);
-        user.chooseCookies(partyCookie, 1);
+        PartyCookie partyCookie = new PartyCookie(testCookie, getSize(size), "princesse", PartyCookie.Event.Anniversary,additional);
+        userAction.addCookies(partyCookie, 1, cart);
     }
     public PartyCookie.CookieSize getSize(String size) throws Exception {
         return switch (size) {

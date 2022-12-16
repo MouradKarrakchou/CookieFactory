@@ -5,6 +5,7 @@ Feature: Order a party cookie
     And a store named "Antibes"
     And an empty cart
     And a list of ingredients
+    And a valid cookie
 
 
   Scenario: he order a classic party cookie XL
