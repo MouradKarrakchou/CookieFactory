@@ -1,10 +1,7 @@
 package fr.unice.polytech.cod.cucumber;
 
 import fr.unice.polytech.cod.components.UserComponent;
-import fr.unice.polytech.cod.interfaces.CartActions;
-import fr.unice.polytech.cod.interfaces.StockModifier;
-import fr.unice.polytech.cod.interfaces.StoreAccessor;
-import fr.unice.polytech.cod.interfaces.UserAction;
+import fr.unice.polytech.cod.interfaces.*;
 import fr.unice.polytech.cod.pojo.*;
 import fr.unice.polytech.cod.food.ingredient.Dough;
 import fr.unice.polytech.cod.food.ingredient.Ingredient;
@@ -49,7 +46,6 @@ public class CartManagementStepDef {
     Order inProgressOrder;
     Order retrieveOrder;
     Store store;
-    StoreManager storeManager;
     List<Order> historic;
 
     private final IngredientCatalog ingredientCatalog = IngredientCatalog.instance;
@@ -61,6 +57,18 @@ public class CartManagementStepDef {
     UserAction userAction;
     @Autowired
     StockModifier stockModifier;
+    @Autowired
+    StoreModifier storeModifier;
+    @Autowired
+    CookieBookManager cookieBookManager;
+    @Autowired
+    FidelityAccountManager fidelityAccountManager;
+    @Autowired
+    UserRequest userRequest;
+    @Autowired
+    StockExplorer stockExplorer;
+    @Autowired
+    IntervalManager intervalManager;
 
     @Given("a user")
     public void a_user() {
@@ -71,19 +79,19 @@ public class CartManagementStepDef {
     public void the_antibes_store(String name) throws InvalidStoreException {
         userAction.selectStore(name,user.getCart());
         this.store=user.getCart().getStore();
-        Map<Ingredient, Double> taxesValues = new HashMap<>();
         for(Ingredient ingredient : ingredientCatalog.getIngredientList())
-            taxesValues.put(ingredient, 3.0);
-        for (int i =0; i <100; i++)
-            stockModifier.fillStock(ingredientCatalog.getIngredientList(), taxesValues);
+            storeModifier.setTax(store,ingredient.getName(), 3.0);
+        //for (int i =0; i <100; i++)
+        //    store.fillStock(ingredientCatalog.getIngredientList(), taxesValues);
+        stockModifier.addIngredients(store.getStock(),ingredientCatalog.getIngredientList());
     }
     @Given("a valid cookie")
     public void a_valid_cookie() {
-        testCookie = new CookieBook().getCookie("Cookie au chocolat");
+        testCookie = cookieBookManager.getCookie(new CookieBook(),"Cookie au chocolat");
     }
     @Given("a fidelity account")
     public void a_fidelity_account() {
-        user.subscribeToFidelityAccount("name", "email", "password");
+        userAction.subscribeToFidelityAccount(user,"name", "email", "password");
     }
 
     @Given("a non-empty cart with {int} cookie")
@@ -108,38 +116,39 @@ public class CartManagementStepDef {
 
     @When("he remove a cookie from his cart")
     public void he_remove_a_cookie_from_his_cart() throws Exception {
-        Item item = user.getItemFromCart("Cookie au chocolat");
-        user.removeOneItemFromCart(item);
+        Item item = userRequest.getItemFromCart(user.getCart(),"Cookie au chocolat");
+        userAction.removeOneItemFromCart(item,user.getCart());
     }
+
     @When("he requests the cookie list")
     public void he_requests_the_cookie_list() {
         // Write code here that turns the phrase above into concrete actions
-        cookieList = user.viewCatalog();
+        cookieList = userRequest.viewCatalog(user.getCart().getStore());
     }
     @When("he validate his cart")
     public void he_validate_his_cart() throws Exception {
-        user.getCart().showCart();
-        bill = user.validateCart();
+        cartActions.showCart(user.getCart());
+        bill = userAction.validateCart(user);
     }
     @When("we choose a valid store")
     public void we_choose_a_valid_store() throws InvalidStoreException {
-        user.selectStore("Antibes");
+        userAction.selectStore("Antibes",cart);
     }
     @When("we choose an invalid store")
     public void we_choose_an_invalid_store() {
         try {
-            user.selectStore("invalidStore");
+            userAction.selectStore("invalidStore",cart);
         } catch (InvalidStoreException e) {
             this.exception=e;
         }
     }
     @When("he subscribe to the fidelity program as {string} with {string} mail and this password {string}")
     public void he_subscribe_to_the_fidelity_program(String name, String email, String password) {
-        user.subscribeToFidelityAccount(name, email, password);
+        userAction.subscribeToFidelityAccount(user,name, email, password);
     }
     @When("he order {int} cookies")
     public void he_order_cookies(int numberOfCookies) {
-        user.chooseCookies(testCookie, numberOfCookies);
+        userAction.addCookies(testCookie, numberOfCookies,user.getCart());
     }
 
     @Then("the bill is created")
@@ -148,7 +157,7 @@ public class CartManagementStepDef {
     }
     @Then("he take advantage of our loyalty program")
     public void he_take_advantage_of_our_loyalty_program() {
-        assertTrue(user.getSubscription().isPresent());
+        assertNotNull(user.getFidelityAccount());
     }
 
     @Then("an InvalidStoreException is triggered")
@@ -162,10 +171,10 @@ public class CartManagementStepDef {
     }
     @Then("his order is created")
     public void his_order_is_created(){
-        assertEquals(1, user.getOrders().size());
+        assertEquals(1, user.getUserOrders().size());
         assertEquals(1, cart.getStore().getOrderList().size());
         Stock stock = cart.getStore().getStock();
-        Optional<Ingredient> ingredient = stock.findIngredientInStock(new Dough("Pate verte", 25, 30));
+        Optional<Ingredient> ingredient = stockExplorer.findIngredient(stock,new Dough("Pate verte", 25, 30));
         assertEquals(0, ingredient.get().getQuantity());
     }
     @Then("he receive the entire list")
@@ -179,15 +188,15 @@ public class CartManagementStepDef {
     @Then("his cart has one item less")
     public void his_cart_has_one_item_less() {
         System.out.println(cart.getItemSet().size());
-       assertEquals(1, cart.getItemQuantity("Cookie au chocolat"));
+       assertEquals(1, cartActions.getItemQuantity(cart,"Cookie au chocolat"));
     }
     @Then("he receive a discount for his next order")
     public void he_receive_a_discount_for_his_next_order() {
-        assertTrue(user.hasFidelityAccount());
+        assertNotNull(user.getFidelityAccount());
     }
     @Then("he do not receive a discount for his next order")
     public void he_do_not_receive_a_discount_for_his_next_order() {
-        assertFalse(user.hasFidelityAccount());
+        assertNull(user.getFidelityAccount());
     }
 
 
