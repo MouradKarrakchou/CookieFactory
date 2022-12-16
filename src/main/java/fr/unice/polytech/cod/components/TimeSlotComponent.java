@@ -19,7 +19,7 @@ public class TimeSlotComponent implements TimeSlotAction {
     ChefAction chefAction;
 
     @Override
-    public List<Interval> timeSlotAvailable(TimeSlot timeSlot, Store store, List<Chef> chefs, int minutes, int numberOfDaysBeforeTheOrder) {
+    public List<Interval> timeSlotAvailable(Store store, List<Chef> chefs, int minutes, int numberOfDaysBeforeTheOrder) {
         List<Interval> intervals = new ArrayList<>();
         for (Chef chef : chefs) {
             for (Interval interval : chefAction.getIntervalsAvailable(chef, minutes, numberOfDaysBeforeTheOrder))
