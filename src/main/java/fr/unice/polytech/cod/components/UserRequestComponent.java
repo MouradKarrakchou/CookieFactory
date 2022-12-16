@@ -5,7 +5,6 @@ import fr.unice.polytech.cod.helper.Display;
 import fr.unice.polytech.cod.interfaces.*;
 import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.pojo.Item;
-import fr.unice.polytech.cod.pojo.StoreLocation;
 import fr.unice.polytech.cod.schedule.Interval;
 import fr.unice.polytech.cod.store.Store;
 import fr.unice.polytech.cod.user.Cart;
@@ -19,16 +18,21 @@ import java.util.Optional;
 
 @Component
 public class UserRequestComponent implements UserRequest {
-    @Autowired
+
     CartActions cartActions;
-
-    @Autowired
     TimeSlotAction timeSlotAction;
+    StoreAccessor storeAccessor;
+    StoreFinder storeFinder;
+    FidelityAccountManager fidelityAccountManager;
 
     @Autowired
-    StoreAccessor storeAccessor;
-
-    StoreFinder storeFinder = StoreFinderComponent.getInstance();
+    UserRequestComponent(CartActions cartActions, TimeSlotAction timeSlotAction, StoreAccessor storeAccessor, StoreFinder storeFinder, FidelityAccountManager fidelityAccountManager) {
+        this.cartActions = cartActions;
+        this.timeSlotAction = timeSlotAction;
+        this.storeAccessor = storeAccessor;
+        this.storeFinder = StoreFinderComponent.getInstance();
+        this.fidelityAccountManager = fidelityAccountManager;
+    }
 
     @Override
     public List<Cookie> viewCatalog(Store store) {
@@ -83,5 +87,6 @@ public class UserRequestComponent implements UserRequest {
     public List<Order> getHistory(FidelityAccount fidelityAccount) throws Exception {
         if(fidelityAccount == null)
             throw new Exception("Your not subscribe to a fidelity account");
-        return fidelityAccount.getRetrieveOrder();    }
+        return fidelityAccountManager.getRetrievedOrder(fidelityAccount);
+    }
 }

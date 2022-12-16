@@ -1,6 +1,5 @@
 package fr.unice.polytech.cod.interfaces;
 
-import fr.unice.polytech.cod.pojo.StoreLocation;
 import fr.unice.polytech.cod.exceptions.InvalidStoreException;
 import fr.unice.polytech.cod.store.Store;
 

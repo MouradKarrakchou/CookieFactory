@@ -22,11 +22,9 @@ public class User {
     private StoreLocation storeLocation;
     private FidelityAccount fidelityAccount;
 
-    public User(Cart cart, List<Order> userOrders, StoreLocation storeLocation, FidelityAccount fidelityAccount) {
-        this.cart = cart;
-        this.userOrders = userOrders;
-        this.storeLocation = storeLocation;
-        this.fidelityAccount = fidelityAccount;
+    public User() {
+        this.cart = new Cart();
+        this.userOrders = new ArrayList<>();
     }
 
     public Cart getCart() {

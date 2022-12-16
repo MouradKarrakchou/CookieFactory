@@ -22,6 +22,7 @@ public class Store {
     private TimeClock openHour = new TimeClock(8,0);
     private TimeClock closeHour = new TimeClock(18,0);
     private PartyCookieStoreManager partyCookieStoreManager;
+    private final List<SurpriseBasket> surpriseBaskets;
 
     public Store(String name) {
         this.name=name;
@@ -32,8 +33,12 @@ public class Store {
         listChef.add(new Chef(this));
         this.cookieBook = new CookieBook();
         this.partyCookieStoreManager = new PartyCookieStoreManager();
+        this.surpriseBaskets = new ArrayList<>();
     }
 
+    public List<SurpriseBasket> getSurpriseBaskets() {
+        return surpriseBaskets;
+    }
 
     public void setOrderList(List<Order> orderList) {
         this.orderList = new ArrayList<>(orderList);
@@ -68,14 +73,8 @@ public class Store {
         return cookieBook;
     }
 
-    public void addFidelityAccount(FidelityAccount fidelityAccount, int todayDay, int day, int hour, int minute) {
-        int waitingDay = Math.abs(day - todayDay);
-        int waitingTime = waitingDay*24*60*60*1000; //days in milliseconds
-        waitingTime += hour*60*60*1000; //hours in milliseconds
-        waitingTime += minute*60*1000; //minute in milliseconds
-        MailNotifier mailNotifier = new MailNotifier(waitingTime, this, fidelityAccount);
-        mailNotifier.OnTimeReached();
-        fidelityAccountList.add(fidelityAccount);
+    public List<FidelityAccount> getFidelityAccountList() {
+        return fidelityAccountList;
     }
 
     public boolean hasPartyChef() {

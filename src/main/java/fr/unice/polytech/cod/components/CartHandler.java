@@ -19,22 +19,23 @@ import java.util.Set;
 
 @Component
 public class CartHandler implements CartActions, CartPenalty {
-    private StockExplorer stockExplorer;
-    private ItemActions itemActions;
-    private IngredientActions ingredientActions;
-    private OrderActions orderActions;
-    private UserRequestComponent userRequestComponent;
-    private UserActionComponent userActionComponent;
-
+    private final StockExplorer stockExplorer;
+    private final ItemActions itemActions;
+    private final IngredientActions ingredientActions;
+    private final OrderActions orderActions;
+    private final UserRequestComponent userRequestComponent;
+    private final UserActionComponent userActionComponent;
+    private final IntervalManager intervalManager;
 
     @Autowired
-    public CartHandler(StockExplorer stockExplorer, ItemActions itemActions, IngredientActions ingredientActions, OrderActions orderActions, UserRequestComponent userRequestComponent, UserActionComponent userActionComponent) {
+    public CartHandler(StockExplorer stockExplorer, ItemActions itemActions, IngredientActions ingredientActions, OrderActions orderActions, UserRequestComponent userRequestComponent, UserActionComponent userActionComponent, IntervalManager intervalManager) {
         this.stockExplorer = stockExplorer;
         this.itemActions = itemActions;
         this.ingredientActions = ingredientActions;
         this.orderActions = orderActions;
         this.userRequestComponent = userRequestComponent;
         this.userActionComponent = userActionComponent;
+        this.intervalManager = intervalManager;
     }
 
     @Override
@@ -79,7 +80,8 @@ public class CartHandler implements CartActions, CartPenalty {
         userActionComponent.addOrder(user, order);
         orderActions.addOrder(cart.getStore().getStock(), cart.getStore().getOrderList(), order, ingredientsNeeded);
 
-        cart.getInterval().validate(order);
+        intervalManager.validate(cart.getInterval(), order);
+
         cart.getItemSet().clear();
 
         return new Bill(order);
@@ -88,7 +90,7 @@ public class CartHandler implements CartActions, CartPenalty {
     @Override
     public void cancelOrder(Cart cart, Order order) {
         orderActions.removeOrder(cart.getStore().getOrderList(), order);
-        cart.getInterval().freedInterval();
+        intervalManager.freedInterval(cart.getInterval());
         cart.setCanceled(cart.getCanceled() + 1);
         Instant time = Instant.now();
 

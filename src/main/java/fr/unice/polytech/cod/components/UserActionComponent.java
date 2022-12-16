@@ -2,10 +2,7 @@ package fr.unice.polytech.cod.components;
 
 import fr.unice.polytech.cod.exceptions.InvalidStoreException;
 import fr.unice.polytech.cod.food.Cookie;
-import fr.unice.polytech.cod.interfaces.CartActions;
-import fr.unice.polytech.cod.interfaces.CartPenalty;
-import fr.unice.polytech.cod.interfaces.StoreFinder;
-import fr.unice.polytech.cod.interfaces.UserAction;
+import fr.unice.polytech.cod.interfaces.*;
 import fr.unice.polytech.cod.order.Bill;
 import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.order.OrderState;
@@ -26,15 +23,21 @@ import java.util.Optional;
 @Component
 public class UserActionComponent implements UserAction {
 
-    @Autowired
+    FidelityAccountComponent fidelityAccountComponent;
     CartActions cartActions;
-
-    @Autowired
     CartPenalty cartPenalty;
     //pas de autowired car on l'instancie comme un singleton donc pas d'injection de dépendance necessaire
-    StoreFinder storeFinder = StoreFinderComponent.getInstance();
+    StoreFinder storeFinder;
+    IntervalManager intervalManager;
 
-    public UserActionComponent(){}
+    @Autowired
+    public UserActionComponent(FidelityAccountComponent fidelityAccountComponent, CartActions cartActions, CartPenalty cartPenalty, IntervalManager intervalManager){
+        this.fidelityAccountComponent = fidelityAccountComponent;
+        this.cartActions = cartActions;
+        this.cartPenalty = cartPenalty;
+        this.storeFinder = StoreFinderComponent.getInstance();
+        this.intervalManager = intervalManager;
+    }
     /**
      * Add cookies to cart
      *
@@ -62,11 +65,12 @@ public class UserActionComponent implements UserAction {
     public Store selectStore(String name, Cart cart) throws InvalidStoreException {
         Store store = storeFinder.findStore(name);
         cart.setStore(store);
-        return (store);    }
+        return (store);
+    }
 
     @Override
     public void chooseInterval(Interval interval, Cart cart) {
-        interval.reserve();
+        intervalManager.reserve(interval);
         cart.setInterval(interval);
     }
 
@@ -83,7 +87,7 @@ public class UserActionComponent implements UserAction {
         user.getUserOrders().add(order);
         FidelityAccount fidelityAccount = user.getFidelityAccount();
         if (fidelityAccount != null)
-            fidelityAccount.addOrder(order);
+            fidelityAccountComponent.addOrder(fidelityAccount, order);
     }
 
     @Override
@@ -100,7 +104,7 @@ public class UserActionComponent implements UserAction {
     public void useDiscount(FidelityAccount fidelityAccount, Order order) {
         if(fidelityAccount == null)
             return;
-        Optional<Discount> _discount = fidelityAccount.getDiscount();
+        Optional<Discount> _discount = fidelityAccountComponent.getDiscount(fidelityAccount);
         if(_discount.isEmpty())
             return;
 

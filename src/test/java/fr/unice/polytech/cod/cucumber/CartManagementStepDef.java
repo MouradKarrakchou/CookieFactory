@@ -1,6 +1,10 @@
 package fr.unice.polytech.cod.cucumber;
 
 import fr.unice.polytech.cod.components.UserComponent;
+import fr.unice.polytech.cod.interfaces.CartActions;
+import fr.unice.polytech.cod.interfaces.StockModifier;
+import fr.unice.polytech.cod.interfaces.StoreAccessor;
+import fr.unice.polytech.cod.interfaces.UserAction;
 import fr.unice.polytech.cod.pojo.*;
 import fr.unice.polytech.cod.food.ingredient.Dough;
 import fr.unice.polytech.cod.food.ingredient.Ingredient;
@@ -51,20 +55,27 @@ public class CartManagementStepDef {
     private final IngredientCatalog ingredientCatalog = IngredientCatalog.instance;
     private final StoreLocation storeLocation = StoreLocation.instance;
 
+    @Autowired
+    CartActions cartActions;
+    @Autowired
+    UserAction userAction;
+    @Autowired
+    StockModifier stockModifier;
+
     @Given("a user")
     public void a_user() {
-        this.user = new User(new Cart(), this.storeLocation);
+        this.user = new User();
     }
 
     @Given("a store named {string}")
     public void the_antibes_store(String name) throws InvalidStoreException {
-        user.selectStore(name);
-        this.store=user.getStore();
+        userAction.selectStore(name,user.getCart());
+        this.store=user.getCart().getStore();
         Map<Ingredient, Double> taxesValues = new HashMap<>();
         for(Ingredient ingredient : ingredientCatalog.getIngredientList())
             taxesValues.put(ingredient, 3.0);
         for (int i =0; i <100; i++)
-            store.fillStock(ingredientCatalog.getIngredientList(), taxesValues);
+            stockModifier.fillStock(ingredientCatalog.getIngredientList(), taxesValues);
     }
     @Given("a valid cookie")
     public void a_valid_cookie() {
