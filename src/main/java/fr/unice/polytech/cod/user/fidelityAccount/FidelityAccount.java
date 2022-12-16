@@ -74,7 +74,7 @@ public class FidelityAccount {
         Display.mailNotifier(message);
     }
 
-    public List<Order> getRetrieveOrder() {
+    public List<Order> getRetrievedOrder() {
         return orderList.stream().filter(
                 order -> order.getOrderState().equals(OrderState.RETRIEVE)).toList();
     }
