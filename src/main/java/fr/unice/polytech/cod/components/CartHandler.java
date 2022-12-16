@@ -1,11 +1,8 @@
 package fr.unice.polytech.cod.components;
 
-import fr.unice.polytech.cod.interfaces.IngredientActions;
+import fr.unice.polytech.cod.interfaces.*;
 import fr.unice.polytech.cod.pojo.Item;
 import fr.unice.polytech.cod.food.ingredient.Ingredient;
-import fr.unice.polytech.cod.interfaces.CartActions;
-import fr.unice.polytech.cod.interfaces.ItemActions;
-import fr.unice.polytech.cod.interfaces.StockExplorer;
 import fr.unice.polytech.cod.order.Bill;
 import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.user.Cart;
@@ -13,12 +10,15 @@ import fr.unice.polytech.cod.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.nio.file.FileAlreadyExistsException;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
 @Component
-public class CartHandler implements CartActions {
+public class CartHandler implements CartActions, CartPenalty {
     StockExplorer stockExplorer;
     ItemActions itemActions;
     IngredientActions ingredientActions;
@@ -30,13 +30,6 @@ public class CartHandler implements CartActions {
         this.ingredientActions = ingredientActions;
     }
 
-
-    /**
-     * If the store as the ingredients, add an item to the cart
-     *
-     * @param item
-     * @return boolean
-     */
     @Override
     public boolean addToCart(Cart cart, Item item) {
         Optional<Item> _item =  cart.getItemSet().stream()
@@ -121,5 +114,38 @@ public class CartHandler implements CartActions {
     @Override
     public boolean isEmpty(Cart cart) {
         return cart.getItemSet().isEmpty();
+    }
+
+    @Override
+    public void cancelPenalty(Cart cart, Instant time) {
+        if(cart.getCanceled() == 2) {
+            boolean isCanceledTwiceInARow = isCanceledTwiceInARow(cart, time);
+            if(isCanceledTwiceInARow)
+                penalty(cart, time);
+            else
+                cart.setCanceled(0);
+        }
+
+        cart.setLastTimeCanceled(time);
+    }
+
+    @Override
+    public boolean isTherePenalty(Cart cart, Instant time) {
+        if(cart.getEndPenaltyTime() != null)
+            if(time.isAfter(cart.getEndPenaltyTime()))
+                cart.setPenalty(false);
+
+        return cart.isPenalty();
+    }
+
+    @Override
+    public boolean isCanceledTwiceInARow(Cart cart, Instant time) {
+        return Duration.between(cart.getLastTimeCanceled(), time).toMinutes() <= 8;
+    }
+
+    @Override
+    public void penalty(Cart cart, Instant time) {
+        cart.setEndPenaltyTime(time.plusSeconds(600));  //10 minutes
+        cart.setPenalty(true);
     }
 }

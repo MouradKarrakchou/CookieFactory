@@ -1,9 +1,11 @@
 package fr.unice.polytech.cod.components;
 
 import fr.unice.polytech.cod.food.ingredient.Ingredient;
+import fr.unice.polytech.cod.interfaces.IngredientActions;
 import fr.unice.polytech.cod.interfaces.StockExplorer;
 import fr.unice.polytech.cod.interfaces.StockModifier;
 import fr.unice.polytech.cod.pojo.Stock;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -13,7 +15,12 @@ import java.util.Set;
 @Component
 public class StockComponent implements StockExplorer, StockModifier {
 
+    IngredientActions ingredientActions;
 
+    @Autowired
+    public StockComponent(IngredientActions ingredientActions) {
+        this.ingredientActions = ingredientActions;
+    }
 
     @Override
     public Optional<Ingredient> findIngredient(Stock stock, Ingredient ingredient) {

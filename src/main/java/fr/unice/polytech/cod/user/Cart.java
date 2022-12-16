@@ -37,69 +37,11 @@ public class Cart {
         Display.showItems(itemSet);
     }
 
-    /**
-     * If the store as the ingredients, add an item to the cart
-     *
-     * @param item
-     * @return
-     */
-    public boolean addToCart(Item item) {
-        Optional<Item> _item =  itemSet.stream().filter(currentItem -> currentItem.equals(item)).findFirst();
-        if (_item.isPresent())
-            _item.get().updateQuantity(item.getQuantity());
-        else
-            itemSet.add(item);
-
-        if (!store.hasEnoughIngredients(generateIngredientsNeeded(itemSet))){
-            System.out.println("hggvhjgv");
-            removeFromCart(item);
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * Remove the given item quantity from the quantity of the item, if the item is present as one copy, then it is deleted
-     *
-     * @param item The item present in the cart.
-     */
-    public void removeFromCart(Item item) {
-        Optional<Item> _item =  itemSet.stream().filter(currentItem -> currentItem.equals(item)).findFirst();
-        if (_item.isEmpty())
-            return;
-
-        Item inCartItem = _item.get();
-        itemActions.updateQuantity(inCartItem, - item.getQuantity());
-    }
 
     public Set<Item> getItemSet() {
         return itemSet;
     }
 
-    /**
-     * Validate the cart and create an order, that is added to the user and the sore.
-     * The cart is validated only if the store has all the ingredients needed
-     *
-     * @param user
-     * @return
-     */
-    public Bill validate(User user) throws Exception {
-        Set<Ingredient> ingredientsNeeded = generateIngredientsNeeded(this.itemSet);
-        if (!store.hasEnoughIngredients(ingredientsNeeded))
-            throw new Exception("Ingrédients indisponibles");
-
-        Order order = new Order(this, user);
-        if (user.hasFidelityAccount())
-            user.useDiscount(order);
-        user.addOrder(order);
-        store.addOrder(order, ingredientsNeeded);
-
-        this.interval.validate(order);
-        itemSet.clear();
-
-        return new Bill(order);
-    }
 
     /**
      * Cancel the client order
@@ -243,5 +185,33 @@ public class Cart {
 
     public void add(Item item) {
         this.itemSet.add(item);
+    }
+
+    public void setCanceled(int canceled) {
+        this.canceled = canceled;
+    }
+
+    public Instant getLastTimeCanceled() {
+        return lastTimeCanceled;
+    }
+
+    public void setLastTimeCanceled(Instant lastTimeCanceled) {
+        this.lastTimeCanceled = lastTimeCanceled;
+    }
+
+    public Instant getEndPenaltyTime() {
+        return endPenaltyTime;
+    }
+
+    public void setEndPenaltyTime(Instant endPenaltyTime) {
+        this.endPenaltyTime = endPenaltyTime;
+    }
+
+    public void setPenalty(boolean penalty) {
+        this.penalty = penalty;
+    }
+
+    public boolean isPenalty() {
+        return penalty;
     }
 }
