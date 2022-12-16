@@ -40,42 +40,32 @@ public class FidelityAccount {
         return name;
     }
 
-    public void addOrder(Order order) {
-        this.orderList.add(order);
-        Set<Item> items = order.getCart().getItemSet();
-        for (Item item : items) numberOfCommandedCookies += item.getQuantity();
-        if (numberOfCommandedCookies >= 30) {
-            discount = new Discount("Loyalty program", 10);
-            numberOfCommandedCookies -= 30;
-        }
+
+    public List<Order> getOrderList() {
+        return orderList;
+    }
+
+    public int getNumberOfCommandedCookies() {
+        return numberOfCommandedCookies;
+    }
+
+    public Discount getTheDiscount() {
+        return discount;
+    }
+
+    public void setTheDiscount(Discount loyalty_program) {
+        discount = loyalty_program;
     }
 
     public void resetDiscount() {
         this.discount = null;
     }
 
-    public Optional<Discount> getDiscount() {
-        if (discount == null)
-            return Optional.empty();
-        return Optional.of(discount);
+    public void incrementNumberOfCommandedCookies(int value) {
+        numberOfCommandedCookies += value;
     }
 
-    /**
-     * Subscribe to a store to receive mail notifications when a surprise basket is available
-     *
-     * @param store store at which the fidelity account subscribes
-     */
-    public void subscribeToSurpriseBasket(Store store, int todayDay, int day, int hour, int minute) {
-        store.addFidelityAccount(this, todayDay, day, hour, minute);
-        //TODO Maybe change the way we chose the date
-    }
-
-    public void notify(String message) {
-        Display.mailNotifier(message);
-    }
-
-    public List<Order> getRetrievedOrder() {
-        return orderList.stream().filter(
-                order -> order.getOrderState().equals(OrderState.RETRIEVE)).toList();
+    public void decrementNumberOfCommandedCookies(int value) {
+        numberOfCommandedCookies -= value;
     }
 }

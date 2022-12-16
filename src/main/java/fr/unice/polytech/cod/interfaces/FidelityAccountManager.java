@@ -3,21 +3,20 @@ package fr.unice.polytech.cod.interfaces;
 import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.store.Store;
 import fr.unice.polytech.cod.user.fidelityAccount.Discount;
+import fr.unice.polytech.cod.user.fidelityAccount.FidelityAccount;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 public interface FidelityAccountManager {
 
-    void addOrder(Order order);
+    void addOrder(FidelityAccount fidelityAccount, Order order);
 
-    void resetDiscount();
+    Optional<Discount> getDiscount(FidelityAccount fidelityAccount);
 
-    Optional<Discount> getDiscount();
-    void subscribeToSurpriseBasket(Store store, int todayDay, int day, int hour, int minute);
+    void subscribeToSurpriseBasket(FidelityAccount fidelityAccount, Store store, int todayDay, int day, int hour, int minute);
 
-    void notify(String message);
+    void notify(FidelityAccount fidelityAccount, String message);
 
-    List<Order> getRetrieveOrder();
+    List<Order> getRetrieveOrder(FidelityAccount fidelityAccount);
 }

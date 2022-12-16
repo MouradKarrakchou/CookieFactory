@@ -26,15 +26,19 @@ import java.util.Optional;
 @Component
 public class UserActionComponent implements UserAction {
 
-    @Autowired
+    FidelityAccountComponent fidelityAccountComponent;
     CartActions cartActions;
-
-    @Autowired
     CartPenalty cartPenalty;
     //pas de autowired car on l'instancie comme un singleton donc pas d'injection de dépendance necessaire
     StoreFinder storeFinder = StoreFinderComponent.getInstance();
 
-    public UserActionComponent(){}
+    @Autowired
+    public UserActionComponent(FidelityAccountComponent fidelityAccountComponent, CartActions cartActions, CartPenalty cartPenalty, StoreFinder storeFinder){
+        this.fidelityAccountComponent = fidelityAccountComponent;
+        this.cartActions = cartActions;
+        this.cartPenalty = cartPenalty;
+        this.storeFinder = storeFinder;
+    }
     /**
      * Add cookies to cart
      *
@@ -100,7 +104,7 @@ public class UserActionComponent implements UserAction {
     public void useDiscount(FidelityAccount fidelityAccount, Order order) {
         if(fidelityAccount == null)
             return;
-        Optional<Discount> _discount = fidelityAccount.getDiscount();
+        Optional<Discount> _discount = fidelityAccountComponent.getDiscount(fidelityAccount);
         if(_discount.isEmpty())
             return;
 
