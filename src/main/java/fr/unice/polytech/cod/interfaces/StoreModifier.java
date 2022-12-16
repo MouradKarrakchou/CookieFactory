@@ -1,9 +1,11 @@
 package fr.unice.polytech.cod.interfaces;
 
 import fr.unice.polytech.cod.food.ingredient.Ingredient;
+import fr.unice.polytech.cod.helper.threadedObjects.MailNotifier;
 import fr.unice.polytech.cod.schedule.TimeClock;
 import fr.unice.polytech.cod.store.Chef;
 import fr.unice.polytech.cod.store.Store;
+import fr.unice.polytech.cod.user.fidelityAccount.FidelityAccount;
 
 public interface StoreModifier {
     /**
@@ -22,4 +24,5 @@ public interface StoreModifier {
      * @return boolean : The ingredient's price has been updated
      */
     boolean setTax(Store store, String ingredient, double newPrice);
+    void addFidelityAccount(Store store, FidelityAccount fidelityAccount, int todayDay, int day, int hour, int minute);
 }
