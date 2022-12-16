@@ -5,10 +5,12 @@ import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.order.OrderState;
 import fr.unice.polytech.cod.user.User;
 import fr.unice.polytech.cod.user.fidelityAccount.Discount;
+import org.springframework.stereotype.Component;
 
 import java.time.Instant;
 import java.util.Optional;
 
+@Component
 public class OrderComponent implements OrderActions {
     @Override
     public void cancelOrder(Order order) {
