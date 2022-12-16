@@ -29,14 +29,6 @@ public class StoreLocation {
         throw new InvalidStoreException();
     }
 
-    public Store findStore(String storeName) {
-        for (Store store : storeList) {
-            if (store.getName().equals(storeName))
-                return store;
-        }
-        return null;
-    }
-
     public void addCookieStore(Cookie cookie, String store) throws Exception {
         Store store1 = this.selectStore(store);
         store1.getCookieBook().addCookieRecipe(cookie);

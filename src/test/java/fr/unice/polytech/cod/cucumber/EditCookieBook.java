@@ -40,8 +40,8 @@ public class EditCookieBook {
     }
 
     @Given("a cookieBook")
-    public void a_cookieBook() {
-        cookieBook = storeLocation.findStore("Antibes").getCookieBook();
+    public void a_cookieBook() throws InvalidStoreException {
+        cookieBook = storeLocation.selectStore("Antibes").getCookieBook();
     }
 
     @When("when a brandManager add a cookie to the cookie book")

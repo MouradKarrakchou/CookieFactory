@@ -7,12 +7,15 @@ import fr.unice.polytech.cod.order.Bill;
 import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.schedule.Interval;
 import fr.unice.polytech.cod.store.Store;
+import fr.unice.polytech.cod.user.Cart;
 import fr.unice.polytech.cod.user.User;
 
 public interface UserAction {
 
-    boolean chooseCookies(User user, Cookie cookie, int quantity);
-    Store selectStore(User user, String name) throws InvalidStoreException;
+    boolean chooseCookies(User user, Cookie cookie, int quantity, Cart cart);
+
+    Store selectStore(String name, Cart cart) throws InvalidStoreException;
+
     void chooseInterval(User user, Interval interval);
     Bill validateCart(User user) throws Exception;
     void addOrder(User user, Order order);
