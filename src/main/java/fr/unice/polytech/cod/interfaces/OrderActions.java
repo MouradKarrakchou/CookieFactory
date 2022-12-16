@@ -33,5 +33,5 @@ public interface OrderActions {
      */
     void associateOrder(Chef chef, Order orderToPrepare);
 
-    public void removeOrder(List<Order> orderList, Order order);
+    void removeOrder(List<Order> orderList, Order order);
 }
