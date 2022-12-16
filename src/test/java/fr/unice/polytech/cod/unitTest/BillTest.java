@@ -38,7 +38,6 @@ public class BillTest {
     StockModifier stockModifier;
     @Autowired
     CartActions cartActions;
-
     @Autowired
     BillAction billAction;
 

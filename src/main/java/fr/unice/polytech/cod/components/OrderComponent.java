@@ -72,7 +72,7 @@ public class OrderComponent implements OrderActions, OrderStatesAction {
         double totalPrice = 0;
         for (Item item : items) {
             Cookie cookie = item.getCookie();
-            double cookiePrice = Math.round(cookie.getPriceByStore(order.getCart().getStore()) * 100) / 100.0;
+            double cookiePrice = Math.round(cookie.getPrice() * 100) / 100.0;
             totalPrice += cookiePrice;
         }
         if (order.getDiscount().isPresent())

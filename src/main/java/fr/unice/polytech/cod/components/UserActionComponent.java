@@ -75,7 +75,8 @@ public class UserActionComponent implements UserAction {
     }
 
     @Override
-    public Bill validateCart(User user, Cart cart) throws Exception {
+    public Bill validateCart(User user) throws Exception {
+        Cart cart=user.getCart();
         Instant time = Instant.now();
         if (!cartActions.isEmpty(cart) && !cartPenalty.isTherePenalty(cart, time))
             return cartActions.validate(cart, user);
