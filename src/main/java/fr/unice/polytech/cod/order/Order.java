@@ -32,19 +32,11 @@ public class Order extends UpdatableObject {
         smsNotifier = new SmsNotifier(user);
     }
 
-    /**
-     * Get the current state of th order
-     *
-     * @return The current OrderState
-     */
+
     public OrderState getOrderState() {
         return orderState;
     }
 
-
-    /**
-     * When the waitingTime is reached the order become OBSOLETE.
-     */
     @Override
     public void OnTimeReached() {
         this.orderState = OrderState.OBSOLETE;
@@ -69,7 +61,6 @@ public class Order extends UpdatableObject {
     public SmsNotifier getSmsNotifier() {
         return smsNotifier;
     }
-
 
     public void setOrderState(OrderState orderState) {
         this.orderState = orderState;
