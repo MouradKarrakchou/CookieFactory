@@ -1,18 +1,24 @@
 package fr.unice.polytech.cod.components;
 
+import fr.unice.polytech.cod.food.Cookie;
 import fr.unice.polytech.cod.food.ingredient.Ingredient;
 import fr.unice.polytech.cod.interfaces.OrderActions;
 import fr.unice.polytech.cod.interfaces.OrderStatesAction;
 import fr.unice.polytech.cod.order.Bill;
 import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.order.OrderState;
+import fr.unice.polytech.cod.pojo.Item;
 import fr.unice.polytech.cod.pojo.Stock;
 import fr.unice.polytech.cod.store.Chef;
 import fr.unice.polytech.cod.store.ChefState;
 import fr.unice.polytech.cod.store.Store;
 import fr.unice.polytech.cod.store.SurpriseBasket;
+import fr.unice.polytech.cod.user.Cart;
 import fr.unice.polytech.cod.user.User;
 import fr.unice.polytech.cod.user.fidelityAccount.Discount;
+import io.cucumber.java.sv.Och;
+import org.aspectj.weaver.ast.Or;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
@@ -23,74 +29,96 @@ import java.util.Set;
 @Component
 public class OrderComponent implements OrderActions, OrderStatesAction {
     StockComponent stockComponent;
+    CartHandler cartHandler;
+
+    @Autowired
+    public OrderComponent(StockComponent stockComponent, CartHandler cartHandler) {
+        this.stockComponent = stockComponent;
+        this.cartHandler = cartHandler;
+    }
+
     @Override
     public void cancelOrder(Order order) {
-        //TODO
+        this.cartHandler.cancelOrder(order.getCart(), order);
     }
 
     @Override
     public void updateState(Order order, OrderState newState) {
-        //TODO
+        order.setOrderState(newState);
+
+        if (order.getOrderState() == OrderState.READY) {
+            order.startTimer();
+            order.getSmsNotifier().startTimer();
+        }
+        if (order.getOrderState() == OrderState.RETRIEVE) {
+            order.killCurrentThread();
+            order.getSmsNotifier().killCurrentThread();
+        }
     }
 
     @Override
     public User getUser(Order order) {
-        return null; //TODO
+        return order.getUser();
     }
 
     @Override
     public boolean isCanceledTwiceInARow(Order order, Instant time) {
-        return false; //TODO
+        return this.cartHandler.isCanceledTwiceInARow(order.getCart(), time);
     }
 
     @Override
     public double computeTotalPrice(Order order) {
-        return 0; //TODO
+        Set<Item> items = order.getCart().getItemSet();
+        double totalPrice = 0;
+        for (Item item : items) {
+            Cookie cookie = item.getCookie();
+            double cookiePrice = Math.round(cookie.getPriceByStore(order.getCart().getStore()) * 100) / 100.0;
+            totalPrice += cookiePrice;
+        }
+        if (order.getDiscount().isPresent())
+            totalPrice -= totalPrice * order.getDiscount().get().getValue();
+        return totalPrice;
     }
 
     @Override
     public OrderState getOrderState(Order order) {
-        return null; //TODO
+        return order.getOrderState();
     }
 
     @Override
     public Optional<Discount> getDiscount(Order order) {
-        return Optional.empty(); //TODO
+        return order.getDiscount();
     }
 
     @Override
-    public void addOrder(Stock stock,List<Order> orderList,Order order, Set<Ingredient> ingredientsNeeded) {
-        for(Ingredient ingredient : ingredientsNeeded)
-            stockComponent.lock(stock,ingredient);
+    public void addOrder(Stock stock, List<Order> orderList, Order order, Set<Ingredient> ingredientsNeeded) {
+        for (Ingredient ingredient : ingredientsNeeded)
+            stockComponent.lock(stock, ingredient);
         orderList.add(order);
     }
+
     @Override
-    public void retrieveOrder(List<Order> orderList, Bill bill) throws Exception{
+    public void retrieveOrder(List<Order> orderList, Bill bill) throws Exception {
         Order order = bill.getOrder();
-        if (orderList.contains(order)){
-            order.updateState(OrderState.RETRIEVE);
+        if (orderList.contains(order)) {
+            order.setOrderState(OrderState.RETRIEVE);
             orderList.remove(order);
-        }else
+        } else
             throw new Exception("Order doesn't exist");
     }
-    /**
-     * Associate the chef with an order, the chef is now unavailable
-     * @param orderToPrepare
-     */
+
     @Override
     public void associateOrder(Chef chef, Order orderToPrepare) {
-        if(chef.isAvailable()) {
+        if (chef.isAvailable()) {
             chef.setOrderToPrepare(Optional.of(orderToPrepare));
             chef.setState(ChefState.UNAVAILABLE);
-            orderToPrepare.updateState(OrderState.IN_PROGRESS);
+            orderToPrepare.setOrderState(OrderState.IN_PROGRESS);
         }
     }
+
     @Override
-    public void removeOrder(List<Order> orderList,Order order){
+    public void removeOrder(List<Order> orderList, Order order) {
         orderList.remove(order);
     }
-
-
-
 
 }
