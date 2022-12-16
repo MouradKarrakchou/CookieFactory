@@ -336,12 +336,6 @@ public class CartManagementStepDef {
         assertFalse(user.getCart().getStore().getOrderList().contains(inProgressOrder));
     }
 
-    @Given("a manager")
-    public void aManager() {
-        storeManager = new StoreManager(store);
-        store.setStoreManager(storeManager);
-    }
-
     @When("the manager changes the opening time of the store from {int} to {int}")
     public void theManagerChangesTheOpeningTimeOfTheStoreFromTo(int startingHour, int endHour) {
         this.storeManager.changeOpeningHour(new TimeClock(startingHour,0),new TimeClock(endHour,0));
