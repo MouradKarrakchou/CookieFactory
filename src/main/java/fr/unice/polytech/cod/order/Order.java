@@ -16,30 +16,14 @@ public class Order extends UpdatableObject {
     protected final Cart cart;
     protected final User user;
     protected Discount discount;
-    protected double totalPrice;
     protected SmsNotifier smsNotifier;
-
-
+    
     public Order(Cart cart, User user) {
         super(7_200_000); // An order expire when 2h is reached
         this.cart = cart;
         this.orderState = OrderState.PENDING;
         this.user = user;
-        this.totalPrice = computeTotalPrice();
         smsNotifier = new SmsNotifier(user);
-    }
-
-    private double computeTotalPrice() {
-        Set<Item> items = this.cart.getItemSet();
-        double totalPrice = 0;
-        for (Item item : items) {
-            Cookie cookie = item.getCookie();
-            double cookiePrice = Math.round(cookie.getPriceByStore(this.cart.getStore()) * 100) / 100.0;
-            totalPrice += cookiePrice;
-        }
-        if (discount != null)
-            totalPrice -= totalPrice * discount.getValue();
-        return totalPrice;
     }
 
     public Order(Cart cart, OrderState orderState, User user) {
@@ -59,26 +43,8 @@ public class Order extends UpdatableObject {
         return orderState;
     }
 
-    /**
-     * Set the state of the order to the given OrderState
-     * If the state is set to READY run the UpdatableObject thread
-     *
-     * @param state The new state of the order
-     */
-    public void updateState(OrderState state) {
-        this.orderState = state;
 
-        if (orderState == OrderState.READY) {
-            startTimer();
-            smsNotifier.startTimer();
-        }
-        if (orderState == OrderState.RETRIEVE) {
-            killCurrentThread();
-            smsNotifier.killCurrentThread();
-        }
-
-    }
-
+    //TODO on fait comment ?
     /**
      * When the waitingTime is reached the order become OBSOLETE.
      */
@@ -108,7 +74,13 @@ public class Order extends UpdatableObject {
         return smsNotifier;
     }
 
-    public double getTotalPrice() {
-        return totalPrice;
+
+    public void setOrderState(OrderState orderState) {
+        this.orderState = orderState;
     }
+
+    public void setSmsNotifier(SmsNotifier smsNotifier) {
+        this.smsNotifier = smsNotifier;
+    }
+
 }
