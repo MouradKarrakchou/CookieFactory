@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.*;
 
-public class Store extends UpdatableObject {
+public class Store {
     String name;
     List<Order> orderList;
     List<Order> obsoleteOrders;
@@ -35,7 +35,6 @@ public class Store extends UpdatableObject {
     PartyCookieStoreManager partyCookieStoreManager;
 
     public Store(String name) {
-        super(3*60*60*1000); //3 hours
         this.name=name;
         this.listChef=new ArrayList<>();
         this.orderList = new ArrayList<>();
@@ -48,7 +47,6 @@ public class Store extends UpdatableObject {
         this.partyCookieStoreManager = new PartyCookieStoreManager();
 
         taxes = new HashMap<>();
-        startTimer();
     }
 
 
@@ -97,25 +95,10 @@ public class Store extends UpdatableObject {
         return cookieBook;
     }
 
-
-    /**
-     * Add the order to the obsolete orders list
-     * @param order to add
-     */
-    public void addToObsoleteOrders(Order order) {
-        obsoleteOrders.add(order);
-    }
-
     public List<SurpriseBasket> getSurpriseBaskets() {
         return surpriseBaskets;
     }
 
-    //TODO start timer at the open hour + 3h and stop it at the close hour
-    @Override
-    protected void OnTimeReached() {
-        checkObsoleteOrders();
-        startTimer();
-    }
 
     public void addFidelityAccount(FidelityAccount fidelityAccount, int todayDay, int day, int hour, int minute) {
         int waitingDay = Math.abs(day - todayDay);
@@ -123,7 +106,6 @@ public class Store extends UpdatableObject {
         waitingTime += hour*60*60*1000; //hours in milliseconds
         waitingTime += minute*60*1000; //minute in milliseconds
         MailNotifier mailNotifier = new MailNotifier(waitingTime, this, fidelityAccount);
-        startTimer();
         mailNotifier.OnTimeReached();
         fidelityAccountList.add(fidelityAccount);
     }
