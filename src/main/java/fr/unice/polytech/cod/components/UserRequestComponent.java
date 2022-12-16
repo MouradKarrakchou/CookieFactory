@@ -18,16 +18,21 @@ import java.util.Optional;
 
 @Component
 public class UserRequestComponent implements UserRequest {
-    @Autowired
+
     CartActions cartActions;
-
-    @Autowired
     TimeSlotAction timeSlotAction;
+    StoreAccessor storeAccessor;
+    StoreFinder storeFinder;
+    FidelityAccountManager fidelityAccountManager;
 
     @Autowired
-    StoreAccessor storeAccessor;
-
-    StoreFinder storeFinder = StoreFinderComponent.getInstance();
+    UserRequestComponent(CartActions cartActions, TimeSlotAction timeSlotAction, StoreAccessor storeAccessor, StoreFinder storeFinder, FidelityAccountManager fidelityAccountManager) {
+        this.cartActions = cartActions;
+        this.timeSlotAction = timeSlotAction;
+        this.storeAccessor = storeAccessor;
+        this.storeFinder = StoreFinderComponent.getInstance();
+        this.fidelityAccountManager = fidelityAccountManager;
+    }
 
     @Override
     public List<Cookie> viewCatalog(Store store) {
@@ -82,5 +87,6 @@ public class UserRequestComponent implements UserRequest {
     public List<Order> getHistory(FidelityAccount fidelityAccount) throws Exception {
         if(fidelityAccount == null)
             throw new Exception("Your not subscribe to a fidelity account");
-        return fidelityAccount.getRetrievedOrder();    }
+        return fidelityAccountManager.getRetrievedOrder(fidelityAccount);
+    }
 }

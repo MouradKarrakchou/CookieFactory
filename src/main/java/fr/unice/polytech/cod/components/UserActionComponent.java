@@ -2,10 +2,7 @@ package fr.unice.polytech.cod.components;
 
 import fr.unice.polytech.cod.exceptions.InvalidStoreException;
 import fr.unice.polytech.cod.food.Cookie;
-import fr.unice.polytech.cod.interfaces.CartActions;
-import fr.unice.polytech.cod.interfaces.CartPenalty;
-import fr.unice.polytech.cod.interfaces.StoreFinder;
-import fr.unice.polytech.cod.interfaces.UserAction;
+import fr.unice.polytech.cod.interfaces.*;
 import fr.unice.polytech.cod.order.Bill;
 import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.order.OrderState;
@@ -30,14 +27,16 @@ public class UserActionComponent implements UserAction {
     CartActions cartActions;
     CartPenalty cartPenalty;
     //pas de autowired car on l'instancie comme un singleton donc pas d'injection de dépendance necessaire
-    StoreFinder storeFinder = StoreFinderComponent.getInstance();
+    StoreFinder storeFinder;
+    IntervalManager intervalManager;
 
     @Autowired
-    public UserActionComponent(FidelityAccountComponent fidelityAccountComponent, CartActions cartActions, CartPenalty cartPenalty, StoreFinder storeFinder){
+    public UserActionComponent(FidelityAccountComponent fidelityAccountComponent, CartActions cartActions, CartPenalty cartPenalty, IntervalManager intervalManager){
         this.fidelityAccountComponent = fidelityAccountComponent;
         this.cartActions = cartActions;
         this.cartPenalty = cartPenalty;
-        this.storeFinder = storeFinder;
+        this.storeFinder = StoreFinderComponent.getInstance();
+        this.intervalManager = intervalManager;
     }
     /**
      * Add cookies to cart
@@ -70,7 +69,7 @@ public class UserActionComponent implements UserAction {
 
     @Override
     public void chooseInterval(Interval interval, Cart cart) {
-        interval.reserve();
+        intervalManager.reserve(interval);
         cart.setInterval(interval);
     }
 

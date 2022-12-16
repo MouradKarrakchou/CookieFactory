@@ -18,5 +18,5 @@ public interface FidelityAccountManager {
 
     void notify(FidelityAccount fidelityAccount, String message);
 
-    List<Order> getRetrieveOrder(FidelityAccount fidelityAccount);
+    List<Order> getRetrievedOrder(FidelityAccount fidelityAccount);
 }
