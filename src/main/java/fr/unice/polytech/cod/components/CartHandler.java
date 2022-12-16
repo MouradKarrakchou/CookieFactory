@@ -11,7 +11,6 @@ import fr.unice.polytech.cod.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.nio.file.FileAlreadyExistsException;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.HashSet;
@@ -82,7 +81,7 @@ public class CartHandler implements CartActions, CartPenalty {
 
     @Override
     public void cancelOrder(Cart cart, Order order) {
-        store.removeOrder(order);
+        orderActions.removeOrder(cart.getStore().getOrderList(), order);
         cart.getInterval().freedInterval();
         cart.setCanceled(cart.getCanceled() + 1);
         Instant time = Instant.now();
@@ -192,6 +191,4 @@ public class CartHandler implements CartActions, CartPenalty {
         cart.setEndPenaltyTime(time.plusSeconds(600));  //10 minutes
         cart.setPenalty(true);
     }
-
-
 }

@@ -66,14 +66,21 @@ public interface CartActions {
     Item findItem(Cart cart, String cookieName) throws Exception;
 
     /**
-     * Calcul the
+     * Get the quantity of the specific item in the cart.
      *
-     * @param cart
-     * @param itemName
-     * @return
+     * @param cart - The cart.
+     * @param itemName - The item we are looking for.
+     * @return the quantities of the item.
      */
     int getItemQuantity(Cart cart, String itemName);
 
+
+    /**
+     * Calculated the time to cook the cookie of the cart.
+     *
+     * @param cart - The cart.
+     * @return the duration to cook the cookie of the cart.
+     */
     int getDuration(Cart cart);
 
     /**
