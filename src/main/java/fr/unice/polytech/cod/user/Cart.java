@@ -1,12 +1,14 @@
 package fr.unice.polytech.cod.user;
 
 import fr.unice.polytech.cod.helper.Display;
+import fr.unice.polytech.cod.interfaces.ItemActions;
 import fr.unice.polytech.cod.schedule.Interval;
 import fr.unice.polytech.cod.pojo.Item;
 import fr.unice.polytech.cod.food.ingredient.Ingredient;
 import fr.unice.polytech.cod.order.Bill;
 import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.store.Store;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -20,6 +22,9 @@ public class Cart {
     private Instant lastTimeCanceled;
     private Instant endPenaltyTime;
     private boolean penalty;
+
+    @Autowired
+    ItemActions itemActions;
 
 
     public Cart() {
@@ -65,7 +70,7 @@ public class Cart {
             return;
 
         Item inCartItem = _item.get();
-        inCartItem.updateQuantity(- item.getQuantity());
+        itemActions.updateQuantity(inCartItem, - item.getQuantity());
     }
 
     public Set<Item> getItemSet() {
@@ -171,7 +176,7 @@ public class Cart {
         // Check the list of items
         for (Item item : items) {
             // Generating all needed ingredients for each item
-            for (Ingredient ingredient : item.generateIngredientsNeeded()) {
+            for (Ingredient ingredient : itemActions.generateIngredientsNeeded(item)) {
                 // Merging all needed ingredients together
                 boolean isAdded = false;
                 for (Ingredient neededIngredient : neededIngredients) {
@@ -219,6 +224,10 @@ public class Cart {
 
     public void setInterval(Interval intervals) {
         this.interval = intervals;
+    }
+
+    public Interval getInterval() {
+         return this.interval;
     }
 
     public int getDuration() {
