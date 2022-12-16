@@ -51,13 +51,14 @@ public class CartHandler implements CartActions, CartPenalty {
     }
 
     @Override
-    public void removeFromCart(Cart cart, Item item) {
+    public Boolean removeFromCart(Cart cart, Item item) {
         Optional<Item> _item =  cart.getItemSet().stream().filter(currentItem -> currentItem.equals(item)).findFirst();
         if (_item.isEmpty())
-            return;
+            return false;
 
         Item inCartItem = _item.get();
         itemActions.updateQuantity(inCartItem, - item.getQuantity());
+        return true;
     }
 
     @Override
