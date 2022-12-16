@@ -2,7 +2,6 @@ package fr.unice.polytech.cod.components;
 
 
 import fr.unice.polytech.cod.pojo.CookieBook;
-import fr.unice.polytech.cod.food.Item;
 import fr.unice.polytech.cod.interfaces.ItemActions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

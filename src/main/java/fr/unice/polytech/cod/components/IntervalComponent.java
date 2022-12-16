@@ -6,6 +6,7 @@ import fr.unice.polytech.cod.schedule.Interval;
 import fr.unice.polytech.cod.schedule.TimeSlot;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.sql.Time;
 import java.util.List;
 
 public class IntervalComponent implements IntervalManager {
@@ -23,7 +24,7 @@ public class IntervalComponent implements IntervalManager {
 
     @Override
     public void freedInterval(Interval interval) {
-        interval.getTimeSlots().forEach(TimeSlot::disassociate);
+        interval.getTimeSlots().forEach(timeSlot->timeSlotComponent.disassociate(timeSlot));
     }
 
 }

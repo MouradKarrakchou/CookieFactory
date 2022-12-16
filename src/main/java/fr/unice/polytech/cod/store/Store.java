@@ -68,14 +68,8 @@ public class Store {
         return cookieBook;
     }
 
-    public void addFidelityAccount(FidelityAccount fidelityAccount, int todayDay, int day, int hour, int minute) {
-        int waitingDay = Math.abs(day - todayDay);
-        int waitingTime = waitingDay*24*60*60*1000; //days in milliseconds
-        waitingTime += hour*60*60*1000; //hours in milliseconds
-        waitingTime += minute*60*1000; //minute in milliseconds
-        MailNotifier mailNotifier = new MailNotifier(waitingTime, this, fidelityAccount);
-        mailNotifier.OnTimeReached();
-        fidelityAccountList.add(fidelityAccount);
+    public List<FidelityAccount> getFidelityAccountList() {
+        return fidelityAccountList;
     }
 
     public boolean hasPartyChef() {

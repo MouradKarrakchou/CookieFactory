@@ -15,28 +15,6 @@ public class Interval implements Comparable {
         this.timeSlots = timeSlots;
     }
 
-    /**
-     * Set all the timeSlot in the Interval to reserved = true
-     */
-    public void reserve() {
-        timeSlots.forEach(timeSlot -> timeSlot.setReserved(true));
-    }
-
-    /**
-     * Associate all the timeSlot in the Interval to the given order
-     * @param order The order to associate all timeSlot
-     */
-    public void validate(Order order) {
-        timeSlots.forEach(timeSlot -> timeSlot.associate(order));
-    }
-
-    /**
-     * Reset each timeSlot from the Interval
-     */
-    public void freedInterval() {
-        timeSlots.forEach(TimeSlot::disassociate);
-    }
-
     public TimeClock getStartTime() {
         return startTime;
     }
