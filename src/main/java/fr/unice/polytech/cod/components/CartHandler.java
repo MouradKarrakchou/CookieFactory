@@ -47,7 +47,7 @@ public class CartHandler implements CartActions, CartPenalty {
         else
             cart.getItemSet().add(item);
 
-        if(!stockExplorer.hasEnoughIngredients(cart.store.stock, itemActions.generateIngredientsNeeded(cart.getItemSet()))){
+        if(!stockExplorer.hasEnoughIngredients(cart.getStore().getStock(), itemActions.generateIngredientsNeeded(cart.getItemSet()))){
             removeFromCart(cart, item);
             return false;
         }
@@ -70,7 +70,7 @@ public class CartHandler implements CartActions, CartPenalty {
     public Bill validate(Cart cart, User user) throws Exception {
         Set<Ingredient> ingredientsNeeded = itemActions.generateIngredientsNeeded(cart.itemSet);
         if (!stockExplorer.hasEnoughIngredients(cart.getStore().getStock(), ingredientsNeeded))
-            throw new Exception("Ingrédients indisponibles");
+            throw new Exception("Unavailable Ingredients");
 
         Order order = new Order(cart, user);
 
@@ -88,7 +88,7 @@ public class CartHandler implements CartActions, CartPenalty {
     @Override
     public void cancelOrder(Cart cart, Order order) {
         orderActions.removeOrder(cart.getStore().getOrderList(), order);
-        cart.get l().freedInterval();
+        cart.getInterval().freedInterval();
         cart.setCanceled(cart.getCanceled() + 1);
         Instant time = Instant.now();
 
@@ -131,7 +131,7 @@ public class CartHandler implements CartActions, CartPenalty {
 
     @Override
     public int getItemQuantity(Cart cart, String itemName) {
-        Item item = null;
+        Item item;
         try {
             item = findItem(cart, itemName);
         } catch (Exception e) {
