@@ -15,6 +15,4 @@ public interface StoreAccessor {
      */
     List<Cookie> getAvailableCookie(Store store);
     List<Order> getObsoleteOrders(Store store);
-    List<SurpriseBasket> getAllSurpriseBasket(Store store);
-
 }

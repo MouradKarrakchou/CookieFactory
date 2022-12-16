@@ -22,11 +22,13 @@ import java.util.Optional;
 public class StoreComponent implements StoreModifier, StoreAccessor {
     private final ChefAction chefAction;
     private final StockExplorer stockExplorer;
+    private final OrderStatesAction orderStatesAction;
 
     @Autowired
-    public StoreComponent(ChefAction chefAction, StockExplorer stockExplorer) {
+    public StoreComponent(ChefAction chefAction, StockExplorer stockExplorer, OrderStatesAction orderStatesAction) {
         this.chefAction = chefAction;
         this.stockExplorer = stockExplorer;
+        this.orderStatesAction = orderStatesAction;
     }
 
     @Override
@@ -75,10 +77,11 @@ public class StoreComponent implements StoreModifier, StoreAccessor {
     }
 
     @Override
-    public List<SurpriseBasket> getAllSurpriseBasket(Store store) {
-        List<SurpriseBasket> surpriseBaskets = new ArrayList<>();
-        getObsoleteOrders(store).forEach(obsoleteOrder -> surpriseBaskets.add(new SurpriseBasket(obsoleteOrder)));
-        return surpriseBaskets;
+    public void updateSurpriseBasket(Store store) {
+        getObsoleteOrders(store).forEach(obsoleteOrder -> {
+            store.getSurpriseBaskets().add(new SurpriseBasket(obsoleteOrder));
+            orderStatesAction.updateState(obsoleteOrder, OrderState.IN_SURPRISE_BASKET);
+        });
     }
 
     @Override

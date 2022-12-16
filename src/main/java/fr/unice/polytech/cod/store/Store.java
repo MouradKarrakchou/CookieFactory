@@ -22,6 +22,7 @@ public class Store {
     private TimeClock openHour = new TimeClock(8,0);
     private TimeClock closeHour = new TimeClock(18,0);
     private PartyCookieStoreManager partyCookieStoreManager;
+    private final List<SurpriseBasket> surpriseBaskets;
 
     public Store(String name) {
         this.name=name;
@@ -32,8 +33,12 @@ public class Store {
         listChef.add(new Chef(this));
         this.cookieBook = new CookieBook();
         this.partyCookieStoreManager = new PartyCookieStoreManager();
+        this.surpriseBaskets = new ArrayList<>();
     }
 
+    public List<SurpriseBasket> getSurpriseBaskets() {
+        return surpriseBaskets;
+    }
 
     public void setOrderList(List<Order> orderList) {
         this.orderList = new ArrayList<>(orderList);
