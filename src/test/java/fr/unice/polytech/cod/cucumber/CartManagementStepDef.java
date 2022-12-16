@@ -347,7 +347,7 @@ public class CartManagementStepDef {
     @Then("the schedule of the employees start from {int} to {int}")
     public void theScheduleOfTheEmployeesStartFromTo(int startingHour, int endHour) {
         for(Chef chef:store.getListChef()){
-            List<TimeSlot> timeSlots = chef.getSchedule().getDaySlot(0).getTimeSlots();
+            List<TimeSlot> timeSlots = chef.getSchedule().getDaySlots().get(0).getTimeSlots();
             assertEquals(0,timeSlots.get(0).getStartTime().compareTo(new TimeClock(startingHour,0)));
             assertEquals(0,timeSlots.get(timeSlots.size()-1).getStartTime().compareTo(new TimeClock(endHour,0)));
         }
