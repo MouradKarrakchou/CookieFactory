@@ -5,10 +5,11 @@ import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.schedule.Interval;
 import fr.unice.polytech.cod.schedule.TimeSlot;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.sql.Time;
 import java.util.List;
-
+@Component
 public class IntervalComponent implements IntervalManager {
     @Autowired
     TimeSlotComponent timeSlotComponent;

@@ -5,7 +5,9 @@ import fr.unice.polytech.cod.interfaces.BrandManagerActions;
 import fr.unice.polytech.cod.interfaces.StoreFinder;
 import fr.unice.polytech.cod.interfaces.StoreModifier;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class BrandManagerActionsComponent implements BrandManagerActions {
     @Autowired
     StoreFinder storeFinder;
