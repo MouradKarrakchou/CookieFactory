@@ -7,8 +7,8 @@ import java.util.*;
  * Pojo class : Stock
  */
 public class Stock implements Serializable {
-    public final Set<Ingredient> ingredients;
-    public final Set<Ingredient> lockedIngredients;
+    private final Set<Ingredient> ingredients;
+    private final Set<Ingredient> lockedIngredients;
 
     public Stock() {
         ingredients = new HashSet<>();
