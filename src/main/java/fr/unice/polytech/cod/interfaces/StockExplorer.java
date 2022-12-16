@@ -8,7 +8,7 @@ import java.util.Set;
 
 
 public interface StockExplorer {
-    Optional<Ingredient> findIngredient(Stock stock, Ingredient ingredient);
+    Optional<Ingredient> findIngredient(Stock stock, String ingredient);
     boolean hasEnoughIngredients(Stock stock, Ingredient ingredient);
     boolean hasEnoughIngredients(Stock stock, Set<Ingredient> ingredients);
 }

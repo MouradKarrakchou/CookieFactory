@@ -24,8 +24,8 @@ public class StockComponent implements StockExplorer, StockModifier {
     }
 
     @Override
-    public Optional<Ingredient> findIngredient(Stock stock, Ingredient ingredient) {
-        return stock.getIngredients().stream().filter(i -> i.equals(ingredient)).findFirst();
+    public Optional<Ingredient> findIngredient(Stock stock, String ingredient) {
+        return stock.getIngredients().stream().filter(i -> i.getName().equals(ingredient)).findFirst();
     }
 
     /**
