@@ -21,6 +21,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TimeManagementTest {
+    //ATTENTION NE PAS FAIRE CETTE CLASSE
     private User user;
     private final IngredientCatalog ingredientCatalog = IngredientCatalog.instance;
     private final StoreLocation storeLocation = StoreLocation.instance;
