@@ -22,9 +22,9 @@ public interface StoreModifier {
 
     void addChef(Store store, Chef chef);
 
-    void addCookieStore(Store store, Cookie cookie, String storeName) throws Exception;
+    void addCookieStore(Store store, Cookie cookie) throws Exception;
 
-    void removeCookieStore(Store store, Cookie cookie, String storeName) throws Exception;
+    void removeCookieStore(Store store, Cookie cookie) throws Exception;
 
     /**
      * Update the current price of an ingredient.
