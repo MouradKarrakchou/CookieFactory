@@ -62,7 +62,8 @@ public class UserActionComponent implements UserAction {
     public Store selectStore(String name, Cart cart) throws InvalidStoreException {
         Store store = storeFinder.findStore(name);
         cart.setStore(store);
-        return (store);    }
+        return (store);
+    }
 
     @Override
     public void chooseInterval(Interval interval, Cart cart) {
