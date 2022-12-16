@@ -7,6 +7,7 @@ import fr.unice.polytech.cod.interfaces.ScheduleActions;
 import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.order.OrderState;
 import fr.unice.polytech.cod.schedule.Interval;
+import fr.unice.polytech.cod.schedule.Schedule;
 import fr.unice.polytech.cod.schedule.TimeClock;
 import fr.unice.polytech.cod.store.Chef;
 import fr.unice.polytech.cod.store.ChefState;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Component
@@ -30,12 +32,12 @@ public class ChefComponent implements ChefAction {
 
     @Override
     public void updateSchedule(Chef chef, Store store) {
-        // TODO
+        chef.setSchedule(new Schedule(store));
     }
 
     @Override
     public void associateOrder(Chef chef, Order orderToPrepare) {
-        // TODO
+        chef.setOrderToPrepare(Optional.of(orderToPrepare));
     }
 
     @Override
@@ -54,15 +56,16 @@ public class ChefComponent implements ChefAction {
 
     @Override
     public List<Interval> getIntervalsAvailable(Chef chef, int minutes, int numberOfDaysBeforeTheOrder) {
-        return null; // TODO
+        return(chef.getSchedule().getIntervals(minutes,numberOfDaysBeforeTheOrder));
     }
     @Override
     public void updateCurrentOrder(Chef chef, TimeClock timeClock, int numberOfDaysBeforeTheOrder) {
-        // TODO
+        chef.setOrderToPrepare(chef.getSchedule().getOrderToPrepare(numberOfDaysBeforeTheOrder,timeClock));
     }
     @Override
     public void terminateCurrentOrder(Chef chef) {
         if(chef.getOrderToPrepare().isPresent())
             orderStatesAction.updateState(chef.getOrderToPrepare().get(), OrderState.READY);
     }
+
 }

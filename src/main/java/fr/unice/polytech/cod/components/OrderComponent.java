@@ -2,6 +2,7 @@ package fr.unice.polytech.cod.components;
 
 import fr.unice.polytech.cod.food.Cookie;
 import fr.unice.polytech.cod.food.ingredient.Ingredient;
+import fr.unice.polytech.cod.interfaces.ChefAction;
 import fr.unice.polytech.cod.interfaces.OrderActions;
 import fr.unice.polytech.cod.interfaces.OrderStatesAction;
 import fr.unice.polytech.cod.order.Bill;
@@ -31,10 +32,13 @@ public class OrderComponent implements OrderActions, OrderStatesAction {
     StockComponent stockComponent;
     CartHandler cartHandler;
 
+    ChefAction chefAction;
+
     @Autowired
-    public OrderComponent(StockComponent stockComponent, CartHandler cartHandler) {
+    public OrderComponent(StockComponent stockComponent, CartHandler cartHandler, ChefAction chefAction) {
         this.stockComponent = stockComponent;
         this.cartHandler = cartHandler;
+        this.chefAction = chefAction;
     }
 
     @Override
@@ -109,7 +113,7 @@ public class OrderComponent implements OrderActions, OrderStatesAction {
 
     @Override
     public void associateOrder(Chef chef, Order orderToPrepare) {
-        if (chef.isAvailable()) {
+        if (chefAction.isAvailable(chef)) {
             chef.setOrderToPrepare(Optional.of(orderToPrepare));
             chef.setState(ChefState.UNAVAILABLE);
             orderToPrepare.setOrderState(OrderState.IN_PROGRESS);
