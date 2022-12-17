@@ -2,6 +2,7 @@ package fr.unice.polytech.cod.cucumber;
 
 import fr.unice.polytech.cod.components.CartHandler;
 import fr.unice.polytech.cod.components.CookieBookManager;
+import fr.unice.polytech.cod.components.PartyCookieHandler;
 import fr.unice.polytech.cod.components.UserManager;
 import fr.unice.polytech.cod.exceptions.CookieAlreadyExistingException;
 import fr.unice.polytech.cod.exceptions.FidelityAccountAlreadyExistException;
@@ -111,6 +112,9 @@ public class CartManagementStepDef {
 
     @Autowired
     Saleable saleable;
+
+    @Autowired
+    PartyCookieHandler partyCookieHandler;
 
     boolean historicException = false;
     boolean emptyCartException = false;
@@ -249,7 +253,7 @@ public class CartManagementStepDef {
     @Then("his cart has one item less")
     public void his_cart_has_one_item_less() {
         System.out.println(cart.getItemSet().size());
-       assertEquals(1, cartActions.getItemQuantity(cart,"Cookie au chocolat"));
+        assertEquals(1, cartActions.getItemQuantity(cart,"Cookie au chocolat"));
     }
     @Then("he receive a discount for his next order")
     public void he_receive_a_discount_for_his_next_order() {
@@ -441,6 +445,7 @@ public class CartManagementStepDef {
         HashMap<Ingredient, Boolean> additional= new HashMap<>();
         additional.put(new Ingredient("M&M's", 1.0, 1), true);
         PartyCookie partyCookie = new PartyCookie(testCookie, getSize(size), "princesse", PartyCookie.Event.Anniversary,additional);
+        partyCookieHandler.customize(partyCookie, partyCookie.getCustomIngrdedients());
         userAction.addCookies(partyCookie, 1, cart);
     }
     public PartyCookie.CookieSize getSize(String size) throws Exception {
@@ -569,9 +574,9 @@ public class CartManagementStepDef {
 
     @Then("there is {int} cookie in the cart")
     public void thereIsCookieInTheCart(int number) {
-            Iterator iterator = user.getCart().getItemSet().iterator();
-            Item item = (Item) iterator.next();
-            assertEquals(number, item.getQuantity());
+        Iterator iterator = user.getCart().getItemSet().iterator();
+        Item item = (Item) iterator.next();
+        assertEquals(number, item.getQuantity());
     }
 
     @Given("an store with an empty store")
@@ -639,5 +644,13 @@ public class CartManagementStepDef {
     @Then("he can't subscribe an other time to the fidelity program")
     public void heCanTSubscribeAnOtherTimeToTheFidelityProgram() {
         assertTrue(fidelityAccountException);
+    }
+
+    @Then("the price of the partyCookie is {double}")
+    public void thePriceOfThePartyCookieIs(double price) {
+        Item item = (Item) bill.getOrder().getCart().getItemSet().toArray()[0];
+        double partyCookiePrice = saleable.getPrice(store, item.getCookie());
+        partyCookiePrice = Math.round(partyCookiePrice * 100.0) / 100.0;
+        assertEquals(price, partyCookiePrice);
     }
 }

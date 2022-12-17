@@ -15,10 +15,7 @@ public class PartyCookieHandler implements IPartyCookieHandler {
 
     @Autowired
     Saleable saleable;
-    @Override
-    public void addTopping(PartyCookie partyCookie, Topping t) {
-        partyCookie.getToppingList().add(t);
-    }
+
 
     @Override
     public void customize(PartyCookie partyCookie, HashMap<Ingredient, Boolean> customIngrdedients) {
@@ -38,11 +35,12 @@ public class PartyCookieHandler implements IPartyCookieHandler {
                 removeTopping(partyCookie, (Topping) set.getKey());
         }
     }
-
-    @Override
-    public void removeTopping(PartyCookie partyCookie, Topping t) {
+    private void removeTopping(PartyCookie partyCookie, Topping t) {
         if(saleable.getIngredients(partyCookie).contains(t)){
             saleable.getIngredientsList(partyCookie).remove(t);
         }
+    }
+    private void addTopping(PartyCookie partyCookie, Topping t) {
+        partyCookie.getToppingList().add(t);
     }
 }

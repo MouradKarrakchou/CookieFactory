@@ -71,14 +71,14 @@ public class CartHandler implements CartActions, CartPenalty {
         if (!stockExplorer.hasEnoughIngredients(cart.getStore().getStock(), ingredientsNeeded))
             throw new Exception("Unavailable Ingredients");
 
-        Order order = new Order(cart, user);
+        Order order = new Order(new Cart(cart), user);
 
         if (user.getFidelityAccount()!=null)
             useDiscount(user.getFidelityAccount(), order);
         IFidelityAccountManager.addOrder(user, order);
-        orderActions.addOrder(cart.getStore().getStock(), cart.getStore().getOrderList(), order, ingredientsNeeded);
+        orderActions.addOrder(order.getCart().getStore().getStock(), order.getCart().getStore().getOrderList(), order, ingredientsNeeded);
 
-        iIntervalManager.validate(cart.getInterval(), order);
+        iIntervalManager.validate(order.getCart().getInterval(), order);
 
         cart.getItemSet().clear();
 

@@ -21,6 +21,17 @@ public class Cart {
         this.penalty = false;
     }
 
+    public Cart(Cart cart) {
+        this.itemSet = new HashSet<>();
+        this.itemSet.addAll(cart.itemSet);
+        this.canceled = cart.canceled;
+        this.penalty =  cart.penalty;
+        this.store = cart.store;
+        this.interval = cart.interval;
+        this.lastTimeCanceled = cart.lastTimeCanceled;
+        this.endPenaltyTime = cart.endPenaltyTime;
+    }
+
     public Store getStore() {
         return this.store;
     }
