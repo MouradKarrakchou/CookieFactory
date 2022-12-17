@@ -32,7 +32,7 @@ public class MailNotifier extends UpdatableObject {
     }
 
     @Override
-    public void OnTimeReached() {
+    public void setTimeReached() {
         storeModifier.updateSurpriseBasket(store);
         if(store.getSurpriseBaskets().isEmpty())
             IFidelityAccountManager.notify(fidelityAccount, "A surprise basket is available at the " + store.getName() + " store!");

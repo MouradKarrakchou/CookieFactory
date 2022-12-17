@@ -3,8 +3,10 @@ package fr.unice.polytech.cod.components;
 import fr.unice.polytech.cod.food.Cookie;
 import fr.unice.polytech.cod.interfaces.BillAction;
 import fr.unice.polytech.cod.interfaces.OrderActions;
+import fr.unice.polytech.cod.interfaces.Saleable;
 import fr.unice.polytech.cod.pojo.order.Bill;
 import fr.unice.polytech.cod.pojo.Item;
+import fr.unice.polytech.cod.pojo.store.Store;
 import fr.unice.polytech.cod.pojo.user.fidelityAccount.Discount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -15,6 +17,9 @@ import java.util.Set;
 public class BillHandler implements BillAction {
     @Autowired
     OrderActions orderActions;
+
+    @Autowired
+    Saleable saleable;
 
 
     @Override
@@ -32,12 +37,13 @@ public class BillHandler implements BillAction {
 
         double cookiesPrice;
         double totalPrice = 0;
+        Store store = bill.getOrder().getCart().getStore();
 
         for(Item item : items) {
             Cookie cookie = item.getCookie();
             //Math.round(price * 100) / 100 allows to round the price to 2 figures
-            System.out.println(cookie.getPrice(bill.getOrder().getCart().getStore()) * item.getQuantity());
-            cookiesPrice = Math.round((cookie.getPrice(bill.getOrder().getCart().getStore())  * item.getQuantity()) * 100)/100.0;
+            System.out.println(saleable.getPrice(store, cookie) * item.getQuantity());
+            cookiesPrice = Math.round((saleable.getPrice(store, cookie)  * item.getQuantity()) * 100)/100.0;
 
             receipt.append(cookie.getName()).append("..........").append(cookiesPrice).append("€\n");
             totalPrice += cookiesPrice;

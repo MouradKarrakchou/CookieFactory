@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.*;
 
-public class Cookie implements Saleable, Cloneable {
+public class Cookie implements Cloneable {
     protected final String name;
     protected Dough dough;
     protected Flavour flavour;
@@ -16,9 +16,6 @@ public class Cookie implements Saleable, Cloneable {
     protected Mix mix;
     protected Cooking cooking;
     private int preparationTime; // en minutes
-
-    @Autowired
-    StockExplorer stockExplorer;
 
     public Cookie(String cookieName, Dough dough, Flavour flavour, List<Topping> toppingList, Mix mix, Cooking cooking, int preparationTime) {
         this.name = cookieName;
@@ -46,7 +43,7 @@ public class Cookie implements Saleable, Cloneable {
         return this.cooking;
     }
 
-    private Mix getMix() {
+    public Mix getMix() {
         return this.mix;
     }
 
@@ -68,7 +65,6 @@ public class Cookie implements Saleable, Cloneable {
         return new ArrayList<>(getIngredients().stream().toList());
     }
 
-    @Override
     public String getName() {
         return name;
     }
@@ -85,17 +81,24 @@ public class Cookie implements Saleable, Cloneable {
         return toppingList;
     }
 
-    @Override
-    public double getPrice(Store store) {
-        double tax = store.getTax();
-        double price = dough.getQuantity() * (dough.getPrice() + tax);
-        if (flavour != null)
-            price += flavour.getQuantity() * (flavour.getPrice() + tax);
-        if (!toppingList.isEmpty()) {
-            for (Topping topping : toppingList)
-                price += topping.getQuantity() * (topping.getPrice() + tax);
-        }
-        return price;
+    public void setDough(Dough dough) {
+        this.dough = dough;
+    }
+
+    public void setFlavour(Flavour flavour) {
+        this.flavour = flavour;
+    }
+
+    public void setToppingList(List<Topping> toppingList) {
+        this.toppingList = toppingList;
+    }
+
+    public void setMix(Mix mix) {
+        this.mix = mix;
+    }
+
+    public void setPreparationTime(int preparationTime) {
+        this.preparationTime = preparationTime;
     }
 
 

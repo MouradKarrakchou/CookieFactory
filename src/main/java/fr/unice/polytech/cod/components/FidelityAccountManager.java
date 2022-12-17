@@ -61,7 +61,7 @@ public class FidelityAccountManager implements IFidelityAccountManager, Applicat
         waitingTime += hour*60*60*1000; //hours in milliseconds
         waitingTime += minute*60*1000; //minute in milliseconds
         MailNotifier mailNotifier = new MailNotifier(waitingTime, store, fidelityAccount);
-        mailNotifier.OnTimeReached();
+        mailNotifier.setTimeReached();
         store.getFidelityAccountList().add(fidelityAccount);
     }
 

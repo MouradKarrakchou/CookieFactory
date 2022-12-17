@@ -27,17 +27,8 @@ public class PartyCookie extends Cookie{
         this.theme = theme;
         this.event = event;
         this.customIngrdedients = customIngrdedients;
-        customize(customIngrdedients);
-
     }
 
-    public PartyCookie(Cookie cookie) {
-        super(cookie);
-    }
-
-    public void addTopping(Topping t){
-        this.toppingList.add(t);
-    }
     public void setCooking(Cooking c ){
         this.cooking = c;
     }
@@ -51,58 +42,37 @@ public class PartyCookie extends Cookie{
         this.dough = d;
     }
 
-    @Override
-    public String getName() {
-        return super.getName();
-    }
-
-    @Override
-    public double getPrice(Store store) {
-        double priceHT = super.getPrice(store);
-        return priceHT = getMultiplicator()*priceHT + priceHT*25/100;
-    }
-
-    public int getMultiplicator(){
-        if(size == CookieSize.L) return 4;
-        if(size == CookieSize.XL) return 5;
-        if(size == CookieSize.XXL) return 6;
-        return -1;
-    }
 
     public CookieSize getSize() {
         return size;
     }
 
-
-    private void customize(HashMap<Ingredient, Boolean> customIngrdedients){
-        for (Map.Entry<Ingredient, Boolean> set : customIngrdedients.entrySet()) {
-            if(set.getValue()){
-                if(set.getKey() instanceof Topping)
-                    addTopping((Topping) set.getKey());
-                else if(set.getKey() instanceof Dough)
-                    setDough((Dough) set.getKey());
-                else if(set.getKey() instanceof Flavour)
-                    setFlavour((Flavour) set.getKey());
-                else if(set.getKey() instanceof Cooking)
-                    setCooking((Cooking) set.getKey());
-                else if(set.getKey() instanceof Mix)
-                    setMix((Mix) set.getKey());
-            }
-            else
-            if(set.getKey() instanceof Topping)
-                removeTopping((Topping) set.getKey());
-
-
-            // Printing all elements of a Map
-            System.out.println(set.getKey() + " = "
-                    + set.getValue());
-        }
+    public void setSize(CookieSize size) {
+        this.size = size;
     }
 
-    private void removeTopping(Topping t) {
-        if(this.getIngredients().contains(t)){
-            this.getIngredientsList().remove(t);
-        }
+    public String getTheme() {
+        return theme;
+    }
+
+    public void setTheme(String theme) {
+        this.theme = theme;
+    }
+
+    public Event getEvent() {
+        return event;
+    }
+
+    public void setEvent(Event event) {
+        this.event = event;
+    }
+
+    public HashMap<Ingredient, Boolean> getCustomIngrdedients() {
+        return customIngrdedients;
+    }
+
+    public void setCustomIngrdedients(HashMap<Ingredient, Boolean> customIngrdedients) {
+        this.customIngrdedients = customIngrdedients;
     }
 
     @Override

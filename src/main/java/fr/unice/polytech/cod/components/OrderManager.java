@@ -23,6 +23,8 @@ import java.util.Set;
 public class OrderManager implements OrderActions, OrderStatesAction {
     @Autowired
     StockModifier stockModifier;
+    @Autowired
+    Saleable saleable;
 
     @Override
     public void updateState(Order order, OrderState newState) {
@@ -49,7 +51,7 @@ public class OrderManager implements OrderActions, OrderStatesAction {
         double totalPrice = 0;
         for (Item item : items) {
             Cookie cookie = item.getCookie();
-            double cookiePrice = Math.round(cookie.getPrice(order.getCart().getStore()) * 100) / 100.0;
+            double cookiePrice = Math.round(saleable.getPrice(order.getCart().getStore(), cookie) * 100) / 100.0;
             totalPrice += cookiePrice;
         }
         if (order.getDiscount().isPresent())

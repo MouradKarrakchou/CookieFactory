@@ -1,9 +1,12 @@
 package fr.unice.polytech.cod.interfaces;
 
+import fr.unice.polytech.cod.food.Cookie;
+import fr.unice.polytech.cod.pojo.ingredient.Ingredient;
 import fr.unice.polytech.cod.pojo.store.Store;
 
-public interface Saleable {
-    String getName();
+import java.util.Set;
 
-    double getPrice(Store store);
+public interface Saleable {
+    double getPrice(Store store, Cookie cookie);
+
 }
