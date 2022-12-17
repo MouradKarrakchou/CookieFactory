@@ -2,11 +2,9 @@ package fr.unice.polytech.cod.helper;
 
 import fr.unice.polytech.cod.pojo.Item;
 import fr.unice.polytech.cod.food.Cookie;
-
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
-
 import static com.diogonunes.jcolor.Ansi.colorize;
 import static com.diogonunes.jcolor.Attribute.*;
 

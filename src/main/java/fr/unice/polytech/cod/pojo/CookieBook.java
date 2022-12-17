@@ -1,4 +1,5 @@
 package fr.unice.polytech.cod.pojo;
+
 import fr.unice.polytech.cod.food.Cookie;
 import java.util.ArrayList;
 import java.util.List;

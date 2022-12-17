@@ -1,11 +1,8 @@
 package fr.unice.polytech.cod.schedule;
 
-import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.store.Store;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class Schedule{
     List<DaySlot> daySlots = new ArrayList<>();

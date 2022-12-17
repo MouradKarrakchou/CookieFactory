@@ -77,7 +77,7 @@ public class Ingredient implements Cloneable {
         } catch (CloneNotSupportedException e) {
             throw new RuntimeException(e);
         }
-        // on renvoie le clone
+        // return the clone
             return ingredient;
         }
 

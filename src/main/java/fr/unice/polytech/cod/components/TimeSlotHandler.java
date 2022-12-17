@@ -1,6 +1,5 @@
 package fr.unice.polytech.cod.components;
 
-import fr.unice.polytech.cod.interfaces.ChefAction;
 import fr.unice.polytech.cod.interfaces.TimeSlotAction;
 import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.schedule.DaySlot;
@@ -8,9 +7,7 @@ import fr.unice.polytech.cod.schedule.Interval;
 import fr.unice.polytech.cod.schedule.TimeSlot;
 import fr.unice.polytech.cod.store.Chef;
 import fr.unice.polytech.cod.store.Store;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -70,8 +67,7 @@ public class TimeSlotHandler implements TimeSlotAction {
     @Override
     public boolean isAvailable(TimeSlot timeSlot) {
         if (timeSlot.isReserved()) return false;
-        if (timeSlot.getOrder().isEmpty()) return true;
-        else return false;
+        return timeSlot.getOrder().isEmpty();
     }
 
     @Override

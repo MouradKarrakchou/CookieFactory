@@ -15,9 +15,9 @@ public class TimeClock implements Comparable{
 
     /**
      * compare this with timeClock+the numberOfMinutes that we want to add
-     * @param timeClock
-     * @param numberOfMinutes
-     * @return
+     * @param timeClock time clock
+     * @param numberOfMinutes minutes
+     * @return comparison
      */
     public int compareWithMinuteAdded(TimeClock timeClock,int numberOfMinutes){
         TimeClock timeClock1=new TimeClock(timeClock.hour,timeClock.minute+numberOfMinutes);

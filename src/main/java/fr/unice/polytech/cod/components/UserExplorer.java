@@ -12,7 +12,6 @@ import fr.unice.polytech.cod.user.User;
 import fr.unice.polytech.cod.user.fidelityAccount.FidelityAccount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import java.util.List;
 import java.util.Optional;
 

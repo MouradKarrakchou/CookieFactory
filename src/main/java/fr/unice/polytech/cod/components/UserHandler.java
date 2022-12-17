@@ -15,7 +15,6 @@ import fr.unice.polytech.cod.user.User;
 import fr.unice.polytech.cod.user.fidelityAccount.FidelityAccount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import java.time.Instant;
 import java.util.List;
 
@@ -27,7 +26,6 @@ public class UserHandler implements UserAction {
     CartActions cartActions;
     @Autowired
     CartPenalty cartPenalty;
-    //pas de autowired car on l'instancie comme un singleton donc pas d'injection de dépendance necessaire
     @Autowired
     IStoreFinder IStoreFinder;
     @Autowired
@@ -54,9 +52,9 @@ public class UserHandler implements UserAction {
     /**
      * choose the store for his current order
      *
-     * @param name
-     * @return
-     * @throws InvalidStoreException
+     * @param name name
+     * @return store
+     * @throws InvalidStoreException exception
      */
     @Override
     public Store selectStore(String name, Cart cart) throws InvalidStoreException {

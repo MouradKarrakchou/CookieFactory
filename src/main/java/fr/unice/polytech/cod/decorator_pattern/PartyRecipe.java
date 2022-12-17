@@ -3,7 +3,6 @@ package fr.unice.polytech.cod.decorator_pattern;
 import fr.unice.polytech.cod.food.Cookie;
 import fr.unice.polytech.cod.food.PartyCookie;
 import fr.unice.polytech.cod.food.ingredient.*;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

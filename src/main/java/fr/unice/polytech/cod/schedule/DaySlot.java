@@ -2,15 +2,12 @@ package fr.unice.polytech.cod.schedule;
 
 import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.store.Store;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class DaySlot {
     List<TimeSlot> timeSlots;
-
-
 
     public DaySlot(Store store) {
         timeSlots = new ArrayList<>();
@@ -27,9 +24,9 @@ public class DaySlot {
 
     /**
      * Create as many timeslots of 15 minutes as possible during the timeClockStart and the timeClockFinish time.
-     * @param timeClockStart
-     * @param timeClockFinish
-     * @return
+     * @param timeClockStart start
+     * @param timeClockFinish end
+     * @return time slots
      */
     private List<TimeSlot> creatingTimeSlots(TimeClock timeClockStart,TimeClock timeClockFinish){
         int numberOfSlot;

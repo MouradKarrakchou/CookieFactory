@@ -5,7 +5,6 @@ import fr.unice.polytech.cod.user.Cart;
 import fr.unice.polytech.cod.user.fidelityAccount.Discount;
 import fr.unice.polytech.cod.helper.threadedObjects.UpdatableObject;
 import fr.unice.polytech.cod.user.User;
-
 import java.util.Optional;
 
 public class Order extends UpdatableObject {
