@@ -29,7 +29,7 @@ public class UserHandler implements UserAction {
     //pas de autowired car on l'instancie comme un singleton donc pas d'injection de dépendance necessaire
     IStoreFinder IStoreFinder = StoreFinder.getInstance();
     @Autowired
-    IntervalManager intervalManager;
+    IIntervalManager intervalManager;
 
     /**
      * Add cookies to cart
@@ -68,10 +68,10 @@ public class UserHandler implements UserAction {
     }
 
     @Override
-    public Bill validateCart(User user) throws Exception {
+        public Bill validateCart(User user) throws Exception {
         Cart cart=user.getCart();
         Instant time = Instant.now();
-        if (!cartActions.isEmpty(cart) && !cartPenalty.isTherePenalty(cart, time))
+            if (!cartActions.isEmpty(cart) && !cartPenalty.isTherePenalty(cart, time))
             return cartActions.validate(cart, user);
         else
             throw new Exception("Panier vide impossible de le valider");    }
