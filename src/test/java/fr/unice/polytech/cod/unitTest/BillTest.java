@@ -1,10 +1,15 @@
 package fr.unice.polytech.cod.unitTest;
 
+import fr.unice.polytech.cod.components.CatalogExplorer;
+import fr.unice.polytech.cod.components.IngredientManager;
+import fr.unice.polytech.cod.exceptions.CookieAlreadyExistingException;
+import fr.unice.polytech.cod.exceptions.NotMatchingCatalogRequirementException;
 import fr.unice.polytech.cod.food.*;
 import fr.unice.polytech.cod.food.ingredient.*;
 import fr.unice.polytech.cod.interfaces.*;
 import fr.unice.polytech.cod.order.Bill;
 import fr.unice.polytech.cod.order.Order;
+import fr.unice.polytech.cod.pojo.IngredientCatalog;
 import fr.unice.polytech.cod.pojo.Item;
 import fr.unice.polytech.cod.store.Store;
 
@@ -27,10 +32,10 @@ public class BillTest {
     Order order = new Order(cart, user);
     Bill bill = new Bill(order);
 
-    Dough dough = new Dough("Pâte", 0.5, 100);
-    Flavour flavour = new Flavour("Chocolat", 1.2, 60);
-    Topping topping1 = new Topping("Pépites", 2, 30);
-    Topping topping2 = new Topping("Crème", 1.5, 20);
+    Dough dough = new Dough("Pâte", 0.5, 1);
+    Flavour flavour = new Flavour("Chocolat", 1.2, 1);
+    Topping topping1 = new Topping("Pépites", 2, 1);
+    Topping topping2 = new Topping("Crème", 1.5, 1);
     List<Topping> toppings = new ArrayList<>();
     @Autowired
     StoreModifier storeModifier;
@@ -40,47 +45,93 @@ public class BillTest {
     CartActions cartActions;
     @Autowired
     BillAction billAction;
+    @Autowired
+    ICookieBookManager iCookieBookManager;
+    @Autowired
+    ICatalogExplorer iCatalogExplorer;
+    @Autowired
+    IngredientActions ingredientActions;
+    IngredientCatalog ingredientCatalog = IngredientCatalog.instance;
 
     @Test
     void showBillTest() {
-
-        stockModifier.addIngredient(store.getStock(), new Dough("Pâte", 0.5, 1000000));
-        storeModifier.setTax(store, "Pâte", 0.5);
-
-        stockModifier.addIngredient(store.getStock(), new Flavour("Chocolat", 1.2, 1000000));
-        storeModifier.setTax(store, "Chocolat", 0.6);
-
-        stockModifier.addIngredient(store.getStock(), new Topping("Pépites", 2, 1000000));
-        storeModifier.setTax(store, "Pépites", 0.8);
-
-        stockModifier.addIngredient(store.getStock(), new Topping("Crème", 1.5, 1000000));
-        storeModifier.setTax(store, "Crème", 0.9);
-
         cart.setStore(store);
 
-        Cookie cookie = new Cookie("CooKie", dough, flavour, new ArrayList<>(), new Mix(Mix.MixState.MIXED), new Cooking(Cooking.CookingState.CRUNCHY), 10);
-        Item item = new Item(cookie, 1);
+        for (int i = 0; i < 20; i++) {
+            stockModifier.addIngredients(this.store.getStock(),
+                    List.of(iCatalogExplorer.getDough(ingredientCatalog, "pate"),
+                            iCatalogExplorer.getFlavour(ingredientCatalog, "chocolate"),
+                            iCatalogExplorer.getTopping(ingredientCatalog, "chocolate chips"),
+                            iCatalogExplorer.getTopping(ingredientCatalog, "cream")
+                    ));
+        }
+
+
+        Dough dough1 = iCatalogExplorer.getDough(ingredientCatalog, "pate");
+        stockModifier.addIngredient(store.getStock(), dough1);
+
+        Flavour flavour1 = iCatalogExplorer.getFlavour(ingredientCatalog, "chocolate");
+        stockModifier.addIngredient(store.getStock(), flavour1);
+
+
+        Topping topping1 = iCatalogExplorer.getTopping(ingredientCatalog, "chocolate chips");
+        stockModifier.addIngredient(store.getStock(), topping1);
+
+        Topping topping2 = iCatalogExplorer.getTopping(ingredientCatalog, "cream");
+        stockModifier.addIngredient(store.getStock(), topping2);
+
+        store.setTax(1);
+
+        Cookie cookie = new Cookie("CooKie",
+                dough1,
+                flavour1,
+                new ArrayList<>(List.of(topping1, topping2)),
+                new Mix(Mix.MixState.MIXED),
+                new Cooking(Cooking.CookingState.CRUNCHY),
+                10);
+
+        try {
+            iCookieBookManager.addCookieRecipe(store.getCookieBook(), cookie);
+        } catch (CookieAlreadyExistingException | NotMatchingCatalogRequirementException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        Item item = new Item(iCookieBookManager.getCookie(store.getCookieBook(), "CooKie"), 1);
         cartActions.addToCart(cart, item);
         String receipt = """
                 ===============StoRe===============
-                CooKie..........123.1€
+                CooKie..........4.67€
                 ===================================
-                Total price..........123.1€
+                Total price..........4.67€
                 """;
         assertEquals(receipt, billAction.returnBill((bill)));
 
         toppings.add(topping1);
         toppings.add(topping2);
 
-        cookie = new Cookie("CooKYZ", dough, flavour, toppings, new Mix(Mix.MixState.MIXED), new Cooking(Cooking.CookingState.CRUNCHY), 10);
-        item = new Item(cookie, 1);
+        Cookie cookie2 = new Cookie("CooKYZ",
+                dough1,
+                flavour1,
+                new ArrayList<>(List.of(topping1)),
+                new Mix(Mix.MixState.MIXED),
+                new Cooking(Cooking.CookingState.CRUNCHY),
+                10);
+
+        try {
+            iCookieBookManager.addCookieRecipe(store.getCookieBook(), cookie2);
+        } catch (CookieAlreadyExistingException | NotMatchingCatalogRequirementException e) {
+            throw new RuntimeException(e);
+        }
+
+        item = new Item(cookie2, 5);
         cartActions.addToCart(cart, item);
         receipt = """
                 ===============StoRe===============
-                CooKie..........123.1€
-                CooKYZ..........214.8€
+                CooKie..........4.67€
+                CooKYZ..........17.75€
                 ===================================
-                Total price..........337.9€
+                Total price..........22.42€
                 """;
         assertEquals(receipt, billAction.returnBill((bill)));
     }

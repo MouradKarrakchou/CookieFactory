@@ -1,8 +1,8 @@
 package fr.unice.polytech.cod.unitTest;
 
 import fr.unice.polytech.cod.components.CartHandler;
-import fr.unice.polytech.cod.components.CatalogExplorer;
 import fr.unice.polytech.cod.components.CookieBookManager;
+import fr.unice.polytech.cod.interfaces.ICatalogExplorer;
 import fr.unice.polytech.cod.interfaces.StockModifier;
 import fr.unice.polytech.cod.interfaces.UserAction;
 import fr.unice.polytech.cod.interfaces.UserRequest;
@@ -42,7 +42,7 @@ public class IntegrationTest {
     StockModifier stockModifier;
     IngredientCatalog ingredientCatalog = IngredientCatalog.instance;
     @Autowired
-    CatalogExplorer catalogExplorer;
+    ICatalogExplorer iCatalogExplorer;
     @Autowired
     CookieBookManager cookieBookManager;
     @Autowired
@@ -68,15 +68,15 @@ public class IntegrationTest {
         // Fill the store's stock 20 times
         for (int i = 0; i < 20; i++) {
             stockModifier.addIngredients(this.store.getStock(),
-                    List.of(catalogExplorer.getDough(ingredientCatalog, "chocolate"),
-                            catalogExplorer.getFlavour(ingredientCatalog, "chili"),
-                            catalogExplorer.getTopping(ingredientCatalog, "milk chocolate"),
-                            catalogExplorer.getTopping(ingredientCatalog, "M&M’s"),
+                    List.of(iCatalogExplorer.getDough(ingredientCatalog, "chocolate"),
+                            iCatalogExplorer.getFlavour(ingredientCatalog, "chili"),
+                            iCatalogExplorer.getTopping(ingredientCatalog, "milk chocolate"),
+                            iCatalogExplorer.getTopping(ingredientCatalog, "M&M’s"),
 
-                            catalogExplorer.getDough(ingredientCatalog, "plain"),
-                            catalogExplorer.getFlavour(ingredientCatalog, "vanilla"),
-                            catalogExplorer.getTopping(ingredientCatalog, "milk chocolate"),
-                            catalogExplorer.getTopping(ingredientCatalog, "white chocolate")
+                            iCatalogExplorer.getDough(ingredientCatalog, "plain"),
+                            iCatalogExplorer.getFlavour(ingredientCatalog, "vanilla"),
+                            iCatalogExplorer.getTopping(ingredientCatalog, "milk chocolate"),
+                            iCatalogExplorer.getTopping(ingredientCatalog, "white chocolate")
                     ));
         }
 

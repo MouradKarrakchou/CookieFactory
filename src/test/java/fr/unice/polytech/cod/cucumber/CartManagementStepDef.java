@@ -112,8 +112,6 @@ public class CartManagementStepDef {
     public void the_antibes_store(String name) throws InvalidStoreException {
         userAction.selectStore(name,user.getCart());
         this.store=user.getCart().getStore();
-        for(Ingredient ingredient : ingredientCatalog.getIngredientList())
-            storeModifier.setTax(store,ingredient.getName(), 3.0);
         //for (int i =0; i <100; i++)
         //    store.fillStock(ingredientCatalog.getIngredientList(), taxesValues);
         stockModifier.addIngredients(store.getStock(),ingredientCatalog.getIngredientList());
