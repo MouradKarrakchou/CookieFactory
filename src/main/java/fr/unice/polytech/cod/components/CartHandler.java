@@ -60,7 +60,8 @@ public class CartHandler implements CartActions, CartPenalty {
             return false;
 
         Item inCartItem = _item.get();
-        itemActions.updateQuantity(inCartItem, - item.getQuantity());
+        int itemQuantity=Math.min(inCartItem.getQuantity(),item.getQuantity());
+        itemActions.updateQuantity(inCartItem, - itemQuantity);
         return true;
     }
 

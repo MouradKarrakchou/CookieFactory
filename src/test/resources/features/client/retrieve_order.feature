@@ -6,3 +6,15 @@ Feature: Retrieve order
     And A order at the state "READY"
     When client retrieve his order
     Then the state of the order is "RETRIEVE"
+
+  Scenario: a client retrieve his order with a bill
+    Given A store
+    And A order at the state "READY"
+    When client retrieve his order
+    Then the state of the order is "RETRIEVE"
+
+  Scenario: a client retrieve his order with a bill that doesn't exist
+    Given A store
+    And A order at the state "READY"
+    When client retrieve his order with a bill that doesn't exist
+    Then he couldn't retrieve his order

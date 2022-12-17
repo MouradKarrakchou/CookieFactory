@@ -171,11 +171,6 @@ public class CartManagementStepDef {
         Thread.sleep(1000);
     }
 
-    @When("he remove a cookie from his cart")
-    public void he_remove_a_cookie_from_his_cart() throws Exception {
-        Item item = userRequest.getItemFromCart(user.getCart(),"Cookie au chocolat");
-        userAction.removeCookies(item.getCookie(),1,user.getCart());
-    }
 
     @When("he requests the cookie list")
     public void he_requests_the_cookie_list() {
@@ -603,5 +598,18 @@ public class CartManagementStepDef {
     @Then("the cookie book didn't changed")
     public void theCookieBookDidnTChanged() {
         assertNotNull(exception);
+    }
+
+
+
+    @When("he remove {int} cookie from his cart")
+    public void heRemoveCookieFromHisCart(int numberOfCookie) throws Exception {
+        Item item = userRequest.getItemFromCart(user.getCart(),"Cookie au chocolat");
+        userAction.removeCookies(item.getCookie(),numberOfCookie,user.getCart());
+    }
+
+    @Then("his cart has {int} item less")
+    public void hisCartHasItemLess(int numberOfItems) {
+        assertEquals(numberOfItems, cartActions.getItemQuantity(cart,"Cookie au chocolat"));
     }
 }

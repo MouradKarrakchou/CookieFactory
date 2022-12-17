@@ -15,6 +15,7 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -33,6 +34,7 @@ public class ManageTheKitchenPassageAndOrders {
     OrderStatesAction orderStatesAction;
     @Autowired
     ChefAction chefAction;
+    boolean billNotExistException = false;
 
     @Given("a chef who is \"([^\"]*)\"$")
     public void a_chef_who_is(ChefState chefState) {
@@ -89,5 +91,20 @@ public class ManageTheKitchenPassageAndOrders {
     @When("the chef terminate his current order")
     public void theChefTerminateHisCurrentOrder() {
         chefAction.terminateCurrentOrder(chef);
+    }
+
+    @When("client retrieve his order with a bill that doesn't exist")
+    public void clientRetrieveHisOrderWithABillThatDoesnTExist() {
+        try {
+            Order unknowOrder = new Order(null, OrderState.READY, null);
+            orderStatesAction.retrieveOrder(this.store.getOrderList(), new Bill(unknowOrder));
+        } catch (Exception e) {
+            billNotExistException = true;
+        }
+    }
+
+    @Then("he couldn't retrieve his order")
+    public void heCouldnTRetrieveHisOrder() {
+        assertTrue(billNotExistException);
     }
 }

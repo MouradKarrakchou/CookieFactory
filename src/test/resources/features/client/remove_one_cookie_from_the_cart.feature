@@ -8,8 +8,14 @@ Feature: Remove one cookies from the cart
     And a non-empty cart with 2 cookie
 
 
-  Scenario: remove one cookie from a cart
-    When  he remove a cookie from his cart
-    Then his cart has one item less
+  Scenario: remove 1 cookie from a cart
+    When  he remove 0 cookie from his cart
+    Then his cart has 2 item less
 
+  Scenario: remove 10 cookie from a cart
+    When  he remove 10 cookie from his cart
+    Then his cart has 0 item less
 
+  Scenario: remove 10 cookie from a cart
+    When  he remove 10 cookie from his cart
+    Then his cart has 0 item less
