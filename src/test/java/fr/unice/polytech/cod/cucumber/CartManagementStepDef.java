@@ -1,6 +1,7 @@
 package fr.unice.polytech.cod.cucumber;
 
 import fr.unice.polytech.cod.components.CartHandler;
+import fr.unice.polytech.cod.components.CookieBookManager;
 import fr.unice.polytech.cod.components.UserManager;
 import fr.unice.polytech.cod.exceptions.CookieAlreadyExistingException;
 import fr.unice.polytech.cod.exceptions.NotMatchingCatalogRequirementException;
@@ -51,8 +52,10 @@ public class CartManagementStepDef {
     CookieBook cookieBook;
 
     private final IngredientCatalog ingredientCatalog = IngredientCatalog.instance;
-    private StoreLocation storeLocation = StoreLocation.instance;
 
+
+    @Autowired
+    BrandManagerActions brandManagerActions;
     @Autowired
     CartActions cartActions;
 
@@ -98,14 +101,13 @@ public class CartManagementStepDef {
     @Autowired
     ICatalogExplorer iCatalogExplorer;
 
+    @Autowired
+    CookieBookManager cookieBookManager;
+
     @Given("a user")
     public void a_user() {
         this.user = new User();
-    }
-
-    @Given("a storeLocation")
-    public void a_store_location() {
-        this.storeLocation = new StoreLocation();
+        this.cart=user.getCart();
     }
 
     @Given("a store named {string}")
@@ -467,4 +469,60 @@ public class CartManagementStepDef {
                         new Cooking(Cooking.CookingState.CHEWY),
                         10)
         );}
+
+    @Given("a cookieBook")
+    public void a_cookieBook() throws InvalidStoreException {
+        cookieBook = userAction.selectStore("Antibes", cart).getCookieBook();
+    }
+    @When("when a brandManager remove a cookie to the cookie book")
+    public void when_a_brand_manager_remove_a_cookie_to_the_cookie_book() throws Exception {
+        brandManagerActions.removeCookie(cookieBookManager.getCookie(cookieBook, "Cookie au chocolat"), "Antibes");
+    }
+    @Then("the cookkie is remove to the cookie book")
+    public void the_cookkie_is_remove_to_the_cookie_book() {
+        assertEquals(2, cookieBook.getCookies().size());
+    }
+
+    @And("an initialised cookie book of the store")
+    public void anInitialisedCookieBookOfTheStore() throws NotMatchingCatalogRequirementException, CookieAlreadyExistingException {
+        cookieBook=store.getCookieBook();
+        store.getCookieBook().getCookies().clear();
+        ICookieBookManager.addCookieRecipe(cookieBook,
+                new Cookie("Cookie à la vanille",
+                        iCatalogExplorer.getDough(ingredientCatalog,"plain"),
+                        iCatalogExplorer.getFlavour(ingredientCatalog,"vanilla"),
+                        List.of(iCatalogExplorer.getTopping(ingredientCatalog,"milk chocolate"),iCatalogExplorer.getTopping(ingredientCatalog,"white chocolate")),
+                        new Mix(Mix.MixState.MIXED),
+                        new Cooking(Cooking.CookingState.CHEWY),
+                        5)
+        );
+        ICookieBookManager.addCookieRecipe(cookieBook,
+                new Cookie("Cookie au chocolat",
+                        iCatalogExplorer.getDough(ingredientCatalog,"chocolate"),
+                        iCatalogExplorer.getFlavour(ingredientCatalog,"chili"),
+                        List.of(iCatalogExplorer.getTopping(ingredientCatalog,"milk chocolate"),iCatalogExplorer.getTopping(ingredientCatalog,"M&M’s")),
+                        new Mix(Mix.MixState.MIXED),
+                        new Cooking(Cooking.CookingState.CHEWY),
+                        10)
+        );
+        ICookieBookManager.addCookieRecipe(cookieBook,
+                new Cookie("Cookie à la pistache",
+                        iCatalogExplorer.getDough(ingredientCatalog,"peanut butter"),
+                        iCatalogExplorer.getFlavour(ingredientCatalog,"chili"),
+                        List.of(iCatalogExplorer.getTopping(ingredientCatalog,"milk chocolate")),
+                        new Mix(Mix.MixState.MIXED),
+                        new Cooking(Cooking.CookingState.CHEWY),
+                        10)
+        );
+    }
+
+    @When("when a brandManager add a cookie to the cookie book")
+    public void when_a_brand_manager_add_a_cookie_to_the_cookie_book() throws Exception {
+        brandManagerActions.validCookie(testCookie, "Antibes");
+    }
+
+    @Then("the cookkie is add to the cookie book")
+    public void the_cookkie_is_add_to_the_cookie_book() {
+        assertEquals(4, cookieBook.getCookies().size());
+    }
 }
