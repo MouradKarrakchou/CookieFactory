@@ -4,6 +4,7 @@ import fr.unice.polytech.cod.components.CartHandler;
 import fr.unice.polytech.cod.components.CookieBookManager;
 import fr.unice.polytech.cod.components.UserManager;
 import fr.unice.polytech.cod.exceptions.CookieAlreadyExistingException;
+import fr.unice.polytech.cod.exceptions.FidelityAccountAlreadyExistException;
 import fr.unice.polytech.cod.exceptions.NotMatchingCatalogRequirementException;
 import fr.unice.polytech.cod.food.ingredient.*;
 import fr.unice.polytech.cod.interfaces.*;
@@ -51,6 +52,8 @@ public class CartManagementStepDef {
     Store store;
     List<Order> historic;
     CookieBook cookieBook;
+
+    boolean fidelityAccountException = false;
 
     private final IngredientCatalog ingredientCatalog = IngredientCatalog.instance;
 
@@ -130,7 +133,7 @@ public class CartManagementStepDef {
         testCookie = iCookieBookManager.getCookie(cookieBook,"Cookie au chocolat");
     }
     @Given("a fidelity account")
-    public void a_fidelity_account() {
+    public void a_fidelity_account() throws FidelityAccountAlreadyExistException {
         userAction.subscribeToFidelityAccount(user,"name", "email", "password");
     }
 
@@ -199,7 +202,11 @@ public class CartManagementStepDef {
     }
     @When("he subscribe to the fidelity program as {string} with {string} mail and this password {string}")
     public void he_subscribe_to_the_fidelity_program(String name, String email, String password) {
-        userAction.subscribeToFidelityAccount(user,name, email, password);
+        try {
+            userAction.subscribeToFidelityAccount(user,name, email, password);
+        } catch (FidelityAccountAlreadyExistException e) {
+            fidelityAccountException = true;
+        }
     }
     @When("he order {int} cookies")
     public void he_order_cookies(int numberOfCookies) {
@@ -532,7 +539,7 @@ public class CartManagementStepDef {
     }
 
     @Given("a user with a fidelityAccount")
-    public void aUserWithAFidelityAccount() {
+    public void aUserWithAFidelityAccount() throws FidelityAccountAlreadyExistException {
         userAction.subscribeToFidelityAccount(this.user, "name","email","pw");
         iFidelityAccountManager.addOrder(userRequest.getSubscription(this.user).get(), retrieveOrder);
     }
@@ -611,5 +618,19 @@ public class CartManagementStepDef {
     @Then("his cart has {int} item less")
     public void hisCartHasItemLess(int numberOfItems) {
         assertEquals(numberOfItems, cartActions.getItemQuantity(cart,"Cookie au chocolat"));
+    }
+
+    @Given("the user as subscribe to a fidelity account")
+    public void theUserAsSubscribeToAFidelityAccount() {
+        try {
+            userAction.subscribeToFidelityAccount(user, "name", "email", "password");
+        } catch (FidelityAccountAlreadyExistException e) {
+            fidelityAccountException = true;
+        }
+    }
+
+    @Then("he can't subscribe an other time to the fidelity program")
+    public void heCanTSubscribeAnOtherTimeToTheFidelityProgram() {
+        assertTrue(fidelityAccountException);
     }
 }

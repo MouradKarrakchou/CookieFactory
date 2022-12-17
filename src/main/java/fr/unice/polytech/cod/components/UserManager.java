@@ -1,5 +1,6 @@
 package fr.unice.polytech.cod.components;
 
+import fr.unice.polytech.cod.exceptions.FidelityAccountAlreadyExistException;
 import fr.unice.polytech.cod.exceptions.InvalidStoreException;
 import fr.unice.polytech.cod.food.Cookie;
 import fr.unice.polytech.cod.interfaces.UserAction;
@@ -59,7 +60,7 @@ public class UserManager implements UserEndpoint {
         return userAction.cancelOrder(user.getCart(), user.getUserOrders(), orderToCancel);
     }
 
-    public void createFidelityAccount(User user, String name, String email, String password){
+    public void createFidelityAccount(User user, String name, String email, String password) throws FidelityAccountAlreadyExistException {
         userAction.subscribeToFidelityAccount(user, name, email, password);
     }
 

@@ -1,5 +1,6 @@
 package fr.unice.polytech.cod.components;
 
+import fr.unice.polytech.cod.exceptions.FidelityAccountAlreadyExistException;
 import fr.unice.polytech.cod.exceptions.InvalidStoreException;
 import fr.unice.polytech.cod.food.Cookie;
 import fr.unice.polytech.cod.interfaces.*;
@@ -82,7 +83,8 @@ public class UserHandler implements UserAction {
 
 
     @Override
-    public void subscribeToFidelityAccount(User user, String name, String email, String password) {
+    public void subscribeToFidelityAccount(User user, String name, String email, String password) throws FidelityAccountAlreadyExistException {
+        if(user.getFidelityAccount() != null) throw new FidelityAccountAlreadyExistException();
         user.setFidelityAccount(new FidelityAccount(name, email, password));
     }
 
