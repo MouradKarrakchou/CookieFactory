@@ -24,6 +24,7 @@ public interface UserEndpoint {
     public boolean removeCookieFromCart(User user, Cookie cookie, int quantity);
 
     public List<Interval> getRetrieveCookieHours(User user, int numberOfDayBeforeTheOrder);
+    public void chooseRetrieveCookieHour(User user, Interval interval);
     public boolean cancelOrder(User user, Order orderToCancel);
     public void createFidelityAccount(User user, String name, String email, String password);
 
