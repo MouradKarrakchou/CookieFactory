@@ -3,7 +3,6 @@ package fr.unice.polytech.cod.interfaces;
 import fr.unice.polytech.cod.order.Bill;
 import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.order.OrderState;
-
 import java.util.List;
 
 public interface OrderStatesAction {
@@ -17,7 +16,7 @@ public interface OrderStatesAction {
      */
     void updateState(Order order, OrderState newState);
 
-    public void retrieveOrder(List<Order> orderList,Bill bill) throws Exception;
+    void retrieveOrder(List<Order> orderList,Bill bill) throws Exception;
     OrderState getOrderState(Order order);
 
 }

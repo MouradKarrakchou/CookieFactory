@@ -7,9 +7,7 @@ import fr.unice.polytech.cod.interfaces.StockModifier;
 import fr.unice.polytech.cod.pojo.Stock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 

@@ -3,7 +3,6 @@ package fr.unice.polytech.cod.user;
 import fr.unice.polytech.cod.schedule.Interval;
 import fr.unice.polytech.cod.pojo.Item;
 import fr.unice.polytech.cod.store.Store;
-
 import java.time.Instant;
 import java.util.*;
 

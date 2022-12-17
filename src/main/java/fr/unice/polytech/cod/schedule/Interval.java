@@ -1,7 +1,5 @@
 package fr.unice.polytech.cod.schedule;
 
-import fr.unice.polytech.cod.order.Order;
-
 import java.util.List;
 
 public class Interval implements Comparable {

@@ -2,7 +2,6 @@ package fr.unice.polytech.cod.user;
 
 import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.user.fidelityAccount.FidelityAccount;
-
 import java.util.*;
 
 public class User {

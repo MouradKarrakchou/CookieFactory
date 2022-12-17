@@ -1,26 +1,20 @@
 package fr.unice.polytech.cod.components;
 
 import fr.unice.polytech.cod.food.Cookie;
-import fr.unice.polytech.cod.food.ingredient.Ingredient;
-import fr.unice.polytech.cod.helper.threadedObjects.MailNotifier;
 import fr.unice.polytech.cod.interfaces.*;
 import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.order.OrderState;
-import fr.unice.polytech.cod.pojo.CookieBook;
 import fr.unice.polytech.cod.schedule.TimeClock;
 import fr.unice.polytech.cod.store.Chef;
 import fr.unice.polytech.cod.store.Store;
 import fr.unice.polytech.cod.store.SurpriseBasket;
-import fr.unice.polytech.cod.user.fidelityAccount.FidelityAccount;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Component
 public class StoreManager implements StoreModifier, StoreAccessor, ApplicationContextAware {

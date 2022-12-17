@@ -1,15 +1,8 @@
 package fr.unice.polytech.cod.user.fidelityAccount;
 
-import fr.unice.polytech.cod.pojo.Item;
-import fr.unice.polytech.cod.helper.Display;
 import fr.unice.polytech.cod.order.Order;
-import fr.unice.polytech.cod.order.OrderState;
-import fr.unice.polytech.cod.store.Store;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
 public class FidelityAccount {
     private final String name;

@@ -1,16 +1,12 @@
 package fr.unice.polytech.cod.components;
 
 import fr.unice.polytech.cod.interfaces.IngredientActions;
-import fr.unice.polytech.cod.interfaces.OrderStatesAction;
-import fr.unice.polytech.cod.interfaces.ScheduleActions;
 import fr.unice.polytech.cod.pojo.Item;
 import fr.unice.polytech.cod.food.ingredient.Ingredient;
 import fr.unice.polytech.cod.interfaces.ItemActions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Component

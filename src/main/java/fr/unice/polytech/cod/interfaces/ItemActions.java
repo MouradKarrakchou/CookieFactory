@@ -2,8 +2,6 @@ package fr.unice.polytech.cod.interfaces;
 
 import fr.unice.polytech.cod.pojo.Item;
 import fr.unice.polytech.cod.food.ingredient.Ingredient;
-
-import java.util.List;
 import java.util.Set;
 
 public interface ItemActions {

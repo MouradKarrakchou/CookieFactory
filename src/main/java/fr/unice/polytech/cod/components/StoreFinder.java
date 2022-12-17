@@ -5,13 +5,10 @@ import fr.unice.polytech.cod.interfaces.IStoreFinder;
 import fr.unice.polytech.cod.store.AllStores;
 import fr.unice.polytech.cod.store.Store;
 import org.springframework.stereotype.Component;
-
-import javax.annotation.PostConstruct;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Component qui simule un contacte avec l'entreprise afin de récupérer la liste des magasins de la firme
+ * Component that simulates a link with the company to retrieve the stores list from the company
  */
 @Component
 public class StoreFinder implements IStoreFinder {

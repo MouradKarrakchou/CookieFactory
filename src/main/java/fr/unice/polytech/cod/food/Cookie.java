@@ -3,7 +3,6 @@ package fr.unice.polytech.cod.food;
 import fr.unice.polytech.cod.food.ingredient.*;
 import fr.unice.polytech.cod.interfaces.Saleable;
 import fr.unice.polytech.cod.interfaces.StockExplorer;
-import fr.unice.polytech.cod.pojo.Stock;
 import fr.unice.polytech.cod.store.Store;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -138,7 +137,7 @@ public class Cookie implements Saleable, Cloneable {
         } catch (CloneNotSupportedException e) {
             throw new RuntimeException(e);
         }
-        // on renvoie le clone
+        // return the clone
         return cookie;
     }
 }

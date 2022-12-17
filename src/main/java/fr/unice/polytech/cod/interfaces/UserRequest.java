@@ -12,14 +12,17 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserRequest {
+
     List<Cookie> viewCatalog(Store store);
+
     List<Store> viewStoreAvailable();
+
     void recapCart(Cart cart);
 
     /**
      * Gets a list of available TimeSlots by Date;
      *
-     * @return
+     * @return list of intervals
      */
     List<Interval> getAvailableIntervals(Store store, Cart cart, int numberOfDaysBeforeTheOrder);
 

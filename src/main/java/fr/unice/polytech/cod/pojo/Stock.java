@@ -1,4 +1,5 @@
 package fr.unice.polytech.cod.pojo;
+
 import fr.unice.polytech.cod.food.ingredient.Ingredient;
 import java.io.Serializable;
 import java.util.*;

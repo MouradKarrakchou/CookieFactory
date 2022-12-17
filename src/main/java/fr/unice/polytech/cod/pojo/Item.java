@@ -1,7 +1,6 @@
 package fr.unice.polytech.cod.pojo;
-import fr.unice.polytech.cod.food.Cookie;
-import org.springframework.stereotype.Component;
 
+import fr.unice.polytech.cod.food.Cookie;
 import java.io.Serializable;
 import java.util.Objects;
 

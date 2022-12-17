@@ -2,7 +2,6 @@ package fr.unice.polytech.cod.store;
 
 import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.schedule.Schedule;
-
 import java.util.Optional;
 
 public class Chef {

@@ -1,7 +1,6 @@
 package fr.unice.polytech.cod.store;
 
 import fr.unice.polytech.cod.food.PartyCookie;
-
 import java.util.ArrayList;
 
 public class PartyChef extends Chef{
