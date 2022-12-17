@@ -296,9 +296,10 @@ public class CartManagementStepDef {
     public void he_add_cookie_to_his_cart() {
         userAction.addCookies(testCookie, 1, cart);
     }
+
     @When("a user ask for {int} minute intervals possible")
-    public void aUserAskForMinuteIntervalsPossible() {
-        availableIntervals=userRequest.getAvailableIntervals(store, cart, cartActions.getDuration(cart));
+    public void aUserAskForMinuteIntervalsPossible(int value) {
+        availableIntervals = userRequest.getAvailableIntervals(store, cart, cartActions.getDuration(cart));
     }
 
     @Then("he gets only intervals starting and finishing in the {int} to {int} time period with a {int} minute duration")
