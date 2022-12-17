@@ -112,6 +112,12 @@ public class CartManagementStepDef {
 
     @Given("a store named {string}")
     public void the_antibes_store(String name) throws InvalidStoreException {
+        AllStores.getInstance().getStoreList().clear();
+        AllStores.getInstance().getStoreList().addAll(List.of(
+                new Store("Antibes"),
+                new Store("Nice"),
+                new Store("Sophia")
+        ));
         userAction.selectStore(name,user.getCart());
         this.store=user.getCart().getStore();
         for(Ingredient ingredient : ingredientCatalog.getIngredientList())
