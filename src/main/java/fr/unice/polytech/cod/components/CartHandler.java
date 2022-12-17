@@ -108,28 +108,6 @@ public class CartHandler implements CartActions, CartPenalty {
     }
 
     @Override
-    public Set<Ingredient> generateIngredientsNeeded(Cart cart, Set<Item> items) {
-        Set<Ingredient> neededIngredients = new HashSet<>();
-        // Check the list of items
-        for (Item item : items) {
-            // Generating all needed ingredients for each item
-            for (Ingredient ingredient : itemActions.generateIngredientsNeeded(item)) {
-                // Merging all needed ingredients together
-                boolean isAdded = false;
-                for (Ingredient neededIngredient : neededIngredients) {
-                    if (neededIngredient.equals(ingredient)) {
-                        neededIngredient.setQuantity(ingredient.getQuantity() + neededIngredient.getQuantity());
-                        isAdded = true;
-                    }
-                }
-                if (!isAdded)
-                    neededIngredients.add(ingredient);
-            }
-        }
-        return neededIngredients;
-    }
-
-    @Override
     public Item findItem(Cart cart, String cookieName) throws Exception {
         Item itemFounded = cart.getItemSet().stream()
                 .filter(item -> cookieName.equals(item.getCookie().getName()))
