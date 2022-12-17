@@ -35,7 +35,6 @@ public interface StoreModifier {
      * @return boolean : The ingredient's price has been updated
      */
     boolean setTax(Store store, String ingredient, double newPrice);
-    void addFidelityAccount(Store store, FidelityAccount fidelityAccount, int todayDay, int day, int hour, int minute);
 
     void updateSurpriseBasket(Store store);
 }

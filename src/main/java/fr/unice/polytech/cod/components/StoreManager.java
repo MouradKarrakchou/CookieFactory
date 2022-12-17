@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-public class StoreComponent implements StoreModifier, StoreAccessor, ApplicationContextAware {
+public class StoreManager implements StoreModifier, StoreAccessor, ApplicationContextAware {
 
     private static ApplicationContext context;
     @Autowired
@@ -79,16 +79,6 @@ public class StoreComponent implements StoreModifier, StoreAccessor, Application
         return true;
     }
 
-    @Override
-    public void addFidelityAccount(Store store, FidelityAccount fidelityAccount, int todayDay, int day, int hour, int minute) {
-        int waitingDay = Math.abs(day - todayDay);
-        int waitingTime = waitingDay*24*60*60*1000; //days in milliseconds
-        waitingTime += hour*60*60*1000; //hours in milliseconds
-        waitingTime += minute*60*1000; //minute in milliseconds
-        MailNotifier mailNotifier = new MailNotifier(waitingTime, store, fidelityAccount);
-        mailNotifier.OnTimeReached();
-        store.getFidelityAccountList().add(fidelityAccount);
-    }
 
     @Override
     public void updateSurpriseBasket(Store store) {

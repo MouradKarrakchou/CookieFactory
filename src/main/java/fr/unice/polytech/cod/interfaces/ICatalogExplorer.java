@@ -8,7 +8,7 @@ import fr.unice.polytech.cod.food.ingredient.Topping;
 
 import java.util.List;
 
-public interface CatalogExplorer {
+public interface ICatalogExplorer {
     /**
      * Check if a Ingredient is in the catalog.
      *

@@ -1,7 +1,7 @@
 package fr.unice.polytech.cod.cucumber;
 
 import fr.unice.polytech.cod.components.CartHandler;
-import fr.unice.polytech.cod.components.UserComponent;
+import fr.unice.polytech.cod.components.UserManager;
 import fr.unice.polytech.cod.interfaces.*;
 import fr.unice.polytech.cod.pojo.*;
 import fr.unice.polytech.cod.food.ingredient.Dough;
@@ -22,9 +22,7 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import io.cucumber.spring.CucumberContextConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.*;
 
@@ -34,7 +32,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CartManagementStepDef {
 
     @Autowired
-    UserComponent userComponent;
+    UserManager userManager;
 
     User user;
     Cart cart;
@@ -66,10 +64,10 @@ public class CartManagementStepDef {
     StoreModifier storeModifier;
 
     @Autowired
-    CookieBookManager cookieBookManager;
+    ICookieBookManager ICookieBookManager;
 
     @Autowired
-    FidelityAccountManager fidelityAccountManager;
+    IFidelityAccountManager IFidelityAccountManager;
 
     @Autowired
     UserRequest userRequest;
@@ -78,16 +76,16 @@ public class CartManagementStepDef {
     StockExplorer stockExplorer;
 
     @Autowired
-    IntervalManager intervalManager;
+    IIntervalManager IIntervalManager;
 
     @Autowired
-    CatalogExplorer catalogExplorer;
+    ICatalogExplorer ICatalogExplorer;
 
     @Autowired
     ScheduleActions scheduleActions;
 
     @Autowired
-    StoreFinder storeFinder;
+    IStoreFinder IStoreFinder;
 
     @Autowired
     OrderStatesAction orderStatesAction;
@@ -112,7 +110,7 @@ public class CartManagementStepDef {
     }
     @Given("a valid cookie")
     public void a_valid_cookie() {
-        testCookie = cookieBookManager.getCookie(new CookieBook(),"Cookie au chocolat");
+        testCookie = ICookieBookManager.getCookie(new CookieBook(),"Cookie au chocolat");
     }
     @Given("a fidelity account")
     public void a_fidelity_account() {
@@ -333,8 +331,8 @@ public class CartManagementStepDef {
 
     @When("the user try to cancel his order at the state \"([^\"]*)\"$")
     public void the_user_try_to_cancel_his_order_at_the_state_OrderState(OrderState state) {
-        if(state.equals(OrderState.PENDING)) userComponent.cancelOrder(user,pendingOrder);
-        else userComponent.cancelOrder(user, inProgressOrder);
+        if(state.equals(OrderState.PENDING)) userManager.cancelOrder(user,pendingOrder);
+        else userManager.cancelOrder(user, inProgressOrder);
     }
 
     @Then("the order is canceled")
@@ -379,7 +377,7 @@ public class CartManagementStepDef {
     @When("a client ask for his history")
     public void a_client_ask_for_his_history() throws Exception {
         userAction.subscribeToFidelityAccount(this.user, "name","email","pw");
-        fidelityAccountManager.addOrder(userRequest.getSubscription(this.user).get(), retrieveOrder);
+        IFidelityAccountManager.addOrder(userRequest.getSubscription(this.user).get(), retrieveOrder);
 
         historic = userRequest.getHistory(user.getFidelityAccount());
     }
@@ -390,7 +388,7 @@ public class CartManagementStepDef {
 
     @Given("the stock contain ingredients for {string}")
     public void theStockContainIngredientsFor(String cookieName) {
-        Cookie cookie = cookieBookManager.getCookie(new CookieBook(),cookieName);
+        Cookie cookie = ICookieBookManager.getCookie(new CookieBook(),cookieName);
         stockModifier.addIngredients(store.getStock(), cookie.getIngredientsList());
     }
 

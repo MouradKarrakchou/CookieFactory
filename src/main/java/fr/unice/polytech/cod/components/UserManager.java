@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class UserComponent implements UserEndpoint {
+public class UserManager implements UserEndpoint {
 
     @Autowired
     UserAction userAction;
@@ -50,6 +50,9 @@ public class UserComponent implements UserEndpoint {
 
     public List<Interval> getRetrieveCookieHours(User user, int numberOfDayBeforeTheOrder){
         return userRequest.getAvailableIntervals(user.getCart().getStore(), user.getCart(), numberOfDayBeforeTheOrder);
+    }
+    public void chooseRetrieveCookieHour(User user, Interval interval){
+        userAction.chooseInterval(interval, user.getCart());
     }
 
     public boolean cancelOrder(User user, Order orderToCancel){

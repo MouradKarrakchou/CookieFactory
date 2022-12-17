@@ -1,7 +1,8 @@
 package fr.unice.polytech.cod.components;
 
 import fr.unice.polytech.cod.helper.Display;
-import fr.unice.polytech.cod.interfaces.FidelityAccountManager;
+import fr.unice.polytech.cod.helper.threadedObjects.MailNotifier;
+import fr.unice.polytech.cod.interfaces.IFidelityAccountManager;
 import fr.unice.polytech.cod.interfaces.StoreModifier;
 import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.order.OrderState;
@@ -21,7 +22,7 @@ import java.util.Optional;
 import java.util.Set;
 
 @Component
-public class FidelityAccountComponent implements FidelityAccountManager, ApplicationContextAware {
+public class FidelityAccountManager implements IFidelityAccountManager, ApplicationContextAware {
     @Autowired
     StoreModifier storeModifier;
     private static ApplicationContext context;
@@ -51,8 +52,18 @@ public class FidelityAccountComponent implements FidelityAccountManager, Applica
      */
     @Override
     public void subscribeToSurpriseBasket(FidelityAccount fidelityAccount, Store store, int todayDay, int day, int hour, int minute) {
-        storeModifier.addFidelityAccount(store, fidelityAccount, todayDay, day, hour, minute);
+        addFidelityAccount(store, fidelityAccount, todayDay, day, hour, minute);
         //TODO Maybe change the way we chose the date
+    }
+
+    private void addFidelityAccount(Store store, FidelityAccount fidelityAccount, int todayDay, int day, int hour, int minute) {
+        int waitingDay = Math.abs(day - todayDay);
+        int waitingTime = waitingDay*24*60*60*1000; //days in milliseconds
+        waitingTime += hour*60*60*1000; //hours in milliseconds
+        waitingTime += minute*60*1000; //minute in milliseconds
+        MailNotifier mailNotifier = new MailNotifier(waitingTime, store, fidelityAccount);
+        mailNotifier.OnTimeReached();
+        store.getFidelityAccountList().add(fidelityAccount);
     }
 
     @Override

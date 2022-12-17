@@ -5,13 +5,13 @@ import fr.unice.polytech.cod.food.ingredient.Dough;
 import fr.unice.polytech.cod.food.ingredient.Flavour;
 import fr.unice.polytech.cod.food.ingredient.Ingredient;
 import fr.unice.polytech.cod.food.ingredient.Topping;
-import fr.unice.polytech.cod.interfaces.CatalogExplorer;
+import fr.unice.polytech.cod.interfaces.ICatalogExplorer;
 
 import org.springframework.stereotype.Component;
 
 
 @Component
-public class CatalogComponent implements CatalogExplorer {
+public class CatalogExplorer implements ICatalogExplorer {
     @Override
     public boolean isInCatalog(IngredientCatalog ingredientCatalog, Ingredient ingredient) {
         return ingredientCatalog.ingredientList.contains(ingredient);
