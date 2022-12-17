@@ -2,7 +2,6 @@ package fr.unice.polytech.cod.unitTest;
 
 import fr.unice.polytech.cod.interfaces.*;
 import fr.unice.polytech.cod.pojo.IngredientCatalog;
-import fr.unice.polytech.cod.pojo.StoreLocation;
 import fr.unice.polytech.cod.food.Cookie;
 import fr.unice.polytech.cod.pojo.Item;
 import fr.unice.polytech.cod.schedule.Interval;
@@ -10,7 +9,6 @@ import fr.unice.polytech.cod.schedule.TimeClock;
 import fr.unice.polytech.cod.schedule.TimeSlot;
 import fr.unice.polytech.cod.store.Chef;
 import fr.unice.polytech.cod.exceptions.InvalidStoreException;
-import fr.unice.polytech.cod.user.Cart;
 import fr.unice.polytech.cod.user.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,7 +26,6 @@ public class TimeManagementTest {
     //ATTENTION NE PAS FAIRE CETTE CLASSE
     private User user;
     private final IngredientCatalog ingredientCatalog = IngredientCatalog.instance;
-    private final StoreLocation storeLocation = StoreLocation.instance;
 
     @Autowired
     UserAction userAction;

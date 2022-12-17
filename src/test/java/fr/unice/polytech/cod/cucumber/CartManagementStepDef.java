@@ -50,7 +50,6 @@ public class CartManagementStepDef {
     Store store;
     List<Order> historic;
     CookieBook cookieBook;
-    StoreLocation storeLocation;
 
     private final IngredientCatalog ingredientCatalog = IngredientCatalog.instance;
 
@@ -109,11 +108,6 @@ public class CartManagementStepDef {
     public void a_user() {
         this.user = new User();
         this.cart=user.getCart();
-    }
-
-    @Given("a storeLocation")
-    public void a_store_location() {
-        this.storeLocation = new StoreLocation();
     }
 
     @Given("a store named {string}")
@@ -307,8 +301,15 @@ public class CartManagementStepDef {
     }
 
     @When("a user ask for {int} minute intervals possible")
-    public void aUserAskForMinuteIntervalsPossible(int value) {
-        availableIntervals = userRequest.getAvailableIntervals(store, cart, cartActions.getDuration(cart));
+    public void aUserAskForMinuteIntervalsPossible(int minutes) {
+        cart.getItemSet().add(new Item(new Cookie("Cookie au chocolat",
+                iCatalogExplorer.getDough(ingredientCatalog,"chocolate"),
+                iCatalogExplorer.getFlavour(ingredientCatalog,"chili"),
+                List.of(iCatalogExplorer.getTopping(ingredientCatalog,"milk chocolate"),iCatalogExplorer.getTopping(ingredientCatalog,"M&M’s")),
+                new Mix(Mix.MixState.MIXED),
+                new Cooking(Cooking.CookingState.CHEWY),
+                minutes-15),1));
+        availableIntervals = userRequest.getAvailableIntervals(store, cart,0);
     }
 
     @Then("he gets only intervals starting and finishing in the {int} to {int} time period with a {int} minute duration")
@@ -524,7 +525,7 @@ public class CartManagementStepDef {
 
     @When("when a brandManager add a cookie to the cookie book")
     public void when_a_brand_manager_add_a_cookie_to_the_cookie_book() throws Exception {
-        brandManagerActions.validCookie(testCookie, "Antibes");
+        brandManagerActions.validCookie(new Cookie("CUSTOM COOKIE",null,null,new ArrayList<>(),null,null,6), "Antibes");
     }
 
     @Then("the cookkie is add to the cookie book")
