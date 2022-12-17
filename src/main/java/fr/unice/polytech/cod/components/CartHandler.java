@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -25,8 +26,6 @@ public class CartHandler implements CartActions, CartPenalty {
     private  StockExplorer stockExplorer;
     @Autowired
     private  ItemActions itemActions;
-    @Autowired
-    private  IngredientActions ingredientActions;
     @Autowired
     private  OrderActions orderActions;
     @Autowired
@@ -118,7 +117,7 @@ public class CartHandler implements CartActions, CartPenalty {
                 boolean isAdded = false;
                 for (Ingredient neededIngredient : neededIngredients) {
                     if (neededIngredient.equals(ingredient)) {
-                        ingredientActions.increaseQuantity(ingredient, ingredient.getQuantity());
+                        neededIngredient.setQuantity(ingredient.getQuantity() + neededIngredient.getQuantity());
                         isAdded = true;
                     }
                 }
@@ -208,5 +207,12 @@ public class CartHandler implements CartActions, CartPenalty {
     public void penalty(Cart cart, Instant time) {
         cart.setEndPenaltyTime(time.plusSeconds(600));  //10 minutes
         cart.setPenalty(true);
+    }
+
+    @Override
+    public List<Order> getHistory(FidelityAccount fidelityAccount) throws Exception {
+        if(fidelityAccount == null)
+            throw new Exception("Your not subscribe to a fidelity account");
+        return IFidelityAccountManager.getRetrievedOrder(fidelityAccount);
     }
 }

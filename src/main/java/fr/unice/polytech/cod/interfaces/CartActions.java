@@ -6,6 +6,9 @@ import fr.unice.polytech.cod.food.ingredient.Ingredient;
 import fr.unice.polytech.cod.order.Bill;
 import fr.unice.polytech.cod.user.Cart;
 import fr.unice.polytech.cod.user.User;
+import fr.unice.polytech.cod.user.fidelityAccount.FidelityAccount;
+
+import java.util.List;
 import java.util.Set;
 
 public interface CartActions {
@@ -103,4 +106,6 @@ public interface CartActions {
      * Show all the cookies in our order and give the choice to validate or add/delete more cookies.
      */
     void showCart(Cart cart);
+
+    List<Order> getHistory(FidelityAccount fidelityAccount) throws Exception;
 }

@@ -51,6 +51,9 @@ public class UserManager implements UserEndpoint {
     public List<Interval> getRetrieveCookieHours(User user, int numberOfDayBeforeTheOrder){
         return userRequest.getAvailableIntervals(user.getCart().getStore(), user.getCart(), numberOfDayBeforeTheOrder);
     }
+    public void chooseRetrieveCookieHour(User user, Interval interval){
+        userAction.chooseInterval(interval, user.getCart());
+    }
 
     public boolean cancelOrder(User user, Order orderToCancel){
         return userAction.cancelOrder(user.getCart(), user.getUserOrders(), orderToCancel);

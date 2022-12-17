@@ -25,9 +25,7 @@ public class UserExplorer implements UserRequest {
     @Autowired
     StoreAccessor storeAccessor;
     @Autowired
-    StoreFinder storeFinder;
-    @Autowired
-    IFidelityAccountManager IFidelityAccountManager;
+    IStoreFinder storeFinder;
 
     @Override
     public List<Cookie> viewCatalog(Store store) {
@@ -80,8 +78,6 @@ public class UserExplorer implements UserRequest {
 
     @Override
     public List<Order> getHistory(FidelityAccount fidelityAccount) throws Exception {
-        if(fidelityAccount == null)
-            throw new Exception("Your not subscribe to a fidelity account");
-        return IFidelityAccountManager.getRetrievedOrder(fidelityAccount);
+        return(cartActions.getHistory(fidelityAccount));
     }
 }
