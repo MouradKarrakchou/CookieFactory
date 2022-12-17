@@ -7,6 +7,7 @@ import fr.unice.polytech.cod.schedule.Interval;
 import fr.unice.polytech.cod.schedule.TimeSlot;
 import fr.unice.polytech.cod.store.Chef;
 import fr.unice.polytech.cod.store.Store;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -16,6 +17,8 @@ import java.util.Optional;
 
 @Component
 public class TimeSlotComponent implements TimeSlotAction {
+
+    @Autowired
     ChefAction chefAction;
 
     @Override

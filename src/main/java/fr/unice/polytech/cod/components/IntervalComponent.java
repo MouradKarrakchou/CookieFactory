@@ -12,7 +12,7 @@ import java.util.List;
 @Component
 public class IntervalComponent implements IntervalManager {
     @Autowired
-    TimeSlotComponent timeSlotComponent;
+    private TimeSlotComponent timeSlotComponent;
     @Override
     public void reserve(Interval interval) {
         interval.getTimeSlots().forEach(timeSlot -> timeSlot.setReserved(true));
