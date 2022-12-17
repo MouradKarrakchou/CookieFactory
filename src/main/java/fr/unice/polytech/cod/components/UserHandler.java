@@ -31,7 +31,7 @@ public class UserHandler implements UserAction {
     @Autowired
     IStoreFinder IStoreFinder;
     @Autowired
-    IntervalManager intervalManager;
+    IIntervalManager intervalManager;
 
     AllStores allStores=AllStores.getInstance();
 
@@ -72,10 +72,10 @@ public class UserHandler implements UserAction {
     }
 
     @Override
-    public Bill validateCart(User user) throws Exception {
+        public Bill validateCart(User user) throws Exception {
         Cart cart=user.getCart();
         Instant time = Instant.now();
-        if (!cartActions.isEmpty(cart) && !cartPenalty.isTherePenalty(cart, time))
+            if (!cartActions.isEmpty(cart) && !cartPenalty.isTherePenalty(cart, time))
             return cartActions.validate(cart, user);
         else
             throw new Exception("Panier vide impossible de le valider");    }

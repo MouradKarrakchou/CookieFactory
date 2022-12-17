@@ -2,10 +2,10 @@ Feature: Choose a time slot
 
   Background:
     Given a user
+    And a store named "Antibes"
     And an initialised cookie book
     And a valid cookie
     And a non-empty cart with 2 cookie
-    And a store named "Antibes"
     And the store has no employ
 
   Scenario:the user ask for the list of Intervals
