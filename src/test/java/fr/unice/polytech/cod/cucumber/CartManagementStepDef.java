@@ -234,6 +234,7 @@ public class CartManagementStepDef {
     }
     @Then("his cart has one item less")
     public void his_cart_has_one_item_less() {
+        System.out.println(cart.getItemSet().size());
        assertEquals(1, cartActions.getItemQuantity(cart,"Cookie au chocolat"));
     }
     @Then("he receive a discount for his next order")
@@ -598,6 +599,8 @@ public class CartManagementStepDef {
     public void theCookieBookDidnTChanged() {
         assertNotNull(exception);
     }
+
+
 
     @When("he remove {int} cookie from his cart")
     public void heRemoveCookieFromHisCart(int numberOfCookie) throws Exception {
