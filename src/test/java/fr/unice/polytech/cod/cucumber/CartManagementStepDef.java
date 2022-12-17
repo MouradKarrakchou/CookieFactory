@@ -43,7 +43,7 @@ public class CartManagementStepDef {
     Interval interval;
     Bill bill;
     List<Interval> availableIntervals;
-    Order pendingOrder;
+    Order order;
     Order inProgressOrder;
     Order retrieveOrder;
     Store store;
@@ -148,6 +148,19 @@ public class CartManagementStepDef {
         List<TimeSlot> timeSlots=new ArrayList<>();
         timeSlots.add(timeSlot);
         cart.setInterval(new Interval(timeSlots));
+    }
+
+    @When("the order change to {string}")
+    public void the_order_change_to(String string) {
+        user = new User();
+        Cart cart = new Cart();
+        order = new Order(cart, user);
+        order.setOrderState(OrderState.READY);
+    }
+
+    @When("the client overdue the timer")
+    public void the_client_overdue_the_timer() throws InterruptedException {
+        Thread.sleep(1000);
     }
 
     @When("he remove a cookie from his cart")
@@ -283,9 +296,10 @@ public class CartManagementStepDef {
     public void he_add_cookie_to_his_cart() {
         userAction.addCookies(testCookie, 1, cart);
     }
+
     @When("a user ask for {int} minute intervals possible")
-    public void aUserAskForMinuteIntervalsPossible() {
-        availableIntervals=userRequest.getAvailableIntervals(store, cart, cartActions.getDuration(cart));
+    public void aUserAskForMinuteIntervalsPossible(int value) {
+        availableIntervals = userRequest.getAvailableIntervals(store, cart, cartActions.getDuration(cart));
     }
 
     @Then("he gets only intervals starting and finishing in the {int} to {int} time period with a {int} minute duration")
@@ -334,29 +348,30 @@ public class CartManagementStepDef {
         stockModifier.addIngredients(store.getStock(), ingredients);
         cart.getItemSet().clear();
         cart.getItemSet().add(item);
-        pendingOrder = new Order(cart, user);
+        order = new Order(cart, user);
         inProgressOrder = new Order(cart, user);
-        user.getUserOrders().add(pendingOrder);
+        user.getUserOrders().add(order);
         user.getUserOrders().add(inProgressOrder);
-        if(state.equals(OrderState.PENDING))orderStatesAction.updateState(pendingOrder, state);
+        order.setWaitingTime(500);
+        if(state.equals(OrderState.PENDING))orderStatesAction.updateState(order, state);
         else orderStatesAction.updateState(inProgressOrder, state);
     }
 
     @When("the user try to cancel his order at the state \"([^\"]*)\"$")
     public void the_user_try_to_cancel_his_order_at_the_state_OrderState(OrderState state) {
-        if(state.equals(OrderState.PENDING)) userManager.cancelOrder(user,pendingOrder);
+        if(state.equals(OrderState.PENDING)) userManager.cancelOrder(user, order);
         else userManager.cancelOrder(user, inProgressOrder);
     }
 
     @Then("the order is canceled")
     public void the_order_is_canceled() {
-        assertFalse(user.getCart().getStore().getOrderList().contains(pendingOrder));
+        assertFalse(user.getCart().getStore().getOrderList().contains(order));
     }
 
     @Then("the user is notified")
     public void the_user_is_notified() {
-        if(!user.getCart().getStore().getOrderList().contains(pendingOrder))
-            assertTrue(userAction.cancelOrder(user.getCart(), user.getUserOrders(), pendingOrder));
+        if(!user.getCart().getStore().getOrderList().contains(order))
+            assertTrue(userAction.cancelOrder(user.getCart(), user.getUserOrders(), order));
         if(user.getCart().getStore().getOrderList().contains(inProgressOrder))
             assertFalse(userAction.cancelOrder(user.getCart(), user.getUserOrders(), inProgressOrder));
     }
