@@ -13,11 +13,6 @@ Contient :
 
 ## User stories: src/test/ressources/features.client
 
-Chaque user story est décrite par 
-   - son identifiant en tant que issue github (#), 
-   - sa forme classique (As a… I want to… In order to…)
-   - Le nom du fichier feature Cucumber et le nom des scénarios qui servent de tests d’acceptation pour la story.
-
 Les contenus détaillés sont dans l'issue elle-même, ainsi que dans les .feature associés.
 
 Au fur et à mesure des différents sprints, nous avons implémentés les différentes user stories. Certaines d'entre elles ont étés créés lors des premiers sprints et améliorés et/ou modifiés dans les sprints suivants.
