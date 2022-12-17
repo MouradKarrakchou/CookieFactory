@@ -51,11 +51,6 @@ public class ChefComponent implements ChefAction {
     }
 
     @Override
-    public List<Interval> getIntervalsAvailable(Chef chef, int minutes, int numberOfDaysBeforeTheOrder) {
-        return scheduleActions.getIntervals(chef.getSchedule(), minutes, numberOfDaysBeforeTheOrder);
-    }
-
-    @Override
     public void updateCurrentOrder(Chef chef, TimeClock timeClock, int numberOfDaysBeforeTheOrder) {
         scheduleActions.getOrderToPrepare(chef.getSchedule(), numberOfDaysBeforeTheOrder, timeClock);
     }

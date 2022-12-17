@@ -20,7 +20,7 @@ public interface FidelityAccountManager {
     void notify(FidelityAccount fidelityAccount, String message);
 
     List<Order> getRetrievedOrder(FidelityAccount fidelityAccount);
-    
+
     void addOrder(User user, Order order);
 
 }

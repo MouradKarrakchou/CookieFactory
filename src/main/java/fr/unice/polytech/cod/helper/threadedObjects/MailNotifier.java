@@ -1,5 +1,7 @@
 package fr.unice.polytech.cod.helper.threadedObjects;
 
+import fr.unice.polytech.cod.components.FidelityAccountComponent;
+import fr.unice.polytech.cod.components.StoreComponent;
 import fr.unice.polytech.cod.interfaces.FidelityAccountManager;
 import fr.unice.polytech.cod.interfaces.StoreAccessor;
 import fr.unice.polytech.cod.interfaces.StoreModifier;
@@ -8,15 +10,13 @@ import fr.unice.polytech.cod.user.fidelityAccount.FidelityAccount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-@Component
+
 public class MailNotifier extends UpdatableObject {
     private Store store;
     private FidelityAccount fidelityAccount;
 
-    @Autowired
     private StoreModifier storeModifier;
 
-    @Autowired
     private FidelityAccountManager fidelityAccountManager;
 
     /**
@@ -28,6 +28,10 @@ public class MailNotifier extends UpdatableObject {
         super(waitingTime);
         this.store = store;
         this.fidelityAccount = fidelityAccount;
+
+        fidelityAccountManager = FidelityAccountComponent.getBean(FidelityAccountManager.class);
+        storeModifier = StoreComponent.getBean(StoreModifier.class);
+
     }
 
     @Override

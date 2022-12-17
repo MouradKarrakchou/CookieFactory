@@ -10,7 +10,10 @@ import fr.unice.polytech.cod.store.Store;
 import fr.unice.polytech.cod.user.User;
 import fr.unice.polytech.cod.user.fidelityAccount.Discount;
 import fr.unice.polytech.cod.user.fidelityAccount.FidelityAccount;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -18,9 +21,10 @@ import java.util.Optional;
 import java.util.Set;
 
 @Component
-public class FidelityAccountComponent implements FidelityAccountManager {
+public class FidelityAccountComponent implements FidelityAccountManager, ApplicationContextAware {
     @Autowired
     StoreModifier storeModifier;
+    private static ApplicationContext context;
 
     @Override
     public void addOrder(FidelityAccount fidelityAccount, Order order) {
@@ -67,5 +71,14 @@ public class FidelityAccountComponent implements FidelityAccountManager {
         FidelityAccount fidelityAccount = user.getFidelityAccount();
         if (fidelityAccount != null)
             addOrder(fidelityAccount, order);
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        context = applicationContext;
+    }
+
+    public static <T> T getBean(Class<T> beanClass) {
+        return context.getBean(beanClass);
     }
 }
