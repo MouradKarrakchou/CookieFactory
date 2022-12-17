@@ -1,7 +1,7 @@
 Feature: Start order preparation
 
   Background:
-    Given an chef who is "AVAILABLE"
+    Given a chef who is "AVAILABLE"
     And An order at the state "PENDING"
 
   Scenario: chef as an order to prepare
