@@ -2,10 +2,8 @@ Feature: Choose a time slot
 
   Background:
     Given a user
-    And an initialised cookie book
-    And a valid cookie
-    And a non-empty cart with 2 cookie
     And a store named "Antibes"
+    And an initialised cookie book
     And the store has no employ
 
   Scenario:the user ask for the list of Intervals
@@ -29,6 +27,8 @@ Feature: Choose a time slot
 
   Scenario:the user chooses a valid interval and validate his cart
     Given a valid interval
+    And a valid cookie
+    And a non-empty cart with 1 cookie
     When a user chooses an interval
     And he validate his cart
     Then the order is associated with the Time slots composing the interval are

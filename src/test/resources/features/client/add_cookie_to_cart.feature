@@ -2,10 +2,9 @@ Feature: Add cookie to the cart
 
   Background:
     Given a user
-    Given a storeLocation
-    And an initialised cookie book
-    And a valid cookie
     And a store named "Antibes"
+    And an initialised cookie book of the store
+    And a valid cookie
     And a non-empty cart with 2 cookie
 
 

@@ -22,7 +22,7 @@ import java.util.Set;
 @Component
 public class OrderManager implements OrderActions, OrderStatesAction {
     @Autowired
-    StockManager stockManager;
+    StockModifier stockModifier;
 
     @Override
     public void updateState(Order order, OrderState newState) {
@@ -70,7 +70,7 @@ public class OrderManager implements OrderActions, OrderStatesAction {
     @Override
     public void addOrder(Stock stock, List<Order> orderList, Order order, Set<Ingredient> ingredientsNeeded) {
         for (Ingredient ingredient : ingredientsNeeded)
-            stockManager.lock(stock, ingredient);
+            stockModifier.lock(stock, ingredient);
         orderList.add(order);
     }
 

@@ -8,6 +8,7 @@ import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.order.OrderState;
 import fr.unice.polytech.cod.pojo.Item;
 import fr.unice.polytech.cod.schedule.Interval;
+import fr.unice.polytech.cod.store.AllStores;
 import fr.unice.polytech.cod.store.Store;
 import fr.unice.polytech.cod.user.Cart;
 import fr.unice.polytech.cod.user.User;
@@ -27,9 +28,12 @@ public class UserHandler implements UserAction {
     @Autowired
     CartPenalty cartPenalty;
     //pas de autowired car on l'instancie comme un singleton donc pas d'injection de dépendance necessaire
-    IStoreFinder IStoreFinder = StoreFinder.getInstance();
     @Autowired
-    IntervalManager intervalManager;
+    IStoreFinder IStoreFinder;
+    @Autowired
+    IIntervalManager intervalManager;
+
+    AllStores allStores=AllStores.getInstance();
 
     /**
      * Add cookies to cart
@@ -68,7 +72,7 @@ public class UserHandler implements UserAction {
     }
 
     @Override
-    public Bill validateCart(User user) throws Exception {
+        public Bill validateCart(User user) throws Exception {
         Cart cart=user.getCart();
         Instant time = Instant.now();
         if (!cartActions.isEmpty(cart) && !cartPenalty.isTherePenalty(cart, time))

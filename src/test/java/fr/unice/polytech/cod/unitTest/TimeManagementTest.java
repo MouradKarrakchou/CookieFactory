@@ -1,8 +1,9 @@
 package fr.unice.polytech.cod.unitTest;
 
+import fr.unice.polytech.cod.food.ingredient.Cooking;
+import fr.unice.polytech.cod.food.ingredient.Mix;
 import fr.unice.polytech.cod.interfaces.*;
 import fr.unice.polytech.cod.pojo.IngredientCatalog;
-import fr.unice.polytech.cod.pojo.StoreLocation;
 import fr.unice.polytech.cod.food.Cookie;
 import fr.unice.polytech.cod.pojo.Item;
 import fr.unice.polytech.cod.schedule.Interval;
@@ -10,7 +11,6 @@ import fr.unice.polytech.cod.schedule.TimeClock;
 import fr.unice.polytech.cod.schedule.TimeSlot;
 import fr.unice.polytech.cod.store.Chef;
 import fr.unice.polytech.cod.exceptions.InvalidStoreException;
-import fr.unice.polytech.cod.user.Cart;
 import fr.unice.polytech.cod.user.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,7 +28,6 @@ public class TimeManagementTest {
     //ATTENTION NE PAS FAIRE CETTE CLASSE
     private User user;
     private final IngredientCatalog ingredientCatalog = IngredientCatalog.instance;
-    private final StoreLocation storeLocation = StoreLocation.instance;
 
     @Autowired
     UserAction userAction;
@@ -53,16 +52,13 @@ public class TimeManagementTest {
 
     @Test
     public void IntervalTest30Min() {
-        Cookie testCookie5Min = new Cookie("testCookie5Min", null, null, new ArrayList<>(), null, null, 5);
-        Cookie testCookie10Min = new Cookie("testCookie10Min", null, null, new ArrayList<>(), null, null, 10);
-
         int startingHour = 10;
         int finishingHour = 11;
         int duration = 30;
         int numberOfHour = 1;
         int intervalDuration = 30;
-        this.user.getCart().getItemSet().add(new Item(testCookie5Min, 1));
-        this.user.getCart().getItemSet().add(new Item(testCookie10Min, 1));
+        Cookie testCookie = new Cookie("testCookie", null, null, new ArrayList<>(), null, null, intervalDuration-15);
+        this.user.getCart().getItemSet().add(new Item(testCookie, 1));
         createChef(startingHour, finishingHour);
         createChef(startingHour, finishingHour);
         createChef(startingHour, finishingHour);
@@ -83,15 +79,15 @@ public class TimeManagementTest {
 
     @Test
     public void IntervalTest40Min() {
-        Cookie testCookie10Min = new Cookie("testCookie10Min", null, null, new ArrayList<>(), null, null, 10);
         int startingHour = 14;
         int finishingHour = 17;
         int durationCompute = 45;
 
         int numberOfHour = 3;
-        int intervalDuration = 45;
-        this.user.getCart().getItemSet().add(new Item(testCookie10Min, 1));
-        this.user.getCart().getItemSet().add(new Item(testCookie10Min, 1));
+        int intervalDuration = 40;
+        Cookie testCookie = new Cookie("testCookie", null, null, new ArrayList<>(), null, null, intervalDuration-15);
+        this.user.getCart().getItemSet().add(new Item(testCookie, 1));
+
         createChef(startingHour, finishingHour);
 
 
@@ -111,15 +107,13 @@ public class TimeManagementTest {
 
     @Test
     public void IntervalTest() {
-        Cookie testCookie10Min = new Cookie("testCookie10Min", null, null, new ArrayList<>(), null, null, 10);
         int startingHour = 8;
         int finishingHour = 10;
         int durationCompute = 45;
+        Cookie testCookie = new Cookie("testCookie", null, null, new ArrayList<>(), null, null, durationCompute-15);
 
-        int numberOfHour = 3;
-        int intervalDuration = 45;
-        this.user.getCart().getItemSet().add(new Item(testCookie10Min, 1));
-        this.user.getCart().getItemSet().add(new Item(testCookie10Min, 1));
+
+        this.user.getCart().getItemSet().add(new Item(testCookie, 1));
         createChef(startingHour, finishingHour);
         createChef(10, 12);
 
@@ -133,7 +127,7 @@ public class TimeManagementTest {
             boolean startBeforeEndOfFirstshift = interval.getStartTime().compareTo(new TimeClock(10, 0)) < 0;
             boolean endAfterFirstshift = interval.getEndTime().compareTo(new TimeClock(10, 0)) > 0;
             //xor
-            assertTrue(!(startBeforeEndOfFirstshift && endAfterFirstshift));
+            assertFalse(startBeforeEndOfFirstshift && endAfterFirstshift);
         }
     }
 
