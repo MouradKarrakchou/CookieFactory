@@ -518,7 +518,7 @@ public class CartManagementStepDef {
 
     @When("when a brandManager add a cookie to the cookie book")
     public void when_a_brand_manager_add_a_cookie_to_the_cookie_book() throws Exception {
-        brandManagerActions.validCookie(testCookie, "Antibes");
+        brandManagerActions.validCookie(new Cookie("CUSTOM COOKIE",null,null,new ArrayList<>(),null,null,6), "Antibes");
     }
 
     @Then("the cookkie is add to the cookie book")
