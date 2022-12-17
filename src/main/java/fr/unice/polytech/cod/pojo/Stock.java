@@ -22,4 +22,5 @@ public class Stock implements Serializable {
     public Set<Ingredient> getIngredients() {
         return ingredients;
     }
+
 }

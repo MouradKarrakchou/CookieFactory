@@ -1,7 +1,9 @@
 Feature: edit cookie in the cookie book
 
   Background:
-    Given an initialised cookie book
+    Given a user
+    And an empty cart
+    And an initialised cookie book
     And a cookie
     And a cookieBook
 

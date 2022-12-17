@@ -4,12 +4,9 @@ import fr.unice.polytech.cod.components.CartHandler;
 import fr.unice.polytech.cod.components.UserManager;
 import fr.unice.polytech.cod.exceptions.CookieAlreadyExistingException;
 import fr.unice.polytech.cod.exceptions.NotMatchingCatalogRequirementException;
-import fr.unice.polytech.cod.food.ingredient.Cooking;
-import fr.unice.polytech.cod.food.ingredient.Mix;
+import fr.unice.polytech.cod.food.ingredient.*;
 import fr.unice.polytech.cod.interfaces.*;
 import fr.unice.polytech.cod.pojo.*;
-import fr.unice.polytech.cod.food.ingredient.Dough;
-import fr.unice.polytech.cod.food.ingredient.Ingredient;
 import fr.unice.polytech.cod.food.*;
 import fr.unice.polytech.cod.order.Bill;
 import fr.unice.polytech.cod.order.Order;
@@ -139,6 +136,9 @@ public class CartManagementStepDef {
         List<TimeSlot> timeSlots=new ArrayList<>();
         timeSlots.add(timeSlot);
         cart.setInterval(new Interval(timeSlots));
+        for (Ingredient ingredient : store.getStock().getIngredients()) {
+            ingredient.setQuantity(nbCookies);
+        }
     }
 
     @Given("an empty cart")
