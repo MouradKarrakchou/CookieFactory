@@ -1,7 +1,8 @@
 Feature: edit cookie in the cookie book
 
   Background:
-    Given a cookie
+    Given an initialised cookie book
+    And a cookie
     And a cookieBook
 
     #Le BrandManager n'existe plus !

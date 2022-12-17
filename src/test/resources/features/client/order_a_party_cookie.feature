@@ -3,6 +3,7 @@ Feature: Order a party cookie
   Background:
     Given a user
     And a store named "Antibes"
+    And an initialised cookie book
     And an empty cart
     And a valid cookie
 
