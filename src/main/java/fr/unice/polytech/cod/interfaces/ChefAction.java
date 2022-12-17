@@ -12,7 +12,7 @@ public interface ChefAction {
 
     void startWork(Chef chef) throws Exception;
 
-    void updateCurrentOrder(Chef chef,TimeClock timeClock, int numberOfDaysBeforeTheOrder);
+    void getCurrentOrder(Chef chef, TimeClock timeClock, int numberOfDaysBeforeTheOrder);
 
     void terminateCurrentOrder(Chef chef);
 

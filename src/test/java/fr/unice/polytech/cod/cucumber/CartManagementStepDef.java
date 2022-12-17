@@ -643,4 +643,5 @@ public class CartManagementStepDef {
     public void heCanTSubscribeAnOtherTimeToTheFidelityProgram() {
         assertTrue(fidelityAccountException);
     }
+
 }

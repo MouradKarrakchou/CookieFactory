@@ -38,3 +38,4 @@ Feature: Choose a time slot
     Given a valid interval
     When a user chooses an interval
     Then the Time slots composing the interval are set to reserved
+    And the chef got a reserved timeSlot
