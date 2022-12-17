@@ -1,4 +1,4 @@
-package fr.unice.polytech.cod.food.ingredient;
+package fr.unice.polytech.cod.pojo.ingredient;
 
 public class Cooking extends Ingredient {
     int preparationTime;

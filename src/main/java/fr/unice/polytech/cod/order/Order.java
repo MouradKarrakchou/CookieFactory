@@ -1,6 +1,7 @@
 package fr.unice.polytech.cod.order;
 
 import fr.unice.polytech.cod.helper.threadedObjects.SmsNotifier;
+import fr.unice.polytech.cod.pojo.order.OrderState;
 import fr.unice.polytech.cod.user.Cart;
 import fr.unice.polytech.cod.user.fidelityAccount.Discount;
 import fr.unice.polytech.cod.helper.threadedObjects.UpdatableObject;

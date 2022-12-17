@@ -4,7 +4,7 @@ import fr.unice.polytech.cod.interfaces.ChefAction;
 import fr.unice.polytech.cod.interfaces.OrderStatesAction;
 import fr.unice.polytech.cod.interfaces.ScheduleActions;
 import fr.unice.polytech.cod.order.Order;
-import fr.unice.polytech.cod.order.OrderState;
+import fr.unice.polytech.cod.pojo.order.OrderState;
 import fr.unice.polytech.cod.schedule.Schedule;
 import fr.unice.polytech.cod.schedule.TimeClock;
 import fr.unice.polytech.cod.store.Chef;

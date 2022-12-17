@@ -1,6 +1,6 @@
 package fr.unice.polytech.cod.cucumber;
 
-import fr.unice.polytech.cod.food.ingredient.Ingredient;
+import fr.unice.polytech.cod.pojo.ingredient.Ingredient;
 import fr.unice.polytech.cod.interfaces.StockExplorer;
 import fr.unice.polytech.cod.interfaces.StockModifier;
 import fr.unice.polytech.cod.pojo.Stock;

@@ -2,7 +2,7 @@ package fr.unice.polytech.cod.components;
 
 import fr.unice.polytech.cod.interfaces.IngredientActions;
 import fr.unice.polytech.cod.pojo.Item;
-import fr.unice.polytech.cod.food.ingredient.Ingredient;
+import fr.unice.polytech.cod.pojo.ingredient.Ingredient;
 import fr.unice.polytech.cod.interfaces.ItemActions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

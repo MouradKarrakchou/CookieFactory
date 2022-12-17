@@ -1,6 +1,6 @@
 package fr.unice.polytech.cod.unitTest;
 
-import fr.unice.polytech.cod.food.ingredient.Ingredient;
+import fr.unice.polytech.cod.pojo.ingredient.Ingredient;
 import fr.unice.polytech.cod.interfaces.IngredientActions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

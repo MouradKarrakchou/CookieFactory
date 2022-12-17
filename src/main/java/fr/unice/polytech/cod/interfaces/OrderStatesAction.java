@@ -1,8 +1,8 @@
 package fr.unice.polytech.cod.interfaces;
 
-import fr.unice.polytech.cod.order.Bill;
+import fr.unice.polytech.cod.pojo.order.Bill;
 import fr.unice.polytech.cod.order.Order;
-import fr.unice.polytech.cod.order.OrderState;
+import fr.unice.polytech.cod.pojo.order.OrderState;
 import java.util.List;
 
 public interface OrderStatesAction {

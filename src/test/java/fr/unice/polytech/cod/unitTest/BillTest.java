@@ -1,13 +1,11 @@
 package fr.unice.polytech.cod.unitTest;
 
-import fr.unice.polytech.cod.components.CatalogExplorer;
-import fr.unice.polytech.cod.components.IngredientManager;
 import fr.unice.polytech.cod.exceptions.CookieAlreadyExistingException;
 import fr.unice.polytech.cod.exceptions.NotMatchingCatalogRequirementException;
 import fr.unice.polytech.cod.food.*;
-import fr.unice.polytech.cod.food.ingredient.*;
 import fr.unice.polytech.cod.interfaces.*;
-import fr.unice.polytech.cod.order.Bill;
+import fr.unice.polytech.cod.pojo.ingredient.*;
+import fr.unice.polytech.cod.pojo.order.Bill;
 import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.pojo.IngredientCatalog;
 import fr.unice.polytech.cod.pojo.Item;

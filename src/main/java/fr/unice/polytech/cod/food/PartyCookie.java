@@ -1,6 +1,6 @@
 package fr.unice.polytech.cod.food;
 
-import fr.unice.polytech.cod.food.ingredient.*;
+import fr.unice.polytech.cod.pojo.ingredient.*;
 import fr.unice.polytech.cod.store.Store;
 
 import java.util.HashMap;

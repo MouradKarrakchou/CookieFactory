@@ -3,7 +3,7 @@ package fr.unice.polytech.cod.components;
 import fr.unice.polytech.cod.exceptions.CookieAlreadyExistingException;
 import fr.unice.polytech.cod.exceptions.NotMatchingCatalogRequirementException;
 import fr.unice.polytech.cod.food.Cookie;
-import fr.unice.polytech.cod.food.ingredient.Ingredient;
+import fr.unice.polytech.cod.pojo.ingredient.Ingredient;
 import fr.unice.polytech.cod.interfaces.ICatalogExplorer;
 import fr.unice.polytech.cod.interfaces.ICookieBookManager;
 import fr.unice.polytech.cod.pojo.CookieBook;

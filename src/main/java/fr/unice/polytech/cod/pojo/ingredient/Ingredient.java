@@ -1,4 +1,4 @@
-package fr.unice.polytech.cod.food.ingredient;
+package fr.unice.polytech.cod.pojo.ingredient;
 
 import java.util.Objects;
 

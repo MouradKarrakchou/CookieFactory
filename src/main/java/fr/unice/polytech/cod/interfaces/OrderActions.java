@@ -1,6 +1,6 @@
 package fr.unice.polytech.cod.interfaces;
 
-import fr.unice.polytech.cod.food.ingredient.Ingredient;
+import fr.unice.polytech.cod.pojo.ingredient.Ingredient;
 import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.pojo.Stock;
 import fr.unice.polytech.cod.user.User;

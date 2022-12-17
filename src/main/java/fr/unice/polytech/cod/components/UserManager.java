@@ -6,7 +6,7 @@ import fr.unice.polytech.cod.food.Cookie;
 import fr.unice.polytech.cod.interfaces.UserAction;
 import fr.unice.polytech.cod.interfaces.UserEndpoint;
 import fr.unice.polytech.cod.interfaces.UserRequest;
-import fr.unice.polytech.cod.order.Bill;
+import fr.unice.polytech.cod.pojo.order.Bill;
 import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.schedule.Interval;
 import fr.unice.polytech.cod.store.Store;

@@ -1,19 +1,18 @@
-package fr.unice.polytech.cod.food.ingredient;
+package fr.unice.polytech.cod.pojo.ingredient;
 
-public class Topping extends Ingredient {
-    public Topping(String name, double price, double quantity) {
+public class  Flavour extends Ingredient {
+    public Flavour(String name, double price, double quantity) {
         super(name, price, quantity);
     }
 
-    public Topping(Topping topping){
-        super(topping);
+    public Flavour(Flavour flavour){
+        super(flavour);
     }
-
 
     /**
      * Check if 2 objects are the same (same name, same class)
      *
-     * @param object The flavour to compare
+     * @param object The object to compare
      * @return true/false - The two given ingredients are the same
      */
     @Override
@@ -23,10 +22,10 @@ public class Topping extends Ingredient {
             return true;
 
         // Check for the instance
-        if (!(object instanceof Topping t))
+        if (!(object instanceof Flavour f))
             return false;
 
         // Check for the name equality
-        return t.name.equals(name);
+        return f.name.equals(name);
     }
 }

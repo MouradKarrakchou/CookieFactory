@@ -1,8 +1,8 @@
 package fr.unice.polytech.cod.food;
 
-import fr.unice.polytech.cod.food.ingredient.*;
 import fr.unice.polytech.cod.interfaces.Saleable;
 import fr.unice.polytech.cod.interfaces.StockExplorer;
+import fr.unice.polytech.cod.pojo.ingredient.*;
 import fr.unice.polytech.cod.store.Store;
 import org.springframework.beans.factory.annotation.Autowired;
 

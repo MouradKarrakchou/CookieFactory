@@ -1,9 +1,9 @@
 package fr.unice.polytech.cod.pojo;
 
-import fr.unice.polytech.cod.food.ingredient.Dough;
-import fr.unice.polytech.cod.food.ingredient.Flavour;
-import fr.unice.polytech.cod.food.ingredient.Ingredient;
-import fr.unice.polytech.cod.food.ingredient.Topping;
+import fr.unice.polytech.cod.pojo.ingredient.Dough;
+import fr.unice.polytech.cod.pojo.ingredient.Flavour;
+import fr.unice.polytech.cod.pojo.ingredient.Ingredient;
+import fr.unice.polytech.cod.pojo.ingredient.Topping;
 import java.util.ArrayList;
 import java.util.List;
 

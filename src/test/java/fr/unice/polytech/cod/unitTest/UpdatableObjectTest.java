@@ -2,7 +2,7 @@ package fr.unice.polytech.cod.unitTest;
 
 import fr.unice.polytech.cod.interfaces.OrderStatesAction;
 import fr.unice.polytech.cod.order.Order;
-import fr.unice.polytech.cod.order.OrderState;
+import fr.unice.polytech.cod.pojo.order.OrderState;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

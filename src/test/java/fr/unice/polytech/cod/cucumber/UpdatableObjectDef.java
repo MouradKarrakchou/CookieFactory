@@ -2,12 +2,10 @@ package fr.unice.polytech.cod.cucumber;
 
 import fr.unice.polytech.cod.interfaces.OrderStatesAction;
 import fr.unice.polytech.cod.order.Order;
-import fr.unice.polytech.cod.order.OrderState;
-import fr.unice.polytech.cod.user.Cart;
+import fr.unice.polytech.cod.pojo.order.OrderState;
 import fr.unice.polytech.cod.user.User;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import static org.junit.jupiter.api.Assertions.assertEquals;

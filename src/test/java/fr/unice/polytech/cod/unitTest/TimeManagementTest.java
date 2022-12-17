@@ -1,7 +1,5 @@
 package fr.unice.polytech.cod.unitTest;
 
-import fr.unice.polytech.cod.food.ingredient.Cooking;
-import fr.unice.polytech.cod.food.ingredient.Mix;
 import fr.unice.polytech.cod.interfaces.*;
 import fr.unice.polytech.cod.pojo.IngredientCatalog;
 import fr.unice.polytech.cod.food.Cookie;

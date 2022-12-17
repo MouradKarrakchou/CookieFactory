@@ -1,5 +1,6 @@
-package fr.unice.polytech.cod.order;
+package fr.unice.polytech.cod.pojo.order;
 
+import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.store.Store;
 
 public class Bill {
