@@ -111,7 +111,7 @@ public class CartManagementStepDef {
     Saleable saleable;
 
     @Autowired
-    PartyCookieHandler partyCookieHandler;
+    IPartyCookieHandler partyCookieHandler;
 
     @Autowired
     UserRequest userRequest;
