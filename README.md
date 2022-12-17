@@ -70,7 +70,7 @@ Prévenir le client qu'un panier est disponlible #28 :
 S'abonner au programme de fidélité #13 :
 [subscribe_to_the_fidelity_program.feature](https://github.com/PNS-Conception/cookiefactory-22-23-k/blob/main/src/test/resources/features/client/subscribe_to_the_fidelity_program.feature)
 
-### Implémentation Gherkin supplémentaire
+### Implémentations Gherkin supplémentaires
 
 Ajouter un cookie au panier :
 [add_cookie_to_cart.feature](https://github.com/PNS-Conception/cookiefactory-22-23-k/blob/main/src/test/resources/features/client/add_cookie_to_cart.feature)
