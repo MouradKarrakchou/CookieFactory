@@ -22,4 +22,7 @@ public interface IFidelityAccountManager {
 
     void addOrder(User user, Order order);
 
+    void addFidelityAccount(Store store, FidelityAccount fidelityAccount, int todayDay, int day, int hour, int minute);
+
+
 }

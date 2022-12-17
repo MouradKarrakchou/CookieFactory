@@ -52,10 +52,10 @@ public class FidelityAccountManager implements IFidelityAccountManager, Applicat
     @Override
     public void subscribeToSurpriseBasket(FidelityAccount fidelityAccount, Store store, int todayDay, int day, int hour, int minute) {
         addFidelityAccount(store, fidelityAccount, todayDay, day, hour, minute);
-        //TODO Maybe change the way we chose the date
     }
 
-    private void addFidelityAccount(Store store, FidelityAccount fidelityAccount, int todayDay, int day, int hour, int minute) {
+    @Override
+    public void addFidelityAccount(Store store, FidelityAccount fidelityAccount, int todayDay, int day, int hour, int minute) {
         int waitingDay = Math.abs(day - todayDay);
         int waitingTime = waitingDay*24*60*60*1000; //days in milliseconds
         waitingTime += hour*60*60*1000; //hours in milliseconds
