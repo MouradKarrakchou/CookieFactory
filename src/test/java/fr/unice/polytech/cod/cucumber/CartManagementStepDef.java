@@ -50,7 +50,6 @@ public class CartManagementStepDef {
     Store store;
     List<Order> historic;
     CookieBook cookieBook;
-    StoreLocation storeLocation;
 
     private final IngredientCatalog ingredientCatalog = IngredientCatalog.instance;
 
@@ -109,11 +108,6 @@ public class CartManagementStepDef {
     public void a_user() {
         this.user = new User();
         this.cart=user.getCart();
-    }
-
-    @Given("a storeLocation")
-    public void a_store_location() {
-        this.storeLocation = new StoreLocation();
     }
 
     @Given("a store named {string}")
