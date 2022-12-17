@@ -6,7 +6,7 @@ import fr.unice.polytech.cod.interfaces.ScheduleActions;
 import fr.unice.polytech.cod.pojo.order.Order;
 import fr.unice.polytech.cod.pojo.order.OrderState;
 import fr.unice.polytech.cod.pojo.schedule.Schedule;
-import fr.unice.polytech.cod.schedule.TimeClock;
+import fr.unice.polytech.cod.helper.tools.TimeClock;
 import fr.unice.polytech.cod.pojo.store.Chef;
 import fr.unice.polytech.cod.pojo.store.ChefState;
 import fr.unice.polytech.cod.pojo.store.Store;

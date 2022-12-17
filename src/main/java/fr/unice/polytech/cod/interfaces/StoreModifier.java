@@ -1,7 +1,7 @@
 package fr.unice.polytech.cod.interfaces;
 
 import fr.unice.polytech.cod.food.Cookie;
-import fr.unice.polytech.cod.schedule.TimeClock;
+import fr.unice.polytech.cod.helper.tools.TimeClock;
 import fr.unice.polytech.cod.pojo.store.Chef;
 import fr.unice.polytech.cod.pojo.store.Store;
 

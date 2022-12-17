@@ -6,7 +6,7 @@ import fr.unice.polytech.cod.pojo.order.Order;
 import fr.unice.polytech.cod.pojo.schedule.Interval;
 import fr.unice.polytech.cod.pojo.schedule.Schedule;
 import fr.unice.polytech.cod.pojo.schedule.TimeSlot;
-import fr.unice.polytech.cod.schedule.*;
+import fr.unice.polytech.cod.helper.tools.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
