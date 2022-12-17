@@ -4,7 +4,6 @@ Feature: Order a party cookie
     Given a user
     And a store named "Antibes"
     And an empty cart
-    And a list of ingredients
     And a valid cookie
 
 
