@@ -24,6 +24,10 @@ public class UpdatableObject implements Runnable {
         this.waitingTime = waitingTime;
     }
 
+    public int getWaitingTime() {
+        return this.waitingTime;
+    }
+
     /**
      * This method will wait for waitingTime (in ms) before calling OnTimeReached method.
      */
