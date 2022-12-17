@@ -32,7 +32,7 @@ public class CartHandler implements CartActions, CartPenalty {
     @Autowired
     private IntervalManager intervalManager;
     @Autowired
-    private FidelityAccountManager fidelityAccountManager;
+    private IFidelityAccountManager IFidelityAccountManager;
 
 
 
@@ -75,7 +75,7 @@ public class CartHandler implements CartActions, CartPenalty {
 
         if (user.getFidelityAccount()!=null)
             useDiscount(user.getFidelityAccount(), order);
-        fidelityAccountManager.addOrder(user, order);
+        IFidelityAccountManager.addOrder(user, order);
         orderActions.addOrder(cart.getStore().getStock(), cart.getStore().getOrderList(), order, ingredientsNeeded);
 
         intervalManager.validate(cart.getInterval(), order);
@@ -88,7 +88,7 @@ public class CartHandler implements CartActions, CartPenalty {
     private void useDiscount(FidelityAccount fidelityAccount, Order order) {
         if(fidelityAccount == null)
             return;
-        Optional<Discount> _discount = fidelityAccountManager.getDiscount(fidelityAccount);
+        Optional<Discount> _discount = IFidelityAccountManager.getDiscount(fidelityAccount);
         if(_discount.isEmpty())
             return;
 

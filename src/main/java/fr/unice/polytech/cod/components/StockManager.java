@@ -14,7 +14,7 @@ import java.util.Optional;
 import java.util.Set;
 
 @Component
-public class StockComponent implements StockExplorer, StockModifier {
+public class StockManager implements StockExplorer, StockModifier {
     @Autowired
     IngredientActions ingredientActions;
 

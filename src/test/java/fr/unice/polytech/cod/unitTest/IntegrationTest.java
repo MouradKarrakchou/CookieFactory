@@ -1,15 +1,12 @@
 package fr.unice.polytech.cod.unitTest;
 
 import fr.unice.polytech.cod.components.CartHandler;
-import fr.unice.polytech.cod.components.CatalogComponent;
-import fr.unice.polytech.cod.components.CookieBookComponent;
+import fr.unice.polytech.cod.components.CatalogExplorer;
+import fr.unice.polytech.cod.components.CookieBookManager;
 import fr.unice.polytech.cod.interfaces.StockModifier;
-import fr.unice.polytech.cod.interfaces.StoreModifier;
 import fr.unice.polytech.cod.interfaces.UserAction;
 import fr.unice.polytech.cod.interfaces.UserRequest;
-import fr.unice.polytech.cod.pojo.CookieBook;
 import fr.unice.polytech.cod.pojo.IngredientCatalog;
-import fr.unice.polytech.cod.pojo.StoreLocation;
 import fr.unice.polytech.cod.food.ingredient.Ingredient;
 import fr.unice.polytech.cod.exceptions.InvalidStoreException;
 import fr.unice.polytech.cod.order.Bill;
@@ -17,9 +14,7 @@ import fr.unice.polytech.cod.schedule.Interval;
 import fr.unice.polytech.cod.schedule.TimeClock;
 import fr.unice.polytech.cod.schedule.TimeSlot;
 import fr.unice.polytech.cod.store.Store;
-import fr.unice.polytech.cod.user.Cart;
 import fr.unice.polytech.cod.user.User;
-import io.cucumber.java.bs.A;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -47,9 +42,9 @@ public class IntegrationTest {
     StockModifier stockModifier;
     IngredientCatalog ingredientCatalog = IngredientCatalog.instance;
     @Autowired
-    CatalogComponent catalogComponent;
+    CatalogExplorer catalogExplorer;
     @Autowired
-    CookieBookComponent cookieBookComponent;
+    CookieBookManager cookieBookManager;
     @Autowired
     CartHandler cartHandler;
 
@@ -73,15 +68,15 @@ public class IntegrationTest {
         // Fill the store's stock 20 times
         for (int i = 0; i < 20; i++) {
             stockModifier.addIngredients(this.store.getStock(),
-                    List.of(catalogComponent.getDough(ingredientCatalog, "chocolate"),
-                            catalogComponent.getFlavour(ingredientCatalog, "chili"),
-                            catalogComponent.getTopping(ingredientCatalog, "milk chocolate"),
-                            catalogComponent.getTopping(ingredientCatalog, "M&M’s"),
+                    List.of(catalogExplorer.getDough(ingredientCatalog, "chocolate"),
+                            catalogExplorer.getFlavour(ingredientCatalog, "chili"),
+                            catalogExplorer.getTopping(ingredientCatalog, "milk chocolate"),
+                            catalogExplorer.getTopping(ingredientCatalog, "M&M’s"),
 
-                            catalogComponent.getDough(ingredientCatalog, "plain"),
-                            catalogComponent.getFlavour(ingredientCatalog, "vanilla"),
-                            catalogComponent.getTopping(ingredientCatalog, "milk chocolate"),
-                            catalogComponent.getTopping(ingredientCatalog, "white chocolate")
+                            catalogExplorer.getDough(ingredientCatalog, "plain"),
+                            catalogExplorer.getFlavour(ingredientCatalog, "vanilla"),
+                            catalogExplorer.getTopping(ingredientCatalog, "milk chocolate"),
+                            catalogExplorer.getTopping(ingredientCatalog, "white chocolate")
                     ));
         }
 
@@ -102,12 +97,12 @@ public class IntegrationTest {
                 .count());
 
         // Check if the user can select the given amount of cookie
-        assertTrue(userAction.addCookies(cookieBookComponent.getCookie(store.getCookieBook(), "Cookie au chocolat"), 5, user.getCart()));
-        assertTrue(userAction.addCookies(cookieBookComponent.getCookie(store.getCookieBook(), "Cookie au chocolat"), 15, user.getCart()));
-        assertTrue(userAction.addCookies(cookieBookComponent.getCookie(store.getCookieBook(), "Cookie à la vanille"), 19, user.getCart()));
+        assertTrue(userAction.addCookies(cookieBookManager.getCookie(store.getCookieBook(), "Cookie au chocolat"), 5, user.getCart()));
+        assertTrue(userAction.addCookies(cookieBookManager.getCookie(store.getCookieBook(), "Cookie au chocolat"), 15, user.getCart()));
+        assertTrue(userAction.addCookies(cookieBookManager.getCookie(store.getCookieBook(), "Cookie à la vanille"), 19, user.getCart()));
 
-        assertTrue(userAction.addCookies(cookieBookComponent.getCookie(store.getCookieBook(), "Cookie au chocolat"), 1, user.getCart()));
-        assertTrue(userAction.addCookies(cookieBookComponent.getCookie(store.getCookieBook(), "Cookie à la vanille"), 2, user.getCart()));
+        assertTrue(userAction.addCookies(cookieBookManager.getCookie(store.getCookieBook(), "Cookie au chocolat"), 1, user.getCart()));
+        assertTrue(userAction.addCookies(cookieBookManager.getCookie(store.getCookieBook(), "Cookie à la vanille"), 2, user.getCart()));
 
 
         try {

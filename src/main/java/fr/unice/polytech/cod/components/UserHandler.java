@@ -11,25 +11,23 @@ import fr.unice.polytech.cod.schedule.Interval;
 import fr.unice.polytech.cod.store.Store;
 import fr.unice.polytech.cod.user.Cart;
 import fr.unice.polytech.cod.user.User;
-import fr.unice.polytech.cod.user.fidelityAccount.Discount;
 import fr.unice.polytech.cod.user.fidelityAccount.FidelityAccount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
 import java.util.List;
-import java.util.Optional;
 
 @Component
-public class UserActionComponent implements UserAction {
+public class UserHandler implements UserAction {
     @Autowired
-    FidelityAccountManager fidelityAccountManager;
+    IFidelityAccountManager IFidelityAccountManager;
     @Autowired
     CartActions cartActions;
     @Autowired
     CartPenalty cartPenalty;
     //pas de autowired car on l'instancie comme un singleton donc pas d'injection de dépendance necessaire
-    StoreFinder storeFinder = StoreFinderComponent.getInstance();
+    IStoreFinder IStoreFinder = StoreFinder.getInstance();
     @Autowired
     IntervalManager intervalManager;
 
@@ -58,7 +56,7 @@ public class UserActionComponent implements UserAction {
      */
     @Override
     public Store selectStore(String name, Cart cart) throws InvalidStoreException {
-        Store store = storeFinder.findStore(name);
+        Store store = IStoreFinder.findStore(name);
         cart.setStore(store);
         return (store);
     }

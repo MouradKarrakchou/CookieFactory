@@ -9,24 +9,20 @@ import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.order.OrderState;
 import fr.unice.polytech.cod.pojo.Item;
 import fr.unice.polytech.cod.pojo.Stock;
-import fr.unice.polytech.cod.store.Chef;
-import fr.unice.polytech.cod.store.ChefState;
 import fr.unice.polytech.cod.user.User;
 import fr.unice.polytech.cod.user.fidelityAccount.Discount;
-import fr.unice.polytech.cod.user.fidelityAccount.FidelityAccount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
 
 @Component
-public class OrderComponent implements OrderActions, OrderStatesAction {
+public class OrderManager implements OrderActions, OrderStatesAction {
     @Autowired
-    StockComponent stockComponent;
+    StockManager stockManager;
 
     @Override
     public void updateState(Order order, OrderState newState) {
@@ -74,7 +70,7 @@ public class OrderComponent implements OrderActions, OrderStatesAction {
     @Override
     public void addOrder(Stock stock, List<Order> orderList, Order order, Set<Ingredient> ingredientsNeeded) {
         for (Ingredient ingredient : ingredientsNeeded)
-            stockComponent.lock(stock, ingredient);
+            stockManager.lock(stock, ingredient);
         orderList.add(order);
     }
 

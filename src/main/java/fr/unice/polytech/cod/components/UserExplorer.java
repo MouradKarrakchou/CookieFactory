@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-public class UserRequestComponent implements UserRequest {
+public class UserExplorer implements UserRequest {
     @Autowired
     CartActions cartActions;
     @Autowired
@@ -27,7 +27,7 @@ public class UserRequestComponent implements UserRequest {
     @Autowired
     StoreFinder storeFinder;
     @Autowired
-    FidelityAccountManager fidelityAccountManager;
+    IFidelityAccountManager IFidelityAccountManager;
 
     @Override
     public List<Cookie> viewCatalog(Store store) {
@@ -82,6 +82,6 @@ public class UserRequestComponent implements UserRequest {
     public List<Order> getHistory(FidelityAccount fidelityAccount) throws Exception {
         if(fidelityAccount == null)
             throw new Exception("Your not subscribe to a fidelity account");
-        return fidelityAccountManager.getRetrievedOrder(fidelityAccount);
+        return IFidelityAccountManager.getRetrievedOrder(fidelityAccount);
     }
 }

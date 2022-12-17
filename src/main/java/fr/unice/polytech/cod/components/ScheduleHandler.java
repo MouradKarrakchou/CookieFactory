@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-public class ScheduleComponent implements ScheduleActions {
+public class ScheduleHandler implements ScheduleActions {
     @Autowired
     private TimeSlotAction timeSlotAction;
     @Override

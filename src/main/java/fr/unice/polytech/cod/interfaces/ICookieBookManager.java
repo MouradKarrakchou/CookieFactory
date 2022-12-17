@@ -7,7 +7,7 @@ import fr.unice.polytech.cod.food.Cookie;
 
 import java.util.List;
 
-public interface CookieBookManager {
+public interface ICookieBookManager {
     /**
      * Add a cookie to the cookie book if it's not in the book and all the ingredients are in the catalog.
      *

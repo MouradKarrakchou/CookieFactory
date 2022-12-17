@@ -19,7 +19,7 @@ import java.util.Optional;
 
 
 @Component
-public class ChefComponent implements ChefAction {
+public class ChefHandler implements ChefAction {
     @Autowired
     private  ScheduleActions scheduleActions;
     @Autowired

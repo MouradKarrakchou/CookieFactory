@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-public class TimeSlotComponent implements TimeSlotAction {
+public class TimeSlotHandler implements TimeSlotAction {
 
     @Override
     public List<Interval> timeSlotAvailable(Store store, List<Chef> chefs, int minutes, int numberOfDaysBeforeTheOrder) {
