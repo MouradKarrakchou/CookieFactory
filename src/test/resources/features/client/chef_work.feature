@@ -1,7 +1,7 @@
 Feature: Starting an order as a chef
   
   Background:
-    Given an chef who is "AVAILABLE"
+    Given a chef who is "AVAILABLE"
     And An order at the state "PENDING"
     
   Scenario:

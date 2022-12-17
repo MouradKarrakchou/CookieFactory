@@ -11,7 +11,7 @@ public class SmsNotifier extends UpdatableObject {
     }
 
     @Override
-    protected void OnTimeReached() {
+    protected void setTimeReached() {
         if(user.getFidelityAccount() != null)
             System.out.println(user.getFidelityAccount().getName() + " has been notified");
     }
