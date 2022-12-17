@@ -2,7 +2,6 @@ package fr.unice.polytech.cod.components;
 
 import fr.unice.polytech.cod.helper.Display;
 import fr.unice.polytech.cod.helper.threadedObjects.MailNotifier;
-import fr.unice.polytech.cod.interfaces.FidelityAccountManager;
 import fr.unice.polytech.cod.interfaces.IFidelityAccountManager;
 import fr.unice.polytech.cod.interfaces.StoreModifier;
 import fr.unice.polytech.cod.order.Order;
@@ -23,7 +22,6 @@ import java.util.Optional;
 import java.util.Set;
 
 @Component
-public class FidelityAccountComponent implements FidelityAccountManager, ApplicationContextAware {
 public class FidelityAccountManager implements IFidelityAccountManager, ApplicationContextAware {
     @Autowired
     StoreModifier storeModifier;
