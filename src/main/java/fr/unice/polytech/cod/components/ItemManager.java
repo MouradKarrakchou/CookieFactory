@@ -1,6 +1,8 @@
 package fr.unice.polytech.cod.components;
 
+import fr.unice.polytech.cod.food.Cookie;
 import fr.unice.polytech.cod.interfaces.IngredientActions;
+import fr.unice.polytech.cod.interfaces.Saleable;
 import fr.unice.polytech.cod.pojo.Item;
 import fr.unice.polytech.cod.pojo.ingredient.Ingredient;
 import fr.unice.polytech.cod.interfaces.ItemActions;
@@ -14,6 +16,9 @@ public class ItemManager implements ItemActions {
     @Autowired
     private IngredientActions ingredientActions;
 
+    @Autowired
+    private Saleable saleable;
+
     @Override
     public void updateQuantity(Item item, int value) {
         item.setQuantity(item.getQuantity() + value);
@@ -22,7 +27,7 @@ public class ItemManager implements ItemActions {
     @Override
     public Set<Ingredient> generateIngredientsNeeded(Item item) {
         // Get ingredients needed for 1 cookie
-        Set<Ingredient> ingredientsClone = new HashSet<>(item.getCookie().getIngredients());
+        Set<Ingredient> ingredientsClone = new HashSet<>(saleable.getIngredients(item.getCookie()));
 
         // Multiplying each ingredient needed by the number of cookies
         for (Ingredient ingredient : ingredientsClone)

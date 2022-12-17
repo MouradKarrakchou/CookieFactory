@@ -2,7 +2,9 @@ package fr.unice.polytech.cod.components;
 
 import fr.unice.polytech.cod.food.PartyCookie;
 import fr.unice.polytech.cod.interfaces.IPartyCookieHandler;
+import fr.unice.polytech.cod.interfaces.Saleable;
 import fr.unice.polytech.cod.pojo.ingredient.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -10,6 +12,9 @@ import java.util.Map;
 
 @Component
 public class PartyCookieHandler implements IPartyCookieHandler {
+
+    @Autowired
+    Saleable saleable;
     @Override
     public void addTopping(PartyCookie partyCookie, Topping t) {
         partyCookie.getToppingList().add(t);
@@ -36,8 +41,8 @@ public class PartyCookieHandler implements IPartyCookieHandler {
 
     @Override
     public void removeTopping(PartyCookie partyCookie, Topping t) {
-        if(partyCookie.getIngredients().contains(t)){
-            partyCookie.getIngredientsList().remove(t);
+        if(saleable.getIngredients(partyCookie).contains(t)){
+            saleable.getIngredientsList(partyCookie).remove(t);
         }
     }
 }
