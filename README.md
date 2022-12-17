@@ -9,15 +9,14 @@ Contient le rapport final au format pdf
        - Maven compatible
        - JDK 17
 
-
-
 ## User stories: src/test/ressources/features.client
 
 Chaque user story est décrite par 
    - son identifiant en tant que issue github (#), 
    - sa forme classique (As a… I want to… In order to…)
    - Le nom du fichier feature Cucumber et le nom des scénarios qui servent de tests d’acceptation pour la story.
-   Les contenus détaillés sont dans l'issue elle-même, ainsi que dans les .feature associés.
+
+Les contenus détaillés sont dans l'issue elle-même, ainsi que dans les .feature associés.
    
 La liste des fonctionnalités livrées par user story :
 
