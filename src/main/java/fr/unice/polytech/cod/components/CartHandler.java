@@ -26,8 +26,6 @@ public class CartHandler implements CartActions, CartPenalty {
     @Autowired
     private  ItemActions itemActions;
     @Autowired
-    private  IngredientActions ingredientActions;
-    @Autowired
     private  OrderActions orderActions;
     @Autowired
     private IntervalManager intervalManager;
@@ -118,7 +116,7 @@ public class CartHandler implements CartActions, CartPenalty {
                 boolean isAdded = false;
                 for (Ingredient neededIngredient : neededIngredients) {
                     if (neededIngredient.equals(ingredient)) {
-                        ingredientActions.increaseQuantity(ingredient, ingredient.getQuantity());
+                        neededIngredient.setQuantity(ingredient.getQuantity() + neededIngredient.getQuantity());
                         isAdded = true;
                     }
                 }

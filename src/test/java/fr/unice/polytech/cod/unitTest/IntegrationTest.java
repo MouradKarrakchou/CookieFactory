@@ -61,7 +61,7 @@ public class IntegrationTest {
 
         // Check if the store has been associated
         userAction.selectStore("Antibes", user.getCart());
-        assertEquals("Antibes", user.getCart().getStore());
+        assertEquals("Antibes", user.getCart().getStore().getName());
 
         this.store = user.getCart().getStore();
 
@@ -93,7 +93,7 @@ public class IntegrationTest {
                 assertEquals(20, ingredient.getQuantity());
         }
 
-        // Check if the store is able to craft the given cookies based on their name & the acctual stock
+        // Check if the store is able to craft the given cookies based on their name & the actual stock
         assertEquals(1, userRequest.viewCatalog(this.store).stream()
                 .filter(cookie -> cookie.getName().equals("Cookie au chocolat"))
                 .count());
