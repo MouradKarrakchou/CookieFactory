@@ -2,7 +2,7 @@ Feature: Add cookie to the cart
 
   Background:
     Given a user
-    Given a storeLocattion
+    Given a storeLocation
     And a valid cookie
     And a store named "Antibes"
     And a non-empty cart with 2 cookie

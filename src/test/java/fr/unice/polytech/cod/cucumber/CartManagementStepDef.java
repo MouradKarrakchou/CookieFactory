@@ -49,7 +49,7 @@ public class CartManagementStepDef {
     List<Order> historic;
 
     private final IngredientCatalog ingredientCatalog = IngredientCatalog.instance;
-    private final StoreLocation storeLocation = StoreLocation.instance;
+    private StoreLocation storeLocation = StoreLocation.instance;
 
     @Autowired
     CartActions cartActions;
@@ -96,6 +96,11 @@ public class CartManagementStepDef {
     @Given("a user")
     public void a_user() {
         this.user = new User();
+    }
+
+    @Given("a storeLocation")
+    public void a_store_location() {
+        this.storeLocation = new StoreLocation();
     }
 
     @Given("a store named {string}")

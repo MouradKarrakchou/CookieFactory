@@ -11,7 +11,7 @@ public class StoreLocation {
     private final List<Store> storeList;
     public static StoreLocation instance = new StoreLocation();
 
-    private StoreLocation(){
+    public StoreLocation(){
         storeList = new ArrayList<>();
         storeList.add(new Store("Antibes"));
         storeList.add(new Store("Nice"));
