@@ -1,6 +1,6 @@
 # Cookiefactory-22-23-Team-K
 
-## doc
+## docs
 Contient le rapport final au format pdf
 
 ## src
