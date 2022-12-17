@@ -70,17 +70,6 @@ public class StoreManager implements StoreModifier, StoreAccessor, ApplicationCo
     }
 
     @Override
-    public boolean setTax(Store store, String ingredientName, double newPrice) {
-        Optional<Ingredient> _stockIngredient = stockExplorer.findIngredient(store.getStock(), ingredientName);
-        if(_stockIngredient.isEmpty())
-            return false;
-
-        _stockIngredient.get().setPrice(newPrice);
-        return true;
-    }
-
-
-    @Override
     public void updateSurpriseBasket(Store store) {
         getObsoleteOrders(store).forEach(obsoleteOrder -> {
             store.getSurpriseBaskets().add(new SurpriseBasket(obsoleteOrder));

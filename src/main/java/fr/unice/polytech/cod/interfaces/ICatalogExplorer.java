@@ -16,7 +16,7 @@ public interface ICatalogExplorer {
      * @param ingredient -  A ingredient.
      * @return
      */
-    boolean isInCatalog(IngredientCatalog ingredientCatalog, Ingredient ingredient);
+    boolean isInCatalog(Ingredient ingredient);
 
     /**
      *  Find a Dough with a dough name in the catalog.

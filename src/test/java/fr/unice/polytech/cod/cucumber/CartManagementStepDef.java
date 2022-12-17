@@ -20,6 +20,7 @@ import fr.unice.polytech.cod.store.Store;
 import fr.unice.polytech.cod.store.*;
 import fr.unice.polytech.cod.user.Cart;
 import fr.unice.polytech.cod.user.User;
+import fr.unice.polytech.cod.user.fidelityAccount.FidelityAccount;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -69,10 +70,10 @@ public class CartManagementStepDef {
     StoreModifier storeModifier;
 
     @Autowired
-    ICookieBookManager ICookieBookManager;
+    ICookieBookManager iCookieBookManager;
 
     @Autowired
-    IFidelityAccountManager IFidelityAccountManager;
+    IFidelityAccountManager iFidelityAccountManager;
 
     @Autowired
     UserRequest userRequest;
@@ -81,16 +82,16 @@ public class CartManagementStepDef {
     StockExplorer stockExplorer;
 
     @Autowired
-    IIntervalManager IIntervalManager;
+    IIntervalManager iIntervalManager;
 
     @Autowired
-    ICatalogExplorer ICatalogExplorer;
+    ICatalogExplorer iCatalogExplorer;
 
     @Autowired
     ScheduleActions scheduleActions;
 
     @Autowired
-    IStoreFinder IStoreFinder;
+    IStoreFinder iStoreFinder;
 
     @Autowired
     OrderStatesAction orderStatesAction;
@@ -99,10 +100,10 @@ public class CartManagementStepDef {
     CartHandler cartHandler;
 
     @Autowired
-    ICatalogExplorer iCatalogExplorer;
-
-    @Autowired
     CookieBookManager cookieBookManager;
+
+    boolean historicException = false;
+    boolean emptyCartException = false;
 
     @Given("a user")
     public void a_user() {
@@ -120,15 +121,13 @@ public class CartManagementStepDef {
         ));
         userAction.selectStore(name,user.getCart());
         this.store=user.getCart().getStore();
-        for(Ingredient ingredient : ingredientCatalog.getIngredientList())
-            storeModifier.setTax(store,ingredient.getName(), 3.0);
         //for (int i =0; i <100; i++)
         //    store.fillStock(ingredientCatalog.getIngredientList(), taxesValues);
         stockModifier.addIngredients(store.getStock(),ingredientCatalog.getIngredientList());
     }
     @Given("a valid cookie")
     public void a_valid_cookie() {
-        testCookie = ICookieBookManager.getCookie(cookieBook,"Cookie au chocolat");
+        testCookie = iCookieBookManager.getCookie(cookieBook,"Cookie au chocolat");
     }
     @Given("a fidelity account")
     public void a_fidelity_account() {
@@ -152,6 +151,7 @@ public class CartManagementStepDef {
     @Given("an empty cart")
     public void anEmptyCart() {
         cart = user.getCart();
+        cart.getItemSet().clear();
         TimeSlot timeSlot=new TimeSlot(new TimeClock(8,0),new TimeClock(8,15));
         List<TimeSlot> timeSlots=new ArrayList<>();
         timeSlots.add(timeSlot);
@@ -182,9 +182,13 @@ public class CartManagementStepDef {
         cookieList = userRequest.viewCatalog(user.getCart().getStore());
     }
     @When("he validate his cart")
-    public void he_validate_his_cart() throws Exception {
+    public void he_validate_his_cart() {
         cartActions.showCart(user.getCart());
-        bill = userAction.validateCart(user);
+        try {
+            bill = userAction.validateCart(user);
+        } catch (Exception e) {
+            emptyCartException = true;
+        }
     }
     @When("we choose a valid store")
     public void we_choose_a_valid_store() throws InvalidStoreException {
@@ -405,11 +409,12 @@ public class CartManagementStepDef {
         retrieveOrder = new Order(user.getCart(),OrderState.RETRIEVE,user);
     }
     @When("a client ask for his history")
-    public void a_client_ask_for_his_history() throws Exception {
-        userAction.subscribeToFidelityAccount(this.user, "name","email","pw");
-        IFidelityAccountManager.addOrder(userRequest.getSubscription(this.user).get(), retrieveOrder);
-
-        historic = userRequest.getHistory(user.getFidelityAccount());
+    public void a_client_ask_for_his_history() {
+        try {
+            historic = userRequest.getHistory(user.getFidelityAccount());
+        } catch (Exception e) {
+            historicException = true;
+        }
     }
     @Then("he gets all his past orders")
     public void he_gets_all_his_past_orders() {
@@ -418,7 +423,7 @@ public class CartManagementStepDef {
 
     @Given("the stock contain ingredients for {string}")
     public void theStockContainIngredientsFor(String cookieName) {
-        Cookie cookie = ICookieBookManager.getCookie(cookieBook,cookieName);
+        Cookie cookie = iCookieBookManager.getCookie(cookieBook,cookieName);
         stockModifier.addIngredients(store.getStock(), cookie.getIngredientsList());
     }
 
@@ -441,7 +446,7 @@ public class CartManagementStepDef {
     @And("an initialised cookie book")
     public void anInitialisedCookieBook() throws NotMatchingCatalogRequirementException, CookieAlreadyExistingException {
         cookieBook=new CookieBook();
-        ICookieBookManager.addCookieRecipe(cookieBook,
+        iCookieBookManager.addCookieRecipe(cookieBook,
                 new Cookie("Cookie à la vanille",
                         iCatalogExplorer.getDough(ingredientCatalog,"plain"),
                         iCatalogExplorer.getFlavour(ingredientCatalog,"vanilla"),
@@ -450,16 +455,16 @@ public class CartManagementStepDef {
                         new Cooking(Cooking.CookingState.CHEWY),
                         5)
         );
-        ICookieBookManager.addCookieRecipe(cookieBook,
+        iCookieBookManager.addCookieRecipe(cookieBook,
                 new Cookie("Cookie au chocolat",
-                        iCatalogExplorer.getDough(ingredientCatalog,"chocolate"),
-                        iCatalogExplorer.getFlavour(ingredientCatalog,"chili"),
+                        iCatalogExplorer.getDough(ingredientCatalog,"plain"),
+                        iCatalogExplorer.getFlavour(ingredientCatalog,"chocolate"),
                         List.of(iCatalogExplorer.getTopping(ingredientCatalog,"milk chocolate"),iCatalogExplorer.getTopping(ingredientCatalog,"M&M’s")),
                         new Mix(Mix.MixState.MIXED),
                         new Cooking(Cooking.CookingState.CHEWY),
                         10)
         );
-        ICookieBookManager.addCookieRecipe(cookieBook,
+        iCookieBookManager.addCookieRecipe(cookieBook,
                 new Cookie("Cookie à la pistache",
                         iCatalogExplorer.getDough(ingredientCatalog,"peanut butter"),
                         iCatalogExplorer.getFlavour(ingredientCatalog,"chili"),
@@ -486,7 +491,7 @@ public class CartManagementStepDef {
     public void anInitialisedCookieBookOfTheStore() throws NotMatchingCatalogRequirementException, CookieAlreadyExistingException {
         cookieBook=store.getCookieBook();
         store.getCookieBook().getCookies().clear();
-        ICookieBookManager.addCookieRecipe(cookieBook,
+        iCookieBookManager.addCookieRecipe(cookieBook,
                 new Cookie("Cookie à la vanille",
                         iCatalogExplorer.getDough(ingredientCatalog,"plain"),
                         iCatalogExplorer.getFlavour(ingredientCatalog,"vanilla"),
@@ -495,16 +500,16 @@ public class CartManagementStepDef {
                         new Cooking(Cooking.CookingState.CHEWY),
                         5)
         );
-        ICookieBookManager.addCookieRecipe(cookieBook,
+        iCookieBookManager.addCookieRecipe(cookieBook,
                 new Cookie("Cookie au chocolat",
-                        iCatalogExplorer.getDough(ingredientCatalog,"chocolate"),
-                        iCatalogExplorer.getFlavour(ingredientCatalog,"chili"),
+                        iCatalogExplorer.getDough(ingredientCatalog,"plain"),
+                        iCatalogExplorer.getFlavour(ingredientCatalog,"chocolate"),
                         List.of(iCatalogExplorer.getTopping(ingredientCatalog,"milk chocolate"),iCatalogExplorer.getTopping(ingredientCatalog,"M&M’s")),
                         new Mix(Mix.MixState.MIXED),
                         new Cooking(Cooking.CookingState.CHEWY),
                         10)
         );
-        ICookieBookManager.addCookieRecipe(cookieBook,
+        iCookieBookManager.addCookieRecipe(cookieBook,
                 new Cookie("Cookie à la pistache",
                         iCatalogExplorer.getDough(ingredientCatalog,"peanut butter"),
                         iCatalogExplorer.getFlavour(ingredientCatalog,"chili"),
@@ -523,6 +528,29 @@ public class CartManagementStepDef {
     @Then("the cookie is add to the cookie book")
     public void the_cookie_is_add_to_the_cookie_book() {
         assertEquals(4, cookieBook.getCookies().size());
+    }
+
+    @Given("a user with no fidelityAccount")
+    public void aUserWithNoFidelityAccount() {
+        FidelityAccount fidelityAccount = user.getFidelityAccount();
+        fidelityAccount = null;
+    }
+
+    @Given("a user with a fidelityAccount")
+    public void aUserWithAFidelityAccount() {
+        userAction.subscribeToFidelityAccount(this.user, "name","email","pw");
+        iFidelityAccountManager.addOrder(userRequest.getSubscription(this.user).get(), retrieveOrder);
+    }
+
+    @Then("he can't get an history")
+    public void heCanTGetAnHistory() {
+        assertTrue(historicException);
+    }
+
+    @Then("he can't receive a bill")
+    public void heCanTReceiveABill() {
+        assertTrue(emptyCartException);
+
     }
 
     @When("he add {int} cookie to his cart")
