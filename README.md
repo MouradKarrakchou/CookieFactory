@@ -2,8 +2,8 @@
 
 ## docs
 Contient :
-le rapport final au format pdf
-les différents diagrammes
+- le rapport final au format pdf
+- les différents diagrammes
 
 ## src
  - pom.xml : 
