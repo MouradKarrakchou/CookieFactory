@@ -109,6 +109,9 @@ public class CartManagementStepDef {
     @Autowired
     CookieBookManager cookieBookManager;
 
+    @Autowired
+    Saleable saleable;
+
     boolean historicException = false;
     boolean emptyCartException = false;
 
@@ -430,7 +433,7 @@ public class CartManagementStepDef {
     @Given("the stock contain ingredients for {string}")
     public void theStockContainIngredientsFor(String cookieName) {
         Cookie cookie = iCookieBookManager.getCookie(cookieBook,cookieName);
-        stockModifier.addIngredients(store.getStock(), cookie.getIngredientsList());
+        stockModifier.addIngredients(store.getStock(), saleable.getIngredientsList(cookie));
     }
 
     @When("he order {string} a party cookie {string} customized with additional M&Ms")

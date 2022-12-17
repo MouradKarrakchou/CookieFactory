@@ -47,23 +47,6 @@ public class Cookie implements Cloneable {
         return this.mix;
     }
 
-    /**
-     * Give the set of all ingredients cloned needed to produce one cookie base on its recipe.
-     *
-     * @return The set of all ingredients cloned needed.
-     */
-    public Set<Ingredient> getIngredients() {
-        Set<Ingredient> ingredients = new HashSet<>();
-
-        if (dough != null) ingredients.add(dough.clone());
-        if (flavour != null) ingredients.add(flavour.clone());
-        toppingList.forEach(topping -> ingredients.add(topping.clone()));
-        return ingredients;
-    }
-
-    public ArrayList<Ingredient> getIngredientsList() {
-        return new ArrayList<>(getIngredients().stream().toList());
-    }
 
     public String getName() {
         return name;

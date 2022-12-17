@@ -14,8 +14,6 @@ public interface OrderActions {
 
     User getUser(Order order);
 
-    double computeTotalPrice(Order order);
-
     Optional<Discount> getDiscount(Order order);
 
     void addOrder(Stock stock, List<Order> orderList, Order order, Set<Ingredient> ingredientsNeeded);

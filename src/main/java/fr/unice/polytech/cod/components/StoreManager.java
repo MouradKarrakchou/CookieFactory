@@ -29,6 +29,9 @@ public class StoreManager implements StoreModifier, StoreAccessor, ApplicationCo
     @Autowired
     private  OrderStatesAction orderStatesAction;
 
+    @Autowired
+    Saleable saleable;
+
     @Override
     public void changeOpeningHour(Store store, TimeClock open, TimeClock close) {
         store.setOpenHour(open);
@@ -43,7 +46,7 @@ public class StoreManager implements StoreModifier, StoreAccessor, ApplicationCo
         List<Cookie> cookieAvailable = new ArrayList<>();
 
         store.getCookieBook().getCookies().stream()
-                .filter(cookie -> stockExplorer.hasEnoughIngredients(store.getStock(), cookie.getIngredients()))
+                .filter(cookie -> stockExplorer.hasEnoughIngredients(store.getStock(), saleable.getIngredients(cookie)))
                 .forEach(cookieAvailable::add);
         return cookieAvailable;
     }
