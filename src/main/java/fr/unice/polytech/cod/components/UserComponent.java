@@ -24,8 +24,6 @@ public class UserComponent implements UserEndpoint {
     UserRequest userRequest;
 
 
-    public UserComponent(){}
-
     public List<Store> viewStoreAvailable(User user) {
         return userRequest.viewStoreAvailable();
     }

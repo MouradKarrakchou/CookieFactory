@@ -12,7 +12,7 @@ import java.util.List;
 
 @Component
 public class StoreFinderComponent implements StoreFinder {
-    private final List<Store> storeList;
+    private List<Store> storeList;
 
     private StoreFinderComponent() {
         storeList = new ArrayList<>();

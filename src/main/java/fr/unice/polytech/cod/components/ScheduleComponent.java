@@ -13,14 +13,8 @@ import java.util.Optional;
 
 @Component
 public class ScheduleComponent implements ScheduleActions {
-
-    TimeSlotAction timeSlotAction;
-
     @Autowired
-    public ScheduleComponent(TimeSlotAction timeSlotAction) {
-        this.timeSlotAction = timeSlotAction;
-    }
-
+    private TimeSlotAction timeSlotAction;
     @Override
     public List<Interval> getIntervals(Schedule schedule, int minutes, int numberOfDaysBeforeTheOrder) {
         return askForSlotsAvailable(schedule.getDaySlots().get(numberOfDaysBeforeTheOrder), minutes);

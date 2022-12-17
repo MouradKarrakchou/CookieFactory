@@ -18,12 +18,8 @@ import java.util.List;
 
 @Component
 public class CookieBookComponent implements CookieBookManager {
-    private CatalogExplorer catalogExplorer;
-
     @Autowired
-    public CookieBookComponent(CatalogExplorer catalogExplorer){
-        this.catalogExplorer = catalogExplorer;
-    }
+    private CatalogExplorer catalogExplorer;
 
     @Override
     public void addCookieRecipe(CookieBook cookieBook, Cookie cookie) throws CookieAlreadyExistingException, NotMatchingCatalogRequirementException {

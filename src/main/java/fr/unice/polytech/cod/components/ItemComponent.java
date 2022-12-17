@@ -15,13 +15,8 @@ import java.util.Set;
 
 @Component
 public class ItemComponent implements ItemActions {
-    IngredientActions ingredientActions;
-
-
     @Autowired
-    public ItemComponent(IngredientActions ingredientActions) {
-        this.ingredientActions = ingredientActions;
-    }
+    private IngredientActions ingredientActions;
 
     @Override
     public void updateQuantity(Item item, int value) {
