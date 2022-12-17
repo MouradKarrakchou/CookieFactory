@@ -133,7 +133,7 @@ public class TimeManagementTest {
             boolean startBeforeEndOfFirstshift = interval.getStartTime().compareTo(new TimeClock(10, 0)) < 0;
             boolean endAfterFirstshift = interval.getEndTime().compareTo(new TimeClock(10, 0)) > 0;
             //xor
-            assertTrue(!(startBeforeEndOfFirstshift && endAfterFirstshift));
+            assertFalse(startBeforeEndOfFirstshift && endAfterFirstshift);
         }
     }
 
