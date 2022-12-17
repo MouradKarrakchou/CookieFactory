@@ -20,14 +20,10 @@ import java.util.Optional;
 
 @Component
 public class ChefComponent implements ChefAction {
-    private final ScheduleActions scheduleActions;
-    private final OrderStatesAction orderStatesAction;
-
     @Autowired
-    public ChefComponent(ScheduleActions scheduleActions, OrderStatesAction orderStatesAction) {
-        this.scheduleActions = scheduleActions;
-        this.orderStatesAction = orderStatesAction;
-    }
+    private  ScheduleActions scheduleActions;
+    @Autowired
+    private  OrderStatesAction orderStatesAction;
 
     @Override
     public void updateSchedule(Chef chef, Store store) {
@@ -68,6 +64,15 @@ public class ChefComponent implements ChefAction {
     public void terminateCurrentOrder(Chef chef) {
         if (chef.getOrderToPrepare().isPresent())
             orderStatesAction.updateState(chef.getOrderToPrepare().get(), OrderState.READY);
+    }
+
+    @Override
+    public void associateOrder(Chef chef, Order orderToPrepare) {
+        if (isAvailable(chef)) {
+            chef.setOrderToPrepare(Optional.of(orderToPrepare));
+            chef.setState(ChefState.UNAVAILABLE);
+            orderToPrepare.setOrderState(OrderState.IN_PROGRESS);
+        }
     }
 
 }

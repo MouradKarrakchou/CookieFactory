@@ -28,4 +28,12 @@ public interface ChefAction {
     List<Interval> getIntervalsAvailable(Chef chef,int minutes,int numberOfDaysBeforeTheOrder);
     void updateCurrentOrder(Chef chef,TimeClock timeClock, int numberOfDaysBeforeTheOrder);
     void terminateCurrentOrder(Chef chef);
+
+    /**
+     * Associate the chef with an order, the chef is now unavailable.
+     *
+     * @param - The chef who will prepare the order.
+     * @param orderToPrepare - Order to prepare.
+     */
+    void associateOrder(Chef chef, Order orderToPrepare);
 }

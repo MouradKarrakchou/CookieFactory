@@ -44,12 +44,12 @@ public class ManageTheKitchenPassageAndOrders {
     @And("An order at the state \"([^\"]*)\"$")
     public void an_order_at_the_state(OrderState orderState) {
         order = new Order(null, orderState, new User());
-        if (orderState == OrderState.READY) orderActions.associateOrder(chef, order);
+        if (orderState == OrderState.READY) chefAction.associateOrder(chef, order);
     }
 
     @When("the chef is associate with an order")
     public void the_chef_is_associate_with_an_order() {
-        orderActions.associateOrder(chef, order);
+        chefAction.associateOrder(chef, order);
     }
 
     @Then("the state of the order is \"([^\"]*)\"$")

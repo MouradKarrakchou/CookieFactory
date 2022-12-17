@@ -13,7 +13,6 @@ import static io.cucumber.junit.platform.engine.Constants.PLUGIN_PROPERTY_NAME;
 @IncludeEngines("cucumber")
 @SelectClasspathResource("features/client")
 @ConfigurationParameter(key = PLUGIN_PROPERTY_NAME, value = "pretty")
-@ConfigurationParameter(key = GLUE_PROPERTY_NAME, value = "fr.unice.polytech.cod")
-
+@ConfigurationParameter(key = GLUE_PROPERTY_NAME, value = "fr.unice.polytech.cod.cucumber")
 public class RunCucumberTest {
 }

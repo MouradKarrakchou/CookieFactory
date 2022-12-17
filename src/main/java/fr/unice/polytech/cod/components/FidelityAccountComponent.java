@@ -18,13 +18,8 @@ import java.util.Set;
 
 @Component
 public class FidelityAccountComponent implements FidelityAccountManager {
-
-    StoreModifier storeModifier;
-
     @Autowired
-    FidelityAccountComponent(StoreComponent storeModifier) {
-        this.storeModifier = storeModifier;
-    }
+    StoreModifier storeModifier;
 
     @Override
     public void addOrder(FidelityAccount fidelityAccount, Order order) {

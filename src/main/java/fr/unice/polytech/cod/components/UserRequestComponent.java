@@ -18,21 +18,16 @@ import java.util.Optional;
 
 @Component
 public class UserRequestComponent implements UserRequest {
-
-    CartActions cartActions;
-    TimeSlotAction timeSlotAction;
-    StoreAccessor storeAccessor;
-    StoreFinder storeFinder;
-    FidelityAccountManager fidelityAccountManager;
-
     @Autowired
-    UserRequestComponent(CartActions cartActions, TimeSlotAction timeSlotAction, StoreAccessor storeAccessor, StoreFinder storeFinder, FidelityAccountManager fidelityAccountManager) {
-        this.cartActions = cartActions;
-        this.timeSlotAction = timeSlotAction;
-        this.storeAccessor = storeAccessor;
-        this.storeFinder = StoreFinderComponent.getInstance();
-        this.fidelityAccountManager = fidelityAccountManager;
-    }
+    CartActions cartActions;
+    @Autowired
+    TimeSlotAction timeSlotAction;
+    @Autowired
+    StoreAccessor storeAccessor;
+    @Autowired
+    StoreFinder storeFinder;
+    @Autowired
+    FidelityAccountManager fidelityAccountManager;
 
     @Override
     public List<Cookie> viewCatalog(Store store) {

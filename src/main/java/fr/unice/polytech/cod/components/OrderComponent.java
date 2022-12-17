@@ -3,9 +3,7 @@ package fr.unice.polytech.cod.components;
 import fr.unice.polytech.cod.food.Cookie;
 import fr.unice.polytech.cod.food.ingredient.Ingredient;
 
-import fr.unice.polytech.cod.interfaces.ChefAction;
-import fr.unice.polytech.cod.interfaces.OrderActions;
-import fr.unice.polytech.cod.interfaces.OrderStatesAction;
+import fr.unice.polytech.cod.interfaces.*;
 import fr.unice.polytech.cod.order.Bill;
 import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.order.OrderState;
@@ -26,21 +24,8 @@ import java.util.Set;
 
 @Component
 public class OrderComponent implements OrderActions, OrderStatesAction {
-    StockComponent stockComponent;
-    CartHandler cartHandler;
-    ChefAction chefAction;
-
     @Autowired
-    public OrderComponent(StockComponent stockComponent, CartHandler cartHandler, ChefAction chefAction) {
-        this.stockComponent = stockComponent;
-        this.cartHandler = cartHandler;
-        this.chefAction = chefAction;
-    }
-
-    @Override
-    public void cancelOrder(Order order) {
-        this.cartHandler.cancelOrder(order.getCart(), order);
-    }
+    StockComponent stockComponent;
 
     @Override
     public void updateState(Order order, OrderState newState) {
@@ -59,11 +44,6 @@ public class OrderComponent implements OrderActions, OrderStatesAction {
     @Override
     public User getUser(Order order) {
         return order.getUser();
-    }
-
-    @Override
-    public boolean isCanceledTwiceInARow(Order order, Instant time) {
-        return this.cartHandler.isCanceledTwiceInARow(order.getCart(), time);
     }
 
     @Override
@@ -105,15 +85,6 @@ public class OrderComponent implements OrderActions, OrderStatesAction {
             orderList.remove(order);
         } else
             throw new Exception("Order doesn't exist");
-    }
-
-    @Override
-    public void associateOrder(Chef chef, Order orderToPrepare) {
-        if (chefAction.isAvailable(chef)) {
-            chef.setOrderToPrepare(Optional.of(orderToPrepare));
-            chef.setState(ChefState.UNAVAILABLE);
-            orderToPrepare.setOrderState(OrderState.IN_PROGRESS);
-        }
     }
 
     @Override

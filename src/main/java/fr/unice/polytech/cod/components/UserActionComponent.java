@@ -22,22 +22,17 @@ import java.util.Optional;
 
 @Component
 public class UserActionComponent implements UserAction {
-
+    @Autowired
     FidelityAccountComponent fidelityAccountComponent;
+    @Autowired
     CartActions cartActions;
+    @Autowired
     CartPenalty cartPenalty;
     //pas de autowired car on l'instancie comme un singleton donc pas d'injection de dépendance necessaire
-    StoreFinder storeFinder;
+    StoreFinder storeFinder = StoreFinderComponent.getInstance();
+    @Autowired
     IntervalManager intervalManager;
 
-    @Autowired
-    public UserActionComponent(FidelityAccountComponent fidelityAccountComponent, CartActions cartActions, CartPenalty cartPenalty, IntervalManager intervalManager){
-        this.fidelityAccountComponent = fidelityAccountComponent;
-        this.cartActions = cartActions;
-        this.cartPenalty = cartPenalty;
-        this.storeFinder = StoreFinderComponent.getInstance();
-        this.intervalManager = intervalManager;
-    }
     /**
      * Add cookies to cart
      *
