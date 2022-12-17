@@ -26,9 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -75,7 +73,7 @@ public class IntegrationTest {
         );
         cookieBookManager.addCookieRecipe(cookieBook,
                 new Cookie("Cookie au chocolat",
-                        catalogExplorer.getDough(ingredientCatalog,"chocolate"),
+                        catalogExplorer.getDough(ingredientCatalog,"pate"),
                         catalogExplorer.getFlavour(ingredientCatalog,"chili"),
                         List.of(catalogExplorer.getTopping(ingredientCatalog,"milk chocolate"),catalogExplorer.getTopping(ingredientCatalog,"M&M’s")),
                         new Mix(Mix.MixState.MIXED),
@@ -95,7 +93,7 @@ public class IntegrationTest {
         // Fill the store's stock 20 times
         for (int i = 0; i < 20; i++) {
             stockModifier.addIngredients(store.getStock(),
-                    List.of(catalogExplorer.getDough(ingredientCatalog, "chocolate"),
+                    List.of(catalogExplorer.getDough(ingredientCatalog, "pate"),
                             catalogExplorer.getFlavour(ingredientCatalog, "chili"),
                             catalogExplorer.getTopping(ingredientCatalog, "milk chocolate"),
                             catalogExplorer.getTopping(ingredientCatalog, "M&M’s"),
