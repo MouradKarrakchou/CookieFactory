@@ -2,7 +2,7 @@ package fr.unice.polytech.cod.interfaces;
 
 import fr.unice.polytech.cod.food.Cookie;
 import fr.unice.polytech.cod.order.Order;
-import fr.unice.polytech.cod.store.Store;
+import fr.unice.polytech.cod.pojo.store.Store;
 
 import java.util.List;
 

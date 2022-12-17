@@ -4,8 +4,8 @@ import fr.unice.polytech.cod.components.FidelityAccountManager;
 import fr.unice.polytech.cod.components.StoreManager;
 import fr.unice.polytech.cod.interfaces.IFidelityAccountManager;
 import fr.unice.polytech.cod.interfaces.StoreModifier;
-import fr.unice.polytech.cod.store.Store;
-import fr.unice.polytech.cod.user.fidelityAccount.FidelityAccount;
+import fr.unice.polytech.cod.pojo.store.Store;
+import fr.unice.polytech.cod.pojo.user.fidelityAccount.FidelityAccount;
 
 
 public class MailNotifier extends UpdatableObject {

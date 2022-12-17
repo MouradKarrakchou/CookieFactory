@@ -1,7 +1,8 @@
-package fr.unice.polytech.cod.store;
+package fr.unice.polytech.cod.pojo.store;
 
 import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.pojo.schedule.Schedule;
+
 import java.util.Optional;
 
 public class Chef {
@@ -13,14 +14,6 @@ public class Chef {
         this.schedule = new Schedule(store);
         this.state = ChefState.AVAILABLE;
         orderToPrepare = Optional.empty();
-    }
-
-    public void updateSchedule(Store store){
-        this.schedule = new Schedule(store);
-    }
-
-    public void makeOtherActivityDuringLeftTime() {
-        //TODO he can clean, help or take a break
     }
 
     public void setState(ChefState chefState) {

@@ -4,9 +4,9 @@ import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.pojo.Item;
 import fr.unice.polytech.cod.pojo.ingredient.Ingredient;
 import fr.unice.polytech.cod.pojo.order.Bill;
-import fr.unice.polytech.cod.user.Cart;
-import fr.unice.polytech.cod.user.User;
-import fr.unice.polytech.cod.user.fidelityAccount.FidelityAccount;
+import fr.unice.polytech.cod.pojo.user.Cart;
+import fr.unice.polytech.cod.pojo.user.User;
+import fr.unice.polytech.cod.pojo.user.fidelityAccount.FidelityAccount;
 
 import java.util.List;
 import java.util.Set;

@@ -2,8 +2,8 @@ package fr.unice.polytech.cod.interfaces;
 
 import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.schedule.TimeClock;
-import fr.unice.polytech.cod.store.Chef;
-import fr.unice.polytech.cod.store.Store;
+import fr.unice.polytech.cod.pojo.store.Chef;
+import fr.unice.polytech.cod.pojo.store.Store;
 
 public interface ChefAction {
     void updateSchedule(Chef chef, Store store);

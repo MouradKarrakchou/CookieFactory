@@ -1,6 +1,6 @@
 package fr.unice.polytech.cod.interfaces;
 
-import fr.unice.polytech.cod.user.Cart;
+import fr.unice.polytech.cod.pojo.user.Cart;
 
 import java.time.Instant;
 

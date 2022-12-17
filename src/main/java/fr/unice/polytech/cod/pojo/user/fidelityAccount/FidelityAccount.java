@@ -1,4 +1,4 @@
-package fr.unice.polytech.cod.user.fidelityAccount;
+package fr.unice.polytech.cod.pojo.user.fidelityAccount;
 
 import fr.unice.polytech.cod.order.Order;
 import java.util.ArrayList;

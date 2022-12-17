@@ -2,7 +2,7 @@ package fr.unice.polytech.cod.schedule;
 
 import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.pojo.schedule.TimeSlot;
-import fr.unice.polytech.cod.store.Store;
+import fr.unice.polytech.cod.pojo.store.Store;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

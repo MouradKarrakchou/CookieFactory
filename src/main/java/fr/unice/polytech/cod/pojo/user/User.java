@@ -1,7 +1,8 @@
-package fr.unice.polytech.cod.user;
+package fr.unice.polytech.cod.pojo.user;
 
 import fr.unice.polytech.cod.order.Order;
-import fr.unice.polytech.cod.user.fidelityAccount.FidelityAccount;
+import fr.unice.polytech.cod.pojo.user.fidelityAccount.FidelityAccount;
+
 import java.util.*;
 
 public class User {

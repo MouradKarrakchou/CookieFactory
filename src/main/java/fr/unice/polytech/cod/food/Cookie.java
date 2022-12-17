@@ -3,7 +3,7 @@ package fr.unice.polytech.cod.food;
 import fr.unice.polytech.cod.interfaces.Saleable;
 import fr.unice.polytech.cod.interfaces.StockExplorer;
 import fr.unice.polytech.cod.pojo.ingredient.*;
-import fr.unice.polytech.cod.store.Store;
+import fr.unice.polytech.cod.pojo.store.Store;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.*;

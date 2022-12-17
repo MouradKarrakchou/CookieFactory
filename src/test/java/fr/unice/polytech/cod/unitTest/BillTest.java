@@ -9,10 +9,10 @@ import fr.unice.polytech.cod.pojo.order.Bill;
 import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.pojo.IngredientCatalog;
 import fr.unice.polytech.cod.pojo.Item;
-import fr.unice.polytech.cod.store.Store;
+import fr.unice.polytech.cod.pojo.store.Store;
 
-import fr.unice.polytech.cod.user.Cart;
-import fr.unice.polytech.cod.user.User;
+import fr.unice.polytech.cod.pojo.user.Cart;
+import fr.unice.polytech.cod.pojo.user.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

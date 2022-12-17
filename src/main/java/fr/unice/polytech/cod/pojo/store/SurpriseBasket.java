@@ -1,4 +1,4 @@
-package fr.unice.polytech.cod.store;
+package fr.unice.polytech.cod.pojo.store;
 
 import fr.unice.polytech.cod.pojo.order.Bill;
 import fr.unice.polytech.cod.order.Order;

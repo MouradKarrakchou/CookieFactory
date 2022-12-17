@@ -9,8 +9,8 @@ import fr.unice.polytech.cod.interfaces.UserRequest;
 import fr.unice.polytech.cod.pojo.order.Bill;
 import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.pojo.schedule.Interval;
-import fr.unice.polytech.cod.store.Store;
-import fr.unice.polytech.cod.user.User;
+import fr.unice.polytech.cod.pojo.store.Store;
+import fr.unice.polytech.cod.pojo.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

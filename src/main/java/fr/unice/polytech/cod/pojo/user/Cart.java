@@ -1,8 +1,8 @@
-package fr.unice.polytech.cod.user;
+package fr.unice.polytech.cod.pojo.user;
 
 import fr.unice.polytech.cod.pojo.schedule.Interval;
 import fr.unice.polytech.cod.pojo.Item;
-import fr.unice.polytech.cod.store.Store;
+import fr.unice.polytech.cod.pojo.store.Store;
 import java.time.Instant;
 import java.util.*;
 

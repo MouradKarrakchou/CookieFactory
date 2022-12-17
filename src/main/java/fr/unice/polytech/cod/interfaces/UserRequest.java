@@ -4,10 +4,10 @@ import fr.unice.polytech.cod.food.Cookie;
 import fr.unice.polytech.cod.pojo.Item;
 import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.pojo.schedule.Interval;
-import fr.unice.polytech.cod.store.Store;
-import fr.unice.polytech.cod.user.Cart;
-import fr.unice.polytech.cod.user.User;
-import fr.unice.polytech.cod.user.fidelityAccount.FidelityAccount;
+import fr.unice.polytech.cod.pojo.store.Store;
+import fr.unice.polytech.cod.pojo.user.Cart;
+import fr.unice.polytech.cod.pojo.user.User;
+import fr.unice.polytech.cod.pojo.user.fidelityAccount.FidelityAccount;
 import java.util.List;
 import java.util.Optional;
 

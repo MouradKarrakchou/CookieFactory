@@ -1,6 +1,6 @@
 package fr.unice.polytech.cod.interfaces;
 
-import fr.unice.polytech.cod.store.Store;
+import fr.unice.polytech.cod.pojo.store.Store;
 
 public interface Saleable {
     String getName();

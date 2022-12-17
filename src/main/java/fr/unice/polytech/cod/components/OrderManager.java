@@ -9,8 +9,8 @@ import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.pojo.order.OrderState;
 import fr.unice.polytech.cod.pojo.Item;
 import fr.unice.polytech.cod.pojo.Stock;
-import fr.unice.polytech.cod.user.User;
-import fr.unice.polytech.cod.user.fidelityAccount.Discount;
+import fr.unice.polytech.cod.pojo.user.User;
+import fr.unice.polytech.cod.pojo.user.fidelityAccount.Discount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

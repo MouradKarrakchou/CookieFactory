@@ -1,10 +1,10 @@
 package fr.unice.polytech.cod.interfaces;
 
 import fr.unice.polytech.cod.order.Order;
-import fr.unice.polytech.cod.store.Store;
-import fr.unice.polytech.cod.user.User;
-import fr.unice.polytech.cod.user.fidelityAccount.Discount;
-import fr.unice.polytech.cod.user.fidelityAccount.FidelityAccount;
+import fr.unice.polytech.cod.pojo.store.Store;
+import fr.unice.polytech.cod.pojo.user.User;
+import fr.unice.polytech.cod.pojo.user.fidelityAccount.Discount;
+import fr.unice.polytech.cod.pojo.user.fidelityAccount.FidelityAccount;
 import java.util.List;
 import java.util.Optional;
 
