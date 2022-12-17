@@ -34,8 +34,8 @@ public class ManageTheKitchenPassageAndOrders {
     @Autowired
     ChefAction chefAction;
 
-    @Given("an chef who is \"([^\"]*)\"$")
-    public void an_chef_who_is(ChefState chefState) {
+    @Given("a chef who is \"([^\"]*)\"$")
+    public void a_chef_who_is(ChefState chefState) {
         store = new Store("Magasin");
         chef = new Chef(store);
         chef.setState(chefState);

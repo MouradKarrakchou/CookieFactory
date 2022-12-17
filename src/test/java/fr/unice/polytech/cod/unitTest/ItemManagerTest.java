@@ -1,4 +1,4 @@
-package fr.unice.polytech.cod.components;
+package fr.unice.polytech.cod.unitTest;
 
 import fr.unice.polytech.cod.food.ingredient.Ingredient;
 import fr.unice.polytech.cod.interfaces.IngredientActions;

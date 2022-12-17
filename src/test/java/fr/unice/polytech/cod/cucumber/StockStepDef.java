@@ -24,7 +24,7 @@ public class StockStepDef {
 
 
     @Given("an empty stock")
-    public void a_user() {
+    public void an_empty_stock() {
         stock = new Stock();
     }
 
