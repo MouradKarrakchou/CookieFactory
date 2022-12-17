@@ -13,13 +13,8 @@ import java.util.Set;
 
 @Component
 public class BillCompoment implements BillAction {
-
-    OrderActions orderActions;
-
     @Autowired
-    public BillCompoment(OrderActions orderActions) {
-        this.orderActions = orderActions;
-    }
+    OrderActions orderActions;
 
 
     @Override

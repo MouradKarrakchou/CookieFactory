@@ -21,20 +21,14 @@ import java.util.Optional;
 
 @Component
 public class StoreComponent implements StoreModifier, StoreAccessor {
-    private final ChefAction chefAction;
-    private final StockExplorer stockExplorer;
-    private final StoreFinder storeFinder;
-    private final CookieBookManager cookieBookManager;
-    private final OrderStatesAction orderStatesAction;
-
     @Autowired
-    public StoreComponent(ChefAction chefAction, StockExplorer stockExplorer, StoreFinder storeFinder,CookieBookManager cookieBookManager, OrderStatesAction orderStatesAction) {
-        this.chefAction = chefAction;
-        this.stockExplorer = stockExplorer;
-        this.storeFinder = storeFinder;
-        this.cookieBookManager = cookieBookManager;
-        this.orderStatesAction = orderStatesAction;
-    }
+    private  ChefAction chefAction;
+    @Autowired
+    private  StockExplorer stockExplorer;
+    @Autowired
+    private  CookieBookManager cookieBookManager;
+    @Autowired
+    private  OrderStatesAction orderStatesAction;
 
     @Override
     public void changeOpeningHour(Store store, TimeClock open, TimeClock close) {

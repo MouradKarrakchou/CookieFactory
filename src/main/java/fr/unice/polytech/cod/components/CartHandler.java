@@ -19,24 +19,22 @@ import java.util.Set;
 
 @Component
 public class CartHandler implements CartActions, CartPenalty {
-    private final StockExplorer stockExplorer;
-    private final ItemActions itemActions;
-    private final IngredientActions ingredientActions;
-    private final OrderActions orderActions;
-    private final UserRequestComponent userRequestComponent;
-    private final UserActionComponent userActionComponent;
-    private final IntervalManager intervalManager;
-
     @Autowired
-    public CartHandler(StockExplorer stockExplorer, ItemActions itemActions, IngredientActions ingredientActions, OrderActions orderActions, UserRequestComponent userRequestComponent, UserActionComponent userActionComponent, IntervalManager intervalManager) {
-        this.stockExplorer = stockExplorer;
-        this.itemActions = itemActions;
-        this.ingredientActions = ingredientActions;
-        this.orderActions = orderActions;
-        this.userRequestComponent = userRequestComponent;
-        this.userActionComponent = userActionComponent;
-        this.intervalManager = intervalManager;
-    }
+    private  StockExplorer stockExplorer;
+    @Autowired
+    private  ItemActions itemActions;
+    @Autowired
+    private  IngredientActions ingredientActions;
+    @Autowired
+    private  OrderActions orderActions;
+    @Autowired
+    private  UserRequestComponent userRequestComponent;
+    @Autowired
+    private  UserActionComponent userActionComponent;
+    @Autowired
+    private IntervalManager intervalManager;
+
+
 
     @Override
     public boolean addToCart(Cart cart, Item item) {

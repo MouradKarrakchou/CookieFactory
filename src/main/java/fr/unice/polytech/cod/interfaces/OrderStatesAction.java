@@ -7,8 +7,6 @@ import fr.unice.polytech.cod.order.OrderState;
 import java.util.List;
 
 public interface OrderStatesAction {
-    // Setter
-    void cancelOrder(Order order);
 
     /**
      * Set the state of the order to the given OrderState.

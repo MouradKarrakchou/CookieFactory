@@ -15,13 +15,8 @@ import java.util.Set;
 
 @Component
 public class StockComponent implements StockExplorer, StockModifier {
-
-    IngredientActions ingredientActions;
-
     @Autowired
-    public StockComponent(IngredientActions ingredientActions) {
-        this.ingredientActions = ingredientActions;
-    }
+    IngredientActions ingredientActions;
 
     @Override
     public Optional<Ingredient> findIngredient(Stock stock, String ingredient) {
