@@ -104,7 +104,6 @@ public class BillTest {
                 Total price..........4.67€
                 """;
         assertEquals(receipt, billAction.returnBill((bill)));
-
         toppings.add(topping1);
         toppings.add(topping2);
 
@@ -131,6 +130,7 @@ public class BillTest {
                 ===================================
                 Total price..........22.42€
                 """;
-        assertEquals(receipt, billAction.returnBill((bill)));
+        assertEquals(receipt, billAction.returnBill(bill));
+
     }
 }

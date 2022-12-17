@@ -27,7 +27,7 @@ public class ScheduleHandler implements ScheduleActions {
     @Override
     public Optional<Order> getOrderToPrepare(Schedule schedule, int numberOfDaysBeforeTheOrder, TimeClock timeClock) {
         for (TimeSlot timeSlot : schedule.getDaySlots().get(numberOfDaysBeforeTheOrder).getTimeSlots()) {
-            if (timeSlot.getStartTime().equals(timeClock)) return timeSlot.getOrder();
+            if (timeSlot.getStartTime().compareTo(timeClock)==0) return timeSlot.getOrder();
         }
         return Optional.empty();
     }

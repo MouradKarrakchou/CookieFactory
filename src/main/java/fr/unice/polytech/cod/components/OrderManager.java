@@ -46,20 +46,6 @@ public class OrderManager implements OrderActions, OrderStatesAction {
     }
 
     @Override
-    public double computeTotalPrice(Order order) {
-        Set<Item> items = order.getCart().getItemSet();
-        double totalPrice = 0;
-        for (Item item : items) {
-            Cookie cookie = item.getCookie();
-            double cookiePrice = Math.round(saleable.getPrice(order.getCart().getStore(), cookie) * 100) / 100.0;
-            totalPrice += cookiePrice;
-        }
-        if (order.getDiscount().isPresent())
-            totalPrice -= totalPrice * order.getDiscount().get().getValue();
-        return totalPrice;
-    }
-
-    @Override
     public OrderState getOrderState(Order order) {
         return order.getOrderState();
     }

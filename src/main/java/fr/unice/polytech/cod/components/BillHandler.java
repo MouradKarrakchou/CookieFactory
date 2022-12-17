@@ -23,11 +23,6 @@ public class BillHandler implements BillAction {
 
 
     @Override
-    public double calculateTotalPrice(Bill bill) {
-        return orderActions.computeTotalPrice(bill.getOrder());
-    }
-
-    @Override
     public String returnBill(Bill bill) {
         StringBuilder receipt = new StringBuilder();
 
