@@ -1,6 +1,4 @@
-package fr.unice.polytech.cod.store;
-
-import fr.unice.polytech.cod.pojo.store.Store;
+package fr.unice.polytech.cod.pojo.store;
 
 import java.util.ArrayList;
 import java.util.List;

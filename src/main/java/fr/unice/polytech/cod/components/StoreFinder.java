@@ -2,7 +2,7 @@ package fr.unice.polytech.cod.components;
 
 import fr.unice.polytech.cod.exceptions.InvalidStoreException;
 import fr.unice.polytech.cod.interfaces.IStoreFinder;
-import fr.unice.polytech.cod.store.AllStores;
+import fr.unice.polytech.cod.pojo.store.AllStores;
 import fr.unice.polytech.cod.pojo.store.Store;
 import org.springframework.stereotype.Component;
 import java.util.List;

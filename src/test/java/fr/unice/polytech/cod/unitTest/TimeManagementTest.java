@@ -5,7 +5,7 @@ import fr.unice.polytech.cod.pojo.IngredientCatalog;
 import fr.unice.polytech.cod.food.Cookie;
 import fr.unice.polytech.cod.pojo.Item;
 import fr.unice.polytech.cod.pojo.schedule.Interval;
-import fr.unice.polytech.cod.schedule.TimeClock;
+import fr.unice.polytech.cod.helper.tools.TimeClock;
 import fr.unice.polytech.cod.pojo.schedule.TimeSlot;
 import fr.unice.polytech.cod.pojo.store.Chef;
 import fr.unice.polytech.cod.exceptions.InvalidStoreException;

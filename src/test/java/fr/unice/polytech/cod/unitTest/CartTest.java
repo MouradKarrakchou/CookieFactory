@@ -5,7 +5,7 @@ import fr.unice.polytech.cod.interfaces.ItemActions;
 import fr.unice.polytech.cod.interfaces.OrderActions;
 import fr.unice.polytech.cod.pojo.order.Order;
 import fr.unice.polytech.cod.pojo.schedule.Interval;
-import fr.unice.polytech.cod.schedule.TimeClock;
+import fr.unice.polytech.cod.helper.tools.TimeClock;
 import fr.unice.polytech.cod.pojo.schedule.TimeSlot;
 import fr.unice.polytech.cod.pojo.store.Store;
 import fr.unice.polytech.cod.pojo.user.Cart;

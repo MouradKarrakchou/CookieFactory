@@ -3,7 +3,7 @@ package fr.unice.polytech.cod.pojo.store;
 import fr.unice.polytech.cod.pojo.CookieBook;
 import fr.unice.polytech.cod.pojo.Stock;
 import fr.unice.polytech.cod.pojo.order.Order;
-import fr.unice.polytech.cod.schedule.TimeClock;
+import fr.unice.polytech.cod.helper.tools.TimeClock;
 import fr.unice.polytech.cod.pojo.user.fidelityAccount.FidelityAccount;
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package fr.unice.polytech.cod.schedule;
+package fr.unice.polytech.cod.helper.tools;
 
 import fr.unice.polytech.cod.pojo.order.Order;
 import fr.unice.polytech.cod.pojo.schedule.TimeSlot;

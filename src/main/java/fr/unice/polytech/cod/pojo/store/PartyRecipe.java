@@ -1,4 +1,4 @@
-package fr.unice.polytech.cod.store;
+package fr.unice.polytech.cod.pojo.store;
 
 import fr.unice.polytech.cod.food.Cookie;
 import fr.unice.polytech.cod.food.PartyCookie;

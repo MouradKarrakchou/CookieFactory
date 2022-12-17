@@ -1,6 +1,6 @@
 package fr.unice.polytech.cod.pojo.schedule;
 
-import fr.unice.polytech.cod.schedule.TimeClock;
+import fr.unice.polytech.cod.helper.tools.TimeClock;
 
 import java.util.List;
 
