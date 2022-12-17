@@ -38,7 +38,7 @@ public class CookieBookManager implements ICookieBookManager {
 
     @Override
     public List<Cookie> getCookies(CookieBook cookieBook) {
-        return null;
+        return cookieBook.getCookies();
     }
 
     @Override

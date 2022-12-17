@@ -78,11 +78,6 @@ public class UserHandler implements UserAction {
 
 
     @Override
-    public void removeOneItemFromCart(Item item, Cart cart) {
-        cartActions.removeFromCart(cart, item);
-    }
-
-    @Override
     public void subscribeToFidelityAccount(User user, String name, String email, String password) {
         user.setFidelityAccount(new FidelityAccount(name, email, password));
     }

@@ -2,6 +2,10 @@ package fr.unice.polytech.cod.cucumber;
 
 import fr.unice.polytech.cod.components.CartHandler;
 import fr.unice.polytech.cod.components.UserManager;
+import fr.unice.polytech.cod.exceptions.CookieAlreadyExistingException;
+import fr.unice.polytech.cod.exceptions.NotMatchingCatalogRequirementException;
+import fr.unice.polytech.cod.food.ingredient.Cooking;
+import fr.unice.polytech.cod.food.ingredient.Mix;
 import fr.unice.polytech.cod.interfaces.*;
 import fr.unice.polytech.cod.pojo.*;
 import fr.unice.polytech.cod.food.ingredient.Dough;
@@ -47,6 +51,7 @@ public class CartManagementStepDef {
     Order retrieveOrder;
     Store store;
     List<Order> historic;
+    CookieBook cookieBook;
 
     private final IngredientCatalog ingredientCatalog = IngredientCatalog.instance;
     private StoreLocation storeLocation = StoreLocation.instance;
@@ -93,6 +98,9 @@ public class CartManagementStepDef {
     @Autowired
     CartHandler cartHandler;
 
+    @Autowired
+    ICatalogExplorer iCatalogExplorer;
+
     @Given("a user")
     public void a_user() {
         this.user = new User();
@@ -115,7 +123,7 @@ public class CartManagementStepDef {
     }
     @Given("a valid cookie")
     public void a_valid_cookie() {
-        testCookie = ICookieBookManager.getCookie(new CookieBook(),"Cookie au chocolat");
+        testCookie = ICookieBookManager.getCookie(cookieBook,"Cookie au chocolat");
     }
     @Given("a fidelity account")
     public void a_fidelity_account() {
@@ -145,7 +153,7 @@ public class CartManagementStepDef {
     @When("he remove a cookie from his cart")
     public void he_remove_a_cookie_from_his_cart() throws Exception {
         Item item = userRequest.getItemFromCart(user.getCart(),"Cookie au chocolat");
-        userAction.removeOneItemFromCart(item,user.getCart());
+        userAction.removeCookies(item.getCookie(),1,user.getCart());
     }
 
     @When("he requests the cookie list")
@@ -393,7 +401,7 @@ public class CartManagementStepDef {
 
     @Given("the stock contain ingredients for {string}")
     public void theStockContainIngredientsFor(String cookieName) {
-        Cookie cookie = ICookieBookManager.getCookie(new CookieBook(),cookieName);
+        Cookie cookie = ICookieBookManager.getCookie(cookieBook,cookieName);
         stockModifier.addIngredients(store.getStock(), cookie.getIngredientsList());
     }
 
@@ -412,4 +420,35 @@ public class CartManagementStepDef {
             default -> throw new Exception("ERROR incorrect size of cookie");
         };
     }
+
+    @And("an initialised cookie book")
+    public void anInitialisedCookieBook() throws NotMatchingCatalogRequirementException, CookieAlreadyExistingException {
+        cookieBook=new CookieBook();
+        ICookieBookManager.addCookieRecipe(cookieBook,
+                new Cookie("Cookie à la vanille",
+                        iCatalogExplorer.getDough(ingredientCatalog,"plain"),
+                        iCatalogExplorer.getFlavour(ingredientCatalog,"vanilla"),
+                        List.of(iCatalogExplorer.getTopping(ingredientCatalog,"milk chocolate"),iCatalogExplorer.getTopping(ingredientCatalog,"white chocolate")),
+                        new Mix(Mix.MixState.MIXED),
+                        new Cooking(Cooking.CookingState.CHEWY),
+                        5)
+        );
+        ICookieBookManager.addCookieRecipe(cookieBook,
+                new Cookie("Cookie au chocolat",
+                        iCatalogExplorer.getDough(ingredientCatalog,"chocolate"),
+                        iCatalogExplorer.getFlavour(ingredientCatalog,"chili"),
+                        List.of(iCatalogExplorer.getTopping(ingredientCatalog,"milk chocolate"),iCatalogExplorer.getTopping(ingredientCatalog,"M&M’s")),
+                        new Mix(Mix.MixState.MIXED),
+                        new Cooking(Cooking.CookingState.CHEWY),
+                        10)
+        );
+        ICookieBookManager.addCookieRecipe(cookieBook,
+                new Cookie("Cookie à la pistache",
+                        iCatalogExplorer.getDough(ingredientCatalog,"peanut butter"),
+                        iCatalogExplorer.getFlavour(ingredientCatalog,"chili"),
+                        List.of(iCatalogExplorer.getTopping(ingredientCatalog,"milk chocolate")),
+                        new Mix(Mix.MixState.MIXED),
+                        new Cooking(Cooking.CookingState.CHEWY),
+                        10)
+        );}
 }
