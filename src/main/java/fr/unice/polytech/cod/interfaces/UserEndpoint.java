@@ -11,22 +11,25 @@ import fr.unice.polytech.cod.user.User;
 import java.util.List;
 
 public interface UserEndpoint {
-    public List<Store> viewStoreAvailable(User user);
+    List<Store> viewStoreAvailable(User user);
 
-    public Store selectStore(User user, String storeName) throws InvalidStoreException ;
+    Store selectStore(User user, String storeName) throws InvalidStoreException ;
 
-    public List<Cookie> viewStoreCatalogue(User user);
+    List<Cookie> viewStoreCatalogue(User user);
 
-    public boolean addCookieToCart(User user, Cookie cookie, int quantity);
+    boolean addCookieToCart(User user, Cookie cookie, int quantity);
 
-    public Bill validateCart(User user) throws Exception ;
+    Bill validateCart(User user) throws Exception ;
 
-    public boolean removeCookieFromCart(User user, Cookie cookie, int quantity);
+    boolean removeCookieFromCart(User user, Cookie cookie, int quantity);
 
-    public List<Interval> getRetrieveCookieHours(User user, int numberOfDayBeforeTheOrder);
-    public void chooseRetrieveCookieHour(User user, Interval interval);
-    public boolean cancelOrder(User user, Order orderToCancel);
-    public void createFidelityAccount(User user, String name, String email, String password);
+    List<Interval> getRetrieveCookieHours(User user, int numberOfDayBeforeTheOrder);
 
-    public List<Order> getPreviousOrders(User user) throws Exception;
+    void chooseRetrieveCookieHour(User user, Interval interval);
+
+    boolean cancelOrder(User user, Order orderToCancel);
+
+    void createFidelityAccount(User user, String name, String email, String password);
+
+    List<Order> getPreviousOrders(User user) throws Exception;
 }

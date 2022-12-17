@@ -6,15 +6,12 @@ import fr.unice.polytech.cod.food.ingredient.Flavour;
 import fr.unice.polytech.cod.food.ingredient.Ingredient;
 import fr.unice.polytech.cod.food.ingredient.Topping;
 
-import java.util.List;
-
 public interface ICatalogExplorer {
     /**
-     * Check if a Ingredient is in the catalog.
+     * Check if an Ingredient is in the catalog.
      *
-     * @param ingredientCatalog - The ingredient catalog.
      * @param ingredient -  A ingredient.
-     * @return
+     * @return true if the ingredient is in the catalog
      */
     boolean isInCatalog(Ingredient ingredient);
 

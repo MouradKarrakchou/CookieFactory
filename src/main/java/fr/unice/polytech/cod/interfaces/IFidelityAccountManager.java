@@ -5,7 +5,6 @@ import fr.unice.polytech.cod.store.Store;
 import fr.unice.polytech.cod.user.User;
 import fr.unice.polytech.cod.user.fidelityAccount.Discount;
 import fr.unice.polytech.cod.user.fidelityAccount.FidelityAccount;
-
 import java.util.List;
 import java.util.Optional;
 
