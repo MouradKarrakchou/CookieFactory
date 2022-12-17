@@ -20,7 +20,7 @@ Les contenus détaillés sont dans l'issue elle-même, ainsi que dans les .featu
    
 La liste des fonctionnalités livrées par user story :
 
-### User stories
+### Milestone : Sprint 1
 
 Retirer un cookie du panier #08 :
 [remove_one_cookie_from_the_cart.feature](https://github.com/PNS-Conception/cookiefactory-22-23-k/blob/main/src/test/resources/features/client/remove_one_cookie_from_the_cart.feature)
@@ -30,6 +30,8 @@ Choisir un magasin #10 :
 
 Création de la facture #12 :
 [create_the_bill.feature](https://github.com/PNS-Conception/cookiefactory-22-23-k/blob/main/src/test/resources/features/client/create_the_bill.feature)
+
+### Milestone : Sprint 2
 
 Annuler une commande #22 :
 [cancel_order.feature](https://github.com/PNS-Conception/cookiefactory-22-23-k/blob/main/src/test/resources/features/client/cancel_order.feature)
@@ -61,7 +63,7 @@ Prévenir le client qu'un panier est disponlible #28 :
 S'abonner au programme de fidélité #13 :
 [subscribe_to_the_fidelity_program.feature](https://github.com/PNS-Conception/cookiefactory-22-23-k/blob/main/src/test/resources/features/client/subscribe_to_the_fidelity_program.feature)
 
-### Implémentations Gherkin supplémentaires
+### Milestone : Sprint 3
 
 Ajouter un cookie au panier :
 [add_cookie_to_cart.feature](https://github.com/PNS-Conception/cookiefactory-22-23-k/blob/main/src/test/resources/features/client/add_cookie_to_cart.feature)
