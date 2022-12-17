@@ -13,8 +13,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class CatalogExplorer implements ICatalogExplorer {
     @Override
-    public boolean isInCatalog(IngredientCatalog ingredientCatalog, Ingredient ingredient) {
-        return ingredientCatalog.ingredientList.contains(ingredient);
+    public boolean isInCatalog(Ingredient ingredient) {
+        return IngredientCatalog.instance.ingredientList.contains(ingredient.clone());
     }
 
     @Override

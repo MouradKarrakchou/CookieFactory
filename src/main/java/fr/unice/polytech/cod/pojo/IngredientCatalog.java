@@ -16,10 +16,10 @@ public class IngredientCatalog {
         this.ingredientList = new ArrayList<>(
                 List.of(new Dough("pate", 0.2, 1),
                         new Dough("plain", 0.2, 1),
-                        new Flavour("chocolate", 0.2, 1),
                         new Dough("peanut butter", 0.2, 1),
                         new Dough("oatmeal", 0.2, 1),
 
+                        new Flavour("chocolate", 0.2, 1),
                         new Flavour("vanilla", 0.2, 1),
                         new Flavour("cinnamon", 0.2, 1),
                         new Flavour("chili", 0.2, 1),

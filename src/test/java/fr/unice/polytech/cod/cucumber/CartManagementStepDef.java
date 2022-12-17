@@ -454,8 +454,8 @@ public class CartManagementStepDef {
         );
         ICookieBookManager.addCookieRecipe(cookieBook,
                 new Cookie("Cookie au chocolat",
-                        iCatalogExplorer.getDough(ingredientCatalog,"chocolate"),
-                        iCatalogExplorer.getFlavour(ingredientCatalog,"chili"),
+                        iCatalogExplorer.getDough(ingredientCatalog,"plain"),
+                        iCatalogExplorer.getFlavour(ingredientCatalog,"chocolate"),
                         List.of(iCatalogExplorer.getTopping(ingredientCatalog,"milk chocolate"),iCatalogExplorer.getTopping(ingredientCatalog,"M&M’s")),
                         new Mix(Mix.MixState.MIXED),
                         new Cooking(Cooking.CookingState.CHEWY),
@@ -499,8 +499,8 @@ public class CartManagementStepDef {
         );
         ICookieBookManager.addCookieRecipe(cookieBook,
                 new Cookie("Cookie au chocolat",
-                        iCatalogExplorer.getDough(ingredientCatalog,"chocolate"),
-                        iCatalogExplorer.getFlavour(ingredientCatalog,"chili"),
+                        iCatalogExplorer.getDough(ingredientCatalog,"plain"),
+                        iCatalogExplorer.getFlavour(ingredientCatalog,"chocolate"),
                         List.of(iCatalogExplorer.getTopping(ingredientCatalog,"milk chocolate"),iCatalogExplorer.getTopping(ingredientCatalog,"M&M’s")),
                         new Mix(Mix.MixState.MIXED),
                         new Cooking(Cooking.CookingState.CHEWY),
