@@ -4,6 +4,7 @@ import fr.unice.polytech.cod.components.CartHandler;
 import fr.unice.polytech.cod.components.CatalogExplorer;
 import fr.unice.polytech.cod.components.CookieBookManager;
 import fr.unice.polytech.cod.exceptions.CookieAlreadyExistingException;
+import fr.unice.polytech.cod.exceptions.FidelityAccountAlreadyExistException;
 import fr.unice.polytech.cod.exceptions.NotMatchingCatalogRequirementException;
 import fr.unice.polytech.cod.food.Cookie;
 import fr.unice.polytech.cod.food.ingredient.Cooking;
@@ -52,7 +53,7 @@ public class IntegrationTest {
 
 
     @Test
-    void orderingTest() throws InvalidStoreException, NotMatchingCatalogRequirementException, CookieAlreadyExistingException {
+    void orderingTest() throws InvalidStoreException, NotMatchingCatalogRequirementException, CookieAlreadyExistingException, FidelityAccountAlreadyExistException {
         User user = new User();
         userAction.subscribeToFidelityAccount(user, "Kamel", "kamel@gmail.coml", "123456");
 

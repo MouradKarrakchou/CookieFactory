@@ -1,5 +1,6 @@
 package fr.unice.polytech.cod.interfaces;
 
+import fr.unice.polytech.cod.exceptions.FidelityAccountAlreadyExistException;
 import fr.unice.polytech.cod.exceptions.InvalidStoreException;
 import fr.unice.polytech.cod.food.Cookie;
 import fr.unice.polytech.cod.order.Bill;
@@ -21,7 +22,7 @@ public interface UserAction {
 
     Bill validateCart(User user) throws Exception;
 
-    void subscribeToFidelityAccount(User user, String name, String email, String password) ;
+    void subscribeToFidelityAccount(User user, String name, String email, String password) throws FidelityAccountAlreadyExistException;
     boolean cancelOrder(Cart cart, List<Order> userOrders, Order orderToCancel);
 
 }

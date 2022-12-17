@@ -1,5 +1,6 @@
 package fr.unice.polytech.cod.interfaces;
 
+import fr.unice.polytech.cod.exceptions.FidelityAccountAlreadyExistException;
 import fr.unice.polytech.cod.exceptions.InvalidStoreException;
 import fr.unice.polytech.cod.food.Cookie;
 import fr.unice.polytech.cod.order.Bill;
@@ -24,12 +25,9 @@ public interface UserEndpoint {
     boolean removeCookieFromCart(User user, Cookie cookie, int quantity);
 
     List<Interval> getRetrieveCookieHours(User user, int numberOfDayBeforeTheOrder);
-
     void chooseRetrieveCookieHour(User user, Interval interval);
-
     boolean cancelOrder(User user, Order orderToCancel);
-
-    void createFidelityAccount(User user, String name, String email, String password);
+    void createFidelityAccount(User user, String name, String email, String password) throws FidelityAccountAlreadyExistException;
 
     List<Order> getPreviousOrders(User user) throws Exception;
 }

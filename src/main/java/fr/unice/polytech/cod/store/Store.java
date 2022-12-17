@@ -18,7 +18,6 @@ public class Store {
     private CookieBook cookieBook;
     private TimeClock openHour = new TimeClock(8,0);
     private TimeClock closeHour = new TimeClock(18,0);
-    private PartyCookieStoreManager partyCookieStoreManager;
     private final List<SurpriseBasket> surpriseBaskets;
 
     private double tax = 0;
@@ -31,7 +30,6 @@ public class Store {
         this.stock = new Stock();
         listChef.add(new Chef(this));
         this.cookieBook = new CookieBook();
-        this.partyCookieStoreManager = new PartyCookieStoreManager();
         this.surpriseBaskets = new ArrayList<>();
     }
 
@@ -76,10 +74,6 @@ public class Store {
         return fidelityAccountList;
     }
 
-    /*public boolean hasPartyChef() {
-        return this.partyCookieStoreManager.hasPartyChef();
-    }
-    */
 
     public void setName(String name) {
         this.name = name;
@@ -107,10 +101,6 @@ public class Store {
 
     public void setCloseHour(TimeClock closeHour) {
         this.closeHour = closeHour;
-    }
-
-    public void setPartyCookieStoreManager(PartyCookieStoreManager partyCookieStoreManager) {
-        this.partyCookieStoreManager = partyCookieStoreManager;
     }
 
     public double getTax() {
