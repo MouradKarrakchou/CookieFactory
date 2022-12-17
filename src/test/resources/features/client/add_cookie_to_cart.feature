@@ -5,12 +5,15 @@ Feature: Add cookie to the cart
     And a store named "Antibes"
     And an initialised cookie book of the store
     And a valid cookie
-    And a non-empty cart with 2 cookie
-
 
   Scenario: all the cookies are available
-    When  he add cookie to his cart
-    Then a cookie is added to his cart
+    When  he add 1 cookie to his cart
+    Then there is 1 cookie in the cart
+
+  Scenario: all the cookies are available
+    When  he add 2 cookie to his cart
+    Then there is 0 cookie in the cart
+
 
 
   Scenario: all ingredients are available

@@ -1,14 +1,15 @@
 package fr.unice.polytech.cod.store;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AllStores {
     private static AllStores INSTANCE;
-    private final List<Store> storeList=List.of(
+    private List<Store> storeList= new ArrayList<>(List.of(
             new Store("Antibes"),
             new Store("Nice"),
             new Store("Sophia")
-    );
+    ));
     private AllStores(){}
 
     public List<Store> getStoreList() {

@@ -8,7 +8,6 @@ import fr.unice.polytech.cod.exceptions.NotMatchingCatalogRequirementException;
 import fr.unice.polytech.cod.food.Cookie;
 import fr.unice.polytech.cod.food.ingredient.Cooking;
 import fr.unice.polytech.cod.food.ingredient.Mix;
-import fr.unice.polytech.cod.interfaces.ICookieBookManager;
 import fr.unice.polytech.cod.interfaces.StockModifier;
 import fr.unice.polytech.cod.interfaces.UserAction;
 import fr.unice.polytech.cod.interfaces.UserRequest;

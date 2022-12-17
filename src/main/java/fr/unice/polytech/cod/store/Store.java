@@ -23,6 +23,8 @@ public class Store {
     private PartyCookieStoreManager partyCookieStoreManager;
     private final List<SurpriseBasket> surpriseBaskets;
 
+    private double tax = 0;
+
     public Store(String name) {
         this.name=name;
         this.listChef=new ArrayList<>();
@@ -111,6 +113,14 @@ public class Store {
 
     public void setPartyCookieStoreManager(PartyCookieStoreManager partyCookieStoreManager) {
         this.partyCookieStoreManager = partyCookieStoreManager;
+    }
+
+    public double getTax() {
+        return tax;
+    }
+
+    public void setTax(double tax) {
+        this.tax = tax;
     }
 }
 
