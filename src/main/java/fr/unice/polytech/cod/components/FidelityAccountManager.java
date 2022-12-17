@@ -4,7 +4,7 @@ import fr.unice.polytech.cod.helper.Display;
 import fr.unice.polytech.cod.helper.threadedObjects.MailNotifier;
 import fr.unice.polytech.cod.interfaces.IFidelityAccountManager;
 import fr.unice.polytech.cod.interfaces.StoreModifier;
-import fr.unice.polytech.cod.order.Order;
+import fr.unice.polytech.cod.pojo.order.Order;
 import fr.unice.polytech.cod.pojo.order.OrderState;
 import fr.unice.polytech.cod.pojo.Item;
 import fr.unice.polytech.cod.pojo.store.Store;

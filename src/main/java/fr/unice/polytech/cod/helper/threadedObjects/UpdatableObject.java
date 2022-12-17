@@ -53,7 +53,7 @@ public class UpdatableObject implements Runnable {
     public void run() {
         try {
             sleep(waitingTime);
-            OnTimeReached();
+            setTimeReached();
         }
         catch (InterruptedException ignored) {}
     }
@@ -61,5 +61,5 @@ public class UpdatableObject implements Runnable {
     /**
      * To override: This method is called one by Run() when the waitingTime is reached.
      */
-    protected void OnTimeReached(){}
+    protected void setTimeReached(){}
 }

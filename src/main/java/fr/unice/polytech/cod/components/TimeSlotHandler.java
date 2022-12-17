@@ -1,7 +1,7 @@
 package fr.unice.polytech.cod.components;
 
 import fr.unice.polytech.cod.interfaces.TimeSlotAction;
-import fr.unice.polytech.cod.order.Order;
+import fr.unice.polytech.cod.pojo.order.Order;
 import fr.unice.polytech.cod.schedule.DaySlot;
 import fr.unice.polytech.cod.pojo.schedule.Interval;
 import fr.unice.polytech.cod.pojo.schedule.TimeSlot;

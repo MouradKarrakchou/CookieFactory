@@ -1,7 +1,7 @@
 package fr.unice.polytech.cod.pojo.store;
 
 import fr.unice.polytech.cod.pojo.order.Bill;
-import fr.unice.polytech.cod.order.Order;
+import fr.unice.polytech.cod.pojo.order.Order;
 
 public class SurpriseBasket {
 

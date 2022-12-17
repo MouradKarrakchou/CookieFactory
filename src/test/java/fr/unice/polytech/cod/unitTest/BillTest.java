@@ -6,7 +6,7 @@ import fr.unice.polytech.cod.food.*;
 import fr.unice.polytech.cod.interfaces.*;
 import fr.unice.polytech.cod.pojo.ingredient.*;
 import fr.unice.polytech.cod.pojo.order.Bill;
-import fr.unice.polytech.cod.order.Order;
+import fr.unice.polytech.cod.pojo.order.Order;
 import fr.unice.polytech.cod.pojo.IngredientCatalog;
 import fr.unice.polytech.cod.pojo.Item;
 import fr.unice.polytech.cod.pojo.store.Store;

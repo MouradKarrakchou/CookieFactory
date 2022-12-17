@@ -1,7 +1,7 @@
 package fr.unice.polytech.cod.interfaces;
 
 import fr.unice.polytech.cod.pojo.ingredient.Ingredient;
-import fr.unice.polytech.cod.order.Order;
+import fr.unice.polytech.cod.pojo.order.Order;
 import fr.unice.polytech.cod.pojo.Stock;
 import fr.unice.polytech.cod.pojo.user.User;
 import fr.unice.polytech.cod.pojo.user.fidelityAccount.Discount;

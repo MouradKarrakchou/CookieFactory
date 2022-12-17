@@ -3,7 +3,7 @@ package fr.unice.polytech.cod.components;
 import fr.unice.polytech.cod.interfaces.ChefAction;
 import fr.unice.polytech.cod.interfaces.OrderStatesAction;
 import fr.unice.polytech.cod.interfaces.ScheduleActions;
-import fr.unice.polytech.cod.order.Order;
+import fr.unice.polytech.cod.pojo.order.Order;
 import fr.unice.polytech.cod.pojo.order.OrderState;
 import fr.unice.polytech.cod.pojo.schedule.Schedule;
 import fr.unice.polytech.cod.schedule.TimeClock;

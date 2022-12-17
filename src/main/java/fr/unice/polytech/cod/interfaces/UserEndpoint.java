@@ -4,7 +4,7 @@ import fr.unice.polytech.cod.exceptions.FidelityAccountAlreadyExistException;
 import fr.unice.polytech.cod.exceptions.InvalidStoreException;
 import fr.unice.polytech.cod.food.Cookie;
 import fr.unice.polytech.cod.pojo.order.Bill;
-import fr.unice.polytech.cod.order.Order;
+import fr.unice.polytech.cod.pojo.order.Order;
 import fr.unice.polytech.cod.pojo.schedule.Interval;
 import fr.unice.polytech.cod.pojo.store.Store;
 import fr.unice.polytech.cod.pojo.user.User;

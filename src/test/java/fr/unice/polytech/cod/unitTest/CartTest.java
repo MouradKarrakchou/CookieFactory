@@ -3,7 +3,7 @@ package fr.unice.polytech.cod.unitTest;
 import fr.unice.polytech.cod.components.CartHandler;
 import fr.unice.polytech.cod.interfaces.ItemActions;
 import fr.unice.polytech.cod.interfaces.OrderActions;
-import fr.unice.polytech.cod.order.Order;
+import fr.unice.polytech.cod.pojo.order.Order;
 import fr.unice.polytech.cod.pojo.schedule.Interval;
 import fr.unice.polytech.cod.schedule.TimeClock;
 import fr.unice.polytech.cod.pojo.schedule.TimeSlot;

@@ -5,7 +5,7 @@ import fr.unice.polytech.cod.exceptions.InvalidStoreException;
 import fr.unice.polytech.cod.food.Cookie;
 import fr.unice.polytech.cod.interfaces.*;
 import fr.unice.polytech.cod.pojo.order.Bill;
-import fr.unice.polytech.cod.order.Order;
+import fr.unice.polytech.cod.pojo.order.Order;
 import fr.unice.polytech.cod.pojo.order.OrderState;
 import fr.unice.polytech.cod.pojo.Item;
 import fr.unice.polytech.cod.pojo.schedule.Interval;

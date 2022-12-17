@@ -1,4 +1,4 @@
-package fr.unice.polytech.cod.order;
+package fr.unice.polytech.cod.pojo.order;
 
 import fr.unice.polytech.cod.helper.threadedObjects.SmsNotifier;
 import fr.unice.polytech.cod.pojo.order.OrderState;
@@ -38,7 +38,7 @@ public class Order extends UpdatableObject {
     }
 
     @Override
-    public void OnTimeReached() {
+    public void setTimeReached() {
         this.orderState = OrderState.OBSOLETE;
     }
 

@@ -1,6 +1,6 @@
 package fr.unice.polytech.cod.pojo.user.fidelityAccount;
 
-import fr.unice.polytech.cod.order.Order;
+import fr.unice.polytech.cod.pojo.order.Order;
 import java.util.ArrayList;
 import java.util.List;
 

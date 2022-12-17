@@ -14,7 +14,7 @@ import fr.unice.polytech.cod.pojo.ingredient.Dough;
 import fr.unice.polytech.cod.pojo.ingredient.Ingredient;
 import fr.unice.polytech.cod.pojo.ingredient.Mix;
 import fr.unice.polytech.cod.pojo.order.Bill;
-import fr.unice.polytech.cod.order.Order;
+import fr.unice.polytech.cod.pojo.order.Order;
 import fr.unice.polytech.cod.pojo.order.OrderState;
 import fr.unice.polytech.cod.pojo.schedule.Interval;
 import fr.unice.polytech.cod.pojo.store.Chef;
