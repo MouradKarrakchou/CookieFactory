@@ -173,7 +173,6 @@ public class CartManagementStepDef {
 
     @When("he requests the cookie list")
     public void he_requests_the_cookie_list() {
-        // Write code here that turns the phrase above into concrete actions
         cookieList = userRequest.viewCatalog(user.getCart().getStore());
     }
     @When("he validate his cart")
@@ -234,7 +233,9 @@ public class CartManagementStepDef {
     }
     @Then("a cookie is added to his cart")
     public void a_cookie_is_added_to_his_cart() {
-        assertEquals(2, user.getCart().getItemSet().size());
+        Iterator iterator = user.getCart().getItemSet().iterator();
+        Item item = (Item) iterator.next();
+        assertEquals(2, item.getQuantity());
     }
     @Then("his cart has one item less")
     public void his_cart_has_one_item_less() {
