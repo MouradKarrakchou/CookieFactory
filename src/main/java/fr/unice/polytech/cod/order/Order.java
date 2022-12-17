@@ -51,6 +51,7 @@ public class Order extends UpdatableObject {
     }
 
     public Optional<Discount> getDiscount() {
+        if (discount == null) return Optional.empty();
         return Optional.of(discount);
     }
 

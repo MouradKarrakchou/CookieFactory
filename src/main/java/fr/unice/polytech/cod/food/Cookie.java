@@ -2,6 +2,10 @@ package fr.unice.polytech.cod.food;
 
 import fr.unice.polytech.cod.food.ingredient.*;
 import fr.unice.polytech.cod.interfaces.Saleable;
+import fr.unice.polytech.cod.interfaces.StockExplorer;
+import fr.unice.polytech.cod.pojo.Stock;
+import fr.unice.polytech.cod.store.Store;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.*;
 
@@ -10,9 +14,12 @@ public class Cookie implements Saleable, Cloneable {
     protected Dough dough;
     protected Flavour flavour;
     protected List<Topping> toppingList; // TODO : Maybe topping should be represented as a set
-    protected  Mix mix;
-    protected  Cooking cooking;
+    protected Mix mix;
+    protected Cooking cooking;
     private int preparationTime; // en minutes
+
+    @Autowired
+    StockExplorer stockExplorer;
 
     public Cookie(String cookieName, Dough dough, Flavour flavour, List<Topping> toppingList, Mix mix, Cooking cooking, int preparationTime) {
         this.name = cookieName;
@@ -28,7 +35,7 @@ public class Cookie implements Saleable, Cloneable {
         name = cookie.getName();
         dough = new Dough(cookie.getDough());
         flavour = new Flavour(cookie.getFlavour());
-        toppingList =  new ArrayList<>();
+        toppingList = new ArrayList<>();
         cookie.getToppingList().forEach(topping -> toppingList.add(new Topping(topping)));
 
         mix = cookie.getMix();
@@ -59,7 +66,7 @@ public class Cookie implements Saleable, Cloneable {
     }
 
     public ArrayList<Ingredient> getIngredientsList() {
-       return new ArrayList<>(getIngredients().stream().toList());
+        return new ArrayList<>(getIngredients().stream().toList());
     }
 
     @Override
@@ -80,12 +87,14 @@ public class Cookie implements Saleable, Cloneable {
     }
 
     @Override
-    public double getPrice() {
-        double price = dough.getQuantity() * dough.getPrice();
-        if(flavour != null) price += flavour.getQuantity() * flavour.getPrice() ;
-        if(!toppingList.isEmpty()) {
-            for(Topping topping : toppingList)
-                price += topping.getQuantity() * topping.getPrice() ;
+    public double getPrice(Store store) {
+        double tax = store.getTax();
+        double price = dough.getQuantity() * (dough.getPrice() + tax);
+        if (flavour != null)
+            price += flavour.getQuantity() * (flavour.getPrice() + tax);
+        if (!toppingList.isEmpty()) {
+            for (Topping topping : toppingList)
+                price += topping.getQuantity() * (topping.getPrice() + tax);
         }
         return price;
     }

@@ -1,6 +1,8 @@
 package fr.unice.polytech.cod.food;
 
 import fr.unice.polytech.cod.food.ingredient.*;
+import fr.unice.polytech.cod.pojo.Stock;
+import fr.unice.polytech.cod.store.Store;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -56,8 +58,8 @@ public class PartyCookie extends Cookie{
     }
 
     @Override
-    public double getPrice() {
-        double priceHT = super.getPrice();
+    public double getPrice(Store store) {
+        double priceHT = super.getPrice(store);
         return priceHT = getMultiplicator()*priceHT + priceHT*25/100;
     }
 

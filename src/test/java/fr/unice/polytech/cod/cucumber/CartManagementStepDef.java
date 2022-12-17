@@ -121,8 +121,6 @@ public class CartManagementStepDef {
         ));
         userAction.selectStore(name,user.getCart());
         this.store=user.getCart().getStore();
-        for(Ingredient ingredient : ingredientCatalog.getIngredientList())
-            storeModifier.setTax(store,ingredient.getName(), 3.0);
         //for (int i =0; i <100; i++)
         //    store.fillStock(ingredientCatalog.getIngredientList(), taxesValues);
         stockModifier.addIngredients(store.getStock(),ingredientCatalog.getIngredientList());
@@ -243,12 +241,6 @@ public class CartManagementStepDef {
     public void he_receive_the_entire_list() {
         assertFalse(cookieList.isEmpty());
     }
-    @Then("a cookie is added to his cart")
-    public void a_cookie_is_added_to_his_cart() {
-        Iterator iterator = user.getCart().getItemSet().iterator();
-        Item item = (Item) iterator.next();
-        assertEquals(2, item.getQuantity());
-    }
     @Then("his cart has one item less")
     public void his_cart_has_one_item_less() {
         System.out.println(cart.getItemSet().size());
@@ -306,10 +298,6 @@ public class CartManagementStepDef {
             if(!(timeSlot.getStartTime().compareTo(new TimeClock(startingHour,0))>=0&&timeSlot.getEndTime().compareTo(new TimeClock(finishingHour,0))<=0))
                 timeSlot.setReserved(true);
         }
-    }
-    @When("he add cookie to his cart")
-    public void he_add_cookie_to_his_cart() {
-        userAction.addCookies(testCookie, 1, cart);
     }
 
     @When("a user ask for {int} minute intervals possible")
@@ -473,8 +461,8 @@ public class CartManagementStepDef {
         );
         iCookieBookManager.addCookieRecipe(cookieBook,
                 new Cookie("Cookie au chocolat",
-                        iCatalogExplorer.getDough(ingredientCatalog,"chocolate"),
-                        iCatalogExplorer.getFlavour(ingredientCatalog,"chili"),
+                        iCatalogExplorer.getDough(ingredientCatalog,"plain"),
+                        iCatalogExplorer.getFlavour(ingredientCatalog,"chocolate"),
                         List.of(iCatalogExplorer.getTopping(ingredientCatalog,"milk chocolate"),iCatalogExplorer.getTopping(ingredientCatalog,"M&M’s")),
                         new Mix(Mix.MixState.MIXED),
                         new Cooking(Cooking.CookingState.CHEWY),
@@ -518,8 +506,8 @@ public class CartManagementStepDef {
         );
         iCookieBookManager.addCookieRecipe(cookieBook,
                 new Cookie("Cookie au chocolat",
-                        iCatalogExplorer.getDough(ingredientCatalog,"chocolate"),
-                        iCatalogExplorer.getFlavour(ingredientCatalog,"chili"),
+                        iCatalogExplorer.getDough(ingredientCatalog,"plain"),
+                        iCatalogExplorer.getFlavour(ingredientCatalog,"chocolate"),
                         List.of(iCatalogExplorer.getTopping(ingredientCatalog,"milk chocolate"),iCatalogExplorer.getTopping(ingredientCatalog,"M&M’s")),
                         new Mix(Mix.MixState.MIXED),
                         new Cooking(Cooking.CookingState.CHEWY),
@@ -567,5 +555,17 @@ public class CartManagementStepDef {
     public void heCanTReceiveABill() {
         assertTrue(emptyCartException);
 
+    }
+
+    @When("he add {int} cookie to his cart")
+    public void heAddCookieToHisCart(int number) {
+        userAction.addCookies(testCookie, number, cart);
+    }
+
+    @Then("there is {int} cookie in the cart")
+    public void thereIsCookieInTheCart(int number) {
+            Iterator iterator = user.getCart().getItemSet().iterator();
+            Item item = (Item) iterator.next();
+            assertEquals(number, item.getQuantity());
     }
 }

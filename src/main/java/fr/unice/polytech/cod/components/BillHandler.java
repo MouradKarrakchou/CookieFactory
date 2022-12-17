@@ -30,16 +30,17 @@ public class BillHandler implements BillAction {
         receipt.append("===============").append(storeName).append("===============\n");
         Set<Item> items = bill.getOrder().getCart().getItemSet();
 
-        double cookiePrice;
+        double cookiesPrice;
         double totalPrice = 0;
 
         for(Item item : items) {
             Cookie cookie = item.getCookie();
             //Math.round(price * 100) / 100 allows to round the price to 2 figures
-            cookiePrice = Math.round(cookie.getPrice() * 100)/100.0;
+            System.out.println(cookie.getPrice(bill.getOrder().getCart().getStore()) * item.getQuantity());
+            cookiesPrice = Math.round((cookie.getPrice(bill.getOrder().getCart().getStore())  * item.getQuantity()) * 100)/100.0;
 
-            receipt.append(cookie.getName()).append("..........").append(cookiePrice).append("€\n");
-            totalPrice += cookiePrice;
+            receipt.append(cookie.getName()).append("..........").append(cookiesPrice).append("€\n");
+            totalPrice += cookiesPrice;
         }
         if(bill.getOrder().getDiscount().isPresent()){
             Discount discount = bill.getOrder().getDiscount().get();

@@ -22,7 +22,8 @@ public class CookieBookManager implements ICookieBookManager {
     public void addCookieRecipe(CookieBook cookieBook, Cookie cookie) throws CookieAlreadyExistingException, NotMatchingCatalogRequirementException {
         if (!cookieBook.getCookies().contains(cookie)) {
             for (Ingredient ingredient : cookie.getIngredients()) {
-                if(!ICatalogExplorer.isInCatalog(IngredientCatalog.instance, ingredient))
+                IngredientCatalog instance = IngredientCatalog.instance;
+                if(!ICatalogExplorer.isInCatalog(ingredient))
                     throw new NotMatchingCatalogRequirementException();
             }
             cookieBook.getCookies().add(cookie);

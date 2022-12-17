@@ -25,16 +25,5 @@ public interface StoreModifier {
     void addCookieStore(Store store, Cookie cookie) throws Exception;
 
     void removeCookieStore(Store store, Cookie cookie) throws Exception;
-
-    /**
-     * Update the current price of an ingredient.
-     *
-     * @param store      The store where the ingredient is present
-     * @param ingredient The ingredient to update the price of
-     * @param newPrice   The new price according to a tax
-     * @return boolean : The ingredient's price has been updated
-     */
-    boolean setTax(Store store, String ingredient, double newPrice);
-
     void updateSurpriseBasket(Store store);
 }
