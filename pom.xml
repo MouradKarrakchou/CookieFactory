@@ -11,11 +11,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>fr.univ-cotedazur</groupId>
-    <artifactId>cookie-factory</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <name>very-simple-cookie-factory</name>
-    <description>Very Simple Cookie Factory</description>
+    <groupId>fr.unice.polytech.cf</groupId> <!-- CHANGE ME -->
+    <artifactId>The_Cookie_Factory_K</artifactId> <!-- CHANGE ME -->
+    <version>1.0-SNAPSHOT</version> <!-- CHANGE ME -->
 
     <properties>
         <java.version>17</java.version>
