@@ -235,12 +235,6 @@ public class CartManagementStepDef {
     public void he_receive_the_entire_list() {
         assertFalse(cookieList.isEmpty());
     }
-    @Then("a cookie is added to his cart")
-    public void a_cookie_is_added_to_his_cart() {
-        Iterator iterator = user.getCart().getItemSet().iterator();
-        Item item = (Item) iterator.next();
-        assertEquals(2, item.getQuantity());
-    }
     @Then("his cart has one item less")
     public void his_cart_has_one_item_less() {
         System.out.println(cart.getItemSet().size());
@@ -298,10 +292,6 @@ public class CartManagementStepDef {
             if(!(timeSlot.getStartTime().compareTo(new TimeClock(startingHour,0))>=0&&timeSlot.getEndTime().compareTo(new TimeClock(finishingHour,0))<=0))
                 timeSlot.setReserved(true);
         }
-    }
-    @When("he add cookie to his cart")
-    public void he_add_cookie_to_his_cart() {
-        userAction.addCookies(testCookie, 1, cart);
     }
 
     @When("a user ask for {int} minute intervals possible")
@@ -535,5 +525,17 @@ public class CartManagementStepDef {
     @Then("the cookkie is add to the cookie book")
     public void the_cookkie_is_add_to_the_cookie_book() {
         assertEquals(4, cookieBook.getCookies().size());
+    }
+
+    @When("he add {int} cookie to his cart")
+    public void heAddCookieToHisCart(int number) {
+        userAction.addCookies(testCookie, number, cart);
+    }
+
+    @Then("there is {int} cookie in the cart")
+    public void thereIsCookieInTheCart(int number) {
+            Iterator iterator = user.getCart().getItemSet().iterator();
+            Item item = (Item) iterator.next();
+            assertEquals(number, item.getQuantity());
     }
 }
