@@ -637,4 +637,17 @@ public class CartManagementStepDef {
     public void heCanTSubscribeAnOtherTimeToTheFidelityProgram() {
         assertTrue(fidelityAccountException);
     }
+
+    @When("a new surprise basket is available")
+    public void a_new_surprise_basket_is_available() {
+        Store storeLille = new Store("Lille");
+        this.user.getCart().setStore(storeLille);
+
+        storeLille.getSurpriseBaskets().add(new SurpriseBasket(new Order(this.user.getCart(), this.user)));
+    }
+    @Then("the client in notified")
+    public void the_client_in_notified() {
+        iFidelityAccountManager.subscribeToSurpriseBasket(this.user.getFidelityAccount(), this.user.getCart().getStore(), 1,1,1,1);
+        assertTrue(this.user.getCart().getStore().getFidelityAccountList().contains(this.user.getFidelityAccount()));
+    }
 }
