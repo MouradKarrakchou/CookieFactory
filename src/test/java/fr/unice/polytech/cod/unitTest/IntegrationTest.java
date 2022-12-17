@@ -1,11 +1,17 @@
 package fr.unice.polytech.cod.unitTest;
 
 import fr.unice.polytech.cod.components.CartHandler;
+import fr.unice.polytech.cod.components.CatalogExplorer;
 import fr.unice.polytech.cod.components.CookieBookManager;
-import fr.unice.polytech.cod.interfaces.ICatalogExplorer;
+import fr.unice.polytech.cod.exceptions.CookieAlreadyExistingException;
+import fr.unice.polytech.cod.exceptions.NotMatchingCatalogRequirementException;
+import fr.unice.polytech.cod.food.Cookie;
+import fr.unice.polytech.cod.food.ingredient.Cooking;
+import fr.unice.polytech.cod.food.ingredient.Mix;
 import fr.unice.polytech.cod.interfaces.StockModifier;
 import fr.unice.polytech.cod.interfaces.UserAction;
 import fr.unice.polytech.cod.interfaces.UserRequest;
+import fr.unice.polytech.cod.pojo.CookieBook;
 import fr.unice.polytech.cod.pojo.IngredientCatalog;
 import fr.unice.polytech.cod.food.ingredient.Ingredient;
 import fr.unice.polytech.cod.exceptions.InvalidStoreException;
@@ -30,10 +36,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 public class IntegrationTest {
 
-
-    private Store store;
-    private User user;
-
     @Autowired
     UserAction userAction;
     @Autowired
@@ -42,7 +44,7 @@ public class IntegrationTest {
     StockModifier stockModifier;
     IngredientCatalog ingredientCatalog = IngredientCatalog.instance;
     @Autowired
-    ICatalogExplorer iCatalogExplorer;
+    CatalogExplorer catalogExplorer;
     @Autowired
     CookieBookManager cookieBookManager;
     @Autowired
@@ -50,35 +52,63 @@ public class IntegrationTest {
 
 
     @Test
-    void orderingTest() throws InvalidStoreException {
-        user = new User();
-        userAction.subscribeToFidelityAccount(this.user, "Kamel", "kamel@gmail.coml", "123456");
+    void orderingTest() throws InvalidStoreException, NotMatchingCatalogRequirementException, CookieAlreadyExistingException {
+        User user = new User();
+        userAction.subscribeToFidelityAccount(user, "Kamel", "kamel@gmail.coml", "123456");
 
         // Check if the store has been associated
         userAction.selectStore("Antibes", user.getCart());
         assertEquals("Antibes", user.getCart().getStore().getName());
 
-        this.store = user.getCart().getStore();
+        Store store = user.getCart().getStore();
 
-        // Associating an ingredient to a tax value in a hashmap
-        Map<Ingredient, Double> taxesValues = new HashMap<>();
-        for (Ingredient ingredient : IngredientCatalog.instance.getIngredientList())
-            taxesValues.put(ingredient, 3.0);
+        //initialize CookieBook
+        CookieBook cookieBook = new CookieBook();
+        cookieBookManager.addCookieRecipe(cookieBook,
+                new Cookie("Cookie à la vanille",
+                        catalogExplorer.getDough(ingredientCatalog,"plain"),
+                        catalogExplorer.getFlavour(ingredientCatalog,"vanilla"),
+                        List.of(catalogExplorer.getTopping(ingredientCatalog,"milk chocolate"),catalogExplorer.getTopping(ingredientCatalog,"white chocolate")),
+                        new Mix(Mix.MixState.MIXED),
+                        new Cooking(Cooking.CookingState.CHEWY),
+                        5)
+        );
+        cookieBookManager.addCookieRecipe(cookieBook,
+                new Cookie("Cookie au chocolat",
+                        catalogExplorer.getDough(ingredientCatalog,"chocolate"),
+                        catalogExplorer.getFlavour(ingredientCatalog,"chili"),
+                        List.of(catalogExplorer.getTopping(ingredientCatalog,"milk chocolate"),catalogExplorer.getTopping(ingredientCatalog,"M&M’s")),
+                        new Mix(Mix.MixState.MIXED),
+                        new Cooking(Cooking.CookingState.CHEWY),
+                        10)
+        );
+        cookieBookManager.addCookieRecipe(cookieBook,
+                new Cookie("Cookie à la pistache",
+                        catalogExplorer.getDough(ingredientCatalog,"peanut butter"),
+                        catalogExplorer.getFlavour(ingredientCatalog,"chili"),
+                        List.of(catalogExplorer.getTopping(ingredientCatalog,"milk chocolate")),
+                        new Mix(Mix.MixState.MIXED),
+                        new Cooking(Cooking.CookingState.CHEWY),
+                        10)
+        );
 
         // Fill the store's stock 20 times
         for (int i = 0; i < 20; i++) {
-            stockModifier.addIngredients(this.store.getStock(),
-                    List.of(iCatalogExplorer.getDough(ingredientCatalog, "chocolate"),
-                            iCatalogExplorer.getFlavour(ingredientCatalog, "chili"),
-                            iCatalogExplorer.getTopping(ingredientCatalog, "milk chocolate"),
-                            iCatalogExplorer.getTopping(ingredientCatalog, "M&M’s"),
+            stockModifier.addIngredients(store.getStock(),
+                    List.of(catalogExplorer.getDough(ingredientCatalog, "chocolate"),
+                            catalogExplorer.getFlavour(ingredientCatalog, "chili"),
+                            catalogExplorer.getTopping(ingredientCatalog, "milk chocolate"),
+                            catalogExplorer.getTopping(ingredientCatalog, "M&M’s"),
 
-                            iCatalogExplorer.getDough(ingredientCatalog, "plain"),
-                            iCatalogExplorer.getFlavour(ingredientCatalog, "vanilla"),
-                            iCatalogExplorer.getTopping(ingredientCatalog, "milk chocolate"),
-                            iCatalogExplorer.getTopping(ingredientCatalog, "white chocolate")
+                            catalogExplorer.getDough(ingredientCatalog, "plain"),
+                            catalogExplorer.getFlavour(ingredientCatalog, "vanilla"),
+                            catalogExplorer.getTopping(ingredientCatalog, "milk chocolate"),
+                            catalogExplorer.getTopping(ingredientCatalog, "white chocolate")
                     ));
         }
+
+        //set to the store the CookieBook previously initialized
+        store.setCookieBook(cookieBook);
 
         // Check if the ingredients has been added to the store
         for (Ingredient ingredient : store.getStock().getIngredients()) {
@@ -89,10 +119,10 @@ public class IntegrationTest {
         }
 
         // Check if the store is able to craft the given cookies based on their name & the actual stock
-        assertEquals(1, userRequest.viewCatalog(this.store).stream()
+        assertEquals(1, userRequest.viewCatalog(store).stream()
                 .filter(cookie -> cookie.getName().equals("Cookie au chocolat"))
                 .count());
-        assertEquals(1, userRequest.viewCatalog(this.store).stream()
+        assertEquals(1, userRequest.viewCatalog(store).stream()
                 .filter(cookie -> cookie.getName().equals("Cookie à la vanille"))
                 .count());
 
@@ -101,18 +131,18 @@ public class IntegrationTest {
         assertTrue(userAction.addCookies(cookieBookManager.getCookie(store.getCookieBook(), "Cookie au chocolat"), 15, user.getCart()));
         assertTrue(userAction.addCookies(cookieBookManager.getCookie(store.getCookieBook(), "Cookie à la vanille"), 19, user.getCart()));
 
-        assertTrue(userAction.addCookies(cookieBookManager.getCookie(store.getCookieBook(), "Cookie au chocolat"), 1, user.getCart()));
-        assertTrue(userAction.addCookies(cookieBookManager.getCookie(store.getCookieBook(), "Cookie à la vanille"), 2, user.getCart()));
+        assertFalse(userAction.addCookies(cookieBookManager.getCookie(store.getCookieBook(), "Cookie au chocolat"), 1, user.getCart()));
+        assertFalse(userAction.addCookies(cookieBookManager.getCookie(store.getCookieBook(), "Cookie à la vanille"), 2, user.getCart()));
 
 
         try {
             assertEquals(20, cartHandler.findItem(user.getCart(), "Cookie au chocolat").getQuantity());
-            assertEquals(20, cartHandler.findItem(user.getCart(), "Cookie à la vanille").getQuantity());
+            assertEquals(19, cartHandler.findItem(user.getCart(), "Cookie à la vanille").getQuantity());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
-        userRequest.recapCart(this.user.getCart());
+        userRequest.recapCart(user.getCart());
 
 
         TimeSlot timeSlot = new TimeSlot(new TimeClock(8, 0), new TimeClock(8, 15));
