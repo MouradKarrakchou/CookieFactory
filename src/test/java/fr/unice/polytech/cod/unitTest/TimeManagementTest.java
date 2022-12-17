@@ -1,5 +1,7 @@
 package fr.unice.polytech.cod.unitTest;
 
+import fr.unice.polytech.cod.food.ingredient.Cooking;
+import fr.unice.polytech.cod.food.ingredient.Mix;
 import fr.unice.polytech.cod.interfaces.*;
 import fr.unice.polytech.cod.pojo.IngredientCatalog;
 import fr.unice.polytech.cod.food.Cookie;
@@ -50,16 +52,13 @@ public class TimeManagementTest {
 
     @Test
     public void IntervalTest30Min() {
-        Cookie testCookie5Min = new Cookie("testCookie5Min", null, null, new ArrayList<>(), null, null, 5);
-        Cookie testCookie10Min = new Cookie("testCookie10Min", null, null, new ArrayList<>(), null, null, 10);
-
         int startingHour = 10;
         int finishingHour = 11;
         int duration = 30;
         int numberOfHour = 1;
         int intervalDuration = 30;
-        this.user.getCart().getItemSet().add(new Item(testCookie5Min, 1));
-        this.user.getCart().getItemSet().add(new Item(testCookie10Min, 1));
+        Cookie testCookie = new Cookie("testCookie", null, null, new ArrayList<>(), null, null, intervalDuration-15);
+        this.user.getCart().getItemSet().add(new Item(testCookie, 1));
         createChef(startingHour, finishingHour);
         createChef(startingHour, finishingHour);
         createChef(startingHour, finishingHour);
@@ -80,15 +79,15 @@ public class TimeManagementTest {
 
     @Test
     public void IntervalTest40Min() {
-        Cookie testCookie10Min = new Cookie("testCookie10Min", null, null, new ArrayList<>(), null, null, 10);
         int startingHour = 14;
         int finishingHour = 17;
         int durationCompute = 45;
 
         int numberOfHour = 3;
-        int intervalDuration = 45;
-        this.user.getCart().getItemSet().add(new Item(testCookie10Min, 1));
-        this.user.getCart().getItemSet().add(new Item(testCookie10Min, 1));
+        int intervalDuration = 40;
+        Cookie testCookie = new Cookie("testCookie", null, null, new ArrayList<>(), null, null, intervalDuration-15);
+        this.user.getCart().getItemSet().add(new Item(testCookie, 1));
+
         createChef(startingHour, finishingHour);
 
 
@@ -108,15 +107,13 @@ public class TimeManagementTest {
 
     @Test
     public void IntervalTest() {
-        Cookie testCookie10Min = new Cookie("testCookie10Min", null, null, new ArrayList<>(), null, null, 10);
         int startingHour = 8;
         int finishingHour = 10;
         int durationCompute = 45;
+        Cookie testCookie = new Cookie("testCookie", null, null, new ArrayList<>(), null, null, durationCompute-15);
 
-        int numberOfHour = 3;
-        int intervalDuration = 45;
-        this.user.getCart().getItemSet().add(new Item(testCookie10Min, 1));
-        this.user.getCart().getItemSet().add(new Item(testCookie10Min, 1));
+
+        this.user.getCart().getItemSet().add(new Item(testCookie, 1));
         createChef(startingHour, finishingHour);
         createChef(10, 12);
 
