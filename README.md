@@ -64,6 +64,9 @@ Recevoir une réduction :
 Retirer un cookie du panier :
 [remove_one_cookie_from_the_cart.feature](https://github.com/PNS-Conception/cookiefactory-22-23-k/blob/main/src/test/resources/features/client/remove_one_cookie_from_the_cart.feature)
 
+Prévenir le client qu'un panier est disponlible :
+[notify_client_for_a_suprise_basket](https://github.com/PNS-Conception/cookiefactory-22-23-k/blob/main/src/test/resources/features/client/otify_client_for_a_suprise_basket.feature)
+
 Récupérer une commande :
 [retrieve_order.feature](https://github.com/PNS-Conception/cookiefactory-22-23-k/blob/main/src/test/resources/features/client/retrieve_order.feature)
 
