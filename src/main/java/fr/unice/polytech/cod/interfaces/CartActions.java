@@ -50,15 +50,6 @@ public interface CartActions {
     void cancelOrder(Cart cart, Order order);
 
     /**
-     * Take a list of ingredients and return a set of the ingredients needed.
-     *
-     * @param cart - The cart.
-     * @param items - list of ingredients.
-     * @return a set of the ingredients needed
-     */
-    Set<Ingredient> generateIngredientsNeeded(Cart cart, Set<Item> items);
-
-    /**
      * Find a item in a cart.
      *
      * @param cart - The cart.

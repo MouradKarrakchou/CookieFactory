@@ -2,6 +2,7 @@ package fr.unice.polytech.cod.cucumber;
 
 import fr.unice.polytech.cod.components.CartHandler;
 import fr.unice.polytech.cod.components.CookieBookManager;
+import fr.unice.polytech.cod.components.UserHandler;
 import fr.unice.polytech.cod.components.UserManager;
 import fr.unice.polytech.cod.exceptions.CookieAlreadyExistingException;
 import fr.unice.polytech.cod.exceptions.FidelityAccountAlreadyExistException;
@@ -67,8 +68,6 @@ public class CartManagementStepDef {
     @Autowired
     CartActions cartActions;
 
-    @Autowired
-    UserAction userAction;
 
     @Autowired
     StockModifier stockModifier;
@@ -82,8 +81,6 @@ public class CartManagementStepDef {
     @Autowired
     IFidelityAccountManager iFidelityAccountManager;
 
-    @Autowired
-    UserRequest userRequest;
 
     @Autowired
     StockExplorer stockExplorer;
@@ -109,6 +106,15 @@ public class CartManagementStepDef {
     @Autowired
     CookieBookManager cookieBookManager;
 
+    @Autowired
+    Saleable saleable;
+
+    @Autowired
+    UserRequest userRequest;
+
+    @Autowired
+    UserAction userAction;
+
     boolean historicException = false;
     boolean emptyCartException = false;
 
@@ -126,7 +132,7 @@ public class CartManagementStepDef {
                 new Store("Nice"),
                 new Store("Sophia")
         ));
-        userAction.selectStore(name,user.getCart());
+        userManager.selectStore(user,name);
         this.store=user.getCart().getStore();
         //for (int i =0; i <100; i++)
         //    store.fillStock(ingredientCatalog.getIngredientList(), taxesValues);
@@ -138,7 +144,7 @@ public class CartManagementStepDef {
     }
     @Given("a fidelity account")
     public void a_fidelity_account() throws FidelityAccountAlreadyExistException {
-        userAction.subscribeToFidelityAccount(user,"name", "email", "password");
+        userManager.createFidelityAccount(user,"name", "email", "password");
     }
 
     @Given("a non-empty cart with {int} cookie")
@@ -181,25 +187,25 @@ public class CartManagementStepDef {
 
     @When("he requests the cookie list")
     public void he_requests_the_cookie_list() {
-        cookieList = userRequest.viewCatalog(user.getCart().getStore());
+        cookieList = userManager.viewStoreCatalogue(user);
     }
     @When("he validate his cart")
     public void he_validate_his_cart() {
         cartActions.showCart(user.getCart());
         try {
-            bill = userAction.validateCart(user);
+            bill = userManager.validateCart(user);
         } catch (Exception e) {
             emptyCartException = true;
         }
     }
     @When("we choose a valid store")
     public void we_choose_a_valid_store() throws InvalidStoreException {
-        userAction.selectStore("Antibes",cart);
+        userManager.selectStore(user,"Antibes");
     }
     @When("we choose an invalid store")
     public void we_choose_an_invalid_store() {
         try {
-            userAction.selectStore("invalidStore",cart);
+            userManager.selectStore(user,"invalidStore");
         } catch (InvalidStoreException e) {
             this.exception=e;
         }
@@ -207,14 +213,14 @@ public class CartManagementStepDef {
     @When("he subscribe to the fidelity program as {string} with {string} mail and this password {string}")
     public void he_subscribe_to_the_fidelity_program(String name, String email, String password) {
         try {
-            userAction.subscribeToFidelityAccount(user,name, email, password);
+            userManager.createFidelityAccount(user,name, email, password);
         } catch (FidelityAccountAlreadyExistException e) {
             fidelityAccountException = true;
         }
     }
     @When("he order {int} cookies")
     public void he_order_cookies(int numberOfCookies) {
-        userAction.addCookies(testCookie, numberOfCookies,user.getCart());
+        userManager.addCookieToCart(user,testCookie, numberOfCookies);
     }
 
     @Then("the bill is created")
@@ -273,7 +279,7 @@ public class CartManagementStepDef {
 
     @When("a user chooses an interval")
     public void aUserChoosesAnInterval() {
-        userAction.chooseInterval(interval,user.getCart());
+        userManager.chooseRetrieveCookieHour(user,interval);
     }
 
     @Then("the order is associated with the Time slots composing the interval are")
@@ -311,7 +317,7 @@ public class CartManagementStepDef {
                 new Mix(Mix.MixState.MIXED),
                 new Cooking(Cooking.CookingState.CHEWY),
                 minutes-15),1));
-        availableIntervals = userRequest.getAvailableIntervals(store, cart,0);
+        availableIntervals = userManager.getRetrieveCookieHours(user,0);
     }
 
     @Then("he gets only intervals starting and finishing in the {int} to {int} time period with a {int} minute duration")
@@ -383,9 +389,9 @@ public class CartManagementStepDef {
     @Then("the user is notified")
     public void the_user_is_notified() {
         if(!user.getCart().getStore().getOrderList().contains(order))
-            assertTrue(userAction.cancelOrder(user.getCart(), user.getUserOrders(), order));
+            assertTrue(userManager.cancelOrder(user, order));
         if(user.getCart().getStore().getOrderList().contains(inProgressOrder))
-            assertFalse(userAction.cancelOrder(user.getCart(), user.getUserOrders(), inProgressOrder));
+            assertFalse(userManager.cancelOrder(user, inProgressOrder));
     }
 
     @Then("the order cannot be canceled")
@@ -417,7 +423,7 @@ public class CartManagementStepDef {
     @When("a client ask for his history")
     public void a_client_ask_for_his_history() {
         try {
-            historic = userRequest.getHistory(user.getFidelityAccount());
+            historic = userManager.getPreviousOrders(user);
         } catch (Exception e) {
             historicException = true;
         }
@@ -430,7 +436,7 @@ public class CartManagementStepDef {
     @Given("the stock contain ingredients for {string}")
     public void theStockContainIngredientsFor(String cookieName) {
         Cookie cookie = iCookieBookManager.getCookie(cookieBook,cookieName);
-        stockModifier.addIngredients(store.getStock(), cookie.getIngredientsList());
+        stockModifier.addIngredients(store.getStock(), saleable.getIngredientsList(cookie));
     }
 
     @When("he order {string} a party cookie {string} customized with additional M&Ms")
@@ -438,7 +444,7 @@ public class CartManagementStepDef {
         HashMap<Ingredient, Boolean> additional= new HashMap<>();
         additional.put(new Ingredient("M&M's", 1.0, 1), true);
         PartyCookie partyCookie = new PartyCookie(testCookie, getSize(size), "princesse", PartyCookie.Event.Anniversary,additional);
-        userAction.addCookies(partyCookie, 1, cart);
+        userManager.addCookieToCart(user,partyCookie, 1);
     }
     public PartyCookie.CookieSize getSize(String size) throws Exception {
         return switch (size) {
@@ -482,7 +488,7 @@ public class CartManagementStepDef {
 
     @Given("a cookieBook")
     public void a_cookieBook() throws InvalidStoreException {
-        cookieBook = userAction.selectStore("Antibes", cart).getCookieBook();
+        cookieBook = userManager.selectStore(user,"Antibes").getCookieBook();
     }
     @When("when a brandManager remove a cookie to the cookie book")
     public void when_a_brand_manager_remove_a_cookie_to_the_cookie_book() throws Exception {
@@ -544,7 +550,7 @@ public class CartManagementStepDef {
 
     @Given("a user with a fidelityAccount")
     public void aUserWithAFidelityAccount() throws FidelityAccountAlreadyExistException {
-        userAction.subscribeToFidelityAccount(this.user, "name","email","pw");
+        userManager.createFidelityAccount(this.user, "name","email","pw");
         iFidelityAccountManager.addOrder(userRequest.getSubscription(this.user).get(), retrieveOrder);
     }
 
@@ -561,7 +567,7 @@ public class CartManagementStepDef {
 
     @When("he add {int} cookie to his cart")
     public void heAddCookieToHisCart(int number) {
-        userAction.addCookies(testCookie, number, cart);
+        userManager.addCookieToCart(user,testCookie, number);
     }
 
     @Then("there is {int} cookie in the cart")
@@ -593,8 +599,8 @@ public class CartManagementStepDef {
 
     @When("a client got a fidelity account")
     public void aClientGotAFidelityAccount() throws Exception {
-        userAction.subscribeToFidelityAccount(this.user, "name","email","pw");
-        historic = userRequest.getHistory(user.getFidelityAccount());
+        userManager.createFidelityAccount(this.user, "name","email","pw");
+        historic = userManager.getPreviousOrders(user);
     }
 
     @When("when a brandManager add a cookie that is already in the cookie book")
@@ -616,7 +622,7 @@ public class CartManagementStepDef {
     @When("he remove {int} cookie from his cart")
     public void heRemoveCookieFromHisCart(int numberOfCookie) throws Exception {
         Item item = userRequest.getItemFromCart(user.getCart(),"Cookie au chocolat");
-        userAction.removeCookies(item.getCookie(),numberOfCookie,user.getCart());
+        userManager.removeCookieFromCart(user,item.getCookie(),numberOfCookie);
     }
 
     @Then("his cart has {int} item less")
@@ -627,7 +633,7 @@ public class CartManagementStepDef {
     @Given("the user as subscribe to a fidelity account")
     public void theUserAsSubscribeToAFidelityAccount() {
         try {
-            userAction.subscribeToFidelityAccount(user, "name", "email", "password");
+            userManager.createFidelityAccount(user, "name", "email", "password");
         } catch (FidelityAccountAlreadyExistException e) {
             fidelityAccountException = true;
         }
@@ -650,4 +656,5 @@ public class CartManagementStepDef {
         iFidelityAccountManager.subscribeToSurpriseBasket(this.user.getFidelityAccount(), this.user.getCart().getStore(), 1,1,1,1);
         assertTrue(this.user.getCart().getStore().getFidelityAccountList().contains(this.user.getFidelityAccount()));
     }
+
 }

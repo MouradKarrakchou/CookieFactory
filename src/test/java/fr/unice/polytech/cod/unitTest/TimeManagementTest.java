@@ -4,11 +4,13 @@ import fr.unice.polytech.cod.interfaces.*;
 import fr.unice.polytech.cod.pojo.IngredientCatalog;
 import fr.unice.polytech.cod.food.Cookie;
 import fr.unice.polytech.cod.pojo.Item;
+import fr.unice.polytech.cod.pojo.order.Order;
 import fr.unice.polytech.cod.pojo.schedule.Interval;
 import fr.unice.polytech.cod.helper.tools.TimeClock;
 import fr.unice.polytech.cod.pojo.schedule.TimeSlot;
 import fr.unice.polytech.cod.pojo.store.Chef;
 import fr.unice.polytech.cod.exceptions.InvalidStoreException;
+import fr.unice.polytech.cod.pojo.store.Store;
 import fr.unice.polytech.cod.pojo.user.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,6 +20,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -127,6 +130,15 @@ public class TimeManagementTest {
             //xor
             assertFalse(startBeforeEndOfFirstshift && endAfterFirstshift);
         }
+    }
+    @Test
+    public void ChefIntervalTest(){
+        Chef chef=new Chef(new Store(""));
+        Optional<Order> order =scheduleActions.getOrderToPrepare(chef.getSchedule(),0,new TimeClock(8,15));
+        assertTrue(order.isEmpty());
+        chef.getSchedule().getDaySlots().get(0).getTimeSlots().get(0).setOrder(Optional.of(new Order(null,null)));
+        order =scheduleActions.getOrderToPrepare(chef.getSchedule(),0,new TimeClock(8,0));
+        assertTrue(order.isPresent());
     }
 
     public Chef createChef(int start, int end) {

@@ -42,7 +42,7 @@ public class ChefHandler implements ChefAction {
     }
 
     @Override
-    public void updateCurrentOrder(Chef chef, TimeClock timeClock, int numberOfDaysBeforeTheOrder) {
+    public void getCurrentOrder(Chef chef, TimeClock timeClock, int numberOfDaysBeforeTheOrder) {
         scheduleActions.getOrderToPrepare(chef.getSchedule(), numberOfDaysBeforeTheOrder, timeClock);
     }
 
