@@ -12,4 +12,6 @@ Feature: Define opening hour
     When the manager changes the opening time of the store from 10 to 16
     Then the schedule of the employees start from 10 to 16
 
-
+  Scenario:
+    When the manager changes the opening time of the store from 10 to 12
+    Then the schedule of the employees start from 10 to 12

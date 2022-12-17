@@ -7,5 +7,7 @@ Feature: Change the state of the order after a given time
   Scenario:
     When the order change to "READY"
     Then the order should be "READY"
-    When the client overdue the timer
+  Scenario:
+    When the order change to "READY"
+    And the client overdue the timer
     Then the order should be "OBSOLETE"

@@ -233,10 +233,6 @@ public class CartManagementStepDef {
         Optional<Ingredient> ingredient = stockExplorer.findIngredient(stock,new Dough("Pate verte", 25, 30));
         assertEquals(0, ingredient.get().getQuantity());
     }
-    @Then("he receive the entire list")
-    public void he_receive_the_entire_list() {
-        assertFalse(cookieList.isEmpty());
-    }
     @Then("his cart has one item less")
     public void his_cart_has_one_item_less() {
         System.out.println(cart.getItemSet().size());
@@ -481,8 +477,8 @@ public class CartManagementStepDef {
     public void when_a_brand_manager_remove_a_cookie_to_the_cookie_book() throws Exception {
         brandManagerActions.removeCookie(cookieBookManager.getCookie(cookieBook, "Cookie au chocolat"), "Antibes");
     }
-    @Then("the cookkie is remove to the cookie book")
-    public void the_cookkie_is_remove_to_the_cookie_book() {
+    @Then("the cookie is remove to the cookie book")
+    public void the_cookie_is_remove_to_the_cookie_book() {
         assertEquals(2, cookieBook.getCookies().size());
     }
 
@@ -524,8 +520,8 @@ public class CartManagementStepDef {
         brandManagerActions.validCookie(new Cookie("CUSTOM COOKIE",null,null,new ArrayList<>(),null,null,6), "Antibes");
     }
 
-    @Then("the cookkie is add to the cookie book")
-    public void the_cookkie_is_add_to_the_cookie_book() {
+    @Then("the cookie is add to the cookie book")
+    public void the_cookie_is_add_to_the_cookie_book() {
         assertEquals(4, cookieBook.getCookies().size());
     }
 
@@ -539,5 +535,45 @@ public class CartManagementStepDef {
             Iterator iterator = user.getCart().getItemSet().iterator();
             Item item = (Item) iterator.next();
             assertEquals(number, item.getQuantity());
+    }
+
+    @Given("an store with an empty store")
+    public void anStoreWithAnEmptyStore() {
+        this.store.getStock().getIngredients().clear();
+    }
+
+    @Then("he can choose the cookie")
+    public void heCanChooseTheCookie() {
+        assertFalse(cookieList.isEmpty());
+    }
+
+    @Then("he can't choose the cookie")
+    public void heCanTChooseTheCookie() {
+        assertTrue(cookieList.isEmpty());
+    }
+
+    @Then("he don't have a past order")
+    public void heDonTHaveAPastOrder() {
+        assertTrue(historic.isEmpty());
+    }
+
+    @When("a client got a fidelity account")
+    public void aClientGotAFidelityAccount() throws Exception {
+        userAction.subscribeToFidelityAccount(this.user, "name","email","pw");
+        historic = userRequest.getHistory(user.getFidelityAccount());
+    }
+
+    @When("when a brandManager add a cookie that is already in the cookie book")
+    public void whenABrandManagerAddACookieThatIsAlreadyInTheCookieBook() {
+        try {
+            brandManagerActions.validCookie(new Cookie("Cookie au chocolat",null,null,new ArrayList<>(),null,null,6), "Antibes");
+        } catch (Exception e) {
+            this.exception=e;
+        }
+    }
+
+    @Then("the cookie book didn't changed")
+    public void theCookieBookDidnTChanged() {
+        assertNotNull(exception);
     }
 }
