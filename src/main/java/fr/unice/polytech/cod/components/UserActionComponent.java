@@ -23,7 +23,7 @@ import java.util.Optional;
 @Component
 public class UserActionComponent implements UserAction {
     @Autowired
-    FidelityAccountComponent fidelityAccountComponent;
+    FidelityAccountManager fidelityAccountManager;
     @Autowired
     CartActions cartActions;
     @Autowired
@@ -78,13 +78,6 @@ public class UserActionComponent implements UserAction {
         else
             throw new Exception("Panier vide impossible de le valider");    }
 
-    @Override
-    public void addOrder(User user, Order order) {
-        user.getUserOrders().add(order);
-        FidelityAccount fidelityAccount = user.getFidelityAccount();
-        if (fidelityAccount != null)
-            fidelityAccountComponent.addOrder(fidelityAccount, order);
-    }
 
     @Override
     public void removeOneItemFromCart(Item item, Cart cart) {
@@ -96,18 +89,6 @@ public class UserActionComponent implements UserAction {
         user.setFidelityAccount(new FidelityAccount(name, email, password));
     }
 
-    @Override
-    public void useDiscount(FidelityAccount fidelityAccount, Order order) {
-        if(fidelityAccount == null)
-            return;
-        Optional<Discount> _discount = fidelityAccountComponent.getDiscount(fidelityAccount);
-        if(_discount.isEmpty())
-            return;
-
-        Discount discount = _discount.get();
-        order.setDiscount(discount);
-        fidelityAccount.resetDiscount();
-    }
 
     @Override
     public boolean cancelOrder(Cart cart, List<Order> userOrders, Order order) {

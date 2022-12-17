@@ -7,6 +7,7 @@ import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.order.OrderState;
 import fr.unice.polytech.cod.pojo.Item;
 import fr.unice.polytech.cod.store.Store;
+import fr.unice.polytech.cod.user.User;
 import fr.unice.polytech.cod.user.fidelityAccount.Discount;
 import fr.unice.polytech.cod.user.fidelityAccount.FidelityAccount;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,5 +60,12 @@ public class FidelityAccountComponent implements FidelityAccountManager {
     public List<Order> getRetrievedOrder(FidelityAccount fidelityAccount) {
         return fidelityAccount.getOrderList().stream().filter(
                 order -> order.getOrderState().equals(OrderState.RETRIEVE)).toList();
+    }
+    @Override
+    public void addOrder(User user, Order order) {
+        user.getUserOrders().add(order);
+        FidelityAccount fidelityAccount = user.getFidelityAccount();
+        if (fidelityAccount != null)
+            addOrder(fidelityAccount, order);
     }
 }

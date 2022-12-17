@@ -2,6 +2,7 @@ package fr.unice.polytech.cod.interfaces;
 
 import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.store.Store;
+import fr.unice.polytech.cod.user.User;
 import fr.unice.polytech.cod.user.fidelityAccount.Discount;
 import fr.unice.polytech.cod.user.fidelityAccount.FidelityAccount;
 
@@ -19,4 +20,7 @@ public interface FidelityAccountManager {
     void notify(FidelityAccount fidelityAccount, String message);
 
     List<Order> getRetrievedOrder(FidelityAccount fidelityAccount);
+    
+    void addOrder(User user, Order order);
+
 }

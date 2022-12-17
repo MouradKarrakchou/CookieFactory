@@ -8,6 +8,8 @@ import fr.unice.polytech.cod.order.Bill;
 import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.user.Cart;
 import fr.unice.polytech.cod.user.User;
+import fr.unice.polytech.cod.user.fidelityAccount.Discount;
+import fr.unice.polytech.cod.user.fidelityAccount.FidelityAccount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -28,11 +30,9 @@ public class CartHandler implements CartActions, CartPenalty {
     @Autowired
     private  OrderActions orderActions;
     @Autowired
-    private  UserRequestComponent userRequestComponent;
-    @Autowired
-    private  UserActionComponent userActionComponent;
-    @Autowired
     private IntervalManager intervalManager;
+    @Autowired
+    private FidelityAccountManager fidelityAccountManager;
 
 
 
@@ -73,9 +73,9 @@ public class CartHandler implements CartActions, CartPenalty {
 
         Order order = new Order(cart, user);
 
-        if (userRequestComponent.hasFidelityAccount(user))
-            userActionComponent.useDiscount(user.getFidelityAccount(), order);
-        userActionComponent.addOrder(user, order);
+        if (user.getFidelityAccount()!=null)
+            useDiscount(user.getFidelityAccount(), order);
+        fidelityAccountManager.addOrder(user, order);
         orderActions.addOrder(cart.getStore().getStock(), cart.getStore().getOrderList(), order, ingredientsNeeded);
 
         intervalManager.validate(cart.getInterval(), order);
@@ -83,6 +83,18 @@ public class CartHandler implements CartActions, CartPenalty {
         cart.getItemSet().clear();
 
         return new Bill(order);
+    }
+
+    private void useDiscount(FidelityAccount fidelityAccount, Order order) {
+        if(fidelityAccount == null)
+            return;
+        Optional<Discount> _discount = fidelityAccountManager.getDiscount(fidelityAccount);
+        if(_discount.isEmpty())
+            return;
+
+        Discount discount = _discount.get();
+        order.setDiscount(discount);
+        fidelityAccount.resetDiscount();
     }
 
     @Override

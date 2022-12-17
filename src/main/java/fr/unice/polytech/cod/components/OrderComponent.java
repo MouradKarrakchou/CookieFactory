@@ -13,6 +13,7 @@ import fr.unice.polytech.cod.store.Chef;
 import fr.unice.polytech.cod.store.ChefState;
 import fr.unice.polytech.cod.user.User;
 import fr.unice.polytech.cod.user.fidelityAccount.Discount;
+import fr.unice.polytech.cod.user.fidelityAccount.FidelityAccount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -91,4 +92,5 @@ public class OrderComponent implements OrderActions, OrderStatesAction {
     public void removeOrder(List<Order> orderList, Order order) {
         orderList.remove(order);
     }
+
 }
