@@ -29,7 +29,7 @@ public class CartHandler implements CartActions, CartPenalty {
     @Autowired
     private  OrderActions orderActions;
     @Autowired
-    private IntervalManager intervalManager;
+    private IIntervalManager iIntervalManager;
     @Autowired
     private IFidelityAccountManager IFidelityAccountManager;
 
@@ -77,7 +77,7 @@ public class CartHandler implements CartActions, CartPenalty {
         IFidelityAccountManager.addOrder(user, order);
         orderActions.addOrder(cart.getStore().getStock(), cart.getStore().getOrderList(), order, ingredientsNeeded);
 
-        intervalManager.validate(cart.getInterval(), order);
+        iIntervalManager.validate(cart.getInterval(), order);
 
         cart.getItemSet().clear();
 
@@ -99,7 +99,7 @@ public class CartHandler implements CartActions, CartPenalty {
     @Override
     public void cancelOrder(Cart cart, Order order) {
         orderActions.removeOrder(cart.getStore().getOrderList(), order);
-        intervalManager.freedInterval(cart.getInterval());
+        iIntervalManager.freedInterval(cart.getInterval());
         cart.setCanceled(cart.getCanceled() + 1);
         Instant time = Instant.now();
 

@@ -2,6 +2,7 @@ Feature: Cancel order
 
   Background:
     Given a user
+    And an initialised cookie book
     And a non-empty cart with 1 cookie
     And a store named "Antibes"
     And an order at the state "PENDING"

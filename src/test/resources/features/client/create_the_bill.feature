@@ -2,6 +2,7 @@ Feature: Create the bill
 
   Background:
     Given a user
+    And an initialised cookie book
     And a store named "Antibes"
     And a valid cookie
     And a non-empty cart with 1 cookie

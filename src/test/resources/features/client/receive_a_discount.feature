@@ -3,6 +3,7 @@ Feature: Receive a discount after ordering 30 cookies
   Background:
     Given a user
     And a store named "Antibes"
+    And an initialised cookie book
     And a valid cookie
     And a non-empty cart with 30 cookie
 
