@@ -4,9 +4,9 @@ import fr.unice.polytech.cod.components.CartHandler;
 import fr.unice.polytech.cod.interfaces.ItemActions;
 import fr.unice.polytech.cod.interfaces.OrderActions;
 import fr.unice.polytech.cod.order.Order;
-import fr.unice.polytech.cod.schedule.Interval;
+import fr.unice.polytech.cod.pojo.schedule.Interval;
 import fr.unice.polytech.cod.schedule.TimeClock;
-import fr.unice.polytech.cod.schedule.TimeSlot;
+import fr.unice.polytech.cod.pojo.schedule.TimeSlot;
 import fr.unice.polytech.cod.store.Store;
 import fr.unice.polytech.cod.user.Cart;
 import fr.unice.polytech.cod.user.User;
@@ -16,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

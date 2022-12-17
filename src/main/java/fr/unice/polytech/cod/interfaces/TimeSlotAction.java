@@ -1,8 +1,8 @@
 package fr.unice.polytech.cod.interfaces;
 
 import fr.unice.polytech.cod.order.Order;
-import fr.unice.polytech.cod.schedule.Interval;
-import fr.unice.polytech.cod.schedule.TimeSlot;
+import fr.unice.polytech.cod.pojo.schedule.Interval;
+import fr.unice.polytech.cod.pojo.schedule.TimeSlot;
 import fr.unice.polytech.cod.store.Chef;
 import fr.unice.polytech.cod.store.Store;
 

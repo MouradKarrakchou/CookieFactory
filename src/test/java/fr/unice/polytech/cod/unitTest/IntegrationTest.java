@@ -17,16 +17,14 @@ import fr.unice.polytech.cod.pojo.IngredientCatalog;
 import fr.unice.polytech.cod.pojo.ingredient.Ingredient;
 import fr.unice.polytech.cod.exceptions.InvalidStoreException;
 import fr.unice.polytech.cod.pojo.order.Bill;
-import fr.unice.polytech.cod.schedule.Interval;
+import fr.unice.polytech.cod.pojo.schedule.Interval;
 import fr.unice.polytech.cod.schedule.TimeClock;
-import fr.unice.polytech.cod.schedule.TimeSlot;
+import fr.unice.polytech.cod.pojo.schedule.TimeSlot;
 import fr.unice.polytech.cod.store.Store;
 import fr.unice.polytech.cod.user.User;
-import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Repeat;
 
 import java.util.ArrayList;
 import java.util.List;

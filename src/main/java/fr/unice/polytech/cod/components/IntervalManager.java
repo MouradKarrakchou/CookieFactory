@@ -3,7 +3,7 @@ package fr.unice.polytech.cod.components;
 import fr.unice.polytech.cod.interfaces.IIntervalManager;
 import fr.unice.polytech.cod.interfaces.TimeSlotAction;
 import fr.unice.polytech.cod.order.Order;
-import fr.unice.polytech.cod.schedule.Interval;
+import fr.unice.polytech.cod.pojo.schedule.Interval;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

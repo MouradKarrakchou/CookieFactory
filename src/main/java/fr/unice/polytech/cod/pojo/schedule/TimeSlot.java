@@ -1,6 +1,7 @@
-package fr.unice.polytech.cod.schedule;
+package fr.unice.polytech.cod.pojo.schedule;
 
 import fr.unice.polytech.cod.order.Order;
+import fr.unice.polytech.cod.schedule.TimeClock;
 
 import java.util.Optional;
 

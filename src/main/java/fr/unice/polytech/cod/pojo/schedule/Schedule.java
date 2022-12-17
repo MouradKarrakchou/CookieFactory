@@ -1,5 +1,6 @@
-package fr.unice.polytech.cod.schedule;
+package fr.unice.polytech.cod.pojo.schedule;
 
+import fr.unice.polytech.cod.schedule.DaySlot;
 import fr.unice.polytech.cod.store.Store;
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,8 @@
 package fr.unice.polytech.cod.interfaces;
 
 import fr.unice.polytech.cod.order.Order;
+import fr.unice.polytech.cod.pojo.schedule.Interval;
+import fr.unice.polytech.cod.pojo.schedule.Schedule;
 import fr.unice.polytech.cod.schedule.*;
 
 import java.util.List;
