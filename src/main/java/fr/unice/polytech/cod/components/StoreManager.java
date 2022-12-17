@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-public class StoreComponent implements StoreModifier, StoreAccessor, ApplicationContextAware {
+public class StoreManager implements StoreModifier, StoreAccessor, ApplicationContextAware {
 
     private static ApplicationContext context;
     @Autowired

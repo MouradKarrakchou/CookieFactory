@@ -9,7 +9,7 @@ import fr.unice.polytech.cod.user.fidelityAccount.FidelityAccount;
 import java.util.List;
 import java.util.Optional;
 
-public interface FidelityAccountManager {
+public interface IFidelityAccountManager {
 
     void addOrder(FidelityAccount fidelityAccount, Order order);
 

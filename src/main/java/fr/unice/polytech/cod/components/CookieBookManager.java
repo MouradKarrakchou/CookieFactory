@@ -4,28 +4,25 @@ import fr.unice.polytech.cod.exceptions.CookieAlreadyExistingException;
 import fr.unice.polytech.cod.exceptions.NotMatchingCatalogRequirementException;
 import fr.unice.polytech.cod.food.Cookie;
 import fr.unice.polytech.cod.food.ingredient.Ingredient;
-import fr.unice.polytech.cod.interfaces.CatalogExplorer;
-import fr.unice.polytech.cod.interfaces.CookieBookManager;
-import fr.unice.polytech.cod.interfaces.StockExplorer;
+import fr.unice.polytech.cod.interfaces.ICatalogExplorer;
+import fr.unice.polytech.cod.interfaces.ICookieBookManager;
 import fr.unice.polytech.cod.pojo.CookieBook;
 import fr.unice.polytech.cod.pojo.IngredientCatalog;
-import fr.unice.polytech.cod.store.Store;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class CookieBookComponent implements CookieBookManager {
+public class CookieBookManager implements ICookieBookManager {
     @Autowired
-    private CatalogExplorer catalogExplorer;
+    private ICatalogExplorer ICatalogExplorer;
 
     @Override
     public void addCookieRecipe(CookieBook cookieBook, Cookie cookie) throws CookieAlreadyExistingException, NotMatchingCatalogRequirementException {
         if (!cookieBook.getCookies().contains(cookie)) {
             for (Ingredient ingredient : cookie.getIngredients()) {
-                if(!catalogExplorer.isInCatalog(IngredientCatalog.instance, ingredient))
+                if(!ICatalogExplorer.isInCatalog(IngredientCatalog.instance, ingredient))
                     throw new NotMatchingCatalogRequirementException();
             }
             cookieBook.getCookies().add(cookie);

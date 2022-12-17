@@ -5,7 +5,7 @@ import fr.unice.polytech.cod.store.Store;
 
 import java.util.List;
 
-public interface StoreFinder {
+public interface IStoreFinder {
     List<Store> getStores();
     Store findStore(String name) throws InvalidStoreException;
 }

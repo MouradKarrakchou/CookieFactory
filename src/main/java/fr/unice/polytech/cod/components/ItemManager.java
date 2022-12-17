@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Set;
 
 @Component
-public class ItemComponent implements ItemActions {
+public class ItemManager implements ItemActions {
     @Autowired
     private IngredientActions ingredientActions;
 

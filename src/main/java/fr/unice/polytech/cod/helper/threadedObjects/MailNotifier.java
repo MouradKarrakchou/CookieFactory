@@ -1,14 +1,11 @@
 package fr.unice.polytech.cod.helper.threadedObjects;
 
-import fr.unice.polytech.cod.components.FidelityAccountComponent;
-import fr.unice.polytech.cod.components.StoreComponent;
-import fr.unice.polytech.cod.interfaces.FidelityAccountManager;
-import fr.unice.polytech.cod.interfaces.StoreAccessor;
+import fr.unice.polytech.cod.components.FidelityAccountManager;
+import fr.unice.polytech.cod.components.StoreManager;
+import fr.unice.polytech.cod.interfaces.IFidelityAccountManager;
 import fr.unice.polytech.cod.interfaces.StoreModifier;
 import fr.unice.polytech.cod.store.Store;
 import fr.unice.polytech.cod.user.fidelityAccount.FidelityAccount;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 
 public class MailNotifier extends UpdatableObject {
@@ -17,7 +14,7 @@ public class MailNotifier extends UpdatableObject {
 
     private StoreModifier storeModifier;
 
-    private FidelityAccountManager fidelityAccountManager;
+    private IFidelityAccountManager IFidelityAccountManager;
 
     /**
      * Instantiate a new UpdatableObject
@@ -29,8 +26,8 @@ public class MailNotifier extends UpdatableObject {
         this.store = store;
         this.fidelityAccount = fidelityAccount;
 
-        fidelityAccountManager = FidelityAccountComponent.getBean(FidelityAccountManager.class);
-        storeModifier = StoreComponent.getBean(StoreModifier.class);
+        IFidelityAccountManager = FidelityAccountManager.getBean(IFidelityAccountManager.class);
+        storeModifier = StoreManager.getBean(StoreModifier.class);
 
     }
 
@@ -38,7 +35,7 @@ public class MailNotifier extends UpdatableObject {
     public void OnTimeReached() {
         storeModifier.updateSurpriseBasket(store);
         if(store.getSurpriseBaskets().isEmpty())
-            fidelityAccountManager.notify(fidelityAccount, "A surprise basket is available at the " + store.getName() + " store!");
+            IFidelityAccountManager.notify(fidelityAccount, "A surprise basket is available at the " + store.getName() + " store!");
         setWaitingTime(7*24*60*60*1000);
         startTimer();
     }

@@ -1,8 +1,8 @@
 package fr.unice.polytech.cod.cucumber;
 
-import fr.unice.polytech.cod.components.CookieBookComponent;
+import fr.unice.polytech.cod.components.CookieBookManager;
 import fr.unice.polytech.cod.interfaces.BrandManagerActions;
-import fr.unice.polytech.cod.interfaces.CatalogExplorer;
+import fr.unice.polytech.cod.interfaces.ICatalogExplorer;
 import fr.unice.polytech.cod.interfaces.UserAction;
 import fr.unice.polytech.cod.pojo.CookieBook;
 import fr.unice.polytech.cod.pojo.IngredientCatalog;
@@ -27,13 +27,13 @@ public class EditCookieBook {
     final IngredientCatalog ingredientCatalog = IngredientCatalog.instance;
 
     @Autowired
-    CatalogExplorer catalogExplorer;
+    ICatalogExplorer ICatalogExplorer;
 
     @Autowired
     UserAction userAction;
 
     @Autowired
-    CookieBookComponent cookieBookComponent;
+    CookieBookManager cookieBookManager;
 
     @Autowired
     BrandManagerActions brandManagerActions;
@@ -41,9 +41,9 @@ public class EditCookieBook {
     @Given("a cookie")
     public void a_cookie() {
         newCookie = new Cookie("Cookie a la vanille",
-                catalogExplorer.getDough(ingredientCatalog, "peanut butter"),
-                catalogExplorer.getFlavour(ingredientCatalog, "vanilla"),
-                List.of(catalogExplorer.getTopping(ingredientCatalog, "milk chocolate"), catalogExplorer.getTopping(ingredientCatalog, "M&M’s")),
+                ICatalogExplorer.getDough(ingredientCatalog, "peanut butter"),
+                ICatalogExplorer.getFlavour(ingredientCatalog, "vanilla"),
+                List.of(ICatalogExplorer.getTopping(ingredientCatalog, "milk chocolate"), ICatalogExplorer.getTopping(ingredientCatalog, "M&M’s")),
                 new Mix(Mix.MixState.MIXED),
                 new Cooking(Cooking.CookingState.CHEWY),
                 10);
@@ -66,7 +66,7 @@ public class EditCookieBook {
 
     @When("when a brandManager remove a cookie to the cookie book")
     public void when_a_brand_manager_remove_a_cookie_to_the_cookie_book() throws Exception {
-        brandManagerActions.removeCookie(cookieBookComponent.getCookie(cookieBook, "Cookie au chocolat"), "Antibes");
+        brandManagerActions.removeCookie(cookieBookManager.getCookie(cookieBook, "Cookie au chocolat"), "Antibes");
     }
     @Then("the cookkie is remove to the cookie book")
     public void the_cookkie_is_remove_to_the_cookie_book() {
