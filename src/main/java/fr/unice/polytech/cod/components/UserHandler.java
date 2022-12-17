@@ -75,7 +75,7 @@ public class UserHandler implements UserAction {
         public Bill validateCart(User user) throws Exception {
         Cart cart=user.getCart();
         Instant time = Instant.now();
-            if (!cartActions.isEmpty(cart) && !cartPenalty.isTherePenalty(cart, time))
+        if (!cartActions.isEmpty(cart) && !cartPenalty.isTherePenalty(cart, time))
             return cartActions.validate(cart, user);
         else
             throw new Exception("Panier vide impossible de le valider");    }

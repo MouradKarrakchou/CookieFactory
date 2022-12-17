@@ -301,8 +301,15 @@ public class CartManagementStepDef {
     }
 
     @When("a user ask for {int} minute intervals possible")
-    public void aUserAskForMinuteIntervalsPossible(int value) {
-        availableIntervals = userRequest.getAvailableIntervals(store, cart, cartActions.getDuration(cart));
+    public void aUserAskForMinuteIntervalsPossible(int minutes) {
+        cart.getItemSet().add(new Item(new Cookie("Cookie au chocolat",
+                iCatalogExplorer.getDough(ingredientCatalog,"chocolate"),
+                iCatalogExplorer.getFlavour(ingredientCatalog,"chili"),
+                List.of(iCatalogExplorer.getTopping(ingredientCatalog,"milk chocolate"),iCatalogExplorer.getTopping(ingredientCatalog,"M&M’s")),
+                new Mix(Mix.MixState.MIXED),
+                new Cooking(Cooking.CookingState.CHEWY),
+                minutes-15),1));
+        availableIntervals = userRequest.getAvailableIntervals(store, cart,0);
     }
 
     @Then("he gets only intervals starting and finishing in the {int} to {int} time period with a {int} minute duration")
