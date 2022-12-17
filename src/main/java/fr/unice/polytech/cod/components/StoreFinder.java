@@ -9,6 +9,9 @@ import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Component qui simule un contacte avec l'entreprise afin de récupérer la liste des magasins de la firme
+ */
 @Component
 public class StoreFinder implements IStoreFinder {
     private List<Store> storeList;

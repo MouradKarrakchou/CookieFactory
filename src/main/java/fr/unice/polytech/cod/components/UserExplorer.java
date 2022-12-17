@@ -25,7 +25,7 @@ public class UserExplorer implements UserRequest {
     @Autowired
     StoreAccessor storeAccessor;
     @Autowired
-    StoreFinder storeFinder;
+    IStoreFinder storeFinder;
 
     @Override
     public List<Cookie> viewCatalog(Store store) {
