@@ -4,12 +4,12 @@ Feature: A client can check his last orders
     Given a user
     And past orders
 
-  Scenario: The client has a FidelityAccount
+  Scenario: The client has a FidelityAccount and already ordered
     Given a user with a fidelityAccount
     When a client ask for his history
     Then he gets all his past orders
 
-  Scenario:
+  Scenario: The client don't have past orders
     When a client got a fidelity account
     Then he don't have a past order
 

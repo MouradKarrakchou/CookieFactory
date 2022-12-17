@@ -10,7 +10,7 @@ Feature: Add cookie to the cart
     When  he add 1 cookie to his cart
     Then there is 1 cookie in the cart
 
-  Scenario: all the cookies are available
+  Scenario: not enough ingredient
     When  he add 2 cookie to his cart
     Then there is 0 cookie in the cart
 

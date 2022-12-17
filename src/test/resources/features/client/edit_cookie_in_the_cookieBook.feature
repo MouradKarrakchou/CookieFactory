@@ -13,7 +13,7 @@ Feature: edit cookie in the cookie book
     When when a brandManager add a cookie to the cookie book
     Then the cookie is add to the cookie book
 
-  Scenario: add a cookie to the cookie book
+  Scenario: add a cookie that already exist to the cookie book
     When when a brandManager add a cookie that is already in the cookie book
     Then the cookie book didn't changed
 
