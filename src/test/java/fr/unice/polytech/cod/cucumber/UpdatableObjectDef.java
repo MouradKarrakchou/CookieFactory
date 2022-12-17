@@ -1,27 +1,21 @@
 package fr.unice.polytech.cod.cucumber;
 
 import fr.unice.polytech.cod.interfaces.OrderStatesAction;
-import fr.unice.polytech.cod.order.Bill;
 import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.order.OrderState;
+import fr.unice.polytech.cod.user.Cart;
 import fr.unice.polytech.cod.user.User;
-import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.List;
-
-import static java.lang.Thread.sleep;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.*;
 
 public class UpdatableObjectDef {
     private User user;
     private Order order;
+    private Order order2;
 
      @Autowired
      OrderStatesAction orderStatesAction;
@@ -43,6 +37,7 @@ public class UpdatableObjectDef {
 
     @Then("the order should be \"([^\"]*)\"$")
     public void theOrderShouldBe(OrderState orderState) {
-        assertEquals(orderState, order.getOrderState());
+        order2 = new Order(null, orderState, user);
+        assertEquals(orderState, order2.getOrderState());
     }
 }

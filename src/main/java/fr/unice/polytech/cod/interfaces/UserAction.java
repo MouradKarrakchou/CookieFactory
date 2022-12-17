@@ -23,8 +23,6 @@ public interface UserAction {
 
     Bill validateCart(User user) throws Exception;
 
-    void removeOneItemFromCart(Item item, Cart cart);
-
     void subscribeToFidelityAccount(User user, String name, String email, String password) ;
     boolean cancelOrder(Cart cart, List<Order> userOrders, Order orderToCancel);
 

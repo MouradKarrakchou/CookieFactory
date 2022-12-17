@@ -1,8 +1,12 @@
 Feature: edit cookie in the cookie book
 
   Background:
-    Given a cookie
-    And a cookieBook
+    Given a user
+    And a store named "Antibes"
+    And an initialised cookie book of the store
+    And a valid cookie
+
+
 
     #Le BrandManager n'existe plus !
   Scenario: add a cookie to the cookie book

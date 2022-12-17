@@ -1,11 +1,13 @@
 package fr.unice.polytech.cod.cucumber;
 
 import fr.unice.polytech.cod.components.CartHandler;
+import fr.unice.polytech.cod.components.CookieBookManager;
 import fr.unice.polytech.cod.components.UserManager;
+import fr.unice.polytech.cod.exceptions.CookieAlreadyExistingException;
+import fr.unice.polytech.cod.exceptions.NotMatchingCatalogRequirementException;
+import fr.unice.polytech.cod.food.ingredient.*;
 import fr.unice.polytech.cod.interfaces.*;
 import fr.unice.polytech.cod.pojo.*;
-import fr.unice.polytech.cod.food.ingredient.Dough;
-import fr.unice.polytech.cod.food.ingredient.Ingredient;
 import fr.unice.polytech.cod.food.*;
 import fr.unice.polytech.cod.order.Bill;
 import fr.unice.polytech.cod.order.Order;
@@ -42,15 +44,19 @@ public class CartManagementStepDef {
     Interval interval;
     Bill bill;
     List<Interval> availableIntervals;
-    Order pendingOrder;
+    Order order;
     Order inProgressOrder;
     Order retrieveOrder;
     Store store;
     List<Order> historic;
+    CookieBook cookieBook;
+    StoreLocation storeLocation;
 
     private final IngredientCatalog ingredientCatalog = IngredientCatalog.instance;
-    private StoreLocation storeLocation = StoreLocation.instance;
 
+
+    @Autowired
+    BrandManagerActions brandManagerActions;
     @Autowired
     CartActions cartActions;
 
@@ -93,9 +99,16 @@ public class CartManagementStepDef {
     @Autowired
     CartHandler cartHandler;
 
+    @Autowired
+    ICatalogExplorer iCatalogExplorer;
+
+    @Autowired
+    CookieBookManager cookieBookManager;
+
     @Given("a user")
     public void a_user() {
         this.user = new User();
+        this.cart=user.getCart();
     }
 
     @Given("a storeLocation")
@@ -115,7 +128,7 @@ public class CartManagementStepDef {
     }
     @Given("a valid cookie")
     public void a_valid_cookie() {
-        testCookie = ICookieBookManager.getCookie(new CookieBook(),"Cookie au chocolat");
+        testCookie = ICookieBookManager.getCookie(cookieBook,"Cookie au chocolat");
     }
     @Given("a fidelity account")
     public void a_fidelity_account() {
@@ -131,6 +144,9 @@ public class CartManagementStepDef {
         List<TimeSlot> timeSlots=new ArrayList<>();
         timeSlots.add(timeSlot);
         cart.setInterval(new Interval(timeSlots));
+        for (Ingredient ingredient : store.getStock().getIngredients()) {
+            ingredient.setQuantity(nbCookies);
+        }
     }
 
     @Given("an empty cart")
@@ -142,15 +158,27 @@ public class CartManagementStepDef {
         cart.setInterval(new Interval(timeSlots));
     }
 
+    @When("the order change to {string}")
+    public void the_order_change_to(String string) {
+        user = new User();
+        Cart cart = new Cart();
+        order = new Order(cart, user);
+        order.setOrderState(OrderState.READY);
+    }
+
+    @When("the client overdue the timer")
+    public void the_client_overdue_the_timer() throws InterruptedException {
+        Thread.sleep(1000);
+    }
+
     @When("he remove a cookie from his cart")
     public void he_remove_a_cookie_from_his_cart() throws Exception {
         Item item = userRequest.getItemFromCart(user.getCart(),"Cookie au chocolat");
-        userAction.removeOneItemFromCart(item,user.getCart());
+        userAction.removeCookies(item.getCookie(),1,user.getCart());
     }
 
     @When("he requests the cookie list")
     public void he_requests_the_cookie_list() {
-        // Write code here that turns the phrase above into concrete actions
         cookieList = userRequest.viewCatalog(user.getCart().getStore());
     }
     @When("he validate his cart")
@@ -211,7 +239,9 @@ public class CartManagementStepDef {
     }
     @Then("a cookie is added to his cart")
     public void a_cookie_is_added_to_his_cart() {
-        assertEquals(2, user.getCart().getItemSet().size());
+        Iterator iterator = user.getCart().getItemSet().iterator();
+        Item item = (Item) iterator.next();
+        assertEquals(2, item.getQuantity());
     }
     @Then("his cart has one item less")
     public void his_cart_has_one_item_less() {
@@ -275,9 +305,10 @@ public class CartManagementStepDef {
     public void he_add_cookie_to_his_cart() {
         userAction.addCookies(testCookie, 1, cart);
     }
+
     @When("a user ask for {int} minute intervals possible")
-    public void aUserAskForMinuteIntervalsPossible() {
-        availableIntervals=userRequest.getAvailableIntervals(store, cart, cartActions.getDuration(cart));
+    public void aUserAskForMinuteIntervalsPossible(int value) {
+        availableIntervals = userRequest.getAvailableIntervals(store, cart, cartActions.getDuration(cart));
     }
 
     @Then("he gets only intervals starting and finishing in the {int} to {int} time period with a {int} minute duration")
@@ -326,29 +357,30 @@ public class CartManagementStepDef {
         stockModifier.addIngredients(store.getStock(), ingredients);
         cart.getItemSet().clear();
         cart.getItemSet().add(item);
-        pendingOrder = new Order(cart, user);
+        order = new Order(cart, user);
         inProgressOrder = new Order(cart, user);
-        user.getUserOrders().add(pendingOrder);
+        user.getUserOrders().add(order);
         user.getUserOrders().add(inProgressOrder);
-        if(state.equals(OrderState.PENDING))orderStatesAction.updateState(pendingOrder, state);
+        order.setWaitingTime(500);
+        if(state.equals(OrderState.PENDING))orderStatesAction.updateState(order, state);
         else orderStatesAction.updateState(inProgressOrder, state);
     }
 
     @When("the user try to cancel his order at the state \"([^\"]*)\"$")
     public void the_user_try_to_cancel_his_order_at_the_state_OrderState(OrderState state) {
-        if(state.equals(OrderState.PENDING)) userManager.cancelOrder(user,pendingOrder);
+        if(state.equals(OrderState.PENDING)) userManager.cancelOrder(user, order);
         else userManager.cancelOrder(user, inProgressOrder);
     }
 
     @Then("the order is canceled")
     public void the_order_is_canceled() {
-        assertFalse(user.getCart().getStore().getOrderList().contains(pendingOrder));
+        assertFalse(user.getCart().getStore().getOrderList().contains(order));
     }
 
     @Then("the user is notified")
     public void the_user_is_notified() {
-        if(!user.getCart().getStore().getOrderList().contains(pendingOrder))
-            assertTrue(userAction.cancelOrder(user.getCart(), user.getUserOrders(), pendingOrder));
+        if(!user.getCart().getStore().getOrderList().contains(order))
+            assertTrue(userAction.cancelOrder(user.getCart(), user.getUserOrders(), order));
         if(user.getCart().getStore().getOrderList().contains(inProgressOrder))
             assertFalse(userAction.cancelOrder(user.getCart(), user.getUserOrders(), inProgressOrder));
     }
@@ -393,7 +425,7 @@ public class CartManagementStepDef {
 
     @Given("the stock contain ingredients for {string}")
     public void theStockContainIngredientsFor(String cookieName) {
-        Cookie cookie = ICookieBookManager.getCookie(new CookieBook(),cookieName);
+        Cookie cookie = ICookieBookManager.getCookie(cookieBook,cookieName);
         stockModifier.addIngredients(store.getStock(), cookie.getIngredientsList());
     }
 
@@ -411,5 +443,92 @@ public class CartManagementStepDef {
             case "XXL" -> PartyCookie.CookieSize.XXL;
             default -> throw new Exception("ERROR incorrect size of cookie");
         };
+    }
+
+    @And("an initialised cookie book")
+    public void anInitialisedCookieBook() throws NotMatchingCatalogRequirementException, CookieAlreadyExistingException {
+        cookieBook=new CookieBook();
+        ICookieBookManager.addCookieRecipe(cookieBook,
+                new Cookie("Cookie à la vanille",
+                        iCatalogExplorer.getDough(ingredientCatalog,"plain"),
+                        iCatalogExplorer.getFlavour(ingredientCatalog,"vanilla"),
+                        List.of(iCatalogExplorer.getTopping(ingredientCatalog,"milk chocolate"),iCatalogExplorer.getTopping(ingredientCatalog,"white chocolate")),
+                        new Mix(Mix.MixState.MIXED),
+                        new Cooking(Cooking.CookingState.CHEWY),
+                        5)
+        );
+        ICookieBookManager.addCookieRecipe(cookieBook,
+                new Cookie("Cookie au chocolat",
+                        iCatalogExplorer.getDough(ingredientCatalog,"chocolate"),
+                        iCatalogExplorer.getFlavour(ingredientCatalog,"chili"),
+                        List.of(iCatalogExplorer.getTopping(ingredientCatalog,"milk chocolate"),iCatalogExplorer.getTopping(ingredientCatalog,"M&M’s")),
+                        new Mix(Mix.MixState.MIXED),
+                        new Cooking(Cooking.CookingState.CHEWY),
+                        10)
+        );
+        ICookieBookManager.addCookieRecipe(cookieBook,
+                new Cookie("Cookie à la pistache",
+                        iCatalogExplorer.getDough(ingredientCatalog,"peanut butter"),
+                        iCatalogExplorer.getFlavour(ingredientCatalog,"chili"),
+                        List.of(iCatalogExplorer.getTopping(ingredientCatalog,"milk chocolate")),
+                        new Mix(Mix.MixState.MIXED),
+                        new Cooking(Cooking.CookingState.CHEWY),
+                        10)
+        );}
+
+    @Given("a cookieBook")
+    public void a_cookieBook() throws InvalidStoreException {
+        cookieBook = userAction.selectStore("Antibes", cart).getCookieBook();
+    }
+    @When("when a brandManager remove a cookie to the cookie book")
+    public void when_a_brand_manager_remove_a_cookie_to_the_cookie_book() throws Exception {
+        brandManagerActions.removeCookie(cookieBookManager.getCookie(cookieBook, "Cookie au chocolat"), "Antibes");
+    }
+    @Then("the cookkie is remove to the cookie book")
+    public void the_cookkie_is_remove_to_the_cookie_book() {
+        assertEquals(2, cookieBook.getCookies().size());
+    }
+
+    @And("an initialised cookie book of the store")
+    public void anInitialisedCookieBookOfTheStore() throws NotMatchingCatalogRequirementException, CookieAlreadyExistingException {
+        cookieBook=store.getCookieBook();
+        store.getCookieBook().getCookies().clear();
+        ICookieBookManager.addCookieRecipe(cookieBook,
+                new Cookie("Cookie à la vanille",
+                        iCatalogExplorer.getDough(ingredientCatalog,"plain"),
+                        iCatalogExplorer.getFlavour(ingredientCatalog,"vanilla"),
+                        List.of(iCatalogExplorer.getTopping(ingredientCatalog,"milk chocolate"),iCatalogExplorer.getTopping(ingredientCatalog,"white chocolate")),
+                        new Mix(Mix.MixState.MIXED),
+                        new Cooking(Cooking.CookingState.CHEWY),
+                        5)
+        );
+        ICookieBookManager.addCookieRecipe(cookieBook,
+                new Cookie("Cookie au chocolat",
+                        iCatalogExplorer.getDough(ingredientCatalog,"chocolate"),
+                        iCatalogExplorer.getFlavour(ingredientCatalog,"chili"),
+                        List.of(iCatalogExplorer.getTopping(ingredientCatalog,"milk chocolate"),iCatalogExplorer.getTopping(ingredientCatalog,"M&M’s")),
+                        new Mix(Mix.MixState.MIXED),
+                        new Cooking(Cooking.CookingState.CHEWY),
+                        10)
+        );
+        ICookieBookManager.addCookieRecipe(cookieBook,
+                new Cookie("Cookie à la pistache",
+                        iCatalogExplorer.getDough(ingredientCatalog,"peanut butter"),
+                        iCatalogExplorer.getFlavour(ingredientCatalog,"chili"),
+                        List.of(iCatalogExplorer.getTopping(ingredientCatalog,"milk chocolate")),
+                        new Mix(Mix.MixState.MIXED),
+                        new Cooking(Cooking.CookingState.CHEWY),
+                        10)
+        );
+    }
+
+    @When("when a brandManager add a cookie to the cookie book")
+    public void when_a_brand_manager_add_a_cookie_to_the_cookie_book() throws Exception {
+        brandManagerActions.validCookie(testCookie, "Antibes");
+    }
+
+    @Then("the cookkie is add to the cookie book")
+    public void the_cookkie_is_add_to_the_cookie_book() {
+        assertEquals(4, cookieBook.getCookies().size());
     }
 }

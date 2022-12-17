@@ -2,6 +2,8 @@ Feature: Choose store for cookie
 
   Background:
     Given a user
+    And a store named "Antibes"
+    And an initialised cookie book
     And a valid cookie
     And a non-empty cart with 2 cookie
 

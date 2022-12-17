@@ -2,9 +2,11 @@ Feature: Define opening hour
 
   Background:
     Given a user
+    And a store named "Antibes"
+    And a cookieBook
     And a valid cookie
     And a non-empty cart with 2 cookie
-    And a store named "Antibes"
+    And an initialised cookie book
     And the store has no employ
 
   Scenario:
